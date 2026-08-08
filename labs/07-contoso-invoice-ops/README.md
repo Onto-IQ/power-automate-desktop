@@ -1,21 +1,21 @@
 # Lab 07 — Contoso Invoice Ops (Desktop Element UI)
 
 **วัน:** 2 · **ระดับ:** Advanced  
-**ทักษะ:** Launch/Focus/Close Windows app, UI Elements & Selectors บน Desktop, Excel → Contoso → Excel, Conditions, Loops, File attachments, Error handling รายแถว, Subflows
+**ทักษะ:** Run application / Focus / Close บน Windows app, UI Elements & Selectors บน Desktop, Excel → Contoso → Excel, Conditions, Loops, ไฟล์แนบ, Error handling รายแถว และ Subflows
 
 ## ทำไม Lab นี้สำคัญ
 
-Lab อื่นใช้ **Web UI** จาก [PAD Lab Hub](https://ontoiq.tech/pad/)  
-Lab นี้โฟกัส **Element UI บนแอป Windows จริง** ด้วย [Contoso Invoicing](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/tree/master/power-automate-desktop/contoso-invoice-app) จาก Microsoft Learn — เป็นแบบฝึก Desktop RPA ที่ครบและซับซ้อนขึ้น
+Lab ส่วนใหญ่ฝึกกับ **Web UI** บน [PAD Lab Hub](https://ontoiq.tech/pad/)  
+Lab นี้โฟกัส **Element UI บนแอป Windows จริง** ผ่าน [Contoso Invoicing](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/tree/master/power-automate-desktop/contoso-invoice-app) จาก Microsoft Learn เพื่อให้ฝึก Desktop RPA ได้ครบและซับซ้อนขึ้น
 
 ## วัตถุประสงค์
 
-- ติดตั้งและสำรวจ Contoso Invoicing ให้ครบเมนูหลัก
-- Capture UI Elements ของแอป Desktop ให้เสถียร (ไม่พึ่ง Recorder อย่างเดียว)
-- อ่านชุดใบแจ้งหนี้จาก Excel แล้วสร้างใน Contoso เป็นลูป
-- ใช้เงื่อนไขธุรกิจ (validate / priority / skip)
-- จัดการไฟล์แนบจำลองต่อ Invoice
-- เขียนสถานะกลับ Excel + สรุปผล พร้อมกู้ error รายแถวโดยไม่ให้ทั้ง Flow ตาย
+- ติดตั้งและสำรวจ Contoso Invoicing ให้ครอบคลุมเมนูหลัก
+- Capture UI Elements ของแอป Desktop ให้เสถียร โดยไม่พึ่ง Recorder อย่างเดียว
+- อ่านชุดใบแจ้งหนี้จาก Excel แล้วสร้างใน Contoso ด้วยลูป
+- ใช้เงื่อนไขธุรกิจ เช่น validate / priority / skip
+- จัดการไฟล์แนบจำลองต่อแต่ละ Invoice
+- เขียนสถานะกลับ Excel พร้อมสรุปผล และกู้ error รายแถวโดยไม่ให้ทั้ง flow หยุดกะทันหัน
 
 ## Prerequisites
 
