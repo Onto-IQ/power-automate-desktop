@@ -1,0 +1,8 @@
+OrderId,Customer,Product,Amount,OrderDate,Region
+ORD-2001,Contoso Retail,PAD License,15000,2026-08-01,BKK
+ORD-2002,Fabrikam Shops,PAD License,8000,2026-08-02,CNX
+ORD-2003,Adventure Works,Consulting,12000,2026-08-03,BKK
+ORD-2004,Northwind Traders,PAD License,9500,2026-08-03,KKC
+ORD-2005,Onto Demo Co.,Training Seat,18000,2026-08-04,BKK
+ORD-2006,Wide World Importers,Consulting,7000,2026-08-05,CNX
+ORD-2007,Contoso Retail,Training Seat,11000,2026-08-05,HKT

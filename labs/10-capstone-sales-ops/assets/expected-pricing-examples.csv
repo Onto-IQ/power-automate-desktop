@@ -1,0 +1,4 @@
+ProductOrOrder,Amount,DiscountRate,DiscountAmount,NetBeforeTax,TaxAmount,GrandTotal,Notes
+SAMPLE-HIGH,15000,0.10,1500,13500,945,14445,Amount>=15000
+SAMPLE-MID,10000,0.05,500,9500,665,10165,Amount>=10000
+SAMPLE-LOW,4500,0.00,0,4500,315,4815,below threshold

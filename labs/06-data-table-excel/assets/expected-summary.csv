@@ -1,0 +1,6 @@
+Metric,Value
+FilteredRowCount,4
+SumAmount,56000
+Notes,"Region=BKK OR Amount>=10000 => ORD-2001,2003,2005,2007"
+GoldCount,3
+SilverCount,1

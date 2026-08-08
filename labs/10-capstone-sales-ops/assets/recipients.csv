@@ -1,0 +1,4 @@
+DisplayName,Email,Role,SendMode
+Ops Team (Mock),ops.team@mock.local,To,DraftOnly
+Sales Coach (Mock),sales.coach@mock.local,Cc,DraftOnly
+Instructor Backup (Mock),instructor.backup@mock.local,Cc,DraftOnly

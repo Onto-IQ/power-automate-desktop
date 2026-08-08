@@ -1,0 +1,5 @@
+LeadId,FullName,Email,Phone,Company,Interest,Priority,Status,WebResult,SubmittedAt
+L-9001,Maya Scout,maya.scout@example.com,081-900-0001,Onto Demo Co.,PAD Capstone,High,New,,
+L-9002,Brian Loop,brian.loop@example.com,081-900-0002,Contoso Retail,Web Scout,High,New,,
+L-9003,Chai Conditional,chai.cond@example.com,081-900-0003,Fabrikam Shops,Excel Roundtrip,Medium,New,,
+L-9004,Done Already,done.already@example.com,081-900-0004,Adventure Works,Skip me,Low,Done,Seeded,2026-08-01T08:00:00

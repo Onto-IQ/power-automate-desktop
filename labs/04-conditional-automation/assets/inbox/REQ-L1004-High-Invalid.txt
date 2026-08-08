@@ -1,0 +1,5 @@
+LeadId: L1004
+Priority: High
+Status: Invalid
+Company: Northwind
+Note: Invalid status rejected even if High

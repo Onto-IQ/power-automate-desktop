@@ -1,0 +1,5 @@
+LeadId: L1001
+Priority: High
+Status: Ready
+Company: Contoso Retail
+Note: Ready for automation approval path

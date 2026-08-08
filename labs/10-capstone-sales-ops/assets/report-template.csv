@@ -1,0 +1,9 @@
+Section,Key,Value
+Summary,SubmittedCount,
+Summary,ScoutHitCount,
+Summary,MailStatus,DraftCreated
+Summary,GeneratedAt,
+Scout,SampleKey,
+Scout,SampleValue,
+Lead,SampleLeadId,
+Lead,SampleStatus,

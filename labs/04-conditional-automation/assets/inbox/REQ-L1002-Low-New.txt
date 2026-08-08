@@ -1,0 +1,5 @@
+LeadId: L1002
+Priority: Low
+Status: New
+Company: Fabrikam
+Note: Low priority should be rejected
