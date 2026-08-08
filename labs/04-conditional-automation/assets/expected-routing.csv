@@ -1,0 +1,6 @@
+FileName,ExpectedFolder
+REQ-L1001-High-Ready.txt,approved
+REQ-L1002-Low-New.txt,rejected
+REQ-L1003-Medium-Ready.txt,review
+REQ-L1004-High-Invalid.txt,rejected
+REQ-L1005-High-New.txt,review

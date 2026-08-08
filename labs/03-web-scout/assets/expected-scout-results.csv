@@ -1,0 +1,7 @@
+ScoutId,SourcePage,Key,Value,CapturedAt,Matched,Notes
+S-001,03-table,ROW-1,sample-from-static-table,2026-08-08T10:00:00,Yes,shape example only
+S-002,09-ajax-table,ORD-XXXX,15000,2026-08-08T10:01:00,Yes,PRIORITY HIT - replace with real extract
+S-003,02-controls,dropdown,SelectedOption,2026-08-08T10:02:00,No,controls sniff example
+S-004,05-files,download-or-upload,C:\PAD-Labs\output\lab03\downloads\...,Yes,Mission D Files
+S-005,08-iframe,nested-field,value,2026-08-08T10:04:00,Yes,Challenge Mission E
+S-006,12-api,health,200,2026-08-08T10:05:00,Yes,Challenge Mission F

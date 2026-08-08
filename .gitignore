@@ -1,0 +1,14 @@
+# Local working copies / outputs (do not commit personal run artifacts)
+PAD-Labs/
+**/output/
+**/logs/
+**/working/
+*.xlsm
+~$*
+DesktopFlows/
+
+# Course slide / outline binaries (keep local only)
+*.pptx
+*.pdf
+Power Automate Desktop.pptx
+Trainocate_Outline_Power Automate Desktop (2 days) ake.pdf

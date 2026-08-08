@@ -1,0 +1,3 @@
+Invoice demo text file for Lab 02 file management.
+Customer: Adventure Works
+Amount: 4300

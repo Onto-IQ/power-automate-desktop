@@ -1,0 +1,6 @@
+Destination,FileName,Action
+archive/csv,order-1001.csv,Copy
+archive/csv,order-1002.csv,Copy
+archive/txt,readme-note.txt,Copy
+archive/txt,invoice-demo.txt,Copy
+archive/ignored,skip-me.tmp,IgnoreOrMove

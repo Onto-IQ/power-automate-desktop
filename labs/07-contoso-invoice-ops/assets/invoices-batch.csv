@@ -1,0 +1,8 @@
+InvoiceId,Account,Contact,Amount,InvoiceDate,StatusToSet,ProcessFlag,Notes
+INV-7001,Contoso Retail,Maya Scout,15000,2026-08-08,Paid,Process,High value deal
+INV-7002,Fabrikam Shops,Brian Loop,4500,2026-08-08,Open,Process,Standard invoice
+INV-7003,Adventure Works,Chai Conditional,12000,2026-08-09,Paid,Process,Priority training seats
+INV-7004,,No Account,3000,2026-08-09,Open,Process,Should be rejected - blank account
+INV-7005,Northwind Traders,Valid Contact,-50,2026-08-09,Open,Process,Should be rejected - bad amount
+INV-7006,Wide World Importers,Skip Person,8000,2026-08-10,Open,Skip,Seeded skip row
+INV-7007,Onto Demo Co.,Ops Lead,9800,2026-08-10,Open,Process,Just under high-priority threshold

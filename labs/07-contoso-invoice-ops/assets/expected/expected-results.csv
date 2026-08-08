@@ -1,0 +1,8 @@
+InvoiceId,ExpectedStatus,ExpectedPriority,AttachmentFiled,Reason
+INV-7001,Created,High,Yes,Amount>=10000
+INV-7002,Created,Normal,Yes,Standard create
+INV-7003,Created,High,No,Amount>=10000 no attachment file
+INV-7004,Rejected,,No,Blank Account
+INV-7005,Rejected,,No,Amount <= 0
+INV-7006,Skipped,,No,ProcessFlag=Skip
+INV-7007,Created,Normal,Yes,Standard create under threshold

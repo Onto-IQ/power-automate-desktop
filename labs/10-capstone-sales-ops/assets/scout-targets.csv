@@ -1,0 +1,13 @@
+TargetId,URL,Mission,Phase1Module,MinWaitSeconds,SuccessHint,Required
+T1,https://ontoiq.tech/pad/09-ajax-table.html,Extract AJAX orders (optional supplement),09,5,table rows visible,Optional
+T2,https://ontoiq.tech/pad/19-catalog.html,Paginated product scrape via Next loop,19,3,page 1/3 then next until disabled,Yes
+T3,https://ontoiq.tech/pad/06-login.html,Login demo/demo then continue,06,2,dashboard or success,Yes
+T4,https://ontoiq.tech/pad/01-forms.html,Submit follow-up forms from Excel,01,2,form success text,Yes
+T5,https://ontoiq.tech/pad/05-files.html,Download/upload evidence into report folder,05,3,file transferred,Yes
+T6,https://ontoiq.tech/pad/07-wizard.html,Wizard path for High priority leads,07,3,wizard completed,Yes
+T7,https://ontoiq.tech/pad/08-iframe.html,Nested iframe form capture,08,3,iframe filled,Challenge
+T8,https://ontoiq.tech/pad/10-ocr.html,OCR value into Scout Notes,10,3,ocr value captured,Challenge
+T9,https://ontoiq.tech/pad/12-api.html,API health/orders/products pulse,12,3,HTTP 2xx,Challenge
+T9b,https://ontoiq.tech/pad/api/products?page=1&pageSize=8,Products API direct (pairs with catalog),12,2,totalPages=3,Challenge
+T10,https://ontoiq.tech/pad/13-hover.html,Hover tooltip capture,13,2,tooltip text,Challenge
+T11,https://ontoiq.tech/pad/18-popup.html,Popup value capture,18,3,popup opened,Challenge

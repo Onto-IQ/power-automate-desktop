@@ -1,0 +1,5 @@
+LeadId,FullName,Email,Phone,Company,Interest,Priority,Status,WebResult,SubmittedAt
+L-1001,Somchai Jai,somchai.jai@example.com,081-000-1001,Onto Demo Co.,PAD Training,High,New,,
+L-1002,Nicha Siri,nicha.siri@example.com,081-000-1002,Contoso Retail,RPA Discovery,Medium,New,,
+L-1003,Anan Tech,anan.tech@example.com,081-000-1003,Fabrikam Shops,Excel Automation,Low,New,,
+L-1004,Pre-Submitted User,presubmitted@example.com,081-000-1004,Adventure Works,Already done,High,Done,Manual seed,2026-08-01T09:00:00
