@@ -1,6 +1,7 @@
 # Official terminology — Power Automate for desktop
 
-อ้างอิงเอกสารทางการ (ตรวจล่าสุด 2026):
+เอกสารนี้ช่วยให้ชื่อ Action และศัพท์ใน Lab Kit สอดคล้องกับ Microsoft Learn  
+(ตรวจอ้างอิงล่าสุดปี 2026) และยังคง keyphrase ภาษาอังกฤษตามทางการ โดยไม่แปลชื่อ Action
 
 | หัวข้อ | URL |
 |--------|-----|
@@ -20,7 +21,7 @@
 | **desktop flow** | Flow ที่สร้าง/รันบน PAD |
 | **Cloud flow** | Flow บน Power Automate cloud (คู่กันในระบบนิเวศ) |
 
-หลีกเลี่ยงการใช้ “Try-Catch” เป็นชื่อ Action — ใน PAD ใช้กลไกด้านล่าง
+หลีกเลี่ยงการใช้คำว่า “Try-Catch” เป็นชื่อ Action เพราะใน PAD ใช้กลไกตามตารางด้านล่างแทน
 
 ## Error handling (ทางการ)
 
@@ -31,7 +32,7 @@
 | **Get last error** | ดึง error object ล่าสุด (มี message, location, subflow, …) |
 | **Terminate process** / จบ flow ตามสถานการณ์ | หยุด process หรือออกแบบให้ flow จบอย่างควบคุม |
 
-ตัวแปรแนะนำหลัง Get last error: `%LastError%` (ชนิด Error) แล้วอ้าง `%LastError.Message%`, `%LastError.Location%` ตาม properties จริงใน designer
+ตัวแปรแนะนำหลัง Get last error คือ `%LastError%` (ชนิด Error) จากนั้นอ้าง `%LastError.Message%` และ `%LastError.Location%` ตาม properties จริงใน designer
 
 ## Action names ที่ Lab Kit ใช้ (สะกดตาม docs)
 

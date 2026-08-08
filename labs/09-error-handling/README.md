@@ -1,16 +1,16 @@
 # Lab 09 — Error Handling
 
 **วัน:** 2 · **ระดับ:** Advanced  
-**ทักษะ:** **On block error**, **On error** (Retry / Continue flow run), **Get last error**, Logging, Screenshot, cleanup อย่างปลอดภัย  
+**ทักษะ:** **On block error**, **On error** (Retry / Continue flow run), **Get last error**, การบันทึก log, screenshot และการปิดแอปอย่างปลอดภัย  
 อ้างอิง: [Handle errors in desktop flows](https://learn.microsoft.com/power-automate/desktop-flows/errors) · [`shared/OFFICIAL-TERMINOLOGY.md`](../../shared/OFFICIAL-TERMINOLOGY.md)
 
 ## วัตถุประสงค์
 
-- ทำให้ desktop flow ทนต่อความล้มเหลวที่ตั้งใจสร้างขึ้น
-- บันทึก log และไม่ทิ้ง Excel / browser ค้าง
-- แยก error ที่ retry ได้ กับที่ต้องหยุด
+- ทำให้ desktop flow ทนต่อความล้มเหลวที่ตั้งใจจำลองขึ้นมา
+- บันทึก log ให้ตรวจสอบย้อนหลังได้ และไม่ทิ้ง Excel หรือเบราว์เซอร์ค้าง
+- แยกได้ว่า error ใดควร retry และ error ใดควรถือว่าจบงานอย่างควบคุม
 
-> แนวคิด “Try–Catch” ในสไลด์ = ใน PAD ใช้ **On block error** + **On error** ของ action — ไม่มี Action ชื่อ Try-Catch
+> แนวคิด “Try–Catch” ในสไลด์ สอดคล้องกับ **On block error** และ **On error** ใน PAD — ไม่มี Action ชื่อ Try-Catch ใน designer
 
 ## Setup
 
