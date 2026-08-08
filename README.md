@@ -1,4 +1,4 @@
-# Power Automate Desktop — Lab Kit (2 Days)
+# Power Automate Desktop — Lab Kit (3 Days)
 
 ชุดเอกสารและ mock assets สำหรับหลักสูตร **Power Automate Desktop (PAD) 2 วัน**  
 แนวทาง: Hands-on Labs + Capstone Workshop
