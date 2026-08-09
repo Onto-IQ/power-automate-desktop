@@ -67,7 +67,7 @@
 2. หลีกเลี่ยง selector ที่อ้าง index หรือ xpath ยาว เพราะเปราะเมื่อหน้าเว็บเปลี่ยนโครงสร้าง
 3. ใส่ **Wait for web page content** ก่อน Interact กับ element แบบ dynamic เช่น AJAX, Delay หรือ Popup
 
-รายละเอียดเพิ่มเติม: [`shared/SELECTOR-CONVENTIONS.md`](shared/SELECTOR-CONVENTIONS.md) · ชื่อ Action ทางการ: [`shared/OFFICIAL-TERMINOLOGY.md`](shared/OFFICIAL-TERMINOLOGY.md) · สไตล์ภาษา: [`shared/WRITING-STYLE.md`](shared/WRITING-STYLE.md) · อ้างอิง Aug 2026: [`shared/SOURCES-AUG2026.md`](shared/SOURCES-AUG2026.md)
+รายละเอียดเพิ่มเติม: [`shared/SELECTOR-CONVENTIONS.md`](shared/SELECTOR-CONVENTIONS.md) · ชื่อ Action ทางการ: [`shared/OFFICIAL-TERMINOLOGY.md`](shared/OFFICIAL-TERMINOLOGY.md) · อ้างอิง Aug 2026: [`shared/SOURCES-AUG2026.md`](shared/SOURCES-AUG2026.md)
 
 > **ตัวแปรใน PAD:** ตอนสร้างชื่อ (Set variable / Store into / ชื่อ produced) **ไม่ใส่ `%`** — ตอนใช้ในช่องอื่นใช้ `%ชื่อ%` — ดู [`shared/BEST-PRACTICES.md`](shared/BEST-PRACTICES.md) และ [`shared/HANDS-ON-LAB-TEMPLATE.md`](shared/HANDS-ON-LAB-TEMPLATE.md)
 

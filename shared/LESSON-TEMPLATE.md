@@ -4,7 +4,7 @@
 เป้าหมาย: ผู้เรียนที่ไม่มีพื้นฐาน RPA อ่านแล้วเข้าใจ **ทำไม** และ **ศัพท์อะไร** ก่อนลงมือใน `LAB.md`
 
 ลำดับต่อบท: [`PAD-FUNDAMENTALS.md`](PAD-FUNDAMENTALS.md) → `LESSON.md` → `LAB.md`  
-สไตล์ภาษา: [`WRITING-STYLE.md`](WRITING-STYLE.md) · อ้างอิง: [`SOURCES-AUG2026.md`](SOURCES-AUG2026.md)
+อ้างอิงภายนอก: [`SOURCES-AUG2026.md`](SOURCES-AUG2026.md) · สไตล์ภาษา (ผู้เขียนเท่านั้น): [`WRITING-STYLE.md`](WRITING-STYLE.md)
 
 ## โครงมาตรฐาน 10 หัวข้อ (บังคับ)
 
