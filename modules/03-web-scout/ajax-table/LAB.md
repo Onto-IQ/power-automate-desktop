@@ -10,7 +10,8 @@
 C:\PAD-Labs\output\lab03\
 ```
 
-อ่าน [`assets/scout-criteria.csv`](assets/scout-criteria.csv): `MinAmount=10000`
+อ่าน [`assets/scout-criteria.csv`](assets/scout-criteria.csv): `MinAmount=1500`  
+(ข้อมูลตัวอย่างบน hub มี Amount ประมาณ 400–2400 — **อย่าใช้ 10000** จะไม่มีแถวผ่าน If)
 
 ## Hands-on
 
@@ -25,7 +26,7 @@ Lab03_AjaxTable
 2. **Set variable** Name `MinAmount` ← Value:
 
 ```text
-10000
+1500
 ```
 
 3. **บังคับ:** ลาก **Create new data table** (ค้น Actions Pane คำว่า `Create new data table`)
@@ -186,7 +187,7 @@ C:\PAD-Labs\output\lab03\ajax-orders.csv
 | ตารางว่างตอน Extract | กด Refresh + Wait element แถว/ตาราง |
 | หาคอลัมน์ Amount ใน If ไม่เจอ | พิมพ์/วาง `%AjaxRow['Amount']%` ในฝั่งซ้ายเอง |
 | Data table / New value(s) สลับกัน | Data table = `%Hits%` · New value(s) = `%AjaxRow%` |
-| If ไม่เข้า · Hits ว่างหลังรัน | Convert text to number ก่อนเทียบ · ตรวจว่า Amount >= 10000 มีจริง |
+| If ไม่เข้า · Hits ว่างหลังรัน | ตรวจ `%MinAmount%` = `1500` (ข้อมูลจริงสูงสุด ~2400) · หรือ Convert text to number ก่อนเทียบ |
 | Column count ไม่ตรง | `%Hits%` ต้องมี 4 คอลัมน์ชื่อเดียวกับ `%AjaxTable%` |
 | สับสนกับหลายหน้า | Lab นี้ไม่มี Next — ใช้ [Catalog](../catalog/README.md) |
 

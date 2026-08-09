@@ -24,7 +24,7 @@
 |--|--|
 | URL | https://pad.ontoiq.tech/pad/09-ajax-table.html |
 | Hints | `#tbl-orders`, `#btn-refresh-orders`, `#lbl-loading` |
-| Criteria | `MinAmount=10000` (คอลัมน์บนหน้า: Order ID, Customer, Amount, Status) |
+| Criteria | `MinAmount=1500` (ตัวอย่าง Amount บนหน้า ~400–2400 · คอลัมน์: Order ID, Customer, Amount, Status) |
 
 ## 4. แนวคิดหลัก
 
