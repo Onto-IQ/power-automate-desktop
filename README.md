@@ -1,17 +1,19 @@
 # Power Automate Desktop — Lab Kit (2 Days)
 
 ชุดเอกสารและ mock assets สำหรับหลักสูตร **Power Automate Desktop (PAD) 2 วัน**  
-แนวทางหลักคือ Hands-on Labs ควบคู่ Capstone Workshop เพื่อให้ผู้เรียนลงมือสร้าง desktop flow จริง
+แนวทางหลักคือ Hands-on Labs ทีละขั้นใน designer ควบคู่ Capstone Workshop เพื่อให้ผู้เรียนลงมือสร้าง desktop flow จริง
 
 | รายการ | รายละเอียด |
 |--------|------------|
 | Web UI (Lab Hub) | [https://ontoiq.tech/pad/](https://ontoiq.tech/pad/) |
 | Element UI (Desktop) | [Contoso Invoicing](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/tree/master/power-automate-desktop/contoso-invoice-app) · ดูรายละเอียดใน Lab [07](labs/07-contoso-invoice-ops/README.md) |
 | Sample packs อ้างอิง | [Microsoft Learn — power-automate-desktop](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/tree/master/power-automate-desktop) |
+| PAD baseline (Aug 2026) | **2607+** (Installer ~2.70.x) — ดู [`shared/SOURCES-AUG2026.md`](shared/SOURCES-AUG2026.md) |
 | Course Outline (ไฟล์ท้องถิ่น) | `Trainocate_Outline_Power Automate Desktop (2 days) ake.pdf` |
 | สไลด์ประกอบ (ไฟล์ท้องถิ่น) | `Power Automate Desktop.pptx` |
 
-> ไฟล์ PPTX/PDF เก็บไว้ในเครื่องสำหรับสอน — ไม่ได้เผยแพร่ใน GitHub repo
+> ไฟล์ PPTX/PDF เก็บไว้ในเครื่องสำหรับสอน — ไม่ได้เผยแพร่ใน GitHub repo  
+> แต่ละ Lab มีส่วน **Hands-on ทีละขั้น** (ค่าในช่อง action + ตัวแปร) ตาม [`shared/HANDS-ON-LAB-TEMPLATE.md`](shared/HANDS-ON-LAB-TEMPLATE.md)
 
 ---
 
@@ -41,7 +43,7 @@
 | รายการ | หมายเหตุ |
 |--------|----------|
 | Windows 10/11 | สภาพแวดล้อมมาตรฐานสำหรับ PAD |
-| [Power Automate for desktop](https://learn.microsoft.com/power-automate/desktop-flows/install) | ติดตั้งด้วย MSI หรือ Microsoft Store — เวอร์ชันใหม่ต้องการ .NET 8 (ตัว installer จัดการให้โดยทั่วไป) |
+| [Power Automate for desktop](https://learn.microsoft.com/power-automate/desktop-flows/install) | ติดตั้งด้วย MSI หรือ Microsoft Store — แนะนำ **2607+** สำหรับชั้นเรียนสิงหาคม 2026; เวอร์ชันใหม่ต้องการ .NET 8 (ตัว installer จัดการให้โดยทั่วไป) |
 | Microsoft Edge หรือ Chrome | พร้อม browser extension สำหรับ PAD |
 | Microsoft Excel | ใช้ใน Lab 06–10 |
 | Contoso Invoicing | จำเป็นใน Lab 07 — ติดตั้งจาก [ContosoInvoicingSetup.zip](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/raw/master/power-automate-desktop/contoso-invoice-app/ContosoInvoicingSetup.zip) |
@@ -65,7 +67,9 @@
 2. หลีกเลี่ยง selector ที่อ้าง index หรือ xpath ยาว เพราะเปราะเมื่อหน้าเว็บเปลี่ยนโครงสร้าง
 3. ใส่ **Wait for web page content** ก่อน Interact กับ element แบบ dynamic เช่น AJAX, Delay หรือ Popup
 
-รายละเอียดเพิ่มเติม: [`shared/SELECTOR-CONVENTIONS.md`](shared/SELECTOR-CONVENTIONS.md) · ชื่อ Action ทางการ: [`shared/OFFICIAL-TERMINOLOGY.md`](shared/OFFICIAL-TERMINOLOGY.md) · สไตล์ภาษา: [`shared/WRITING-STYLE.md`](shared/WRITING-STYLE.md)
+รายละเอียดเพิ่มเติม: [`shared/SELECTOR-CONVENTIONS.md`](shared/SELECTOR-CONVENTIONS.md) · ชื่อ Action ทางการ: [`shared/OFFICIAL-TERMINOLOGY.md`](shared/OFFICIAL-TERMINOLOGY.md) · สไตล์ภาษา: [`shared/WRITING-STYLE.md`](shared/WRITING-STYLE.md) · อ้างอิง Aug 2026: [`shared/SOURCES-AUG2026.md`](shared/SOURCES-AUG2026.md)
+
+> **ตัวแปรใน PAD:** ตอนสร้างชื่อ (Set variable / Store into / ชื่อ produced) **ไม่ใส่ `%`** — ตอนใช้ในช่องอื่นใช้ `%ชื่อ%` — ดู [`shared/BEST-PRACTICES.md`](shared/BEST-PRACTICES.md) และ [`shared/HANDS-ON-LAB-TEMPLATE.md`](shared/HANDS-ON-LAB-TEMPLATE.md)
 
 สำหรับ Desktop UI ของ Contoso ดู UI map ใน [`labs/07-contoso-invoice-ops/assets/ui-map.md`](labs/07-contoso-invoice-ops/assets/ui-map.md)
 
@@ -164,7 +168,7 @@ power-automate-desktop/
 
 แต่ละ Lab โดยทั่วไปมี:
 
-- `README.md` — วัตถุประสงค์ ขั้นตอนใน PAD เกณฑ์ผ่าน และ troubleshooting
+- `README.md` — วัตถุประสงค์, **Hands-on ทีละขั้น**, จุดที่มักทำผิด, เกณฑ์ผ่าน และ troubleshooting (อ้างอิง docs สิงหาคม 2026)
 - `assets/` — mock input / expected output เมื่อ Lab นั้นต้องการไฟล์ตัวอย่าง
 
 ---
@@ -209,9 +213,9 @@ C:\PAD-Labs\
 | หัวข้อ | แนวทาง |
 |--------|--------|
 | Naming | ใช้รูปแบบ `LabXX_ShortName` เช่น `Lab07_ContosoInvoiceOps` |
-| Variables | เช่น `%InputLeads%`, `%ScoutResults%`, `%LastError%` |
+| Variables | ตอนสร้างชื่อไม่ใส่ `%` (เช่น `InputLeads`); ตอนใช้ในช่องอื่นใส่ `%InputLeads%` — ดู Hands-on ของแต่ละ Lab |
 | Waits | ใช้ Wait for web page content / Wait for window content ก่อน Click หรือ Populate |
-| Excel | ปิด instance ด้วย Close Excel ทุกครั้ง และอย่าเปิดไฟล์ค้างขณะ flow รัน |
+| Excel | ปิด instance ด้วย Close Excel ทุกครั้ง; ก่อน **Save document as** ชื่อคงที่ให้มีนโยบายรันซ้ำ (If exists→Delete / เปิดเดิม+Save / timestamp) — ดู [`shared/BEST-PRACTICES.md`](shared/BEST-PRACTICES.md) |
 | Contoso | Run application ครั้งเดียวต่อรอบ แล้ว Focus window ก่อนกรอก จากนั้น Close window ท้าย flow |
 | Outlook | สร้างเป็น **Draft** ก่อน — ส่งจริงเฉพาะเมื่อวิทยากรอนุญาต |
 | Secrets | ห้าม hardcode รหัสผ่านจริง — บัญชี demo ของ Lab Hub คือ `demo` / `demo` |
@@ -226,6 +230,7 @@ C:\PAD-Labs\
 | Selector ไม่เจอ (Contoso) | Recapture บนหน้าต่างแอป และ Focus window ก่อน Interact |
 | หน้า AJAX ยังว่าง | ใช้ Wait for web page content จนแถวข้อมูลพร้อม |
 | Excel locked | ปิด Excel ที่เปิดอยู่ด้วยมือ และ Close Excel ใน flow |
+| Save as รอบสองล้ม (ไฟล์ซ้ำ) | If file exists → Delete ก่อน Save as หรือเปิดไฟล์เดิมแล้ว Save — Best Practices |
 | Outlook ไม่ส่ง | ตรวจ profile และสิทธิ์ หรือเก็บเป็น Draft แทน |
 | Browser ไม่ตอบ | Close web browser แล้ว Launch new Edge/Chrome ใหม่ หรือ Attach to running instance ถ้าจำเป็น |
 | UIPI / ส่งคลิกไม่ได้ | รัน PAD กับแอปเป้าหมายที่ระดับ elevation เดียวกัน |
