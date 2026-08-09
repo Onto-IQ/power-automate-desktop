@@ -40,7 +40,7 @@ C:\PAD-Labs\working\lab03\upload-sample.txt
 
 | Mission | Phase 1 | URL | เก็บอะไร |
 |---------|---------|-----|----------|
-| A — Static table | 03 | https://ontoiq.tech/pad/03-table.html | แถวตารางทั้งหมด |
+| A — Static table | 03 | https://ontoiq.tech/pad/03-table.html | แถวตารางทั้งหมด · Wait/Extract ที่ `#tbl-employees` (ดู Hints บนหน้า) |
 | B — Controls sniff | 02 | https://ontoiq.tech/pad/02-controls.html | ค่า dropdown/checkbox ที่เลือกได้ |
 | C — AJAX orders | 09 | https://ontoiq.tech/pad/09-ajax-table.html | แถวที่โหลดหลัง wait |
 | D — Files raid | 05 | https://ontoiq.tech/pad/05-files.html | Download อย่างน้อย 1 ไฟล์ และ/หรือ Upload ไฟล์ mock |
@@ -158,6 +158,24 @@ https://ontoiq.tech/pad/03-table.html
 
 ### Mission A — Static table (`03-table`)
 
+หน้าเป้าหมาย (เปิดอยู่แล้วจาก Step 1 — **ไม่ต้อง** เปิด [Lab Hub index](https://pad.ontoiq.tech/pad/) ก่อน Wait):
+
+```text
+https://ontoiq.tech/pad/03-table.html
+```
+
+หรือเทียบเท่า:
+
+```text
+https://pad.ontoiq.tech/pad/03-table.html
+```
+
+บน**หน้า 03 Table นี้** (ไม่ใช่หน้า index) มีกล่อง **Hints** ระบุ selector — Mission A ใช้ตาราง:
+
+```text
+#tbl-employees
+```
+
 ### Step A1 — Wait ตาราง
 
 1. ลาก **Wait for web page content**
@@ -167,8 +185,20 @@ https://ontoiq.tech/pad/03-table.html
 %Browser%
 ```
 
-3. รอ element ตารางบนหน้า (เช่น table / `#tbl-...` ตามที่หน้ามี)
+3. Wait for / UI element: คัดลอก selector นี้ใส่ (หรือ capture ตารางแล้วล็อกเป็นค่านี้):
+
+```text
+#tbl-employees
+```
+
+   วิธีหาถ้าลืม (เลือกอย่างใดอย่างหนึ่ง):
+   - มองกล่อง **Hints:** บนหน้า `03-table.html` ที่เบราว์เซอร์ของ flow เปิดอยู่
+   - หรือเปิด URL ของหน้า 03 ด้วยมือหนึ่งครั้ง → อ่าน Hints แล้วคัดลอก `#tbl-employees`
+   - หรือใน PAD ใช้ UI element picker ชี้ตาราง Emp ID / Name / Department / Salary แล้วล็อก `#tbl-employees`
 4. กด Save
+
+> **Lab Hub index** (`https://pad.ontoiq.tech/pad/`) ใช้ดูแผนที่โมดูลตอน Setup / ก่อนเรียน — **ไม่ใช่** ขั้นตอนของ Wait ใน Mission A  
+> อย่าใช้ `#tbl-products` — นั่นของ Mission P (`19-catalog.html`)
 
 ### Step A2 — Extract ตาราง
 
@@ -179,7 +209,7 @@ https://ontoiq.tech/pad/03-table.html
 %Browser%
 ```
 
-3. เปิด **live web helper** เลือกตารางทั้งตาราง
+3. เปิด **live web helper** เลือกตารางทั้งตารางที่ตรง `#tbl-employees` (คอลัมน์ Emp ID, Name, Department, Salary)
 4. **Variables produced:** `StaticTable` ← **ไม่ใส่ `%`**  
    (อ้างอิงด้วย `%StaticTable%`)
 5. กด Save
@@ -645,6 +675,7 @@ https://ontoiq.tech/pad/18-popup.html
 
 | อาการ | แก้ |
 |-------|-----|
+| Mission A ไม่รู้จะ Wait อะไร | หน้า `03-table.html` → ใช้ `#tbl-employees` (ดู Hints บนหน้า) — อย่าใช้ `#tbl-products` |
 | AJAX ว่าง | เพิ่ม Wait / รอ element แถวแรก |
 | Upload ไม่ติด | ตรวจ path ไฟล์ mock และ selector ของ input file |
 | Iframe กรอกไม่ได้ | Set current iframe ก่อน Populate; กลับ parent หลังจบ |

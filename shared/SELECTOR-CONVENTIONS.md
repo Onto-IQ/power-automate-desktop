@@ -22,7 +22,7 @@
 |-------|-----|--------|
 | 01 Forms | https://ontoiq.tech/pad/01-forms.html | Fill text, validate, submit |
 | 02 Controls | https://ontoiq.tech/pad/02-controls.html | Click, dropdown, checkbox, radio |
-| 03 Table | https://ontoiq.tech/pad/03-table.html | Extract HTML table |
+| 03 Table | https://ontoiq.tech/pad/03-table.html | Extract HTML table · `#tbl-employees` |
 | 04 Dialogs | https://ontoiq.tech/pad/04-dialogs.html | Alert / confirm / modal |
 | 05 Files | https://ontoiq.tech/pad/05-files.html | Download / upload |
 | 06 Login | https://ontoiq.tech/pad/06-login.html | Auth `demo` / `demo` |
