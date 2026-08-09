@@ -19,15 +19,17 @@
 | [WEB-HUB-REQUESTS.md](WEB-HUB-REQUESTS.md) | สถานะหน้า Lab Hub (รวม 19 Catalog) |
 | [generate_mock_xlsx.py](generate_mock_xlsx.py) | สร้างไฟล์ `.xlsx` จาก CSV ใน Labs 06, 07, 08, 10 |
 
-## โครงสร้างเอกสารต่อหนึ่ง Lab
+## โครงสร้างเอกสารต่อหนึ่ง Module
 
 ```text
-labs/<lab>/
+modules/<module>/
   README.md   ← หน้าปก / สารบัญ
   LESSON.md   ← ความรู้ (อ่านก่อน)
   LAB.md      ← จับมือทำ
   assets/     ← ข้อมูลตัวอย่าง (ถ้ามี)
 ```
+
+> รากโฟลเดอร์บทเรียน = `modules/` · ไฟล์แบบฝึกหัดยังชื่อ `LAB.md`
 
 ## Regenerating Excel mocks
 

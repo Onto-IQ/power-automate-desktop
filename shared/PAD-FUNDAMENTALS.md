@@ -118,7 +118,7 @@ C:\PAD-Labs\
 ## ลำดับการเรียนต่อหนึ่งบท
 
 1. อ่าน [`PAD-FUNDAMENTALS.md`](PAD-FUNDAMENTALS.md) (ไฟล์นี้) ถ้ายังไม่คุ้น designer  
-2. เปิด `labs/<บท>/README.md` → อ่าน **LESSON.md**  
+2. เปิด `modules/<บท>/README.md` → อ่าน **LESSON.md**  
 3. ทำ **LAB.md** ทีละขั้น  
 4. เทียบ Expected / Acceptance ใน LAB
 

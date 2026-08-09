@@ -76,8 +76,8 @@ Get-ChildItem $root
 
 | Lab | คัดลอกไปที่ |
 |-----|-------------|
-| 01 | `C:\PAD-Labs\working\lab01\` ← จาก `labs/01-record-replay/assets/` |
-| 02 | `C:\PAD-Labs\working\lab02\inbox\` ← จาก `labs/02-file-management/assets/inbox/` |
+| 01 | `C:\PAD-Labs\working\lab01\` ← จาก `modules/01-record-replay/assets/` |
+| 02 | `C:\PAD-Labs\working\lab02\inbox\` ← จาก `modules/02-file-management/assets/inbox/` |
 | 03 | สร้าง `C:\PAD-Labs\output\lab03\` (ว่างก็ได้) |
 | 04+ | ตาม `LAB.md` ของแต่ละบทในวันที่ 2 |
 
