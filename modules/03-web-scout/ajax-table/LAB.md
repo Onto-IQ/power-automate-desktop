@@ -156,25 +156,74 @@ For each AjaxRow in AjaxTable
 End
 ```
 
-### Step 5 — เขียน CSV
+### Step 5 — เขียน `%Hits%` ลง CSV
 
-1. เขียน `%Hits%` (หรือทั้ง `%AjaxTable%` ถ้า Lab อนุญาต) เป็น:
+ทำ**หลัง** End ของ For each ใน Step 4 (อย่าเขียนไฟล์ข้างในลูปกรอง)
+
+1. ลาก **Set variable**
+2. Name: `CsvBody` ← **ไม่ใส่ `%`**
+3. Value: หัวตาราง (คัดลอกด้านล่างวางในช่อง)
+
+```text
+Order ID,Customer,Amount,Status
+```
+
+4. ลาก **For each**
+5. Value to iterate: (คัดลอก)
+
+```text
+%Hits%
+```
+
+6. Store into: `HitRow` ← **ไม่ใส่ `%`**
+7. **ภายใน For each** ลาก **Set variable** · Name: `CsvBody` ← Value: (คัดลอกทั้งก้อน — **คู่ `%` นอกสุดคู่เดียว**)
+
+```text
+%CsvBody + '
+' + HitRow['Order ID'] + ',' + HitRow['Customer'] + ',' + HitRow['Amount'] + ',' + HitRow['Status']%
+```
+
+> ผิด: `%CsvBody% + HitRow['Amount']%` (ตัด `%` กลางทาง)  
+> ถูก: `%CsvBody + HitRow['Amount']%` (ชื่อตัวแปรอยู่ใน `%...%` คู่เดียว)  
+> ทางเลือก: ใช้ action แปลง Data table เป็นข้อความถ้ามีในเวอร์ชัน PAD ของคุณ แล้วข้ามข้อ 4–8 ได้
+8. **End** For each
+9. **หลัง End** ลาก **Write text to file** (ค้น Actions Pane คำว่า `Write text to file`)
+10. ตั้งค่า:
+    - **File path:** (คัดลอก)
 
 ```text
 C:\PAD-Labs\output\lab03\ajax-orders.csv
 ```
 
-2. **Close web browser** · `%Browser%`
+    - **Text to write:** (คัดลอก)
 
-### Step 6 — Replay
+```text
+%CsvBody%
+```
 
-รัน 2 ครั้ง · ตรวจว่าไม่ได้ Extract ตอนตารางยังว่าง
+    - **If file exists:** **Overwrite**
+    - Encoding: แนะนำ **UTF-8** (ถ้ามีช่องให้เลือก)
+11. กด **Save** ของ action
+12. เปิดโฟลเดอร์ `C:\PAD-Labs\output\lab03\` ตรวจว่ามี `ajax-orders.csv` หลังรัน (Step 6)
+
+### Step 6 — ปิดเบราว์เซอร์ + Replay
+
+1. ลาก **Close web browser** · Web browser instance: (คัดลอก)
+
+```text
+%Browser%
+```
+
+2. กด **Run** อย่างน้อย 2 ครั้ง
+3. ตรวจว่าไม่ได้ Extract ตอนตารางยังว่าง
+4. เปิด `ajax-orders.csv` — ควรมีเฉพาะแถวที่ Amount >= `%MinAmount%` (เช่น 1500)
 
 ## Acceptance
 
 - [ ] Flow ชื่อ `Lab03_AjaxTable`
 - [ ] มี Wait จนมีแถวก่อน Extract
-- [ ] มีไฟล์ `ajax-orders.csv`
+- [ ] มีไฟล์ `ajax-orders.csv` ภายใต้ `C:\PAD-Labs\output\lab03\`
+- [ ] CSV มีหัวตาราง + แถวที่ผ่านเกณฑ์ MinAmount
 - [ ] ปิดเบราว์เซอร์ท้าย flow
 
 ## Troubleshooting
@@ -189,6 +238,8 @@ C:\PAD-Labs\output\lab03\ajax-orders.csv
 | Data table / New value(s) สลับกัน | Data table = `%Hits%` · New value(s) = `%AjaxRow%` |
 | If ไม่เข้า · Hits ว่างหลังรัน | ตรวจ `%MinAmount%` = `1500` (ข้อมูลจริงสูงสุด ~2400) · หรือ Convert text to number ก่อนเทียบ |
 | Column count ไม่ตรง | `%Hits%` ต้องมี 4 คอลัมน์ชื่อเดียวกับ `%AjaxTable%` |
+| หา Write CSV / เขียนไฟล์ไม่เจอ | ค้น **Write text to file** · Text = `%CsvBody%` · path ตาม Step 5 |
+| CSV ว่าง / มีแต่หัวตาราง | `%Hits%` ว่าง — กลับไปตรวจ If + MinAmount=1500 |
 | สับสนกับหลายหน้า | Lab นี้ไม่มี Next — ใช้ [Catalog](../catalog/README.md) |
 
 ## Cleanup
