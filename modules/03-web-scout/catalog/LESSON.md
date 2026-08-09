@@ -37,16 +37,17 @@ Lab นี้ใช้ **ลูปซ้อนลูป** เพราะงา�
 หน้าหนึ่งได้ตารางหนึ่งชุด (`PageTable`) — ต้องวนแถวในหน้านั้นก่อน แล้วค่อยพลิกหน้า วนหน้าถัดไป ไม่ใช่ลูปเดียวที่ทำทั้งสองอย่าง
 
 ```text
-Launch → เก็บ Btn_NextPage → Loop condition (หน้า):
+Launch → เก็บ Btn_NextPage → Loop condition (หน้า · safety MaxPages):
   Wait ตาราง → Extract #tbl-products → PageTable
   For each แถวใน PageTable → Insert เข้า CatalogHits
   Increase variable · Variable name=%PageCount% · Increase by=1
-  ถ้า Next กดได้ → กด Btn_NextPage → วนหน้าต่อ
-  ถ้า Next disabled → Exit loop
+  Get details of element · Btn_NextPage · Attribute=Disabled → AttributeValue
+  If AttributeValue = True → Exit loop
+  Else → Press button Btn_NextPage
 Write CSV → Close
 ```
 
-ใส่ **MaxPages** / เงื่อนไขหยุด เพื่อไม่วนไม่รู้จบ
+ใส่ **MaxPages** เป็น safety เท่านั้น — เงื่อนไขหยุดจริงคือ **Next disabled** (hub มี 3 หน้า; ถ้าไม่ Exit จะอ่านหน้า 3 ซ้ำจนครบ MaxPages)
 
 ## 5. อ้างอิง
 

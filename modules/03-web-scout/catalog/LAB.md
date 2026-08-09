@@ -97,11 +97,35 @@ Btn_NextPage
 14. **End** For each
 15. **Increase variable** — **Variable name:** `%PageCount%` · **Increase by:** `1`
    (ตาม [Variables actions](https://learn.microsoft.com/power-automate/desktop-flows/actions-reference/variables#increase-variable))
-16. ตรวจปุ่ม **Next** (`Btn_NextPage`) — ถ้ายังกดได้ → **Press button on web page** (หรือ **Click link on web page**) · UI element: `Btn_NextPage` · Browser: `%Browser%` แล้ววนต่อ
-17. ถ้า disabled / กดไม่ได้ → **Exit loop**
-18. **End** loop
+16. **สำคัญ:** หลังหน้า 3 ปุ่ม Next จะ **disabled** — ถ้าไม่ตรวจแล้ว **Exit loop** ลูปจะ Extract **หน้า 3 ซ้ำ** จนครบ `MaxPages` (รอบ 4–10)  
+   `MaxPages` เป็น safety เท่านั้น · hub มีจริง **3 หน้า** (~24 แถว)
+17. **Get details of element on web page**
+    - Web browser instance: `%Browser%`
+    - UI element: `Btn_NextPage`
+    - Attribute name: **Disabled** (เลือกจากรายการ หรือพิมพ์ `Disabled`)
+    - Variables produced: `AttributeValue` (หรือ Rename เป็น `NextDisabled`)
+18. ลาก **If**
+    - First operand: `%AttributeValue%` (หรือ `%NextDisabled%`)
+    - Operator: **Equal to (=)**
+    - Second operand: `True` (ถ้าไม่เข้า ให้ลอง `true`)
+19. **ภายใน If (disabled = True):** ลาก **Exit loop** → แล้ว **End** If
+20. **หลัง End If** (แปลว่า Next ยังกดได้): **Press button on web page** (หรือ **Click link on web page**) · UI element: `Btn_NextPage` · Browser: `%Browser%`
+21. **End** loop
 
-เป้าหมาย: รวมแถวประมาณ **24** รายการ (ตามที่ hub ออกแบบ)
+โครงท้ายลูปที่ถูกต้อง:
+
+```text
+End For each
+Increase PageCount
+Get details … Attribute=Disabled → AttributeValue
+If AttributeValue = True
+  Exit loop
+End
+Press button Btn_NextPage
+End  (Loop condition)
+```
+
+เป้าหมาย: รวมแถวประมาณ **24** รายการ (3 หน้า × ~8) — **ไม่ใช่** วน 10 รอบ
 
 ### Step 3 — เขียน CSV + ปิด
 
@@ -123,7 +147,8 @@ C:\PAD-Labs\output\lab03\catalog-products.csv
 - [ ] มี UI element `Btn_NextPage` (เก็บก่อนเข้าลูป)
 - [ ] มีการกด Next อย่างน้อยหนึ่งครั้ง (ถ้ามีหลายหน้า)
 - [ ] CSV มีแถวรวมหลายหน้า (~24)
-- [ ] มี MaxPages / เงื่อนไขหยุด
+- [ ] มี MaxPages เป็น safety **และ** Exit เมื่อ Next Disabled = True
+- [ ] ไม่ Extract หน้าสุดท้ายซ้ำ (CSV ~24 ไม่ใช่แถวซ้ำยาว)
 - [ ] ปิดเบราว์เซอร์ท้าย flow
 
 ## Troubleshooting
@@ -132,7 +157,9 @@ C:\PAD-Labs\output\lab03\catalog-products.csv
 |-------|-----|
 | กด Next ไม่ได้ / หาปุ่มไม่เจอ | ทำ Step 1b ก่อน — Add UI element แล้ว Rename `Btn_NextPage` |
 | ได้แค่หน้าแรก | ตรวจว่ามี Press/Click `Btn_NextPage` + Wait หลังเปลี่ยนหน้า |
-| วนไม่จบ | ใช้ MaxPages + Exit เมื่อ Next disabled |
+| หน้า 3 ซ้ำในรอบ 4–10 / CSV แถวซ้ำเกิน ~24 | ขาด **Exit loop** เมื่อ Next disabled — ใช้ Get details · Attribute **Disabled** แล้ว If = True → Exit (อย่าพึ่งแค่ MaxPages) |
+| วนไม่จบ | ใช้ MaxPages เป็น safety + Exit เมื่อ Disabled = True |
+| If Disabled ไม่เข้า | ลองเทียบ `True` / `true` · ตรวจว่า Attribute name เป็น **Disabled** |
 | หาคอลัมน์ Product ในรายการตัวแปรไม่เจอ | พิมพ์/วาง `%ProductRow['Product']%` เอง |
 | สับสนกับ 03-table | 03-table ไม่มี Next — Lab นี้อยู่บน 19-catalog |
 
