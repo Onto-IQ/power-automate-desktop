@@ -77,16 +77,59 @@ https://pad.ontoiq.tech/pad/09-ajax-table.html
 
 ### Step 4 — กรองแล้วเก็บแถว
 
-1. **For each** · Value to iterate: `%AjaxTable%` · Store into: `AjaxRow`
-2. ภายในลูป **If** Amount ของแถว >= `%MinAmount%` (ใช้คอลัมน์ `Amount` จาก `%AjaxRow%`)
-3. เมื่อผ่าน: **Insert row** เข้า `%Hits%` (ใส่ค่าจากแถว เช่น Order ID, Customer, Amount, Status)
-4. Notes ใส่ค่า:
+1. ลาก **For each**
+2. Value to iterate: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%AjaxTable%
+```
+
+3. Store into: `AjaxRow` ← **ไม่ใส่ `%`**
+4. **ภายใน For each** ลาก **If** (ค้นใน Actions Pane คำว่า `If`)
+5. ตั้งเงื่อนไขดังนี้:
+   - ฝั่งซ้าย / First operand: (คัดลอกด้านล่างวางในช่อง — **พิมพ์เอง** ไม่มีตัวเลือกคอลัมน์ในรายการตัวแปร)
+
+```text
+%AjaxRow['Amount']%
+```
+
+   - ตัวดำเนินการ: **Greater than or equal to**
+   - ฝั่งขวา / Second operand: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%MinAmount%
+```
+
+6. ถ้ารันแล้วเทียบไม่ได้เพราะ Amount เป็นข้อความ: ก่อน If ใช้ **Convert text to number** จาก `%AjaxRow['Amount']%` แล้วเอาตัวแปรตัวเลขไปใส่ฝั่งซ้ายแทน
+7. **ภายใน If** ลาก **Insert row into data table**
+8. Data table: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%Hits%
+```
+
+9. ใส่ค่าแต่ละคอลัมน์ของ `Hits` จากแถวปัจจุบัน เช่น:
+   - Order ID ← `%AjaxRow['Order ID']%`
+   - Customer ← `%AjaxRow['Customer']%`
+   - Amount ← `%AjaxRow['Amount']%`
+   - Status ← `%AjaxRow['Status']%`
+   - Notes ← (คัดลอกด้านล่าง)
 
 ```text
 PRIORITY HIT
 ```
 
-5. **End** If + For each
+10. **End** (ปิด If) แล้ว **End** (ปิด For each)
+
+โครงภายในลูป:
+
+```text
+For each AjaxRow in AjaxTable
+  If %AjaxRow['Amount']% >= %MinAmount%
+    Insert row into Hits
+  End
+End
+```
 
 ### Step 5 — เขียน CSV
 
@@ -114,6 +157,8 @@ C:\PAD-Labs\output\lab03\ajax-orders.csv
 | อาการ | แก้ |
 |-------|-----|
 | ตารางว่าง | กด Refresh + Wait element แถว/ตาราง |
+| หาคอลัมน์ Amount ใน If ไม่เจอ | ไม่มีในรายการตัวแปร — พิมพ์/วาง `%AjaxRow['Amount']%` ในฝั่งซ้ายเอง |
+| If ไม่เข้าทั้งที่ Amount ดูใหญ่ | Convert text to number ก่อนเทียบ · ตรวจชื่อคอลัมน์ให้ตรง header (`Amount`) |
 | สับสนกับหลายหน้า | Lab นี้ไม่มี Next — ใช้ [Catalog](../catalog/README.md) |
 
 ## Cleanup
