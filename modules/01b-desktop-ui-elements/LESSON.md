@@ -73,7 +73,7 @@ Run Calculator → Click Btn_Seven, Plus, Eight, Equals
 | **Run application** | เปิด Notepad / Calculator | Application path | ตามที่ designer มี |
 | **Wait for window content** | รอเนื้อหาหน้าต่าง | หน้าต่าง / element | — |
 | **Focus window** | โฟกัสหน้าต่าง | หน้าต่างเป้าหมาย | — |
-| **Populate text field in window** | พิมพ์ลงช่อง | UI element, Text | — |
+| **Populate text field in window** | พิมพ์ลงช่อง | UI element, Text, **Simulate action** | — |
 | **Send keys** | ส่งคีย์ลัด เช่น Ctrl+S | Keys, หน้าต่าง | — |
 | **Click UI element in window** / **Press button in window** | คลิกปุ่ม | UI element | — |
 | **Get details of UI element in window** (หรือเทียบเท่า) | อ่านข้อความจาก display | UI element | `CalcResult` |
@@ -101,6 +101,7 @@ Run Calculator → Click Btn_Seven, Plus, Eight, Equals
 | อาการ | สาเหตุที่พบบ่อย | วิธีสังเกต |
 |-------|-----------------|------------|
 | พิมพ์ไม่เข้า Notepad | ยังไม่ Wait หรือหน้าต่างอยู่ด้านหลัง | ตรวจว่ามี **Wait for window content**; ถ้ายังไม่เข้าค่อยเพิ่ม **Focus window** |
+| ข้อความใน Notepad ไม่ครบ / ขาดตัว | **Simulate action** ยัง Off — physical keystrokes หลุด | ใน Populate เปิด **Simulate action** |
 | Save As ไม่ครบ | ลืม capture ช่อง path / ปุ่ม Yes | dialog ค้างตอนรัน |
 | Calculator selector หลุด | โหมดเครื่องคิดเลขเปลี่ยน / พิกัดจอ | Recapture หลัง Standard mode |
 | ได้ 15 แต่เกณฑ์ไม่ผ่าน | ไม่อ่านจาก display | ไม่มี `%CalcResult%` ใน Variables |

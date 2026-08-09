@@ -126,7 +126,13 @@ PAD Lab 01b — Desktop UI Elements
 %NoteText%
 ```
 
+   - **Simulate action:** เปิด **On** (แนะนำสำหรับ Lab นี้)
+
 3. กด Save
+
+> **ทำไมต้อง Simulate action:** ตอน **Off** PAD จำลองเมาส์/คีย์บอร์ดจริง (physical) — ถ้าโฟกัสไม่นิ่งหรือพิมพ์เร็ว ข้อความ `%NoteText%` อาจขาดหายบางส่วน  
+> ตอน **On** จะใส่ข้อความทั้งก้อนแบบ programmatic ตาม [UI automation](https://learn.microsoft.com/power-automate/desktop-flows/actions-reference/uiautomation) ไม่พึ่งคีย์ทีละตัว จึงครบและเสถียรกว่ากับ Notepad  
+> ถ้า Simulate ใช้กับ element นั้นไม่ได้ ให้กลับไป **Wait** ให้พร้อม + **Focus window** แล้วลอง Off อีกรอบ หรือใช้ **Focus text field in window** + **Send keys** ตาม [Microsoft troubleshooting](https://learn.microsoft.com/troubleshoot/power-platform/power-automate/desktop-flows/ui-automation/wrong-ui-element-clicked-populated)
 
 ### Step A6 — บันทึกไฟล์
 
@@ -261,6 +267,7 @@ Unexpected calculator result
 |-----|-----|
 | พิมพ์ `%Name%` ในช่อง Name / **Variables produced** | ใช้ชื่อเปล่าไม่มี `%` เช่น `NoteText`, `CalcResult` |
 | คลิกด้วยพิกัดจอเป็นหลัก | Capture **UI Elements** แล้ว Click / Populate ตาม element |
+| ข้อความใน Notepad ไม่ครบ | ใน **Populate text field in window** เปิด **Simulate action** |
 | ไม่ Wait ก่อนพิมพ์ | มี **Wait for window content** ก่อน Populate (เพิ่ม **Focus window** เฉพาะเมื่อพิมพ์ไม่เข้า) |
 | ลืม Save As path ของ Notepad | ใส่ `%OutFile%` และจัดการ dialog ให้ครบ |
 | Calculator ได้ 15 แต่ไม่อ่านจาก display | ต้องเก็บ `%CalcResult%` แล้ว **If** ตรวจ |
@@ -294,6 +301,7 @@ Unexpected calculator result
 
 | อาการ | แก้ |
 |-------|-----|
+| ข้อความใน Notepad ไม่ครบ / ขาดตัว | เปิด **Simulate action** ใน **Populate text field in window** |
 | Calculator selector หลุด | Recapture หลังสลับโหมด Standard และอย่าใช้พิกัดจอ |
 | มี Save dialog ของ Notepad | เพิ่ม UI element ของ Save As / Yes-No ให้ครบ |
 | แอปเปิดซ้อนหลายตัว | ใช้ **Close window** หรือ **Terminate process** ก่อน **Run application** ใหม่ |
