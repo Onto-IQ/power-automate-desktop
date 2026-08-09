@@ -49,11 +49,19 @@ https://pad.ontoiq.tech/pad/09-ajax-table.html
 
 ### Step 2 — โหลดแถวแล้ว Wait
 
-1. ถ้าหน้าขึ้นว่าง: กด/คลิก **Refresh orders** (`#btn-refresh-orders`) ด้วย **Press button** / **Click link**
-2. **Wait for web page content** · `%Browser%` · **Contain element**
-3. ชี้ตาราง `#tbl-orders` หรือแถวข้อมูลแรก
-4. **อย่า** ใช้ Wait วินาทีอย่างเดียวเป็นเกณฑ์หลัก
-5. (ทางเลือก) Rename UI element เป็น `Tbl_Orders`
+1. เปิดแผง **UI Elements** → **Add UI element** (หรือ Add element) ด้วย UI Picker
+2. ชี้ปุ่ม **Refresh orders** บนหน้า (`#btn-refresh-orders` ตาม Hints)
+3. **Save** แล้ว Rename เป็น:
+
+```text
+Btn_RefreshOrders
+```
+
+4. ถ้าหน้าขึ้นว่าง / ยังไม่มีแถว: ใช้ **Press button on web page** (หรือ **Click link on web page**) · UI element: `Btn_RefreshOrders` · Browser: `%Browser%`
+5. **Wait for web page content** · `%Browser%` · **Contain element**
+6. ชี้ตาราง `#tbl-orders` หรือแถวข้อมูลแรก
+7. **อย่า** ใช้ Wait วินาทีอย่างเดียวเป็นเกณฑ์หลัก
+8. (ทางเลือก) Rename UI element ของตารางเป็น `Tbl_Orders`
 
 ### Step 3 — Extract
 
