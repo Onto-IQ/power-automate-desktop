@@ -77,6 +77,9 @@
 
 ## แผนการเรียน 2 วัน
 
+> **สอนในห้อง 12 ชม.:** ใช้ตาราง Core/Optional และหน้าที่ TA ใน [`shared/CLASSROOM-SCHEDULE-12H.md`](shared/CLASSROOM-SCHEDULE-12H.md)  
+> **ผู้เรียนก่อนวันเรียน:** [`shared/PRECLASS-SETUP.md`](shared/PRECLASS-SETUP.md) · **TA ในห้อง:** [`shared/TA-CHEATSHEET.md`](shared/TA-CHEATSHEET.md)
+
 ### วันที่ 1 — Fundamentals & Core Actions
 
 | โมดูล | หัวข้อ | Lab |
@@ -181,12 +184,13 @@ power-automate-desktop/
 ## วิธีเริ่มต้น (ผู้เรียน)
 
 1. Clone หรือ unzip repo นี้ลงเครื่อง Windows
-2. ติดตั้ง PAD พร้อม browser extension และ Excel (เพิ่ม Contoso สำหรับ Lab 07 และ Outlook สำหรับ Lab 10)
+2. ทำ [`shared/PRECLASS-SETUP.md`](shared/PRECLASS-SETUP.md) ให้ครบ **ก่อนวันเรียน**
 3. อ่าน [`shared/PAD-FUNDAMENTALS.md`](shared/PAD-FUNDAMENTALS.md) ให้คุ้น designer และกฎตัวแปร `%`
 4. เปิด Lab Hub ที่ [https://ontoiq.tech/pad/](https://ontoiq.tech/pad/) เพื่อยืนยันว่าเข้าถึงได้
-5. ทำตามลำดับ `01 → 10` (หรือตามที่วิทยากรมอบหมาย) โดยต่อหนึ่งบท: เปิด `README.md` → อ่าน **LESSON.md** → ทำ **LAB.md**
-6. สร้าง desktop flow **ใหม่ต่อหนึ่ง Lab** และตั้งชื่อตาม convention ใน [`shared/BEST-PRACTICES.md`](shared/BEST-PRACTICES.md)
-7. ใช้ไฟล์ใน `labs/<lab>/assets/` เป็น input — **ไม่ควรแก้ไฟล์ต้นฉบับใน repo** ให้คัดลอกไปโฟลเดอร์ทำงานของตนเองก่อน
+5. ในห้องเรียนทำตาม [`shared/CLASSROOM-SCHEDULE-12H.md`](shared/CLASSROOM-SCHEDULE-12H.md) (Core ก่อน Challenge)
+6. ต่อหนึ่งบท: เปิด `README.md` → อ่าน **LESSON.md** → ทำ **LAB.md**
+7. สร้าง desktop flow **ใหม่ต่อหนึ่ง Lab** และตั้งชื่อตาม convention ใน [`shared/BEST-PRACTICES.md`](shared/BEST-PRACTICES.md)
+8. ใช้ไฟล์ใน `labs/<lab>/assets/` เป็น input — **ไม่ควรแก้ไฟล์ต้นฉบับใน repo** ให้คัดลอกไปโฟลเดอร์ทำงานของตนเองก่อน
 
 ### โฟลเดอร์ทำงานที่แนะนำบนเครื่อง
 
