@@ -28,6 +28,7 @@
 |--|------|
 | Mock inbox | [`assets/inbox/`](assets/inbox/) |
 | Expected mapping | [`assets/expected/expected-manifest.csv`](assets/expected/expected-manifest.csv) |
+| ภาพอ้างอิงลูป If/Copy | [`assets/reference-loop-if-copy.png`](assets/reference-loop-if-copy.png) |
 | Output summary | `C:\PAD-Labs\output\lab02\summary.txt` |
 
 ## บทที่เกี่ยวข้อง
