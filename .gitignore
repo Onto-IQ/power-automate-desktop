@@ -7,11 +7,12 @@ PAD-Labs/
 ~$*
 DesktopFlows/
 
-# Course slide / outline binaries (keep local only)
+# Course slides / outline (local only — not published for learners)
+slides/**
+!slides/README.md
+# Safety net if binaries are placed outside slides/
 *.pptx
 *.pdf
-Power Automate Desktop.pptx
-Trainocate_Outline_Power Automate Desktop (2 days) ake.pdf
 
 # Ops / classroom staff notes (local only — not published for learners)
 ops/**
