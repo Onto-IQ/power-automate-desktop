@@ -98,12 +98,15 @@ PAD Lab 01b — Desktop UI Elements
 3. Produced / รอให้แอปเริ่มได้ตามค่าในหน้าต่าง action
 4. กด Save
 
-### Step A3 — รอและโฟกัสหน้าต่าง
+### Step A3 — รอให้หน้าต่างพร้อม
 
-1. ลาก **Wait for window content** (หรือ **Focus window** ถ้าหน้าต่างพร้อมแล้ว)
+เส้นทางหลักของวัน 1: ใช้ **Wait for window content** ให้ Notepad พร้อมก่อน Interact — ไม่บังคับ **Focus window** ถ้า Wait แล้วพิมพ์เข้าได้
+
+1. ลาก **Wait for window content**
 2. ตั้งค่าให้ชี้หน้าต่าง Notepad / พื้นที่ Edit
-3. (ถ้าต้องการชัด) ลาก **Focus window** ต่อท้าย เพื่อให้หน้าต่างอยู่ด้านหน้า
-4. กด Save
+3. กด Save
+
+> **Focus window ใส่เมื่อไหร่:** ถ้า Replay แล้วพิมพ์ไม่เข้า หรือหน้าต่างอยู่ด้านหลัง ให้เพิ่ม **Focus window** หลัง Wait (ข้อ 1–2) — ไม่ต้องใช้ Focus แทน Wait และไม่ต้องใส่ Focus ซ้ำถ้าเลือก Focus ไปแล้ว
 
 ### Step A4 — Capture UI Element ของพื้นที่พิมพ์
 
@@ -258,7 +261,7 @@ Unexpected calculator result
 |-----|-----|
 | พิมพ์ `%Name%` ในช่อง Name / **Variables produced** | ใช้ชื่อเปล่าไม่มี `%` เช่น `NoteText`, `CalcResult` |
 | คลิกด้วยพิกัดจอเป็นหลัก | Capture **UI Elements** แล้ว Click / Populate ตาม element |
-| ไม่ Focus / Wait ก่อนพิมพ์ | มี **Wait for window content** และ/หรือ **Focus window** |
+| ไม่ Wait ก่อนพิมพ์ | มี **Wait for window content** ก่อน Populate (เพิ่ม **Focus window** เฉพาะเมื่อพิมพ์ไม่เข้า) |
 | ลืม Save As path ของ Notepad | ใส่ `%OutFile%` และจัดการ dialog ให้ครบ |
 | Calculator ได้ 15 แต่ไม่อ่านจาก display | ต้องเก็บ `%CalcResult%` แล้ว **If** ตรวจ |
 | เปิดแอปซ้อนหลายตัวตอน Replay | Close / Terminate ก่อนรันรอบใหม่ |
