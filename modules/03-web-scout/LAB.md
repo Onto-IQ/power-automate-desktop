@@ -116,7 +116,7 @@ Lab03_WebScout
 3. กด **Create**
 
 > **กฎตัวแปรใน PAD (อ่านก่อนทำ Step ถัดไป)**  
-> - ช่อง **Name** ของ **Set variable**, ชื่อ **produced variable**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
+> - ช่อง **Name** ของ **Set variable**, ส่วน **Variables produced**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
 > - ช่องอื่นที่ต้องดึงค่าตัวแปร (Folder, File path, Text, …) = ใช้ `%WorkingRoot%` (**มี `%` ครบสองด้าน**)  
 > - หลังสร้างแล้ว Variables pane อาจแสดงเป็น `%WorkingRoot%` — เป็นเรื่องปกติ
 
@@ -138,7 +138,7 @@ BKK
 
 6. ลาก **Create new data table** (หรือเทียบเท่าใน designer)
 7. ตั้งคอลัมน์ให้ตรง template: `ScoutId`, `SourcePage`, `Key`, `Value`, `CapturedAt`, `Matched`, `Notes`
-8. ชื่อ produced: `ScoutResults` ← **ไม่ใส่ `%`**  
+8. **Variables produced:** `ScoutResults` ← **ไม่ใส่ `%`**  
    (อ้างอิงด้วย `%ScoutResults%`)
 
 ### Step 1 — เปิดเบราว์เซอร์
@@ -150,7 +150,7 @@ BKK
 https://ontoiq.tech/pad/03-table.html
 ```
 
-3. ชื่อ produced variable: `Browser` ← **ไม่ใส่ `%`**  
+3. **Variables produced:** `Browser` ← **ไม่ใส่ `%`**  
    (อ้างอิงด้วย `%Browser%`)
 4. กด Save
 
@@ -180,7 +180,7 @@ https://ontoiq.tech/pad/03-table.html
 ```
 
 3. เปิด **live web helper** เลือกตารางทั้งตาราง
-4. ชื่อ produced: `StaticTable` ← **ไม่ใส่ `%`**  
+4. **Variables produced:** `StaticTable` ← **ไม่ใส่ `%`**  
    (อ้างอิงด้วย `%StaticTable%`)
 5. กด Save
 
@@ -297,7 +297,7 @@ https://ontoiq.tech/pad/09-ajax-table.html
 ### Step C2 — Extract ตาราง AJAX
 
 1. ลาก **Extract data from web page** + **live web helper**
-2. ชื่อ produced: `AjaxTable` ← **ไม่ใส่ `%`**  
+2. **Variables produced:** `AjaxTable` ← **ไม่ใส่ `%`**  
    (อ้างอิงด้วย `%AjaxTable%`)
 3. Map คอลัมน์ใกล้เคียง: OrderId, Customer, Product, Amount, Region  
    (ชื่อจริงบนหน้าอาจต่าง — map ให้สอดคล้องใน Data table / ตอนอ่านแถว)
@@ -501,7 +501,7 @@ https://ontoiq.tech/pad/19-catalog.html
 #tbl-products
 ```
 
-5. (ถ้ายังไม่มีตัวสะสม) เตรียม Data table — ชื่อ produced: `Products` ← **ไม่ใส่ `%`** คอลัมน์ Product + Price (อ้างอิงด้วย `%Products%`)
+5. (ถ้ายังไม่มีตัวสะสม) เตรียม Data table — **Variables produced:** `Products` ← **ไม่ใส่ `%`** คอลัมน์ Product + Price (อ้างอิงด้วย `%Products%`)
 
 ### Step P2 — Extract หน้าปัจจุบัน
 
@@ -601,7 +601,7 @@ https://ontoiq.tech/pad/18-popup.html
 
 | ผิด | ถูก |
 |-----|-----|
-| พิมพ์ `%Name%` ในช่อง Name / Store into / ชื่อ produced | ใช้ชื่อเปล่าไม่มี `%` เช่น `ScoutResults`, `StaticRow` |
+| พิมพ์ `%Name%` ในช่อง Name / Store into / **Variables produced** | ใช้ชื่อเปล่าไม่มี `%` เช่น `ScoutResults`, `StaticRow` |
 | Extract หน้า AJAX ทันทีหลัง Go to | มี **Wait for web page content** จนมีแถวก่อน Extract |
 | Hardcode แถวที่ 1–2 แบบตายตัว | วนจาก Data table ที่ extract ได้ |
 | Mission D ไม่มีหลักฐานไฟล์ | ต้องมีไฟล์ใน `downloads\` และ/หรือ Notes path ใน CSV |

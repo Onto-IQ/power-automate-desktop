@@ -71,7 +71,7 @@ Lab06_DataTableExcel
 3. กด **Create**
 
 > **กฎตัวแปรใน PAD (อ่านก่อนทำ Step ถัดไป)**  
-> - ช่อง **Name** ของ **Set variable**, ชื่อ **produced variable**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
+> - ช่อง **Name** ของ **Set variable**, ส่วน **Variables produced**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
 > - ช่องอื่นที่ต้องดึงค่าตัวแปร (Folder, File path, Text, …) = ใช้ `%WorkingRoot%` (**มี `%` ครบสองด้าน**)  
 > - หลังสร้างแล้ว Variables pane อาจแสดงเป็น `%WorkingRoot%` — เป็นเรื่องปกติ
 
@@ -112,7 +112,7 @@ C:\PAD-Labs\output\lab06\orders-report.xlsm
 ```
 
      (หรือ working copy ของ `orders-input.xlsx` แล้วค่อย Save as `.xlsm` ทีหลัง — แนะนำเปิด `.xlsm` ที่มี macro พร้อม)
-3. ชื่อ produced variable: `Excel` ← **ไม่ใส่ `%`**  
+3. **Variables produced:** `Excel` ← **ไม่ใส่ `%`**  
    (อ้างอิงด้วย `%Excel%`)
 4. ลาก **Read from Excel worksheet** วางหลัง Launch Excel
 5. ตั้งค่า:
@@ -129,14 +129,14 @@ Orders
 ```
 
    - First line of range contains column names: เปิด
-6. ชื่อ produced variable: `Orders` ← **ไม่ใส่ `%`**  
+6. **Variables produced:** `Orders` ← **ไม่ใส่ `%`**  
    (อ้างอิงด้วย `%Orders%`)
 
 ### Step 3 — สร้าง Data table ว่างสำหรับผลกรอง
 
 1. ลาก **Create new data table** (หรือสร้างตารางว่างตามที่ designer รองรับ)
 2. ตั้งคอลัมน์ให้ครบตามแถวต้นทาง **บวก** คอลัมน์ `Tier`
-3. ชื่อ produced variable: `Filtered` ← **ไม่ใส่ `%`**  
+3. **Variables produced:** `Filtered` ← **ไม่ใส่ `%`**  
    (อ้างอิงด้วย `%Filtered%`)
 
 ### Step 4 — วนแถว กรอง และตั้ง Tier
@@ -356,7 +356,7 @@ FormatSummary
 
 | ผิด | ถูก |
 |-----|-----|
-| พิมพ์ `%Name%` ในช่อง Name / Store into / ชื่อ produced | ใช้ชื่อเปล่าไม่มี `%` เช่น `WorkingRoot`, `Orders` |
+| พิมพ์ `%Name%` ในช่อง Name / Store into / **Variables produced** | ใช้ชื่อเปล่าไม่มี `%` เช่น `WorkingRoot`, `Orders` |
 | เขียนทับไฟล์ใน `assets/` ของ repo | คัดลอกไป `working\lab06` ก่อน |
 | **Save document as** รอบสองโดยไม่ลบไฟล์เก่า | **If file exists** → **Delete file** ก่อน Save as |
 | ลืม **Close Excel** | ปิด instance ทุกครั้งท้าย flow |

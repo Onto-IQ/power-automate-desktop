@@ -61,7 +61,7 @@ PAD คือเครื่องมือของ Microsoft ที่ให�
 |-----------|-----------|----------|
 | **Set variable** → Name | ไม่มี `%` | `WorkingRoot` |
 | **For each** → Store into | ไม่มี `%` | `CurrentFile` |
-| เปลี่ยนชื่อ produced variable | ไม่มี `%` | `InboxFiles` |
+| เปลี่ยนชื่อในส่วน **Variables produced** | ไม่มี `%` | `InboxFiles` |
 | Folder / File path / Text ที่ต้องการดึงค่า | มี `%` | `%WorkingRoot%\inbox` |
 
 หลังสร้างแล้ว Variables pane มักแสดงเป็น `%WorkingRoot%` — เป็นเรื่องปกติ  

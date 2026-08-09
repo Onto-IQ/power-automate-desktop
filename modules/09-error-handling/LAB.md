@@ -88,7 +88,7 @@ Lab09_ErrorHandling
 3. กด **Create**
 
 > **กฎตัวแปรใน PAD (อ่านก่อนทำ Step ถัดไป)**  
-> - ช่อง **Name** ของ **Set variable**, ชื่อ **produced variable**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
+> - ช่อง **Name** ของ **Set variable**, ส่วน **Variables produced**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
 > - ช่องอื่นที่ต้องดึงค่าตัวแปร (Folder, File path, Text, …) = ใช้ `%WorkingRoot%` (**มี `%` ครบสองด้าน**)  
 > - หลังสร้างแล้ว Variables pane อาจแสดงเป็น `%WorkingRoot%` — เป็นเรื่องปกติ
 
@@ -139,7 +139,7 @@ False
 %WorkingRoot%\missing-file-path.txt
 ```
 
-   (ด้วย **Read text from file**) → ชื่อ produced: `MissingPath` ← **ไม่ใส่ `%`**
+   (ด้วย **Read text from file**) → **Variables produced:** `MissingPath` ← **ไม่ใส่ `%`**
 2. ลาก **On block error** ครอบชุด action ของ Case A
 3. **ภายในบล็อก** ลาก action ที่จะล้ม เช่น **Read text from file** / **Get files in folder** ไปที่ (คัดลอก):
 
@@ -150,7 +150,7 @@ False
    (path ที่ไม่มีจริง)
 4. ในหน้านโยบาย **On block error** (หรือกิ่ง Exception):
    - ลาก **Get last error**
-   - ชื่อ produced variable: `LastError` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%LastError%`)
+   - **Variables produced:** `LastError` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%LastError%`)
    - **Write text to file** append แถว log — Case Value:
 
 ```text
@@ -174,7 +174,7 @@ A
 
 ### Step 3 — Case B: Bad URL + screenshot
 
-1. **Read text from file** → ชื่อ produced: `BadUrl` ← **ไม่ใส่ `%`** จากไฟล์ใน working (อ้างอิงด้วย `%BadUrl%`)
+1. **Read text from file** → **Variables produced:** `BadUrl` ← **ไม่ใส่ `%`** จากไฟล์ใน working (อ้างอิงด้วย `%BadUrl%`)
 2. ลาก **On block error** (จุดที่ 2 ตามเกณฑ์อย่างน้อย 2 จุด) ครอบการเปิดเพจ
 3. **ภายในบล็อก:**
    - **Launch new Microsoft Edge** หรือ **Launch new Chrome** (ถ้ายังไม่มี `%Browser%`) / **Go to web page** ไป URL (คัดลอก):
@@ -336,7 +336,7 @@ https://ontoiq.tech/pad/12-api.html
 
 | ผิด | ถูก |
 |-----|-----|
-| พิมพ์ `%Name%` ในช่อง Name / ชื่อ produced | ใช้ชื่อเปล่าไม่มี `%` เช่น `WorkingRoot`, `LastError` |
+| พิมพ์ `%Name%` ในช่อง Name / **Variables produced** | ใช้ชื่อเปล่าไม่มี `%` เช่น `WorkingRoot`, `LastError` |
 | เรียกกลไกว่า “Try-Catch action” | ใช้ **On block error** / **On error** / **Get last error** |
 | กลืน error โดยไม่ log | **Get last error** แล้วเขียน `%LastError.Message%` / `.Location%` |
 | Retry ไม่จำกัด | จำกัดครั้งใน **On error → Retry** หรือ max loop |

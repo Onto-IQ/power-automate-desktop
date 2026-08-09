@@ -80,7 +80,7 @@ Lab01_RecordReplay
 3. กด **Create**
 
 > **กฎตัวแปรใน PAD (อ่านก่อนทำ Step ถัดไป)**  
-> - ช่อง **Name** ของ **Set variable**, ชื่อ **produced variable**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
+> - ช่อง **Name** ของ **Set variable**, ส่วน **Variables produced**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
 > - ช่องอื่นที่ต้องดึงค่าตัวแปร (Folder, File path, Text, …) = ใช้ `%WorkingRoot%` (**มี `%` ครบสองด้าน**)  
 > - หลังสร้างแล้ว Variables pane อาจแสดงเป็น `%WorkingRoot%` — เป็นเรื่องปกติ
 
@@ -128,7 +128,7 @@ https://ontoiq.tech/pad/01-forms.html
 ```
 
    - Window state: Normal (หรือตามที่ designer เสนอ)
-3. ชื่อ produced variable: `Browser` ← **ไม่ใส่ `%`**  
+3. **Variables produced:** `Browser` ← **ไม่ใส่ `%`**  
    (เวลาอ้างอิงทีหลังใช้ `%Browser%`)
 4. กด Save ในหน้าต่าง action
 
@@ -231,7 +231,7 @@ https://ontoiq.tech/pad/01-forms.html
 1. ลาก **Wait for web page content** อีกครั้ง รอ element/ข้อความยืนยันหลัง submit
 2. ลาก **Extract data from web page** (เปิด **live web helper** ถ้าต้องการเลือกข้อความบนหน้า)
 3. Browser instance: `%Browser%`
-4. ชื่อ produced: `SubmitResult` ← **ไม่ใส่ `%`** (Text หรือตามที่ action คืน; อ้างอิงด้วย `%SubmitResult%`)
+4. **Variables produced:** `SubmitResult` ← **ไม่ใส่ `%`** (Text หรือตามที่ action คืน; อ้างอิงด้วย `%SubmitResult%`)
 
 **วิธี B — Screenshot**
 
@@ -268,7 +268,7 @@ C:\PAD-Labs\output\lab01\submit-proof.png
 
 | ผิด | ถูก |
 |-----|-----|
-| พิมพ์ `%Name%` ในช่อง Name / ชื่อ produced | ใช้ชื่อเปล่าไม่มี `%` เช่น `FullName`, `Browser` |
+| พิมพ์ `%Name%` ในช่อง Name / **Variables produced** | ใช้ชื่อเปล่าไม่มี `%` เช่น `FullName`, `Browser` |
 | Hardcode ข้อความใน Populate หลัง Record | เปลี่ยนเป็น `%FullName%`, `%Email%`, … |
 | Submit ทันทีโดยไม่มี Wait | มี **Wait for web page content** ก่อน Interact / หลังโหลดหน้า |
 | Selector อิงข้อความบนจอที่เปลี่ยนบ่อย | ใช้ `id` / `data-pad` ตาม Selector Conventions |

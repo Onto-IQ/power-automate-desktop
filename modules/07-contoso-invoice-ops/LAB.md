@@ -136,7 +136,7 @@ Lab07_ContosoInvoiceOps
 5. สร้าง Subflows ตามตารางด้านบน (อย่างน้อย 3 ชื่อ) จากแถบ Subflows
 
 > **กฎตัวแปรใน PAD (อ่านก่อนทำ Step ถัดไป)**  
-> - ช่อง **Name** ของ **Set variable**, ชื่อ **produced variable**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
+> - ช่อง **Name** ของ **Set variable**, ส่วน **Variables produced**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
 > - ช่องอื่นที่ต้องดึงค่าตัวแปร (Folder, File path, Text, …) = ใช้ `%WorkingRoot%` (**มี `%` ครบสองด้าน**)  
 > - หลังสร้างแล้ว Variables pane อาจแสดงเป็น `%WorkingRoot%` — เป็นเรื่องปกติ
 
@@ -197,12 +197,12 @@ C:\PAD-Labs\logs\lab07\contoso-run-log.csv
 ```
 
    (หรือแปลงจาก CSV)
-2. ชื่อ produced: `ExcelIn` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%ExcelIn%`)
+2. **Variables produced:** `ExcelIn` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%ExcelIn%`)
 3. ลาก **Read from Excel worksheet**
    - Worksheet: แผ่นที่มีข้อมูล batch (หรือชื่อที่คุณตั้ง)
    - First line contains column names: เปิด
-4. ชื่อ produced: `Invoices` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%Invoices%`)
-5. **Create new data table** → ชื่อ produced: `Results` ← **ไม่ใส่ `%`** คอลัมน์ให้สอดคล้อง [`assets/expected/expected-results.csv`](assets/expected/expected-results.csv)
+4. **Variables produced:** `Invoices` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%Invoices%`)
+5. **Create new data table** → **Variables produced:** `Results` ← **ไม่ใส่ `%`** คอลัมน์ให้สอดคล้อง [`assets/expected/expected-results.csv`](assets/expected/expected-results.csv)
 6. เขียน header log ด้วย **Write text to file** ที่ File path:
 
 ```text
@@ -403,7 +403,7 @@ No
 ภายในกิ่ง error ของ **On block error** (หรือ `SF_LogRowError`):
 
 1. ลาก **Get last error**
-2. ชื่อ produced: `LastError` ← **ไม่ใส่ `%`** (ชนิด Error; อ้างอิงด้วย `%LastError%`)
+2. **Variables produced:** `LastError` ← **ไม่ใส่ `%`** (ชนิด Error; อ้างอิงด้วย `%LastError%`)
 3. Append log ด้วย **Write text to file** — ใส่ (คัดลอกตามช่องที่ใช้):
 
 ```text
@@ -501,7 +501,7 @@ Failed
 
 | ผิด | ถูก |
 |-----|-----|
-| พิมพ์ `%Name%` ในช่อง Name / Store into / ชื่อ produced | ใช้ชื่อเปล่าไม่มี `%` เช่น `WorkingRoot`, `CurrentInvoice` |
+| พิมพ์ `%Name%` ในช่อง Name / Store into / **Variables produced** | ใช้ชื่อเปล่าไม่มี `%` เช่น `WorkingRoot`, `CurrentInvoice` |
 | พึ่งพิกัดจอ / Recorder อย่างเดียว | Capture **UI Elements** ให้เสถียรตาม ui-map |
 | Error แถวเดียวแล้วทั้ง flow ตาย | **On block error** + **Get last error** แล้ว continue (R6) |
 | ลืม R1/R2 แล้วยังเปิดฟอร์ม Contoso | Reject/Skip ต้องไม่แตะ UI สร้าง Invoice |

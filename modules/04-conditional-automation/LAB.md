@@ -97,7 +97,7 @@ Lab04_ConditionalAutomation
 3. กด **Create**
 
 > **กฎตัวแปรใน PAD (อ่านก่อนทำ Step ถัดไป)**  
-> - ช่อง **Name** ของ **Set variable**, ชื่อ **produced variable**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
+> - ช่อง **Name** ของ **Set variable**, ส่วน **Variables produced**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
 > - ช่องอื่นที่ต้องดึงค่าตัวแปร (Folder, File path, Text, …) = ใช้ `%WorkingRoot%` (**มี `%` ครบสองด้าน**)  
 > - หลังสร้างแล้ว Variables pane อาจแสดงเป็น `%WorkingRoot%` — เป็นเรื่องปกติ
 
@@ -220,7 +220,7 @@ Into:
 ```
 
    - Include subfolders: ปิด
-3. ชื่อ produced variable: `InboxFiles` ← **ไม่ใส่ `%`**  
+3. **Variables produced:** `InboxFiles` ← **ไม่ใส่ `%`**  
    (เวลาอ้างอิงทีหลังใช้ `%InboxFiles%`)
 
 ### Step 4 — วนทีละไฟล์ + อ่าน Priority / Status
@@ -239,7 +239,7 @@ Into:
 **วิธีแนะนำ — parse จากชื่อไฟล์** (`REQ-{id}-{Priority}-{Status}.txt`)
 
 1. ลาก **Get file path part** → ได้ชื่อไฟล์ (Name without extension หรือ File name)
-2. ชื่อ produced เช่น `FileNameOnly` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%FileNameOnly%`)
+2. **Variables produced** เช่น `FileNameOnly` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%FileNameOnly%`)
 3. ใช้ **Split text** / **Parse text** / ดึงส่วนตาม `-` ให้ได้ตัวแปรชื่อตอนสร้าง (ไม่มี `%`):
    - `Priority` → อ้างอิง `%Priority%` (เช่น `High`, `Low`, `Medium`)
    - `Status` → อ้างอิง `%Status%` (เช่น `Ready`, `New`, `Invalid`)
@@ -252,7 +252,7 @@ Into:
 %CurrentFile%
 ```
 
-2. ชื่อ produced: `FileText` ← **ไม่ใส่ `%`**
+2. **Variables produced:** `FileText` ← **ไม่ใส่ `%`**
 3. ดึงบรรทัด `Priority:` และ `Status:` ไปใส่ตัวแปร `Priority` / `Status` (Trim ช่องว่าง; อ้างอิงด้วย `%Priority%` / `%Status%`)
 
 > ก่อนเทียบเงื่อนไข ใช้ Trim / ตรวจตัวพิมพ์ให้ตรง `High`, `Ready`, … ตาม business rules
@@ -420,7 +420,7 @@ Approved=%ApprovedCount%; Rejected=%RejectedCount%; Review=%ReviewCount%
 
 | ผิด | ถูก |
 |-----|-----|
-| พิมพ์ `%Name%` ในช่อง Name / Store into / ชื่อ produced | ใช้ชื่อเปล่าไม่มี `%` เช่น `WorkingRoot`, `CurrentFile` |
+| พิมพ์ `%Name%` ในช่อง Name / Store into / **Variables produced** | ใช้ชื่อเปล่าไม่มี `%` เช่น `WorkingRoot`, `CurrentFile` |
 | Hardcode ย้ายทีละไฟล์ 5 action แยก | ใช้ **For each** + เงื่อนไข |
 | ใส่ `%InboxFiles%` ใน Move | ใส่ `%CurrentFile%` |
 | สลับ AND/OR ของกฎ | High+Ready → approved; Low **หรือ** Invalid → rejected |

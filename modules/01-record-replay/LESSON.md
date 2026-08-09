@@ -26,7 +26,7 @@
 | **Web Recorder** | โหมดให้ PAD บันทึกการคลิก/พิมพ์บนเว็บเป็น action | ปุ่ม **Record** ใน designer |
 | **UI Element** | “ตัวแทน” ของช่อง/ปุ่มบนหน้า พร้อม selector | แผง **UI Elements** |
 | **Selector** | กฎชี้ element เช่น `id`, `data-pad` | Selector Builder / หลัง Record |
-| **Browser instance** | “ที่จับ” ของเบราว์เซอร์ที่เปิดอยู่ | produced ของ Launch เช่น `Browser` |
+| **Browser instance** | “ที่จับ” ของเบราว์เซอร์ที่เปิดอยู่ | **Variables produced** ของ Launch เช่น `Browser` |
 | **Populate** | กรอกข้อความลงช่องบนหน้า | **Populate text field on web page** |
 | **Replay** | รัน flow ซ้ำให้ได้ผลเดิม | ปุ่ม **Run** หลายรอบ |
 | **Live web helper** | ตัวช่วยชี้ element/ตารางบนหน้าตอน Extract | ใน **Extract data from web page** |
@@ -64,7 +64,7 @@ Run ซ้ำรอบสอง — ต้องผ่านเหมือน�
 
 ## 5. ตาราง Action ที่จะใช้
 
-| Action (official) | ทำอะไร | Input สำคัญ | Produced (ชื่อตอนสร้าง — ไม่มี `%`) |
+| Action (official) | ทำอะไร | Input สำคัญ | **Variables produced** (ชื่อตอนสร้าง — ไม่มี `%`) |
 |-------------------|--------|-------------|--------------------------------------|
 | **Set variable** | ตั้งค่าตัวแปร | Name, Value | — (ใช้ชื่อที่คุณตั้ง) |
 | **Launch new Microsoft Edge** / **Launch new Chrome** | เปิดเบราว์เซอร์ไป URL | Initial URL | `Browser` |
@@ -87,7 +87,7 @@ Run ซ้ำรอบสอง — ต้องผ่านเหมือน�
 
 ## 7. กฎ `%` และ Variables pane
 
-- ช่อง **Name** / ชื่อ produced → พิมพ์ `FullName`, `Browser`, `SubmitResult` (**ไม่มี `%`**)
+- ช่อง **Name** / **Variables produced** → พิมพ์ `FullName`, `Browser`, `SubmitResult` (**ไม่มี `%`**)
 - ช่อง Browser instance / Text to fill-in → `%Browser%`, `%FullName%` (**มี `%`**)
 - รายละเอียดเต็ม: [`shared/PAD-FUNDAMENTALS.md`](../../shared/PAD-FUNDAMENTALS.md)
 

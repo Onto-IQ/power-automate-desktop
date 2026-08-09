@@ -25,7 +25,7 @@
 |--------|----------------|------------------|
 | **Folder** | โฟลเดอร์ / ไดเรกทอรี | ช่อง Folder ของ Get files / Create folder |
 | **File filter** | ตัวกรองชื่อไฟล์ เช่น `*` = ทุกไฟล์, `*.csv` = เฉพาะ CSV | Get files in folder |
-| **File list** | รายชื่อไฟล์หลายไฟล์ในตัวแปรเดียว | produced ของ Get files เช่น `InboxFiles` |
+| **File list** | รายชื่อไฟล์หลายไฟล์ในตัวแปรเดียว | **Variables produced** ของ Get files เช่น `InboxFiles` |
 | **For each** | วนทำซ้ำ “ทีละชิ้น” จากรายการ | Actions → Loops |
 | **Extension** | นามสกุลไฟล์ เช่น `.csv`, `.txt` | Get file path part |
 | **Copy vs Move** | Copy = สำเนาไปปลายทาง / Move = ย้ายออกจากต้นทาง | Copy file(s) / Move file(s) |
@@ -70,7 +70,7 @@ InboxFiles = ไฟล์ทั้งหมดใน WorkingRoot\inbox
 
 ## 5. ตาราง Action ที่จะใช้
 
-| Action (official) | ทำอะไร | Input สำคัญ | Produced (ชื่อตอนสร้าง — ไม่มี `%`) |
+| Action (official) | ทำอะไร | Input สำคัญ | **Variables produced** (ชื่อตอนสร้าง — ไม่มี `%`) |
 |-------------------|--------|-------------|--------------------------------------|
 | **Set variable** | ตั้งค่าตัวแปร | Name, Value | — (ใช้ชื่อที่คุณตั้ง) |
 | **If folder exists** | ตรวจว่ามี/ไม่มีโฟลเดอร์ แล้วแยกกิ่ง | Folder path · **If folder** = Exists หรือ Doesn't exist | — |
@@ -95,7 +95,7 @@ InboxFiles = ไฟล์ทั้งหมดใน WorkingRoot\inbox
 
 ## 7. กฎ `%` และ Variables pane
 
-- ช่อง **Name** / **Store into** / ชื่อ produced → พิมพ์ `WorkingRoot`, `CurrentFile`, `InboxFiles` (**ไม่มี `%`**)
+- ช่อง **Name** / **Store into** / **Variables produced** → พิมพ์ `WorkingRoot`, `CurrentFile`, `InboxFiles` (**ไม่มี `%`**)
 - ช่อง Folder / path / ข้อความที่ต้องการดึงค่า → `%WorkingRoot%\inbox`, `%CurrentFile%` (**มี `%`**)
 - รายละเอียดเต็ม: [`shared/PAD-FUNDAMENTALS.md`](../../shared/PAD-FUNDAMENTALS.md)
 

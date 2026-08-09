@@ -67,7 +67,7 @@ P: Go 19-catalog → Extract + Loop Click Next จน ~24 รายการ
 
 ## 5. ตาราง Action ที่จะใช้
 
-| Action (official) | ทำอะไร | Input สำคัญ | Produced (ชื่อตอนสร้าง — ไม่มี `%`) |
+| Action (official) | ทำอะไร | Input สำคัญ | **Variables produced** (ชื่อตอนสร้าง — ไม่มี `%`) |
 |-------------------|--------|-------------|--------------------------------------|
 | **Set variable** | ตั้ง criteria / path | Name, Value | — |
 | **Create new data table** | สร้างตารางผล Scout | คอลัมน์ตาม template | `ScoutResults` |
@@ -99,7 +99,7 @@ P: Go 19-catalog → Extract + Loop Click Next จน ~24 รายการ
 
 ## 7. กฎ `%` และ Variables pane
 
-- ช่อง **Name** / **Store into** / ชื่อ produced → พิมพ์ `ScoutResults`, `StaticRow`, `MinAmount` (**ไม่มี `%`**)
+- ช่อง **Name** / **Store into** / **Variables produced** → พิมพ์ `ScoutResults`, `StaticRow`, `MinAmount` (**ไม่มี `%`**)
 - ช่อง Browser / Value to iterate / เงื่อนไข If → `%Browser%`, `%AjaxTable%`, `%MinAmount%` (**มี `%`**)
 - รายละเอียดเต็ม: [`shared/PAD-FUNDAMENTALS.md`](../../shared/PAD-FUNDAMENTALS.md)
 

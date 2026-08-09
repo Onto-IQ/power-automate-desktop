@@ -90,7 +90,7 @@ Lab08_ExcelWebRoundtrip
 3. กด **Create**
 
 > **กฎตัวแปรใน PAD (อ่านก่อนทำ Step ถัดไป)**  
-> - ช่อง **Name** ของ **Set variable**, ชื่อ **produced variable**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
+> - ช่อง **Name** ของ **Set variable**, ส่วน **Variables produced**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
 > - ช่องอื่นที่ต้องดึงค่าตัวแปร (Folder, File path, Text, …) = ใช้ `%WorkingRoot%` (**มี `%` ครบสองด้าน**)  
 > - หลังสร้างแล้ว Variables pane อาจแสดงเป็น `%WorkingRoot%` — เป็นเรื่องปกติ
 
@@ -118,7 +118,7 @@ C:\PAD-Labs\output\lab08\leads-output.xlsx
 %WorkingRoot%\leads-input.xlsx
 ```
 
-3. ชื่อ produced: `Excel` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%Excel%`)
+3. **Variables produced:** `Excel` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%Excel%`)
 4. ลาก **Read from Excel worksheet**
    - Excel instance: (คัดลอก)
 
@@ -133,7 +133,7 @@ Leads
 ```
 
    - First line of range contains column names: เปิด
-5. ชื่อ produced: `Leads` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%Leads%`)
+5. **Variables produced:** `Leads` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%Leads%`)
 
 > ห้าม hardcode ค่า lead ทั้งชุดลงตัวแปรทีละคน — ต้องอ่านจาก Excel แล้วใช้ลูป
 
@@ -147,7 +147,7 @@ Leads
 https://ontoiq.tech/pad/06-login.html
 ```
 
-3. ชื่อ produced: `Browser` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%Browser%`)
+3. **Variables produced:** `Browser` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%Browser%`)
 4. ลาก **Wait for web page content** จนช่อง login พร้อม — selector ที่แนะนำ (คัดลอกได้):
 
 ```text
@@ -245,7 +245,7 @@ https://ontoiq.tech/pad/01-forms.html
    - Message/Interest ← คอลัมน์ที่เกี่ยวข้อง
    - Date ← วันที่รัน flow
 4. **Press button on web page** (ปุ่ม Submit)
-5. อ่าน/Extract ข้อความผลลัพธ์ → ชื่อ produced / Set variable: `WebResult` ← **ไม่ใส่ `%`**  
+5. อ่าน/Extract ข้อความผลลัพธ์ → **Variables produced** / Set variable: `WebResult` ← **ไม่ใส่ `%`**  
    (อ้างอิงด้วย `%WebResult%`; ใช้ **Extract data from web page** กับ **live web helper** หรืออ่านข้อความที่โผล่หลัง submit)
 
 ### Step 7 — อัปเดตสถานะแถวในหน่วยความจำ
@@ -352,7 +352,7 @@ https://ontoiq.tech/pad/05-files.html
 
 | ผิด | ถูก |
 |-----|-----|
-| พิมพ์ `%Name%` ในช่อง Name / Store into / ชื่อ produced | ใช้ชื่อเปล่าไม่มี `%` เช่น `WorkingRoot`, `CurrentLead` |
+| พิมพ์ `%Name%` ในช่อง Name / Store into / **Variables produced** | ใช้ชื่อเปล่าไม่มี `%` เช่น `WorkingRoot`, `CurrentLead` |
 | Hardcode lead ทั้งชุดลงตัวแปร | **Read from Excel worksheet** + **For each** |
 | ข้าม Login แล้วไป Forms ตรง ๆ | ทำ **06 Login** (`demo`/`demo`) ก่อน |
 | High ยังไป Forms อย่างเดียว | **Mission W:** High → **07 Wizard** |

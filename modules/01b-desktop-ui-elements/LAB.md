@@ -52,7 +52,7 @@ Lab01b_DesktopUIElements
 4. (แนะนำ) สร้าง Subflow ชื่อ `SF_Notepad` และ `SF_Calculator` แล้วเรียกจาก Main ใน Challenge — ใน Hands-on หลักวางใน Main ก็ผ่านเกณฑ์ได้
 
 > **กฎตัวแปรใน PAD (อ่านก่อนทำ Step ถัดไป)**  
-> - ช่อง **Name** ของ **Set variable**, ชื่อ **produced variable**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
+> - ช่อง **Name** ของ **Set variable**, ส่วน **Variables produced**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
 > - ช่องอื่นที่ต้องดึงค่าตัวแปร (Folder, File path, Text, …) = ใช้ `%WorkingRoot%` (**มี `%` ครบสองด้าน**)  
 > - หลังสร้างแล้ว Variables pane อาจแสดงเป็น `%WorkingRoot%` — เป็นเรื่องปกติ
 
@@ -197,7 +197,7 @@ calc
 
 1. ลาก action ที่อ่านข้อความจาก UI element ของหน้าต่าง (เช่น Get details of UI element in window / เทียบเท่าในกลุ่ม UI automation ที่ designer มี)
 2. ชี้ `Txt_CalcDisplay`
-3. ชื่อ produced: `CalcResult` ← **ไม่ใส่ `%`**  
+3. **Variables produced:** `CalcResult` ← **ไม่ใส่ `%`**  
    (อ้างอิงด้วย `%CalcResult%`)
 
 ### Step B5 — ตรวจว่าได้ 15
@@ -258,7 +258,7 @@ Unexpected calculator result
 
 | ผิด | ถูก |
 |-----|-----|
-| พิมพ์ `%Name%` ในช่อง Name / ชื่อ produced | ใช้ชื่อเปล่าไม่มี `%` เช่น `NoteText`, `CalcResult` |
+| พิมพ์ `%Name%` ในช่อง Name / **Variables produced** | ใช้ชื่อเปล่าไม่มี `%` เช่น `NoteText`, `CalcResult` |
 | คลิกด้วยพิกัดจอเป็นหลัก | Capture **UI Elements** แล้ว Click / Populate ตาม element |
 | ไม่ Focus / Wait ก่อนพิมพ์ | มี **Wait for window content** และ/หรือ **Focus window** |
 | ลืม Save As path ของ Notepad | ใส่ `%OutFile%` และจัดการ dialog ให้ครบ |

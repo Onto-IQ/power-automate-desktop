@@ -93,7 +93,7 @@ Cleanup Excel/Browser; On block error → Get last error → log
 
 ## 5. ตาราง Action ที่จะใช้
 
-| Action (official) | ทำอะไร | Input สำคัญ | Produced (ชื่อตอนสร้าง — ไม่มี `%`) |
+| Action (official) | ทำอะไร | Input สำคัญ | **Variables produced** (ชื่อตอนสร้าง — ไม่มี `%`) |
 |-------------------|--------|-------------|--------------------------------------|
 | **Set variable** | path, SendMode, counters, pricing fields | Name, Value | — |
 | **Launch Excel** / **Read from Excel worksheet** | อ่าน leads | path, sheet | `Excel`, `Leads` |

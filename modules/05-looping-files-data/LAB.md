@@ -77,7 +77,7 @@ Lab05_LoopingFilesData
 3. กด **Create**
 
 > **กฎตัวแปรใน PAD (อ่านก่อนทำ Step ถัดไป)**  
-> - ช่อง **Name** ของ **Set variable**, ชื่อ **produced variable**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
+> - ช่อง **Name** ของ **Set variable**, ส่วน **Variables produced**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
 > - ช่องอื่นที่ต้องดึงค่าตัวแปร (Folder, File path, Text, …) = ใช้ `%WorkingRoot%` (**มี `%` ครบสองด้าน**)  
 > - หลังสร้างแล้ว Variables pane อาจแสดงเป็น `%WorkingRoot%` — เป็นเรื่องปกติ
 
@@ -141,14 +141,14 @@ processed
 ```
 
    - Include subfolders: ปิด
-3. ชื่อ produced variable: `BatchFiles` ← **ไม่ใส่ `%`**  
+3. **Variables produced:** `BatchFiles` ← **ไม่ใส่ `%`**  
    (เวลาอ้างอิงทีหลังใช้ `%BatchFiles%`)
 
 ### Step 4 — สร้าง Data table สรุป
 
 1. ลาก **Create new data table**
 2. ตั้งคอลัมน์: `FileName`, `RowCount`, `TotalAmount`
-3. ชื่อ produced: `SummaryTable` ← **ไม่ใส่ `%`**  
+3. **Variables produced:** `SummaryTable` ← **ไม่ใส่ `%`**  
    (อ้างอิงด้วย `%SummaryTable%`)
 
 ### Step 5 — For each ไฟล์ (ชั้นนอก)
@@ -170,7 +170,7 @@ processed
 ```
 
    - ส่วนที่ต้องการ: Name / File name
-   - ชื่อ produced: `FileName` ← **ไม่ใส่ `%`**
+   - **Variables produced:** `FileName` ← **ไม่ใส่ `%`**
 4. ลาก **Set variable**: Name: `TotalAmount` ← **ไม่ใส่ `%`** · Value:
 
 ```text
@@ -190,7 +190,7 @@ processed
 1. อ่านเนื้อหาไฟล์เป็นตาราง — เลือกตามที่ designer ถนัด เช่น:
    - **Read text from file** แล้วแปลงเป็น Data table / หรือ
    - เปิดด้วย **Launch Excel** → **Read from Excel worksheet** แล้ว **Close Excel** (ถ้าแปลง CSV เป็น workbook ชั่วคราว)
-2. ชื่อ produced ของตารางแถวข้อมูล: `FileTable` ← **ไม่ใส่ `%`**  
+2. **Variables produced** (ตารางแถวข้อมูล): `FileTable` ← **ไม่ใส่ `%`**  
    (อ้างอิงด้วย `%FileTable%`)
 3. ตั้งค่าให้แถวแรกเป็นชื่อคอลัมน์ (Skip first line / First line of range contains column names) เพื่อไม่นับ header เป็น order
 
@@ -214,7 +214,7 @@ processed
 %CurrentRow%['Amount']
 ```
 
-   - ถ้าเป็นข้อความ: ใช้ **Convert text to number** → ชื่อ produced: `AmountNumber` ← **ไม่ใส่ `%`**
+   - ถ้าเป็นข้อความ: ใช้ **Convert text to number** → **Variables produced:** `AmountNumber` ← **ไม่ใส่ `%`**
    - ลาก **Increase variable** / Set variable: ใช้นิพจน์ (คัดลอกด้านล่างวางในช่อง Value ถ้า designer รองรับ)
 
 ```text
@@ -349,7 +349,7 @@ C:\PAD-Labs\output\lab05\batch-summary.csv
 
 | ผิด | ถูก |
 |-----|-----|
-| พิมพ์ `%Name%` ในช่อง Name / Store into / ชื่อ produced | ใช้ชื่อเปล่าไม่มี `%` เช่น `WorkingRoot`, `CurrentFile` |
+| พิมพ์ `%Name%` ในช่อง Name / Store into / **Variables produced** | ใช้ชื่อเปล่าไม่มี `%` เช่น `WorkingRoot`, `CurrentFile` |
 | อ่าน `batch-01` / `02` / `03` ด้วย 3 ชุด action แยกโดยไม่ลูป | ใช้ **For each** บน `%BatchFiles%` |
 | นับแถว header เป็น order | Skip first line / ตั้ง column names |
 | Amount เป็นข้อความแล้วบวกไม่ได้ | **Convert text to number** ก่อนรวม |

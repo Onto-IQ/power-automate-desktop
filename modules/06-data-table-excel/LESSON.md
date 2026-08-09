@@ -23,7 +23,7 @@
 
 | ศัพท์ | ความหมายภาษาคน | เห็นที่ไหนใน PAD |
 |--------|----------------|------------------|
-| **Excel instance** | เซสชัน Excel ที่ flow เปิดอยู่ | produced ของ **Launch Excel** เช่น `Excel` |
+| **Excel instance** | เซสชัน Excel ที่ flow เปิดอยู่ | **Variables produced** ของ **Launch Excel** เช่น `Excel` |
 | **Data table** | ตารางในหน่วยความจำของ flow | หลัง **Read from Excel worksheet** |
 | **Filter** | คัดเฉพาะแถวที่เข้าเงื่อนไข | **If** ภายใน **For each** |
 | **Tier** | ระดับที่คำนวณจาก Amount | ตัวแปร / คอลัมน์ใหม่ในตาราง |
@@ -86,7 +86,7 @@ Expected สรุปแนว [`assets/expected-summary.csv`](assets/expected-s
 
 ## 5. ตาราง Action ที่จะใช้
 
-| Action (official) | ทำอะไร | Input สำคัญ | Produced (ชื่อตอนสร้าง — ไม่มี `%`) |
+| Action (official) | ทำอะไร | Input สำคัญ | **Variables produced** (ชื่อตอนสร้าง — ไม่มี `%`) |
 |-------------------|--------|-------------|--------------------------------------|
 | **Set variable** | ตั้ง path / SumAmount / Tier | Name, Value | — |
 | **Launch Excel** | เปิด workbook | Document path | `Excel` |
@@ -115,7 +115,7 @@ Expected สรุปแนว [`assets/expected-summary.csv`](assets/expected-s
 
 ## 7. กฎ `%` และ Variables pane
 
-- ช่อง **Name** / **Store into** / ชื่อ produced → `WorkingRoot`, `Excel`, `Orders`, `Filtered`, `Tier` (**ไม่มี `%`**)
+- ช่อง **Name** / **Store into** / **Variables produced** → `WorkingRoot`, `Excel`, `Orders`, `Filtered`, `Tier` (**ไม่มี `%`**)
 - ช่อง Document path / Excel instance / เงื่อนไข / ค่าแถว → `%WorkingRoot%\sales-report.xlsm`, `%Excel%`, `%CurrentRow['Region']%` (**มี `%`**)
 - รายละเอียดเต็ม: [`shared/PAD-FUNDAMENTALS.md`](../../shared/PAD-FUNDAMENTALS.md)
 
@@ -159,7 +159,7 @@ Expected สรุปแนว [`assets/expected-summary.csv`](assets/expected-s
 ใช้ <strong>If file exists</strong> แล้ว <strong>Delete file</strong> ที่ <code>%OutputPath%</code> ก่อน Save as — กัน error ชื่อไฟล์ซ้ำ
 </details>
 
-**5.** ช่อง produced ของ **Launch Excel** ควรตั้งชื่ออย่างไร และตอนอ้างอิงใน action ถัดไปใช้อย่างไร?
+**5.** ส่วน **Variables produced** ของ **Launch Excel** ควรตั้งชื่ออย่างไร และตอนอ้างอิงใน action ถัดไปใช้อย่างไร?
 
 <details>
 <summary>เฉลย</summary>

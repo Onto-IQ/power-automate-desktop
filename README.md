@@ -71,7 +71,7 @@
 
 รายละเอียดเพิ่มเติม: [`shared/SELECTOR-CONVENTIONS.md`](shared/SELECTOR-CONVENTIONS.md) · ชื่อ Action ทางการ: [`shared/OFFICIAL-TERMINOLOGY.md`](shared/OFFICIAL-TERMINOLOGY.md) · เวอร์ชัน PAD: [PAD version matrix](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop)
 
-> **ตัวแปรใน PAD:** ตอนสร้างชื่อ (Set variable / Store into / ชื่อ produced) **ไม่ใส่ `%`** — ตอนใช้ในช่องอื่นใช้ `%ชื่อ%` — ดู [`shared/BEST-PRACTICES.md`](shared/BEST-PRACTICES.md) และ [`shared/PAD-FUNDAMENTALS.md`](shared/PAD-FUNDAMENTALS.md)
+> **ตัวแปรใน PAD:** ตอนสร้างชื่อ (Set variable / Store into / **Variables produced**) **ไม่ใส่ `%`** — ตอนใช้ในช่องอื่นใช้ `%ชื่อ%` — ดู [`shared/BEST-PRACTICES.md`](shared/BEST-PRACTICES.md) และ [`shared/PAD-FUNDAMENTALS.md`](shared/PAD-FUNDAMENTALS.md)
 
 สำหรับ Desktop UI ของ Contoso ดู UI map ใน [`modules/07-contoso-invoice-ops/assets/ui-map.md`](modules/07-contoso-invoice-ops/assets/ui-map.md)
 

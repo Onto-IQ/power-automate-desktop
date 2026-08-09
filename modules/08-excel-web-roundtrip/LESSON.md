@@ -76,7 +76,7 @@ Close Excel + Close browser
 
 ## 5. ตาราง Action ที่จะใช้
 
-| Action (official) | ทำอะไร | Input สำคัญ | Produced (ชื่อตอนสร้าง — ไม่มี `%`) |
+| Action (official) | ทำอะไร | Input สำคัญ | **Variables produced** (ชื่อตอนสร้าง — ไม่มี `%`) |
 |-------------------|--------|-------------|--------------------------------------|
 | **Set variable** | path / WebResult / SubmittedAt | Name, Value | — |
 | **Launch Excel** | เปิด workbook | File path | `Excel` |
