@@ -73,7 +73,7 @@ InboxFiles = ไฟล์ทั้งหมดใน WorkingRoot\inbox
 | Action (official) | ทำอะไร | Input สำคัญ | Produced (ชื่อตอนสร้าง — ไม่มี `%`) |
 |-------------------|--------|-------------|--------------------------------------|
 | **Set variable** | ตั้งค่าตัวแปร | Name, Value | — (ใช้ชื่อที่คุณตั้ง) |
-| **If folder exists** | ตรวจว่ามีโฟลเดอร์หรือยัง | Folder path | — |
+| **If folder exists** | ตรวจว่ามี/ไม่มีโฟลเดอร์ แล้วแยกกิ่ง | Folder path · **If folder** = Exists หรือ Doesn't exist | — |
 | **Create folder** | สร้างโฟลเดอร์ย่อย | Folder name, Into path | `NewFolder` (มักไม่ใช้ต่อ) |
 | **Get files in folder** | ดึงรายการไฟล์ | Folder, File filter | `InboxFiles` |
 | **For each** | วนทีละรายการ | Value to iterate, Store into | Store into = `CurrentFile` |
@@ -90,6 +90,7 @@ InboxFiles = ไฟล์ทั้งหมดใน WorkingRoot\inbox
 | การจัดการไฟล์ | **Copy file(s)** | **Move file(s)** | Copy เมื่ออยากเก็บต้นทาง; Move เมื่ออยากย้ายออกจาก inbox |
 | เป้าหมายในลูป | `%CurrentFile%` | `%InboxFiles%` | **ต้องใช้ CurrentFile** — InboxFiles คือทั้งลิสต์ |
 | แหล่ง Get files | `%WorkingRoot%\inbox` | `%WorkingRoot%` | ต้องชี้ **inbox** ไม่ใช่ราก working |
+| สร้างโฟลเดอร์ถ้ายังไม่มี | **If folder** = **Doesn't exist** → Create ใน Then | **Exists** → Create ใน Else | Lab นี้ใช้ **Doesn't exist** — อ่านตรงเจตนา ไม่ต้องมี Else ว่าง |
 | นามสกุล | `.csv` (มีจุด) | `csv` (ไม่มีจุด) | ดูค่าจริงใน Variables pane แล้วเทียบให้ตรง |
 
 ## 7. กฎ `%` และ Variables pane
@@ -105,7 +106,7 @@ InboxFiles = ไฟล์ทั้งหมดใน WorkingRoot\inbox
 | Copy ซ้ำทั้งชุดทุกครั้งที่เจอ `.csv` | ใส่ `%InboxFiles%` ใน Copy แทน `%CurrentFile%` | ดูจำนวนไฟล์ในปลายทางพุ่งผิดปกติ |
 | Path not found | ยังไม่มี `inbox` หรือ `%WorkingRoot%` คนละไดรฟ์ | Run next action แล้วดูค่า WorkingRoot |
 | นับไฟล์ไม่ตรง | นามสกุลมี/ไม่มีจุดไม่ตรงเงื่อนไข If | ดู `%FileExtension%` ใน Variables pane |
-| สร้างโฟลเดอร์ไม่สำเร็จ | Create folder ชี้ Into path ผิด | ตรวจว่า Into = `%WorkingRoot%\archive` |
+| สร้างโฟลเดอร์ไม่สำเร็จ | Create folder ชี้ Into path ผิด หรือลืมตั้ง **Doesn't exist** | ตรวจ Into = `%WorkingRoot%\archive` และ Create อยู่ในกิ่ง Then |
 
 ## 9. คำถามทบทวน
 
