@@ -1,18 +1,22 @@
 # แม่แบบ Hands-on Lab (ทีละขั้น)
 
-ใช้โครงสร้างนี้เมื่อเขียนหรือปรับ `labs/*/README.md`  
+ใช้โครงสร้างนี้เมื่อเขียนหรือปรับ **`labs/*/LAB.md`** (เอกสารจับมือทำ)  
+หน้าปกบทอยู่ที่ **`labs/*/README.md`** · ความรู้อยู่ที่ **`labs/*/LESSON.md`**  
 เป้าหมาย: ผู้เรียนทำตามได้โดยไม่ต้องเดาว่าต้องคลิกอะไรใน designer
 
-## โครงมาตรฐานของ README แต่ละ Lab
+ลำดับต่อบท: [`PAD-FUNDAMENTALS.md`](PAD-FUNDAMENTALS.md) → `LESSON.md` → `LAB.md`  
+แม่แบบความรู้: [`LESSON-TEMPLATE.md`](LESSON-TEMPLATE.md)
 
-1. **หัวเรื่อง + meta** (วัน / ระดับ / ทักษะ)
-2. **วัตถุประสงค์** (bullet สั้น)
-3. **Prerequisites**
-4. **Setup บนเครื่อง** (คัดลอกไฟล์ / สร้างโฟลเดอร์ — ทีละข้อ)
-5. **อ้างอิง Aug 2026** (ลิงก์สั้น 1–3 รายการจาก [`SOURCES-AUG2026.md`](SOURCES-AUG2026.md))
-6. **Hands-on ทีละขั้น** ← ส่วนหลัก (บังคับ)
-7. **จุดที่มักทำผิด** (Common mistakes)
-8. **Expected Result** + **Acceptance Criteria**
+## โครงมาตรฐานของ LAB.md
+
+1. **หัวเรื่อง + ลิงก์กลับ** README / LESSON  
+2. **Setup บนเครื่อง** (คัดลอกไฟล์ / สร้างโฟลเดอร์ — ทีละข้อ)  
+3. **Input / Output**  
+4. **อ้างอิง Aug 2026** (ลิงก์สั้น 1–3 รายการจาก [`SOURCES-AUG2026.md`](SOURCES-AUG2026.md)) — หรืออ้างใน LESSON แล้วใส่สั้น ๆ  
+5. **Hands-on ทีละขั้น** ← ส่วนหลัก (บังคับ)  
+6. **จุดที่มักทำผิด** (Common mistakes)  
+7. **Variables** (คอลัมน์: ชื่อตอนสร้าง | ตอนอ้างอิง | Type)  
+8. **Expected Result** + **Acceptance Criteria**  
 9. **Troubleshooting** + **Cleanup**
 
 ## กติกาตัวแปร `%` (สำคัญ — ผู้เรียนมักสับสน)
@@ -28,7 +32,7 @@
 | ช่องค่าอื่นที่ต้อง **ใช้** ตัวแปร (Folder, File path, Text, …) | ห่อด้วย `%` ทั้งสองด้าน | `%WorkingRoot%\inbox` |
 | นิพจน์ในช่องค่า | ทั้งนิพจน์อยู่ใน `%...%` | `%CsvCount + 1%` |
 
-ใน README ให้เขียนแยกชัดเสมอ เช่น:
+ใน LAB ให้เขียนแยกชัดเสมอ เช่น:
 
 ```text
 - Name: `WorkingRoot`          ← สร้าง (ไม่มี %)
