@@ -4,8 +4,10 @@
 
 | ไฟล์ | คำอธิบาย |
 |------|----------|
+| [PAD-FUNDAMENTALS.md](PAD-FUNDAMENTALS.md) | พื้นฐาน PAD สำหรับผู้เริ่มต้น (อ่านก่อน Lab แรก) |
+| [LESSON-TEMPLATE.md](LESSON-TEMPLATE.md) | แม่แบบ `LESSON.md` (ความรู้ 10 หัวข้อ) |
+| [HANDS-ON-LAB-TEMPLATE.md](HANDS-ON-LAB-TEMPLATE.md) | แม่แบบ `LAB.md` (Hands-on ทีละขั้นใน designer) |
 | [WRITING-STYLE.md](WRITING-STYLE.md) | สไตล์ภาษาไทย: ไม่ห้วนเกินไป และไม่แปล keyphrase |
-| [HANDS-ON-LAB-TEMPLATE.md](HANDS-ON-LAB-TEMPLATE.md) | แม่แบบ README แบบทีละขั้นใน designer |
 | [SOURCES-AUG2026.md](SOURCES-AUG2026.md) | อ้างอิง official / blog / community เฉพาะสิงหาคม 2026 |
 | [OFFICIAL-TERMINOLOGY.md](OFFICIAL-TERMINOLOGY.md) | ชื่อ Action / ศัพท์ตาม Microsoft Learn (Aug 2026) |
 | [SELECTOR-CONVENTIONS.md](SELECTOR-CONVENTIONS.md) | CSS / data-pad / wait strategy สำหรับ PAD Lab Hub |
@@ -13,6 +15,16 @@
 | [DATA-SCHEMAS.md](DATA-SCHEMAS.md) | Schema ของ mock leads / orders / scout / recipients |
 | [WEB-HUB-REQUESTS.md](WEB-HUB-REQUESTS.md) | สถานะหน้า Lab Hub (รวม 19 Catalog) |
 | [generate_mock_xlsx.py](generate_mock_xlsx.py) | สร้างไฟล์ `.xlsx` จาก CSV ใน Labs 06, 07, 08, 10 |
+
+## โครงสร้างเอกสารต่อหนึ่ง Lab
+
+```text
+labs/<lab>/
+  README.md   ← หน้าปก / สารบัญ
+  LESSON.md   ← ความรู้ (อ่านก่อน)
+  LAB.md      ← จับมือทำ
+  assets/     ← ข้อมูลตัวอย่าง (ถ้ามี)
+```
 
 ## Regenerating Excel mocks
 
