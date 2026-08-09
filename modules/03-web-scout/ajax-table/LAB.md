@@ -102,24 +102,26 @@ https://pad.ontoiq.tech/pad/09-ajax-table.html
 
 6. ถ้ารันแล้วเทียบไม่ได้เพราะ Amount เป็นข้อความ: ก่อน If ใช้ **Convert text to number** จาก `%AjaxRow['Amount']%` แล้วเอาตัวแปรตัวเลขไปใส่ฝั่งซ้ายแทน
 7. **ภายใน If** ลาก **Insert row into data table**
-8. Data table: (คัดลอกด้านล่างวางในช่อง)
+8. ในฟอร์มมีช่องหลัก 3 ช่องเท่านั้น — ตั้งดังนี้:
+   - **Data table** = ตารางปลายทาง (คัดลอก):
 
 ```text
 %Hits%
 ```
 
-9. ใส่ค่าแต่ละคอลัมน์ของ `Hits` จากแถวปัจจุบัน เช่น:
-   - Order ID ← `%AjaxRow['Order ID']%`
-   - Customer ← `%AjaxRow['Customer']%`
-   - Amount ← `%AjaxRow['Amount']%`
-   - Status ← `%AjaxRow['Status']%`
-   - Notes ← (คัดลอกด้านล่าง)
+   - **Into location** = **End of data table**
+   - **New value(s)** = ค่าแถวใหม่ทั้งแถว (ไม่ใช่ช่องทีละคอลัมน์) — คัดลอก:
 
 ```text
-PRIORITY HIT
+%[%AjaxRow['Order ID']%, %AjaxRow['Customer']%, %AjaxRow['Amount']%, %AjaxRow['Status']%, 'PRIORITY HIT']%
 ```
 
-10. **End** (ปิด If) แล้ว **End** (ปิด For each)
+9. จำนวนค่าใน `New value(s)` ต้อง**เท่ากับจำนวนคอลัมน์ของ `%Hits%`** (ลำดับตรงคอลัมน์: Order ID, Customer, Amount, Status, Notes)
+10. **อย่าสลับ:** Data table = `%Hits%` · New value(s) = รายการค่าด้านบน (ถ้าใส่ `%AjaxRow%` ใน Data table จะผิด)
+
+> ทางลัด: ถ้าสร้าง `%Hits%` ให้คอลัมน์**เหมือน** `%AjaxTable%` เป๊ะ (ไม่มี Notes) ใส่ New value(s) เป็น `%AjaxRow%` ได้เลย
+
+11. **End** (ปิด If) แล้ว **End** (ปิด For each)
 
 โครงภายในลูป:
 
@@ -127,6 +129,8 @@ PRIORITY HIT
 For each AjaxRow in AjaxTable
   If %AjaxRow['Amount']% >= %MinAmount%
     Insert row into Hits
+      Data table = %Hits%
+      New value(s) = %[ Order ID, Customer, Amount, Status, 'PRIORITY HIT' ]%
   End
 End
 ```
@@ -158,6 +162,8 @@ C:\PAD-Labs\output\lab03\ajax-orders.csv
 |-------|-----|
 | ตารางว่าง | กด Refresh + Wait element แถว/ตาราง |
 | หาคอลัมน์ Amount ใน If ไม่เจอ | ไม่มีในรายการตัวแปร — พิมพ์/วาง `%AjaxRow['Amount']%` ในฝั่งซ้ายเอง |
+| Insert row ใส่ค่าทีละคอลัมน์ไม่เจอ | UI มีแค่ **New value(s)** — ใส่ `%[v1, v2, ...]%` หรือ `%AjaxRow%` ถ้าคอลัมน์ตรงกัน |
+| Data table / New value(s) สลับกัน | Data table = `%Hits%` · New value(s) = ค่าแถวใหม่ |
 | If ไม่เข้าทั้งที่ Amount ดูใหญ่ | Convert text to number ก่อนเทียบ · ตรวจชื่อคอลัมน์ให้ตรง header (`Amount`) |
 | สับสนกับหลายหน้า | Lab นี้ไม่มี Next — ใช้ [Catalog](../catalog/README.md) |
 

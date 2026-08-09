@@ -52,17 +52,27 @@ https://pad.ontoiq.tech/pad/19-catalog.html
 ```
 
 11. Store into: `ProductRow` ← **ไม่ใส่ `%`**
-12. **ภายใน For each** ลาก **Insert row into data table** · Data table: (คัดลอก)
+12. **ภายใน For each** ลาก **Insert row into data table**
+13. ตั้งค่าตาม UI (มี 3 ช่องหลัก):
+    - **Data table:** (คัดลอก)
 
 ```text
 %CatalogHits%
 ```
 
-13. ใส่ค่าจากแถว (พิมพ์/วางเอง — ไม่มีคอลัมน์ในรายการตัวแปร):
-    - SKU ← `%ProductRow['SKU']%`
-    - Product ← `%ProductRow['Product']%`
-    - Price ← `%ProductRow['Price']%`
-    - Category ← `%ProductRow['Category']%`
+    - **Into location:** **End of data table**
+    - **New value(s):** ใส่ทั้งแถว — ถ้าคอลัมน์ของ `%CatalogHits%` ตรงกับ `%PageTable%` ให้ใช้ (คัดลอก):
+
+```text
+%ProductRow%
+```
+
+    - หรือใส่เป็นรายการตามลำดับคอลัมน์ SKU, Product, Price, Category:
+
+```text
+%[%ProductRow['SKU']%, %ProductRow['Product']%, %ProductRow['Price']%, %ProductRow['Category']%]%
+```
+
 14. **End** For each
 15. เพิ่ม `PageCount` += 1
 16. หาปุ่ม **Next**
