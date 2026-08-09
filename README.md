@@ -6,7 +6,7 @@
 | รายการ | รายละเอียด |
 |--------|------------|
 | Web UI (Lab Hub) | [https://ontoiq.tech/pad/](https://ontoiq.tech/pad/) |
-| Element UI (Desktop) | [Contoso Invoicing](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/tree/master/power-automate-desktop/contoso-invoice-app) · ดูรายละเอียดใน Lab [07](labs/07-contoso-invoice-ops/README.md) |
+| Element UI (Desktop) | [Contoso Invoicing](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/tree/master/power-automate-desktop/contoso-invoice-app) · ดูรายละเอียดใน Lab [07](modules/07-contoso-invoice-ops/README.md) |
 | Sample packs อ้างอิง | [Microsoft Learn — power-automate-desktop](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/tree/master/power-automate-desktop) |
 | PAD baseline (Aug 2026) | **2607+** (Installer ~2.70.x) — ดู [`shared/SOURCES-AUG2026.md`](shared/SOURCES-AUG2026.md) |
 | Course Outline (ไฟล์ท้องถิ่น) | `Trainocate_Outline_Power Automate Desktop (2 days) ake.pdf` |
@@ -71,7 +71,7 @@
 
 > **ตัวแปรใน PAD:** ตอนสร้างชื่อ (Set variable / Store into / ชื่อ produced) **ไม่ใส่ `%`** — ตอนใช้ในช่องอื่นใช้ `%ชื่อ%` — ดู [`shared/BEST-PRACTICES.md`](shared/BEST-PRACTICES.md) และ [`shared/HANDS-ON-LAB-TEMPLATE.md`](shared/HANDS-ON-LAB-TEMPLATE.md)
 
-สำหรับ Desktop UI ของ Contoso ดู UI map ใน [`labs/07-contoso-invoice-ops/assets/ui-map.md`](labs/07-contoso-invoice-ops/assets/ui-map.md)
+สำหรับ Desktop UI ของ Contoso ดู UI map ใน [`modules/07-contoso-invoice-ops/assets/ui-map.md`](modules/07-contoso-invoice-ops/assets/ui-map.md)
 
 ---
 
@@ -86,43 +86,43 @@
 |-------|--------|-----|
 | What is RPA? | แนวคิด RPA, ประโยชน์, Cloud vs Desktop Flows | — |
 | Getting Started | ติดตั้ง PAD, Workspace, Actions Pane, Variables, Recorder | [`PAD-FUNDAMENTALS`](shared/PAD-FUNDAMENTALS.md) |
-| First Automation | Desktop Recorder, Record & Replay | [01 Record & Replay](labs/01-record-replay/README.md) |
-| UI Elements | Selectors และการเปิด/ปิด/โฟกัสแอป | [01b Notepad/Calculator](labs/01b-desktop-ui-elements/README.md) · Contoso เต็มรูปแบบใน Lab 07 |
-| File & Folder | Create/Copy/Move/Rename, Read/Write Text | [02 File Management](labs/02-file-management/README.md) |
-| Web Automation | Launch browser, Fill form, Extract table | [03 Web Scout](labs/03-web-scout/README.md) |
+| First Automation | Desktop Recorder, Record & Replay | [01 Record & Replay](modules/01-record-replay/README.md) |
+| UI Elements | Selectors และการเปิด/ปิด/โฟกัสแอป | [01b Notepad/Calculator](modules/01b-desktop-ui-elements/README.md) · Contoso เต็มรูปแบบใน Lab 07 |
+| File & Folder | Create/Copy/Move/Rename, Read/Write Text | [02 File Management](modules/02-file-management/README.md) |
+| Web Automation | Launch browser, Fill form, Extract table | [03 Web Scout](modules/03-web-scout/README.md) |
 
 ### วันที่ 2 — Advanced Actions, Logic & Capstone
 
 | โมดูล | หัวข้อ | Lab |
 |-------|--------|-----|
-| Conditional Logic | If / Else If / Else | [04 Conditional Automation](labs/04-conditional-automation/README.md) |
-| Loops | For each, Loop condition | [05 Looping Files/Data](labs/05-looping-files-data/README.md) |
-| Variables & Data Tables | Types, List, Data Table | [06 Data Table & Excel](labs/06-data-table-excel/README.md) |
-| Desktop Element UI | Contoso Invoicing ครบวงจร Excel → App → Excel | [07 Contoso Invoice Ops](labs/07-contoso-invoice-ops/README.md) |
-| Excel + Web | Round-trip กับ Lab Hub | [08 Excel ↔ Web Round-trip](labs/08-excel-web-roundtrip/README.md) |
-| Error Handling | On block error / On error, Get last error, Logging | [09 Error Handling](labs/09-error-handling/README.md) |
+| Conditional Logic | If / Else If / Else | [04 Conditional Automation](modules/04-conditional-automation/README.md) |
+| Loops | For each, Loop condition | [05 Looping Files/Data](modules/05-looping-files-data/README.md) |
+| Variables & Data Tables | Types, List, Data Table | [06 Data Table & Excel](modules/06-data-table-excel/README.md) |
+| Desktop Element UI | Contoso Invoicing ครบวงจร Excel → App → Excel | [07 Contoso Invoice Ops](modules/07-contoso-invoice-ops/README.md) |
+| Excel + Web | Round-trip กับ Lab Hub | [08 Excel ↔ Web Round-trip](modules/08-excel-web-roundtrip/README.md) |
+| Error Handling | On block error / On error, Get last error, Logging | [09 Error Handling](modules/09-error-handling/README.md) |
 | Best Practices | Subflows, Debugging, Naming | [`shared/BEST-PRACTICES.md`](shared/BEST-PRACTICES.md) |
-| Capstone Workshop | Web Scout + Excel + Outlook | [10 Capstone Sales Ops](labs/10-capstone-sales-ops/README.md) |
+| Capstone Workshop | Web Scout + Excel + Outlook | [10 Capstone Sales Ops](modules/10-capstone-sales-ops/README.md) |
 
 ---
 
-## Lab Index
+## Module Index
 
 ลำดับต่อบท: อ่าน **ความรู้ (LESSON)** ก่อน → แล้วทำ **Lab (LAB)** ทีละขั้น · พื้นฐานร่วม: [`shared/PAD-FUNDAMENTALS.md`](shared/PAD-FUNDAMENTALS.md)
 
 | # | หน้าปก | ความรู้ | Lab | ทักษะหลัก | UI เป้าหมาย |
 |---|--------|--------|-----|-----------|-------------|
-| 01 | [Record & Replay](labs/01-record-replay/README.md) | [LESSON](labs/01-record-replay/LESSON.md) | [LAB](labs/01-record-replay/LAB.md) | Recorder และการกรอกฟอร์มเบื้องต้น | [01 Forms](https://ontoiq.tech/pad/01-forms.html) |
-| 01b | [Desktop UI Elements](labs/01b-desktop-ui-elements/README.md) | [LESSON](labs/01b-desktop-ui-elements/LESSON.md) | [LAB](labs/01b-desktop-ui-elements/LAB.md) | Selectors บน Notepad และ Calculator | Windows apps |
-| 02 | [File Management](labs/02-file-management/README.md) | [LESSON](labs/02-file-management/LESSON.md) | [LAB](labs/02-file-management/LAB.md) | File/Folder actions | — |
-| 03 | [Web Scout](labs/03-web-scout/README.md) | [LESSON](labs/03-web-scout/LESSON.md) | [LAB](labs/03-web-scout/LAB.md) | Table, Controls, AJAX, Files (+ Iframe/API challenge) | [02](https://ontoiq.tech/pad/02-controls.html) · [03](https://ontoiq.tech/pad/03-table.html) · [05](https://ontoiq.tech/pad/05-files.html) · [09](https://ontoiq.tech/pad/09-ajax-table.html) · [19](https://ontoiq.tech/pad/19-catalog.html) |
-| 04 | [Conditional Automation](labs/04-conditional-automation/README.md) | [LESSON](labs/04-conditional-automation/LESSON.md) | [LAB](labs/04-conditional-automation/LAB.md) | If/Else ตาม business rules | — |
-| 05 | [Looping Files/Data](labs/05-looping-files-data/README.md) | [LESSON](labs/05-looping-files-data/LESSON.md) | [LAB](labs/05-looping-files-data/LAB.md) | For each กับไฟล์และแถวข้อมูล | — |
-| 06 | [Data Table & Excel](labs/06-data-table-excel/README.md) | [LESSON](labs/06-data-table-excel/LESSON.md) | [LAB](labs/06-data-table-excel/LAB.md) | อ่าน แปลง และเขียน Excel | — |
-| 07 | [Contoso Invoice Ops](labs/07-contoso-invoice-ops/README.md) | [LESSON](labs/07-contoso-invoice-ops/LESSON.md) | [LAB](labs/07-contoso-invoice-ops/LAB.md) | Desktop UI, validate, attachments, subflows | **Contoso Invoicing** |
-| 08 | [Excel ↔ Web Round-trip](labs/08-excel-web-roundtrip/README.md) | [LESSON](labs/08-excel-web-roundtrip/LESSON.md) | [LAB](labs/08-excel-web-roundtrip/LAB.md) | Login + Forms + Wizard (+ Iframe/Files challenge) | [06](https://ontoiq.tech/pad/06-login.html) · [01](https://ontoiq.tech/pad/01-forms.html) · [07](https://ontoiq.tech/pad/07-wizard.html) |
-| 09 | [Error Handling](labs/09-error-handling/README.md) | [LESSON](labs/09-error-handling/LESSON.md) | [LAB](labs/09-error-handling/LAB.md) | Retry/log + Dialog/Delay (+ OCR/Files/Iframe/API) | [04](https://ontoiq.tech/pad/04-dialogs.html) · [11](https://ontoiq.tech/pad/11-delay.html) · [01](https://ontoiq.tech/pad/01-forms.html) |
-| 10 | [Capstone Sales Ops](labs/10-capstone-sales-ops/README.md) | [LESSON](labs/10-capstone-sales-ops/LESSON.md) | [LAB](labs/10-capstone-sales-ops/LAB.md) | Scout + Round-trip + Outlook และชุด Phase 1 | ตามโจทย์ Capstone |
+| 01 | [Record & Replay](modules/01-record-replay/README.md) | [LESSON](modules/01-record-replay/LESSON.md) | [LAB](modules/01-record-replay/LAB.md) | Recorder และการกรอกฟอร์มเบื้องต้น | [01 Forms](https://ontoiq.tech/pad/01-forms.html) |
+| 01b | [Desktop UI Elements](modules/01b-desktop-ui-elements/README.md) | [LESSON](modules/01b-desktop-ui-elements/LESSON.md) | [LAB](modules/01b-desktop-ui-elements/LAB.md) | Selectors บน Notepad และ Calculator | Windows apps |
+| 02 | [File Management](modules/02-file-management/README.md) | [LESSON](modules/02-file-management/LESSON.md) | [LAB](modules/02-file-management/LAB.md) | File/Folder actions | — |
+| 03 | [Web Scout](modules/03-web-scout/README.md) | [LESSON](modules/03-web-scout/LESSON.md) | [LAB](modules/03-web-scout/LAB.md) | Table, Controls, AJAX, Files (+ Iframe/API challenge) | [02](https://ontoiq.tech/pad/02-controls.html) · [03](https://ontoiq.tech/pad/03-table.html) · [05](https://ontoiq.tech/pad/05-files.html) · [09](https://ontoiq.tech/pad/09-ajax-table.html) · [19](https://ontoiq.tech/pad/19-catalog.html) |
+| 04 | [Conditional Automation](modules/04-conditional-automation/README.md) | [LESSON](modules/04-conditional-automation/LESSON.md) | [LAB](modules/04-conditional-automation/LAB.md) | If/Else ตาม business rules | — |
+| 05 | [Looping Files/Data](modules/05-looping-files-data/README.md) | [LESSON](modules/05-looping-files-data/LESSON.md) | [LAB](modules/05-looping-files-data/LAB.md) | For each กับไฟล์และแถวข้อมูล | — |
+| 06 | [Data Table & Excel](modules/06-data-table-excel/README.md) | [LESSON](modules/06-data-table-excel/LESSON.md) | [LAB](modules/06-data-table-excel/LAB.md) | อ่าน แปลง และเขียน Excel | — |
+| 07 | [Contoso Invoice Ops](modules/07-contoso-invoice-ops/README.md) | [LESSON](modules/07-contoso-invoice-ops/LESSON.md) | [LAB](modules/07-contoso-invoice-ops/LAB.md) | Desktop UI, validate, attachments, subflows | **Contoso Invoicing** |
+| 08 | [Excel ↔ Web Round-trip](modules/08-excel-web-roundtrip/README.md) | [LESSON](modules/08-excel-web-roundtrip/LESSON.md) | [LAB](modules/08-excel-web-roundtrip/LAB.md) | Login + Forms + Wizard (+ Iframe/Files challenge) | [06](https://ontoiq.tech/pad/06-login.html) · [01](https://ontoiq.tech/pad/01-forms.html) · [07](https://ontoiq.tech/pad/07-wizard.html) |
+| 09 | [Error Handling](modules/09-error-handling/README.md) | [LESSON](modules/09-error-handling/LESSON.md) | [LAB](modules/09-error-handling/LAB.md) | Retry/log + Dialog/Delay (+ OCR/Files/Iframe/API) | [04](https://ontoiq.tech/pad/04-dialogs.html) · [11](https://ontoiq.tech/pad/11-delay.html) · [01](https://ontoiq.tech/pad/01-forms.html) |
+| 10 | [Capstone Sales Ops](modules/10-capstone-sales-ops/README.md) | [LESSON](modules/10-capstone-sales-ops/LESSON.md) | [LAB](modules/10-capstone-sales-ops/LAB.md) | Scout + Round-trip + Outlook และชุด Phase 1 | ตามโจทย์ Capstone |
 
 ---
 
@@ -159,7 +159,7 @@ power-automate-desktop/
 │   ├── PAD-FUNDAMENTALS.md            ← อ่านก่อน Lab แรก
 │   ├── LESSON-TEMPLATE.md
 │   └── HANDS-ON-LAB-TEMPLATE.md
-├── labs/
+├── modules/
 │   ├── 01-record-replay/
 │   │   ├── README.md                  ← หน้าปก / สารบัญบท
 │   │   ├── LESSON.md                  ← ความรู้ (อ่านก่อน)
@@ -172,12 +172,14 @@ power-automate-desktop/
 └── (ไฟล์สไลด์/outline เก็บท้องถิ่น — ไม่ขึ้น GitHub)
 ```
 
-แต่ละ Lab มี 3 เอกสารหลัก:
+แต่ละ **Module** มี 3 เอกสารหลัก:
 
 - `README.md` — หน้าปกบท: meta, ลำดับเรียน, prerequisites, ลิงก์ LESSON/LAB
 - `LESSON.md` — เอกสารความรู้เต็ม (ศัพท์ แนวคิด คำถามทบทวน) ตาม [`shared/LESSON-TEMPLATE.md`](shared/LESSON-TEMPLATE.md)
 - `LAB.md` — Setup + Hands-on ทีละขั้นใน designer ตาม [`shared/HANDS-ON-LAB-TEMPLATE.md`](shared/HANDS-ON-LAB-TEMPLATE.md)
-- `assets/` — mock input / expected output เมื่อ Lab นั้นต้องการไฟล์ตัวอย่าง
+- `assets/` — mock input / expected output เมื่อ Module นั้นต้องการไฟล์ตัวอย่าง
+
+> โฟลเดอร์รากของบทเรียนคือ **`modules/`** (ไม่ใช่ `labs/`) — คำว่า **Lab** ยังใช้กับไฟล์ `LAB.md` และการอ้างอิงแบบ Lab 01, Lab 02 ตามเดิม
 
 ---
 
@@ -190,7 +192,7 @@ power-automate-desktop/
 5. ในห้องเรียนทำตาม [`shared/CLASSROOM-SCHEDULE-12H.md`](shared/CLASSROOM-SCHEDULE-12H.md) (Core ก่อน Challenge)
 6. ต่อหนึ่งบท: เปิด `README.md` → อ่าน **LESSON.md** → ทำ **LAB.md**
 7. สร้าง desktop flow **ใหม่ต่อหนึ่ง Lab** และตั้งชื่อตาม convention ใน [`shared/BEST-PRACTICES.md`](shared/BEST-PRACTICES.md)
-8. ใช้ไฟล์ใน `labs/<lab>/assets/` เป็น input — **ไม่ควรแก้ไฟล์ต้นฉบับใน repo** ให้คัดลอกไปโฟลเดอร์ทำงานของตนเองก่อน
+8. ใช้ไฟล์ใน `modules/<module>/assets/` เป็น input — **ไม่ควรแก้ไฟล์ต้นฉบับใน repo** ให้คัดลอกไปโฟลเดอร์ทำงานของตนเองก่อน
 
 ### โฟลเดอร์ทำงานที่แนะนำบนเครื่อง
 

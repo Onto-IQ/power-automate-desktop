@@ -44,12 +44,12 @@
 |-----------------|------|--------|--------|----------|
 | 09:00–09:15 | 15 | เปิดคอร์ส + กติกาห้อง + Core/Optional | ไฟล์นี้ | แจ้งโซน TA |
 | 09:15–09:45 | 30 | Fundamentals + ตรวจพรีคลาส | [`PAD-FUNDAMENTALS.md`](PAD-FUNDAMENTALS.md) · [`PRECLASS-SETUP.md`](PRECLASS-SETUP.md) | คนที่ยังไม่ติดตั้ง → TA ช่วยทันที |
-| 09:45–10:35 | 50 | Lab 01 Record & Replay | [`labs/01-record-replay/`](../labs/01-record-replay/) | Demo 10 + ทำ 40 |
+| 09:45–10:35 | 50 | Lab 01 Record & Replay | [`modules/01-record-replay/`](../modules/01-record-replay/) | Demo 10 + ทำ 40 |
 | 10:35–10:45 | 10 | พักสั้น | — | |
-| 10:45–11:25 | 40 | Lab 01b (โฟกัส Notepad) | [`labs/01b-desktop-ui-elements/`](../labs/01b-desktop-ui-elements/) | Calculator = optional |
-| 11:25–12:15 | 50 | Lab 02 File Management | [`labs/02-file-management/`](../labs/02-file-management/) | เน้นกฎ `%` |
+| 10:45–11:25 | 40 | Lab 01b (โฟกัส Notepad) | [`modules/01b-desktop-ui-elements/`](../modules/01b-desktop-ui-elements/) | Calculator = optional |
+| 11:25–12:15 | 50 | Lab 02 File Management | [`modules/02-file-management/`](../modules/02-file-management/) | เน้นกฎ `%` |
 | 12:15–13:15 | 60 | พักกลางวัน | — | |
-| 13:15–14:15 | 60 | Lab 03 Web Scout (A + C) | [`labs/03-web-scout/`](../labs/03-web-scout/) | ตัด Challenge ในห้อง |
+| 13:15–14:15 | 60 | Lab 03 Web Scout (A + C) | [`modules/03-web-scout/`](../modules/03-web-scout/) | ตัด Challenge ในห้อง |
 | 14:15–14:45 | 30 | บัฟเฟอร์ช่วยเหลือ + ทบทวนวัน 1 | [`TA-CHEATSHEET.md`](TA-CHEATSHEET.md) | จบเมื่อ Core 01/02/03A+C ผ่าน |
 
 **เกณฑ์ผ่านวัน 1:** Flow 01 รันซ้ำได้ · Lab 02 มี summary ถูก · Lab 03 extract ได้อย่างน้อย 1 ตาราง (+ AJAX มี Wait)
@@ -61,12 +61,12 @@
 | เวลา (ตัวอย่าง) | นาที | บล็อก | เอกสาร | หมายเหตุ |
 |-----------------|------|--------|--------|----------|
 | 09:00–09:10 | 10 | ทบทวน `%` / For each / If | — | Quick quiz ปากเปล่าได้ |
-| 09:10–10:20 | 70 | Lab 04 + 05 | [`04`](../labs/04-conditional-automation/) · [`05`](../labs/05-looping-files-data/) | Demo รวม 15 แล้วทำต่อเนื่อง |
+| 09:10–10:20 | 70 | Lab 04 + 05 | [`04`](../modules/04-conditional-automation/) · [`05`](../modules/05-looping-files-data/) | Demo รวม 15 แล้วทำต่อเนื่อง |
 | 10:20–10:30 | 10 | พักสั้น | — | |
-| 10:30–11:20 | 50 | Lab 06 Excel (ไม่บังคับ macro) | [`labs/06-data-table-excel/`](../labs/06-data-table-excel/) | Mission M = บ้าน |
-| 11:20–12:50 | 90 | **เส้นทาง A:** Lab 07 Contoso **หรือ** **เส้นทาง B:** Lab 08 + Lab 09 ย่อ | [`07`](../labs/07-contoso-invoice-ops/) · [`08`](../labs/08-excel-web-roundtrip/) · [`09`](../labs/09-error-handling/) | ห้องเลือกเส้นเดียวกันทั้งรุ่น (วิทยากรตัดสินใจก่อนวันสอน) |
+| 10:30–11:20 | 50 | Lab 06 Excel (ไม่บังคับ macro) | [`modules/06-data-table-excel/`](../modules/06-data-table-excel/) | Mission M = บ้าน |
+| 11:20–12:50 | 90 | **เส้นทาง A:** Lab 07 Contoso **หรือ** **เส้นทาง B:** Lab 08 + Lab 09 ย่อ | [`07`](../modules/07-contoso-invoice-ops/) · [`08`](../modules/08-excel-web-roundtrip/) · [`09`](../modules/09-error-handling/) | ห้องเลือกเส้นเดียวกันทั้งรุ่น (วิทยากรตัดสินใจก่อนวันสอน) |
 | 12:50–13:50 | 60 | พักกลางวัน | — | |
-| 13:50–15:10 | 80 | Capstone 10 ย่อ | [`labs/10-capstone-sales-ops/`](../labs/10-capstone-sales-ops/) | Scout 1 แหล่ง + Excel สรุป + Outlook DraftOnly |
+| 13:50–15:10 | 80 | Capstone 10 ย่อ | [`modules/10-capstone-sales-ops/`](../modules/10-capstone-sales-ops/) | Scout 1 แหล่ง + Excel สรุป + Outlook DraftOnly |
 | 15:10–15:30 | 20 | สรุป Best Practices + Q&A + ส่งงาน | [`BEST-PRACTICES.md`](BEST-PRACTICES.md) | |
 
 ### คำแนะนำเลือกเส้นทางวัน 2

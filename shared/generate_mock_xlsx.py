@@ -80,23 +80,23 @@ def read_csv(path: Path):
 def main() -> None:
     jobs = [
         (
-            ROOT / "labs/06-data-table-excel/assets/orders-input.csv",
-            ROOT / "labs/06-data-table-excel/assets/orders-input.xlsx",
+            ROOT / "modules/06-data-table-excel/assets/orders-input.csv",
+            ROOT / "modules/06-data-table-excel/assets/orders-input.xlsx",
             "Orders",
         ),
         (
-            ROOT / "labs/08-excel-web-roundtrip/assets/leads-input.csv",
-            ROOT / "labs/08-excel-web-roundtrip/assets/leads-input.xlsx",
+            ROOT / "modules/08-excel-web-roundtrip/assets/leads-input.csv",
+            ROOT / "modules/08-excel-web-roundtrip/assets/leads-input.xlsx",
             "Leads",
         ),
         (
-            ROOT / "labs/07-contoso-invoice-ops/assets/invoices-batch.csv",
-            ROOT / "labs/07-contoso-invoice-ops/assets/invoices-batch.xlsx",
+            ROOT / "modules/07-contoso-invoice-ops/assets/invoices-batch.csv",
+            ROOT / "modules/07-contoso-invoice-ops/assets/invoices-batch.xlsx",
             "Invoices",
         ),
         (
-            ROOT / "labs/10-capstone-sales-ops/assets/leads.csv",
-            ROOT / "labs/10-capstone-sales-ops/assets/leads.xlsx",
+            ROOT / "modules/10-capstone-sales-ops/assets/leads.csv",
+            ROOT / "modules/10-capstone-sales-ops/assets/leads.xlsx",
             "Leads",
         ),
     ]
