@@ -242,11 +242,11 @@ Order ID,Customer,Amount,Status
 %CsvLine%
 ```
 
-    หลังวาง `%CsvLine%` ให้**กด Enter หนึ่งครั้ง**ท้ายข้อความ (หรือใช้ **Append line to text file** ถ้ามี)
-11. **If file exists:** **Append** ← ต้องเป็น Append ไม่ใช่ Overwrite
-12. Encoding: UTF-8 (ให้ตรงกับข้อ 5.1)
-13. กด **Save**
-14. **End** For each
+11. หลังวาง `%CsvLine%` ในช่อง Text ให้กด Enter หนึ่งครั้งท้ายข้อความ (หรือใช้ **Append line to text file** ถ้ามีใน Actions Pane)
+12. **If file exists:** **Append** ← ต้องเป็น Append ไม่ใช่ Overwrite
+13. Encoding: UTF-8 (ให้ตรงกับข้อ 5.1)
+14. กด **Save**
+15. **End** For each
 
 หลังรัน เปิดไฟล์ตรวจ: บรรทัดแรกเป็นหัวตาราง บรรทัดถัดไปเป็นแถวที่ผ่าน MinAmount
 
