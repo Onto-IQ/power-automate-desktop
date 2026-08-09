@@ -11,7 +11,7 @@ C:\PAD-Labs\output\lab03\
 ```
 
 อ่าน [`assets/scout-criteria.csv`](assets/scout-criteria.csv): `MinAmount=1500`  
-(ข้อมูลตัวอย่างบน hub มี Amount ประมาณ 400–2400 — **อย่าใช้ 10000** จะไม่มีแถวผ่าน If)
+(ข้อมูลตัวอย่างบน hub มี Amount ประมาณ 400–2400 — **อย่าใช้ 10000** เพราะจะไม่มีแถวผ่านเงื่อนไข If)
 
 ## Hands-on
 
@@ -31,7 +31,7 @@ Lab03_AjaxTable
 
 3. **บังคับ:** ลาก **Create new data table** (ค้น Actions Pane คำว่า `Create new data table`)
 4. กด **Edit** ในฟอร์ม action เพื่อเปิดตัวสร้างตาราง
-5. ใช้ปุ่ม **+** เพิ่มคอลัมน์ให้ได้ 4 คอลัมน์ แล้วตั้งชื่อให้ตรง header บนหน้าเป๊ะ:
+5. ใช้ปุ่ม **+** เพิ่มคอลัมน์ให้ได้ 4 คอลัมน์ แล้วตั้งชื่อให้ตรงกับ header บนหน้าทุกตัวอักษร:
 
 ```text
 Order ID
@@ -73,7 +73,7 @@ Btn_RefreshOrders
 
 ### Step 3 — Extract
 
-1. ให้เบราว์เซอร์ของ flow เปิดค้างที่ URL ด้านล่าง และมีแถวในตารางแล้ว (หลัง Refresh + Wait ใน Step 2)
+1. ให้เบราว์เซอร์ของ flow เปิดค้างที่ URL ด้านล่าง และตารางมีแถวแล้ว (หลัง Refresh + Wait ใน Step 2)
 
 ```text
 https://pad.ontoiq.tech/pad/09-ajax-table.html
@@ -102,7 +102,7 @@ https://pad.ontoiq.tech/pad/09-ajax-table.html
 ```
 
 3. Store into: `AjaxRow` ← **ไม่ใส่ `%`**
-4. **ภายใน For each** (ต้องเยื้องเข้าในลูป) ลาก **If** (ค้นคำว่า `If`)
+4. **ภายใน For each** (ต้องวางเยื้องเข้าไปในลูป) ลาก **If** (ค้นคำว่า `If`)
 5. ตั้งเงื่อนไข:
    - ฝั่งซ้าย / First operand: (คัดลอก — พิมพ์เอง)
 
@@ -118,7 +118,7 @@ https://pad.ontoiq.tech/pad/09-ajax-table.html
 ```
 
 6. ถ้ารันแล้วเทียบไม่ได้เพราะ Amount เป็นข้อความ: ก่อน If ใช้ **Convert text to number** จาก `%AjaxRow['Amount']%` แล้วเอาตัวแปรตัวเลขไปใส่ฝั่งซ้ายแทน
-7. **ภายในกิ่ง If** (เยื้องเข้าไปอีกชั้น — อย่าวางข้างนอก If) ค้น Actions Pane แล้วลาก:
+7. **ภายในกิ่ง If** (วางเยื้องเข้าไปอีกชั้น — อย่าวางไว้ข้างนอก If) ค้น Actions Pane แล้วลาก:
 
 ```text
 Insert row into data table
@@ -160,8 +160,8 @@ End
 
 ทำ**หลัง** End ของ For each ใน Step 4
 
-เป้าหมาย: เขียนหัวตารางครั้งแรก แล้ว**วนแถว** append ทีละบรรทัดลงไฟล์  
-(ไม่ต่อสตริงขึ้นบรรทัดใหม่ใน Set variable — ใน PAD มัก Syntax error)
+เป้าหมาย: เขียนหัวตารางก่อนหนึ่งครั้ง แล้ว**วนแถว**เพื่อ Append ลงไฟล์ทีละบรรทัด  
+(อย่าต่อข้อความด้วยการขึ้นบรรทัดใหม่ใน Set variable — ใน PAD มักเกิด Syntax error)
 
 กำหนด path ไว้ใช้ซ้ำ (คัดลอก):
 
@@ -193,32 +193,51 @@ Order ID,Customer,Amount,Status
 ```
 
 3. Store into: `HitRow` ← **ไม่ใส่ `%`**
-4. **ภายใน For each** ลาก **Set variable**
-5. Name: `CsvLine` ← **ไม่ใส่ `%`**
-6. Value: (คัดลอกทั้งก้อน)
+4. **ภายใน For each** สร้างข้อความหนึ่งบรรทัดทีละขั้น (อย่าเขียนสูตรยาวบรรทัดเดียว):
+5. ลาก **Set variable** · Name: `CsvLine` ← **ไม่ใส่ `%`** · Value: (คัดลอก)
 
 ```text
-%HitRow['Order ID'] + ',' + HitRow['Customer'] + ',' + HitRow['Amount'] + ',' + HitRow['Status']%
+%HitRow['Order ID']%
 ```
 
-ความหมาย: รวม 4 คอลัมน์เป็นข้อความหนึ่งบรรทัดคั่นด้วย `,`
+6. ลาก **Set variable** อีกตัว · Name: `CsvLine` · Value: (คัดลอกทั้งก้อน)
 
-7. ยัง**ภายใน For each** ลาก **Write text to file** อีกตัว
-8. **File path:** path เดิม (`...\ajax-orders.csv`)
-9. **Text to write:** (คัดลอก)
+```text
+%CsvLine + ',' + HitRow['Customer']%
+```
+
+7. ลาก **Set variable** อีกตัว · Name: `CsvLine` · Value: (คัดลอกทั้งก้อน)
+
+```text
+%CsvLine + ',' + HitRow['Amount']%
+```
+
+8. ลาก **Set variable** อีกตัว · Name: `CsvLine` · Value: (คัดลอกทั้งก้อน)
+
+```text
+%CsvLine + ',' + HitRow['Status']%
+```
+
+ตอนนี้ `%CsvLine%` ควรได้ข้อความแบบ: `ORD-1003,Chai,2400,Paid`
+
+9. **ภายใน For each เดิม** ลาก **Write text to file** เพิ่มอีกหนึ่ง action
+10. **File path:** path เดิม (`...\ajax-orders.csv`)
+11. **Text to write:** (คัดลอก)
 
 ```text
 %CsvLine%
 ```
 
-   หลังวาง `%CsvLine%` ในช่อง Text ให้**กด Enter หนึ่งครั้ง**ท้ายข้อความ (หรือใช้ action **Append line to text file** ถ้ามี) เพื่อไม่ให้แถวติดกันในบรรทัดเดียว
-10. **If file exists:** **Append** ← สำคัญ ต้องเป็น Append ไม่ใช่ Overwrite
-11. Encoding: UTF-8 (ให้ตรงกับข้อ 5.1)
-12. กด **Save**
-13. **End** For each
+    หลังวาง `%CsvLine%` ในช่อง Text ให้**กด Enter หนึ่งครั้ง**ท้ายข้อความ (หรือใช้ action **Append line to text file** ถ้ามี) เพื่อไม่ให้แถวติดกันในบรรทัดเดียว
+12. **If file exists:** **Append** ← สำคัญ ต้องเป็น Append ไม่ใช่ Overwrite
+13. Encoding: UTF-8 (ให้ตรงกับข้อ 5.1)
+14. กด **Save**
+15. **End** For each
 
 หลังรัน เปิดไฟล์ตรวจ: บรรทัดแรกเป็นหัวตาราง บรรทัดถัดไปเป็นแถวที่ผ่าน MinAmount
 
+> ถ้า `%HitRow['Order ID']%` ยัง error: ลองใช้ลำดับคอลัมน์แทนชื่อ  
+> `%HitRow[0]%` แล้วต่อ `,` กับ `%HitRow[1]%` … `%HitRow[3]%` (0=Order ID, 1=Customer, 2=Amount, 3=Status)
 ### Step 6 — ปิดเบราว์เซอร์ + Replay
 
 1. ลาก **Close web browser** · Web browser instance: (คัดลอก)
@@ -245,16 +264,16 @@ Order ID,Customer,Amount,Status
 |-------|-----|
 | หา “Insert into Hits” ไม่เจอ | ไม่มีชื่อนี้ — ค้น **Insert row into data table** แล้วตั้ง Data table = `%Hits%` |
 | `%Hits%` ไม่มีใน `{x}` | ยังไม่ได้ทำ Step 0 **Create new data table** + rename เป็น `Hits` |
-| Insert อยู่นอก If / นอก For each | ลากให้เยื้องเข้าในกิ่ง If (ในลูป) |
-| ตารางว่างตอน Extract | กด Refresh + Wait element แถว/ตาราง |
-| หาคอลัมน์ Amount ใน If ไม่เจอ | พิมพ์/วาง `%AjaxRow['Amount']%` ในฝั่งซ้ายเอง |
+| Insert อยู่นอก If / นอก For each | ลากให้วางเยื้องเข้าในกิ่ง If (ภายในลูป) |
+| ตารางว่างตอน Extract | กด Refresh แล้ว Wait จนมีแถว/ตาราง |
+| หาคอลัมน์ Amount ใน If ไม่เจอ | พิมพ์หรือวาง `%AjaxRow['Amount']%` ในฝั่งซ้ายเอง |
 | Data table / New value(s) สลับกัน | Data table = `%Hits%` · New value(s) = `%AjaxRow%` |
-| If ไม่เข้า · Hits ว่างหลังรัน | ตรวจ `%MinAmount%` = `1500` (ข้อมูลจริงสูงสุด ~2400) · หรือ Convert text to number ก่อนเทียบ |
+| If ไม่เข้า · Hits ว่างหลังรัน | ตรวจว่า `%MinAmount%` = `1500` (ข้อมูลจริงสูงสุดประมาณ 2400) หรือ Convert text to number ก่อนเทียบ |
 | Column count ไม่ตรง | `%Hits%` ต้องมี 4 คอลัมน์ชื่อเดียวกับ `%AjaxTable%` |
-| หา Write CSV / เขียนไฟล์ไม่เจอ | ค้น **Write text to file** · หัวตาราง = Overwrite · แถวในลูป = **Append** |
-| CSV มีแค่แถวสุดท้าย | ในลูปต้องเป็น **Append** ไม่ใช่ Overwrite |
-| Syntax error ตอนต่อ CsvBody + บรรทัดใหม่ | ไม่ต้องทำแบบนั้นแล้ว — ใช้ Append ตาม Step 5 |
-| สับสนกับหลายหน้า | Lab นี้ไม่มี Next — ใช้ [Catalog](../catalog/README.md) |
+| หา Write CSV / เขียนไฟล์ไม่เจอ | ค้น **Write text to file** · หัวตารางใช้ Overwrite · แถวในลูปใช้ **Append** |
+| CSV มีแค่แถวสุดท้าย | ในลูปต้องเลือก **Append** ไม่ใช่ Overwrite |
+| Syntax error ตอนสร้าง CsvLine | อย่าต่อ 4 คอลัมน์ในสูตรเดียว — ทำทีละขั้นตาม Step 5.2 หรือใช้ `%HitRow[0]%` … `%HitRow[3]%` |
+| สับสนกับหลายหน้า | Lab นี้ไม่มีปุ่ม Next — ใช้ [Catalog](../catalog/README.md) |
 
 ## Cleanup
 
