@@ -178,27 +178,37 @@ https://pad.ontoiq.tech/pad/03-table.html
 
 ### Step A1 — Wait ตาราง
 
+ตั้งค่าให้ตรงหน้าต่าง action **Wait for web page content** ใน designer:
+
 1. ลาก **Wait for web page content**
-2. Browser instance: (คัดลอกด้านล่างวางในช่อง)
+2. **Web browser instance:** (คัดลอก)
 
 ```text
 %Browser%
 ```
 
-3. Wait for / UI element: คัดลอก selector นี้ใส่ (หรือ capture ตารางแล้วล็อกเป็นค่านี้):
+3. **Wait for web page to:** เลือก **Contain element**  
+   (ไม่ใช่ช่องพิมพ์ CSS เปล่า ๆ — PAD ให้เลือก UI element)
+4. **UI element:** กดเพิ่ม/เลือก element → ใช้ picker ชี้**ตารางทั้งตาราง**บนหน้า `03-table.html` (คอลัมน์ Emp ID, Name, Department, Salary)  
+   - ชื่อที่ PAD ตั้งให้อัตโนมัติอาจยาวแบบ `Table 'Emp … 45000'` — เป็นเรื่องปกติ
+   - ในแผง **UI Elements** แนะนำ Rename เป็น:
+
+```text
+Tbl_Employees
+```
+
+5. เปิด selector ของ `Tbl_Employees` → ล็อกให้มี `id` / CSS เป็น (คัดลอกเพื่อตรวจใน Selector Builder):
 
 ```text
 #tbl-employees
 ```
 
-   วิธีหาถ้าลืม (เลือกอย่างใดอย่างหนึ่ง):
-   - มองกล่อง **Hints:** บนหน้า `03-table.html` ที่เบราว์เซอร์ของ flow เปิดอยู่
-   - หรือเปิด URL ของหน้า 03 ด้วยมือหนึ่งครั้ง → อ่าน Hints แล้วคัดลอก `#tbl-employees`
-   - หรือใน PAD ใช้ UI element picker ชี้ตาราง Emp ID / Name / Department / Salary แล้วล็อก `#tbl-employees`
-4. กด Save
+   ที่มาของค่านี้: กล่อง **Hints:** บนหน้า `03-table.html` (ไม่ใช่ hub index)
+6. **Check UI element state** / **Fail with timeout error:** ปล่อย Off ตามค่าเริ่มต้นได้ใน Lab นี้ แล้วกด **Save**
 
-> **Lab Hub index** (`https://pad.ontoiq.tech/pad/`) ใช้ดูแผนที่โมดูลตอน Setup / ก่อนเรียน — **ไม่ใช่** ขั้นตอนของ Wait ใน Mission A  
-> อย่าใช้ `#tbl-products` — นั่นของ Mission P (`19-catalog.html`)
+> ถ้า Wait เลือก element ผิด (เช่น ปุ่มกรอง) → ลบแล้ว capture ตารางใหม่  
+> อย่าใช้ `#tbl-products` — นั่นของ Mission P (`19-catalog.html`)  
+> **Lab Hub index** (`https://pad.ontoiq.tech/pad/`) ใช้ดูแผนที่โมดูลตอน Setup — **ไม่ใช่** ขั้นตอนของ Wait
 
 ### Step A2 — Extract ตาราง
 
@@ -675,7 +685,8 @@ https://ontoiq.tech/pad/18-popup.html
 
 | อาการ | แก้ |
 |-------|-----|
-| Mission A ไม่รู้จะ Wait อะไร | หน้า `03-table.html` → ใช้ `#tbl-employees` (ดู Hints บนหน้า) — อย่าใช้ `#tbl-products` |
+| Mission A ไม่รู้จะ Wait อะไร | **Contain element** → picker ชี้ตาราง → ล็อก selector `#tbl-employees` (Hints บน `03-table`) — อย่าใช้ `#tbl-products` |
+| ชื่อ UI element เป็น `Table 'Emp …'` | Rename ใน UI Elements เป็น `Tbl_Employees` ได้ — ไม่ต้องหาชื่อนี้บนหน้าเว็บ |
 | AJAX ว่าง | เพิ่ม Wait / รอ element แถวแรก |
 | Upload ไม่ติด | ตรวจ path ไฟล์ mock และ selector ของ input file |
 | Iframe กรอกไม่ได้ | Set current iframe ก่อน Populate; กลับ parent หลังจบ |
