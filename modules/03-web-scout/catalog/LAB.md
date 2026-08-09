@@ -50,6 +50,8 @@ Btn_NextPage
 
 ### Step 2 — Loop หน้า + Extract
 
+> **Tip:** มีลูปซ้อนกัน — **Loop condition** = วน **หน้า** · **For each** (ข้างใน) = วน **แถว** ของหน้าปัจจุบัน อย่าสลับบทบาท
+
 1. **Loop condition** (First operand / Operator / Second operand — เช่น `%PageCount%` · **Less than (<)** · `%MaxPages%`)
 2. ในลูป: **Wait for web page content** · Contain element · ตาราง `#tbl-products` / `Tbl_Products`
 3. ให้หน้ายังอยู่ที่ [19-catalog](https://pad.ontoiq.tech/pad/19-catalog.html) (หลังกด Next แล้วยังต้องเป็นหน้านี้)
@@ -67,27 +69,34 @@ Btn_NextPage
 
 11. Store into: `ProductRow` ← **ไม่ใส่ `%`**
 12. **ภายใน For each** ลาก **Insert row into data table**
-13. ตั้งค่าตาม UI (มี 3 ช่องหลัก):
-    - **Data table:** (คัดลอก)
+13. ตั้งค่า 3 ช่องให้ตรงนี้เท่านั้น:
+
+| ช่องใน UI | ใส่ค่า |
+|-----------|--------|
+| **Data table** | `%CatalogHits%` (กด `{x}` เลือก `CatalogHits`) |
+| **Into location** | **End of data table** |
+| **New value(s)** | `%ProductRow%` (กด `{x}` เลือก `ProductRow`) ถ้าคอลัมน์ตรงกัน |
+
+คัดลอกวาง Data table:
 
 ```text
 %CatalogHits%
 ```
 
-    - **Into location:** **End of data table**
-    - **New value(s):** ถ้าคอลัมน์ตรงกัน ใช้ (คัดลอก):
+คัดลอกวาง New value(s):
 
 ```text
 %ProductRow%
 ```
 
-    - หรือใส่เป็น list (**ห้ามซ้อน `%` ข้างใน**):
+หรือใส่เป็น list (**ห้ามซ้อน `%` ข้างใน**) — คัดลอก:
 
 ```text
 %[ProductRow['SKU'], ProductRow['Product'], ProductRow['Price'], ProductRow['Category']]%
 ```
 14. **End** For each
-15. เพิ่ม `PageCount` += 1
+15. **Increase variable** — **Variable name:** `%PageCount%` · **Increase by:** `1`
+   (ตาม [Variables actions](https://learn.microsoft.com/power-automate/desktop-flows/actions-reference/variables#increase-variable))
 16. ตรวจปุ่ม **Next** (`Btn_NextPage`) — ถ้ายังกดได้ → **Press button on web page** (หรือ **Click link on web page**) · UI element: `Btn_NextPage` · Browser: `%Browser%` แล้ววนต่อ
 17. ถ้า disabled / กดไม่ได้ → **Exit loop**
 18. **End** loop
