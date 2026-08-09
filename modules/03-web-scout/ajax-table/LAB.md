@@ -14,7 +14,7 @@ C:\PAD-Labs\output\lab03\
 
 ## Hands-on
 
-### Step 0 — สร้าง flow + criteria
+### Step 0 — สร้าง flow + criteria + ตาราง Hits
 
 1. **New flow** → ชื่อ:
 
@@ -28,9 +28,21 @@ Lab03_AjaxTable
 10000
 ```
 
-3. (แนะนำ) **Create new data table** → Variables produced: `Hits`
-4. คอลัมน์ของ `Hits` ให้ตรง header บนหน้า: Order ID, Customer, Amount, Status  
-   (ถ้าต้องการ Notes ด้วย ตอน Insert ต้องใช้ list ที่มีค่าครบทุกคอลัมน์ — ดู Step 4)
+3. **บังคับ:** ลาก **Create new data table** (ค้น Actions Pane คำว่า `Create new data table`)
+4. กด **Edit** ในฟอร์ม action เพื่อเปิดตัวสร้างตาราง
+5. ใช้ปุ่ม **+** เพิ่มคอลัมน์ให้ได้ 4 คอลัมน์ แล้วตั้งชื่อให้ตรง header บนหน้าเป๊ะ:
+
+```text
+Order ID
+Customer
+Amount
+Status
+```
+
+6. ไม่ต้องใส่แถวข้อมูลตอนนี้ (0 rows ก็ได้) → **Save** ตัวสร้างตาราง
+7. **Variables produced:** เปลี่ยนชื่อเป็น `Hits` ← **ไม่ใส่ `%`**  
+   (อ้างอิงทีหลังด้วย `%Hits%`)
+8. ตรวจใน Variables pane ว่ามี `%Hits%` ก่อนไป Step 1 — **ถ้ายังไม่มี `%Hits%` จะ Insert ไม่ได้**
 
 ### Step 1 — Launch
 
@@ -76,7 +88,10 @@ https://pad.ontoiq.tech/pad/09-ajax-table.html
 9. ชื่อคอลัมน์มาจาก header จริงบนหน้าแล้ว: `Order ID`, `Customer`, `Amount`, `Status`
 10. จำชื่อเหล่านี้ไว้ใช้ตอน Step 4 (เช่น อ้าง Amount ด้วยชื่อคอลัมน์จริง ไม่ใช่ชื่อที่ตั้งเอง)
 
-### Step 4 — กรองแล้วเก็บแถว
+### Step 4 — กรองแล้วเก็บแถวลง `%Hits%`
+
+> ไม่มี action ชื่อ “Insert into Hits”  
+> ต้องใช้ **Insert row into data table** แล้วชี้ **Data table** = `%Hits%`
 
 1. ลาก **For each**
 2. Value to iterate: (คัดลอกด้านล่างวางในช่อง)
@@ -86,63 +101,56 @@ https://pad.ontoiq.tech/pad/09-ajax-table.html
 ```
 
 3. Store into: `AjaxRow` ← **ไม่ใส่ `%`**
-4. **ภายใน For each** ลาก **If** (ค้นใน Actions Pane คำว่า `If`)
-5. ตั้งเงื่อนไขดังนี้:
-   - ฝั่งซ้าย / First operand: (คัดลอกด้านล่างวางในช่อง — **พิมพ์เอง** ไม่มีตัวเลือกคอลัมน์ในรายการตัวแปร)
+4. **ภายใน For each** (ต้องเยื้องเข้าในลูป) ลาก **If** (ค้นคำว่า `If`)
+5. ตั้งเงื่อนไข:
+   - ฝั่งซ้าย / First operand: (คัดลอก — พิมพ์เอง)
 
 ```text
 %AjaxRow['Amount']%
 ```
 
    - ตัวดำเนินการ: **Greater than or equal to**
-   - ฝั่งขวา / Second operand: (คัดลอกด้านล่างวางในช่อง)
+   - ฝั่งขวา / Second operand: (คัดลอก)
 
 ```text
 %MinAmount%
 ```
 
 6. ถ้ารันแล้วเทียบไม่ได้เพราะ Amount เป็นข้อความ: ก่อน If ใช้ **Convert text to number** จาก `%AjaxRow['Amount']%` แล้วเอาตัวแปรตัวเลขไปใส่ฝั่งซ้ายแทน
-7. **ภายใน If** ลาก **Insert row into data table**
-8. ในฟอร์มมีช่องหลัก 3 ช่องเท่านั้น — ตั้งดังนี้:
-   - **Data table** = ตารางปลายทาง (คัดลอก):
+7. **ภายในกิ่ง If** (เยื้องเข้าไปอีกชั้น — อย่าวางข้างนอก If) ค้น Actions Pane แล้วลาก:
 
 ```text
-%Hits%
+Insert row into data table
 ```
 
-   - **Into location** = **End of data table**
-   - **New value(s)** = ค่าแถวใหม่ทั้งแถว (ไม่ใช่ช่องทีละคอลัมน์)
+8. ตั้งค่า 3 ช่องให้ตรงนี้เท่านั้น:
 
-**วิธีที่แนะนำ (ง่ายสุด):** ถ้าคอลัมน์ `%Hits%` ตรงกับ `%AjaxTable%` (Order ID, Customer, Amount, Status — **ยังไม่ใส่ Notes**) ให้ใส่:
+| ช่องใน UI | ใส่ค่า |
+|-----------|--------|
+| **Data table** | `%Hits%` (กด `{x}` เลือก `Hits` — **ไม่ใช่** `AjaxRow`) |
+| **Into location** | **End of data table** |
+| **New value(s)** | `%AjaxRow%` (กด `{x}` เลือก `AjaxRow`) |
+
+คัดลอกวาง New value(s) ได้:
 
 ```text
 %AjaxRow%
 ```
 
-**วิธีใส่รายการค่า + Notes:** ในนิพจน์หนึ่งคู่ `%...%` เท่านั้น — **ห้าม** ซ้อน `%` ใน list (จะ Syntax error)
-
-คัดลอก:
+9. กด **Save** ของ action Insert — บน workspace ควรเห็นประมาณ:
 
 ```text
-%[AjaxRow['Order ID'], AjaxRow['Customer'], AjaxRow['Amount'], AjaxRow['Status'], 'PRIORITY HIT']%
+Insert row into data table %Hits%
 ```
 
-> ผิด: `%[%AjaxRow['Amount']%, ...]%` ← `%` ซ้อน  
-> ถูก: `%[AjaxRow['Amount'], ...]%` ← ชื่อตัวแปรอยู่ใน `%` นอกสุดแล้ว
+10. **End** (ปิด If) แล้ว **End** (ปิด For each)
 
-9. จำนวนค่าใน `New value(s)` ต้อง**เท่ากับจำนวนคอลัมน์ของ `%Hits%`** (ลำดับตรงคอลัมน์)
-10. **อย่าสลับ:** Data table = `%Hits%` · New value(s) = `%AjaxRow%` หรือ list ด้านบน
-
-11. **End** (ปิด If) แล้ว **End** (ปิด For each)
-
-โครงภายในลูป:
+โครงที่ถูกต้อง:
 
 ```text
 For each AjaxRow in AjaxTable
   If %AjaxRow['Amount']% >= %MinAmount%
-    Insert row into Hits
-      Data table = %Hits%
-      New value(s) = %AjaxRow%   (หรือ %[AjaxRow['Order ID'], ..., 'PRIORITY HIT']%)
+    Insert row into data table   ← Data table=%Hits% · New value(s)=%AjaxRow%
   End
 End
 ```
@@ -172,12 +180,14 @@ C:\PAD-Labs\output\lab03\ajax-orders.csv
 
 | อาการ | แก้ |
 |-------|-----|
-| ตารางว่าง | กด Refresh + Wait element แถว/ตาราง |
-| หาคอลัมน์ Amount ใน If ไม่เจอ | ไม่มีในรายการตัวแปร — พิมพ์/วาง `%AjaxRow['Amount']%` ในฝั่งซ้ายเอง |
-| Insert row Syntax error | ใน list **อย่าซ้อน `%`** — ใช้ `%[AjaxRow['Amount'], ...]%` หรือใส่ `%AjaxRow%` ทั้งแถว |
-| Insert row ใส่ค่าทีละคอลัมน์ไม่เจอ | UI มีแค่ **New value(s)** — ใส่ datarow หรือ list |
-| Data table / New value(s) สลับกัน | Data table = `%Hits%` · New value(s) = ค่าแถวใหม่ |
-| If ไม่เข้าทั้งที่ Amount ดูใหญ่ | Convert text to number ก่อนเทียบ · ตรวจชื่อคอลัมน์ให้ตรง header (`Amount`) |
+| หา “Insert into Hits” ไม่เจอ | ไม่มีชื่อนี้ — ค้น **Insert row into data table** แล้วตั้ง Data table = `%Hits%` |
+| `%Hits%` ไม่มีใน `{x}` | ยังไม่ได้ทำ Step 0 **Create new data table** + rename เป็น `Hits` |
+| Insert อยู่นอก If / นอก For each | ลากให้เยื้องเข้าในกิ่ง If (ในลูป) |
+| ตารางว่างตอน Extract | กด Refresh + Wait element แถว/ตาราง |
+| หาคอลัมน์ Amount ใน If ไม่เจอ | พิมพ์/วาง `%AjaxRow['Amount']%` ในฝั่งซ้ายเอง |
+| Data table / New value(s) สลับกัน | Data table = `%Hits%` · New value(s) = `%AjaxRow%` |
+| If ไม่เข้า · Hits ว่างหลังรัน | Convert text to number ก่อนเทียบ · ตรวจว่า Amount >= 10000 มีจริง |
+| Column count ไม่ตรง | `%Hits%` ต้องมี 4 คอลัมน์ชื่อเดียวกับ `%AjaxTable%` |
 | สับสนกับหลายหน้า | Lab นี้ไม่มี Next — ใช้ [Catalog](../catalog/README.md) |
 
 ## Cleanup
