@@ -39,7 +39,7 @@ C:\PAD-Labs\output\lab01b\
 
 ## Hands-on ทีละขั้น — Part A: Notepad
 
-### Step A0 — สร้าง flow (และ Subflow แนะนำ)
+### Step A0 — สร้าง flow
 
 1. เปิด Power Automate for desktop → **New flow**
 2. ชื่อ flow (คัดลอกได้):
@@ -49,7 +49,6 @@ Lab01b_DesktopUIElements
 ```
 
 3. กด **Create**
-4. (แนะนำ) สร้าง Subflow ชื่อ `SF_Notepad` และ `SF_Calculator` แล้วเรียกจาก Main ใน Challenge — ใน Hands-on หลักวางใน Main ก็ผ่านเกณฑ์ได้
 
 > **กฎตัวแปรใน PAD (อ่านก่อนทำ Step ถัดไป)**  
 > - ช่อง **Name** ของ **Set variable**, ส่วน **Variables produced**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
@@ -160,7 +159,7 @@ C:\PAD-Labs\output\lab01b\notepad-output.txt
 
 ## Hands-on ทีละขั้น — Part B: Calculator
 
-วางต่อท้าย Part A ใน Main (หรือใน Subflow `SF_Calculator`)
+วางต่อท้าย Part A ใน Main
 
 ### Step B1 — เปิด Calculator
 
@@ -240,8 +239,7 @@ Unexpected calculator result
 
 ### Challenge (ทางเลือก)
 
-- แยก Part A / Part B เป็น Subflow `SF_Notepad` และ `SF_Calculator` แล้วเรียกจาก Main
-- ก่อน **Run application** ใช้ **Terminate process** / **Close window** เคลียร์ instance ค้าง
+- ก่อน **Run application** ใช้ **Terminate process** / **Close window** เคลียร์ instance ค้าง แล้ว Replay ให้ผ่านสองครั้งติดกัน
 
 ---
 
@@ -288,7 +286,6 @@ Unexpected calculator result
 - [ ] Calculator ได้ผล 15 และอ่านค่าจาก display ได้
 - [ ] UI Elements ถูกตั้งชื่อให้สื่อความหมาย
 - [ ] มีขั้นตอนเปิดและปิดแอปครบ
-- [ ] (Challenge) แยกเป็นอย่างน้อย 2 Subflows แล้วเรียกจาก Main
 
 ## Troubleshooting
 
