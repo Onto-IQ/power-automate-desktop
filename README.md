@@ -91,7 +91,7 @@
 | First Automation | Desktop Recorder, Record & Replay | [01 Record & Replay](modules/01-record-replay/README.md) |
 | UI Elements | Selectors และการเปิด/ปิด/โฟกัสแอป | [01b Notepad](modules/01b-notepad/README.md) · [01b Calculator](modules/01b-calculator/README.md) *(optional)* · Contoso เต็มรูปแบบใน Lab 07 |
 | File & Folder | Create/Copy/Move/Rename, Read/Write Text | [02 File Management](modules/02-file-management/README.md) |
-| Web Automation | Launch browser, Fill form, Extract table | [03 Web Scout](modules/03-web-scout/README.md) |
+| Web Automation | Launch browser, Extract table (static / AJAX) | [03 Web Scout](modules/03-web-scout/README.md) · [Static](modules/03-web-scout/static-table/README.md) · [AJAX](modules/03-web-scout/ajax-table/README.md) |
 
 ### วันที่ 2 — Advanced Actions, Logic & Capstone
 
@@ -118,7 +118,12 @@
 | 01b | [Notepad](modules/01b-notepad/README.md) | [LESSON](modules/01b-notepad/LESSON.md) | [LAB](modules/01b-notepad/LAB.md) | UI Elements + Populate Notepad | Windows Notepad |
 | 01b | [Calculator](modules/01b-calculator/README.md) *(optional)* | [LESSON](modules/01b-calculator/LESSON.md) | [LAB](modules/01b-calculator/LAB.md) | Click ปุ่ม + อ่าน display | Windows Calculator |
 | 02 | [File Management](modules/02-file-management/README.md) | [LESSON](modules/02-file-management/LESSON.md) | [LAB](modules/02-file-management/LAB.md) | File/Folder actions | — |
-| 03 | [Web Scout](modules/03-web-scout/README.md) | [LESSON](modules/03-web-scout/LESSON.md) | [LAB](modules/03-web-scout/LAB.md) | Table, Controls, AJAX, Files (+ Iframe/API challenge) | [02](https://ontoiq.tech/pad/02-controls.html) · [03](https://ontoiq.tech/pad/03-table.html) · [05](https://ontoiq.tech/pad/05-files.html) · [09](https://ontoiq.tech/pad/09-ajax-table.html) · [19](https://ontoiq.tech/pad/19-catalog.html) |
+| 03 | [Web Scout](modules/03-web-scout/README.md) | — | — | แผนที่ + lab ย่อยในโฟลเดอร์เดียวกัน | [pad.ontoiq.tech/pad](https://pad.ontoiq.tech/pad/) |
+| 03 | [Static Table](modules/03-web-scout/static-table/README.md) **Core** | [LESSON](modules/03-web-scout/static-table/LESSON.md) | [LAB](modules/03-web-scout/static-table/LAB.md) | Wait + Extract `#tbl-employees` | [03-table](https://pad.ontoiq.tech/pad/03-table.html) |
+| 03 | [AJAX Table](modules/03-web-scout/ajax-table/README.md) **Core** | [LESSON](modules/03-web-scout/ajax-table/LESSON.md) | [LAB](modules/03-web-scout/ajax-table/LAB.md) | Wait แถว + กรอง criteria | [09-ajax-table](https://pad.ontoiq.tech/pad/09-ajax-table.html) |
+| 03 | [Catalog](modules/03-web-scout/catalog/README.md) *(optional)* | [LESSON](modules/03-web-scout/catalog/LESSON.md) | [LAB](modules/03-web-scout/catalog/LAB.md) | Next loop + Extract products | [19-catalog](https://pad.ontoiq.tech/pad/19-catalog.html) |
+| 03 | [Controls](modules/03-web-scout/controls/README.md) *(optional)* | [LESSON](modules/03-web-scout/controls/LESSON.md) | [LAB](modules/03-web-scout/controls/LAB.md) | Dropdown / checkbox | [02-controls](https://pad.ontoiq.tech/pad/02-controls.html) |
+| 03 | [Files](modules/03-web-scout/files/README.md) *(optional)* | [LESSON](modules/03-web-scout/files/LESSON.md) | [LAB](modules/03-web-scout/files/LAB.md) | Download / upload | [05-files](https://pad.ontoiq.tech/pad/05-files.html) |
 | 04 | [Conditional Automation](modules/04-conditional-automation/README.md) | [LESSON](modules/04-conditional-automation/LESSON.md) | [LAB](modules/04-conditional-automation/LAB.md) | If/Else ตาม business rules | — |
 | 05 | [Looping Files/Data](modules/05-looping-files-data/README.md) | [LESSON](modules/05-looping-files-data/LESSON.md) | [LAB](modules/05-looping-files-data/LAB.md) | For each กับไฟล์และแถวข้อมูล | — |
 | 06 | [Data Table & Excel](modules/06-data-table-excel/README.md) | [LESSON](modules/06-data-table-excel/LESSON.md) | [LAB](modules/06-data-table-excel/LAB.md) | อ่าน แปลง และเขียน Excel | — |
@@ -136,20 +141,20 @@
 | โมดูล | การใช้ใน Lab Kit |
 |-------|------------------|
 | 01 Forms | Lab 01 (หลัก) · 08 · 09 · 10 |
-| 02 Controls | Lab 03 Mission B |
-| 03 Table | Lab 03 Mission A · 10 |
+| 02 Controls | [Lab 03 Controls](modules/03-web-scout/controls/README.md) *(optional)* |
+| 03 Table | [Lab 03 Static Table](modules/03-web-scout/static-table/README.md) · 10 |
 | 04 Dialogs | Lab 09 Case D |
-| 05 Files | Lab 03 Mission D · 08 Challenge J · 09 Case G · 10 Mission |
+| 05 Files | [Lab 03 Files](modules/03-web-scout/files/README.md) *(optional)* · 08 Challenge J · 09 Case G · 10 Mission |
 | 06 Login | Lab 08 (บังคับ) · 10 |
 | 07 Wizard | Lab 08 Mission W · 10 Mission |
-| 08 Iframe | Lab 03 Challenge E · 08 Challenge I · 09 Case H · 10 Challenge |
-| 09 AJAX Table | Lab 03 Mission C · 10 |
+| 08 Iframe | Lab 03 โบนัส (hub) · 08 Challenge I · 09 Case H · 10 Challenge |
+| 09 AJAX Table | [Lab 03 AJAX Table](modules/03-web-scout/ajax-table/README.md) · 10 |
 | 10 OCR | Lab 09 Case F · 10 Challenge |
 | 11 Delay | Lab 09 Case C |
-| 12 API | Lab 03 Challenge F · 09 Case I · 10 Challenge |
+| 12 API | Lab 03 โบนัส (hub) · 09 Case I · 10 Challenge |
 
-> หากทำทั้ง Core และ Challenge ตาม Lab 03/08/09/10 จะครอบคลุม Phase 1 ทั้ง 12 โมดูล  
-> โมดูล **19 Catalog** (pagination) พร้อมแล้วที่ [19-catalog.html](https://ontoiq.tech/pad/19-catalog.html) และใช้ใน Lab 03 Mission P กับ Lab 10
+> Lab 03 แยกเป็นหลาย flow ใต้ [03-web-scout](modules/03-web-scout/README.md)  
+> **19 Catalog** (pagination): [Lab 03 Catalog](modules/03-web-scout/catalog/README.md) *(optional)* และ Lab 10
 
 ---
 
@@ -174,6 +179,7 @@ power-automate-desktop/
 │   ├── 01b-notepad/
 │   ├── 01b-calculator/
 │   ├── 02-file-management/            ← ตัวอย่างมาตรฐานโครงสร้าง 3 ไฟล์
+│   ├── 03-web-scout/                  ← Lab 03 index + static-table / ajax-table / …
 │   ├── …
 │   └── 10-capstone-sales-ops/
 └── …

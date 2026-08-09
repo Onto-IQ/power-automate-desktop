@@ -19,7 +19,7 @@
 
 ## Prerequisites
 
-- ผ่านแนวคิด Lab 03, 06, 08, 09 (แนะนำ Lab 07 ถ้าทำ Challenge Contoso)
+- ผ่านแนวคิด Lab 03 ([Static](../03-web-scout/static-table/README.md) / [AJAX](../03-web-scout/ajax-table/README.md) — ดู [index](../03-web-scout/README.md)), 06, 08, 09 (แนะนำ Lab 07 ถ้าทำ Challenge Contoso)
 - Excel + Outlook Desktop
 - เข้าถึง [PAD Lab Hub](https://ontoiq.tech/pad/)
 - PAD baseline แนะนำ **2607+**

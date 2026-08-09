@@ -22,7 +22,7 @@
 - PAD + browser extension (แนะนำ baseline **2607+**)
 - Microsoft Excel
 - เข้าถึง [PAD Lab Hub](https://ontoiq.tech/pad/)
-- แนะนำทำ Lab 03 / 06 มาก่อน
+- แนะนำทำ [Lab 03 Static/AJAX](../03-web-scout/README.md) / Lab 06 มาก่อน
 
 ## Assets / Output
 
@@ -36,6 +36,6 @@
 
 ## บทที่เกี่ยวข้อง
 
-- Web พื้นฐาน: [Lab 03 Web Automation](../03-web-automation/README.md) · Excel: [Lab 06](../06-excel-data-tables/README.md)
+- Web พื้นฐาน: [Lab 03 index](../03-web-scout/README.md) · Excel: [Lab 06](../06-data-table-excel/README.md)
 - Desktop คู่ขนาน: [Lab 07 Contoso](../07-contoso-invoice-ops/README.md)
 - ใช้ต่อใน Capstone: [Lab 10](../10-capstone-sales-ops/README.md)
