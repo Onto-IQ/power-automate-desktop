@@ -71,7 +71,7 @@ Lab02_FileManagement
 3. กด **Create**
 
 > **กฎตัวแปรใน PAD (อ่านก่อนทำ Step ถัดไป)**  
-> - ช่อง **Name** ของ **Set variable**, ชื่อ **produced variable**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
+> - ช่อง **Name** ของ **Set variable**, ส่วน **Variables produced**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
 > - ช่องอื่นที่ต้องดึงค่าตัวแปร (Folder, File path, Text, …) = ใช้ `%WorkingRoot%` (**มี `%` ครบสองด้าน**)  
 > - หลังสร้างแล้ว Variables pane อาจแสดงเป็น `%WorkingRoot%` — เป็นเรื่องปกติ
 
@@ -211,7 +211,7 @@ End
 ```
 
    - Include subfolders: ปิด
-3. ชื่อ produced variable: `InboxFiles` ← **ไม่ใส่ `%`**  
+3. **Variables produced:** `InboxFiles` ← **ไม่ใส่ `%`**  
    (เวลาอ้างอิงทีหลังใช้ `%InboxFiles%`)
 
 อ้างอิงทางการ: action นี้คืน **List of files** แล้วนำไปวนด้วย **For each** — ตาม [Getting started](https://learn.microsoft.com/power-automate/desktop-flows/getting-started-freeorg)
@@ -237,7 +237,7 @@ End
 ```
 
    - ส่วนที่ต้องการ: Extension (หรือเลือกให้ได้ extension)
-5. ชื่อ produced: `FileExtension` ← **ไม่ใส่ `%`**  
+5. **Variables produced:** `FileExtension` ← **ไม่ใส่ `%`**  
    (อ้างอิงด้วย `%FileExtension%`)
 
 ### Step 5 — แยกตามนามสกุลแล้ว Copy ทีละไฟล์
@@ -272,7 +272,7 @@ End
 ```
 
    - If file exists: Overwrite (หรือตามนโยบายที่ชัด)
-5. ชื่อ produced list (ถ้ามี): `CopiedFiles` ← ไม่ใส่ `%` — ไม่บังคับใช้ต่อ
+5. **Variables produced** (ถ้ามี): `CopiedFiles` ← ไม่ใส่ `%` — ไม่บังคับใช้ต่อ
 6. ลาก **Increase variable** → เลือกตัวแปร `CsvCount` (ไม่มี `%` ในรายการเลือก) แล้ว + `1`
 
 7. เพิ่ม **Else if**: ฝั่งขวา

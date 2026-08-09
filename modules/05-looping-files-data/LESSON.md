@@ -81,7 +81,7 @@ BatchFiles = ไฟล์ *.csv ใน WorkingRoot\batch
 
 ## 5. ตาราง Action ที่จะใช้
 
-| Action (official) | ทำอะไร | Input สำคัญ | Produced (ชื่อตอนสร้าง — ไม่มี `%`) |
+| Action (official) | ทำอะไร | Input สำคัญ | **Variables produced** (ชื่อตอนสร้าง — ไม่มี `%`) |
 |-------------------|--------|-------------|--------------------------------------|
 | **Set variable** | ตั้ง path / ตัวรวม / รีเซ็ตต่อไฟล์ | Name, Value | — |
 | **If folder exists** | ตรวจ `processed` | Folder path | — |
@@ -110,7 +110,7 @@ BatchFiles = ไฟล์ *.csv ใน WorkingRoot\batch
 
 ## 7. กฎ `%` และ Variables pane
 
-- ช่อง **Name** / **Store into** / ชื่อ produced → `WorkingRoot`, `BatchFiles`, `SummaryTable`, `AmountNumber` (**ไม่มี `%`**)
+- ช่อง **Name** / **Store into** / **Variables produced** → `WorkingRoot`, `BatchFiles`, `SummaryTable`, `AmountNumber` (**ไม่มี `%`**)
 - ช่อง iterate / path / นิพจน์บวก → `%BatchFiles%`, `%CurrentRow%['Amount']`, `%GrandTotal% + %TotalAmount%` (**มี `%`**)
 - รายละเอียดเต็ม: [`shared/PAD-FUNDAMENTALS.md`](../../shared/PAD-FUNDAMENTALS.md)
 

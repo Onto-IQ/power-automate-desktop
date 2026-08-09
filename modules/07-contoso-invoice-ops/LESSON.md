@@ -96,7 +96,7 @@ Launch Contoso ครั้งเดียว (Wait + Focus)
 
 ## 5. ตาราง Action ที่จะใช้
 
-| Action (official) | ทำอะไร | Input สำคัญ | Produced (ชื่อตอนสร้าง — ไม่มี `%`) |
+| Action (official) | ทำอะไร | Input สำคัญ | **Variables produced** (ชื่อตอนสร้าง — ไม่มี `%`) |
 |-------------------|--------|-------------|--------------------------------------|
 | **Set variable** | path / ตัวนับ / decision | Name, Value | — |
 | **Run application** | เปิด Contoso | Application path | process/window ตาม action |
@@ -127,7 +127,7 @@ Launch Contoso ครั้งเดียว (Wait + Focus)
 
 ## 7. กฎ `%` และ Variables pane
 
-- ช่อง **Name** / **Store into** / ชื่อ produced → `WorkingRoot`, `CurrentInvoice`, `LastError` (**ไม่มี `%`**)
+- ช่อง **Name** / **Store into** / **Variables produced** → `WorkingRoot`, `CurrentInvoice`, `LastError` (**ไม่มี `%`**)
 - path / Text / Value to iterate → `%WorkingRoot%`, `%Invoices%`, `%LastError.Message%` (**มี `%`**)
 - รายละเอียดเต็ม: [`shared/PAD-FUNDAMENTALS.md`](../../shared/PAD-FUNDAMENTALS.md)
 

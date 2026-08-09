@@ -75,7 +75,7 @@ InboxFiles = ไฟล์ *.txt ใน WorkingRoot\inbox
 
 ## 5. ตาราง Action ที่จะใช้
 
-| Action (official) | ทำอะไร | Input สำคัญ | Produced (ชื่อตอนสร้าง — ไม่มี `%`) |
+| Action (official) | ทำอะไร | Input สำคัญ | **Variables produced** (ชื่อตอนสร้าง — ไม่มี `%`) |
 |-------------------|--------|-------------|--------------------------------------|
 | **Set variable** | ตั้ง path / ตัวนับ / log | Name, Value | — |
 | **If folder exists** | ตรวจโฟลเดอร์ปลายทาง | Folder path | — |
@@ -102,7 +102,7 @@ InboxFiles = ไฟล์ *.txt ใน WorkingRoot\inbox
 
 ## 7. กฎ `%` และ Variables pane
 
-- ช่อง **Name** / **Store into** / ชื่อ produced → พิมพ์ `WorkingRoot`, `CurrentFile`, `Priority` (**ไม่มี `%`**)
+- ช่อง **Name** / **Store into** / **Variables produced** → พิมพ์ `WorkingRoot`, `CurrentFile`, `Priority` (**ไม่มี `%`**)
 - ช่อง Folder / path / เงื่อนไข If / ข้อความ log → `%WorkingRoot%\inbox`, `%Priority%`, `%CurrentFile%` (**มี `%`**)
 - รายละเอียดเต็ม: [`shared/PAD-FUNDAMENTALS.md`](../../shared/PAD-FUNDAMENTALS.md)
 

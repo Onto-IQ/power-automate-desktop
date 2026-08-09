@@ -145,7 +145,7 @@ Lab10_CapstoneSalesOps
 4. สร้าง Subflows ตามตารางด้านบน (อย่างน้อย 3 ชื่อ)
 
 > **กฎตัวแปรใน PAD (อ่านก่อนทำ Step ถัดไป)**  
-> - ช่อง **Name** ของ **Set variable**, ชื่อ **produced variable**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
+> - ช่อง **Name** ของ **Set variable**, ส่วน **Variables produced**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
 > - ช่องอื่นที่ต้องดึงค่าตัวแปร (Folder, File path, Text, …) = ใช้ `%WorkingRoot%` (**มี `%` ครบสองด้าน**)  
 > - หลังสร้างแล้ว Variables pane อาจแสดงเป็น `%WorkingRoot%` — เป็นเรื่องปกติ
 
@@ -225,8 +225,8 @@ DraftOnly
 ```
 
    (หรือแปลงจาก CSV)
-2. ชื่อ produced: `Excel` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%Excel%`)
-3. **Read from Excel worksheet** sheet leads → ชื่อ produced: `Leads` ← **ไม่ใส่ `%`** (first line = column names; อ้างอิงด้วย `%Leads%`)
+2. **Variables produced:** `Excel` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%Excel%`)
+3. **Read from Excel worksheet** sheet leads → **Variables produced:** `Leads` ← **ไม่ใส่ `%`** (first line = column names; อ้างอิงด้วย `%Leads%`)
 4. อ่าน `scout-targets.csv` / sheet ที่เกี่ยวข้องถ้ามี → ใช้เป็นรายการหน้า scout
 5. เก็บ instance หรือ **Close Excel** ตามออกแบบ ก่อนเปิดรายงานใหม่ทีหลัง
 
@@ -241,7 +241,7 @@ DraftOnly
 https://ontoiq.tech/pad/06-login.html
 ```
 
-2. ชื่อ produced: `Browser` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%Browser%`)
+2. **Variables produced:** `Browser` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%Browser%`)
 3. **Wait for web page content**
 4. **Populate text field on web page** `#txt-username` → Text (คัดลอก — username):
 
@@ -281,7 +281,7 @@ https://ontoiq.tech/pad/09-ajax-table.html
 ```
 
    / ตารางออเดอร์  
-   (ถ้ายังไม่มี: ชื่อ produced ของตาราง = `ScoutResults` ← **ไม่ใส่ `%`**)
+   (ถ้ายังไม่มี: **Variables produced** ของตาราง = `ScoutResults` ← **ไม่ใส่ `%`**)
 
 **Catalog pagination (19) — ต้องมี**
 
@@ -297,7 +297,7 @@ https://ontoiq.tech/pad/19-catalog.html
 #tbl-products
 ```
 
-3. **Create new data table** → ชื่อ produced: `Products` ← **ไม่ใส่ `%`** (ถ้ายังไม่มี; อ้างอิงด้วย `%Products%`)
+3. **Create new data table** → **Variables produced:** `Products` ← **ไม่ใส่ `%`** (ถ้ายังไม่มี; อ้างอิงด้วย `%Products%`)
 4. **Extract data from web page** ตาราง Product + Price → append เข้า (คัดลอก):
 
 ```text
@@ -396,7 +396,7 @@ Selectors คงที่:
 ```
 
    - Name: `GrandTotal` = NetBeforeTax + TaxAmount
-3. สร้าง/เติม Data table ชื่อ produced: `Priced` ← **ไม่ใส่ `%`** ให้มีคอลัมน์ด้านบนครบ (อ้างอิงด้วย `%Priced%`)
+3. สร้าง/เติม Data table **Variables produced:** `Priced` ← **ไม่ใส่ `%`** ให้มีคอลัมน์ด้านบนครบ (อ้างอิงด้วย `%Priced%`)
 4. รวมยอด Summary: Sum Amount, Sum Discount, Sum Tax, Sum GrandTotal
 5. เทียบมือกับ [`assets/expected-pricing-examples.csv`](assets/expected-pricing-examples.csv) สำหรับเคสเดียวกัน
 
@@ -524,7 +524,7 @@ Skipped
 
 ใน `SF_LogError` (เรียกจาก **On block error** / **On error**):
 
-1. **Get last error** → ชื่อ produced: `LastError` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%LastError%`)
+1. **Get last error** → **Variables produced:** `LastError` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%LastError%`)
 2. Append File path (คัดลอก):
 
 ```text
@@ -576,7 +576,7 @@ Skipped
 
 | ผิด | ถูก |
 |-----|-----|
-| พิมพ์ `%Name%` ในช่อง Name / Store into / ชื่อ produced | ใช้ชื่อเปล่าไม่มี `%` เช่น `WorkingRoot`, `CurrentLead` |
+| พิมพ์ `%Name%` ในช่อง Name / Store into / **Variables produced** | ใช้ชื่อเปล่าไม่มี `%` เช่น `WorkingRoot`, `CurrentLead` |
 | Catalog ดึงแค่หน้าแรก | Loop จน `#btn-next-page` disabled (~24 รายการ) |
 | สูตรส่วนลด/ภาษีไม่ตรง pricing-rules | ทำตามอัตรา 10%/5%/0% + VAT 7% |
 | Send อีเมลจริงในชั้นเรียน | `SendMode=DraftOnly` + subject `[PAD-LAB-MOCK]` |

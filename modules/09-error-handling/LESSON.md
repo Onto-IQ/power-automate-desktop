@@ -29,7 +29,7 @@
 |--------|----------------|------------------|
 | **On block error** | ครอบหลาย action เป็นบล็อก — กำหนดว่าเมื่อพังจะทำอะไร | ลากเป็นโครงสร้างใน workspace |
 | **On error** | นโยบายต่อ **หนึ่ง action** (Retry / Continue flow run / Throw ฯลฯ) | แท็บ/ไอคอนในหน้าต่าง action |
-| **Get last error** | อ่านรายละเอียด error ล่าสุดเพื่อ log หรือตัดสินใจ | produced = `LastError` (ชนิด Error) |
+| **Get last error** | อ่านรายละเอียด error ล่าสุดเพื่อ log หรือตัดสินใจ | **Variables produced** = `LastError` (ชนิด Error) |
 | **Retry** | ลอง action เดิมอีกครั้งตามจำนวนที่จำกัด | ภายใต้ On error ของ action |
 | **Continue flow run** | ไม่หยุดทั้ง flow หลัง error ของ action/บล็อก | นโยบาย On error / On block error |
 | **Fault injection** | จงใจทำให้พังเพื่อทดสอบการกู้ | [`assets/fault-injection.md`](assets/fault-injection.md) |
@@ -78,7 +78,7 @@ Close browser / Excel
 
 ## 5. ตาราง Action ที่จะใช้
 
-| Action (official) | ทำอะไร | Input สำคัญ | Produced (ชื่อตอนสร้าง — ไม่มี `%`) |
+| Action (official) | ทำอะไร | Input สำคัญ | **Variables produced** (ชื่อตอนสร้าง — ไม่มี `%`) |
 |-------------------|--------|-------------|--------------------------------------|
 | **On block error** | ครอบชุดงาน + นโยบายเมื่อพัง | Exception handling / Continue | — |
 | **Get last error** | อ่าน error ล่าสุด | — | `LastError` |
@@ -103,7 +103,7 @@ Close browser / Excel
 
 ## 7. กฎ `%` และ Variables pane
 
-- produced ของ Get last error = `LastError` (**ไม่มี `%`**)
+- **Variables produced** ของ Get last error = `LastError` (**ไม่มี `%`**)
 - ตอน log ใช้ `%LastError.Message%`, `%LastError.Location%` (**มี `%`**)
 - รายละเอียดเต็ม: [`shared/PAD-FUNDAMENTALS.md`](../../shared/PAD-FUNDAMENTALS.md)
 

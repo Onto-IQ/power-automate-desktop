@@ -67,7 +67,7 @@ Run Calculator → Click Btn_Seven, Plus, Eight, Equals
 
 ## 5. ตาราง Action ที่จะใช้
 
-| Action (official) | ทำอะไร | Input สำคัญ | Produced (ชื่อตอนสร้าง — ไม่มี `%`) |
+| Action (official) | ทำอะไร | Input สำคัญ | **Variables produced** (ชื่อตอนสร้าง — ไม่มี `%`) |
 |-------------------|--------|-------------|--------------------------------------|
 | **Set variable** | ตั้ง path / ข้อความ | Name, Value | — |
 | **Run application** | เปิด Notepad / Calculator | Application path | ตามที่ designer มี |
@@ -93,7 +93,7 @@ Run Calculator → Click Btn_Seven, Plus, Eight, Equals
 
 ## 7. กฎ `%` และ Variables pane
 
-- ช่อง **Name** / ชื่อ produced → พิมพ์ `NoteText`, `OutFile`, `CalcResult` (**ไม่มี `%`**)
+- ช่อง **Name** / **Variables produced** → พิมพ์ `NoteText`, `OutFile`, `CalcResult` (**ไม่มี `%`**)
 - ช่อง Application path / Text to fill-in → `%NotepadPath%`, `%NoteText%`, `%OutFile%` (**มี `%`**)
 - รายละเอียดเต็ม: [`shared/PAD-FUNDAMENTALS.md`](../../shared/PAD-FUNDAMENTALS.md)
 
