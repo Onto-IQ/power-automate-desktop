@@ -1,3 +1,3 @@
 CriteriaKey,CriteriaValue,Notes
-MinAmount,10000,Flag rows with Amount greater than or equal to this value
+MinAmount,1500,Flag rows with Amount greater than or equal to this value (sample orders max ~2400)
 MaxRows,20,Safety cap while learning

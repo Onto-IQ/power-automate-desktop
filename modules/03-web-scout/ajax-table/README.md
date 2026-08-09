@@ -16,7 +16,7 @@
 ## วัตถุประสงค์
 
 - เปิด [09-ajax-table](https://pad.ontoiq.tech/pad/09-ajax-table.html) แล้ว **Wait จนมีแถว** ก่อน Extract
-- กรองตาม criteria (`MinAmount`) แล้วเขียน CSV
+- กรองตาม criteria (`MinAmount=1500`) แล้วเขียน CSV
 - แยกจาก static หน้าเดียว และ catalog pagination
 
 ## Prerequisites
