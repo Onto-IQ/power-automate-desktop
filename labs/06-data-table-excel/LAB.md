@@ -15,8 +15,23 @@
 
 ## Setup บนเครื่อง (ทำก่อนเปิด designer)
 
-1. สร้างโฟลเดอร์ `C:\PAD-Labs\working\lab06\` และ `C:\PAD-Labs\output\lab06\`
-2. คัดลอก workbook จาก [`assets/`](assets/) ไป `C:\PAD-Labs\working\lab06\` (อย่าเขียนทับไฟล์ใน repo โดยตรง)
+1. สร้างโฟลเดอร์ working และ output (คัดลอก path):
+
+```text
+C:\PAD-Labs\working\lab06\
+```
+
+```text
+C:\PAD-Labs\output\lab06\
+```
+
+2. คัดลอก workbook จาก [`assets/`](assets/) ไปยัง:
+
+```text
+C:\PAD-Labs\working\lab06\
+```
+
+   (อย่าเขียนทับไฟล์ใน repo โดยตรง)
 3. เตรียม macro ตาม [`assets/vba/README.md`](assets/vba/README.md) → ได้ไฟล์ `sales-report.xlsm` ใน working  
    - ถ้ายังมีแค่ CSV: เปิด `orders-input.csv` ใน Excel แล้ว Save As `.xlsx` / รวมเข้า `.xlsm` ตาม howto
 4. ตรวจว่าใน working มีแผ่น `Orders` ตาม schema ใน [`shared/DATA-SCHEMAS.md`](../../shared/DATA-SCHEMAS.md) ส่วน Orders Scout
@@ -31,7 +46,7 @@
 | Macro source | [`assets/vba/FormatSummary.bas`](assets/vba/FormatSummary.bas) |
 | Macro howto | [`assets/vba/README.md`](assets/vba/README.md) |
 | Expected summary | [`assets/expected-summary.csv`](assets/expected-summary.csv) |
-| Output | `C:\PAD-Labs\output\lab06\orders-report.xlsm` (หรือ `.xlsx` ถ้ายังไม่รัน macro) |
+| Output | ดู code block ใน Step 1 (`OutputPath`) |
 
 ### โจทย์คำนวณ (ต้อง implement)
 
@@ -47,7 +62,13 @@
 ### Step 0 — สร้าง flow
 
 1. เปิด Power Automate for desktop → **New flow**
-2. ชื่อ: `Lab06_DataTableExcel` → **Create**
+2. ชื่อ flow (คัดลอกได้):
+
+```text
+Lab06_DataTableExcel
+```
+
+3. กด **Create**
 
 > **กฎตัวแปรใน PAD (อ่านก่อนทำ Step ถัดไป)**  
 > - ช่อง **Name** ของ **Set variable**, ชื่อ **produced variable**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
@@ -59,25 +80,54 @@
 1. ใน Actions Pane ค้นหา **Set variable** แล้วลากลง workspace
 2. ตั้งค่า:
    - Name: `WorkingRoot` ← **ไม่ใส่ `%`**
-   - Value: `C:\PAD-Labs\working\lab06`
+   - Value: (คัดลอกด้านล่างวางในช่อง Value — หรือ path ที่คุณใช้จริง)
+
+```text
+C:\PAD-Labs\working\lab06
+```
+
 3. เพิ่ม **Set variable** อีกตัว:
    - Name: `OutputPath` ← **ไม่ใส่ `%`**
-   - Value: `C:\PAD-Labs\output\lab06\orders-report.xlsm`
-4. (แนะนำ) **Set variable** Name `SumAmount` = Value `0`
+   - Value: (คัดลอกด้านล่างวางในช่อง Value)
+
+```text
+C:\PAD-Labs\output\lab06\orders-report.xlsm
+```
+
+4. (แนะนำ) **Set variable** Name: `SumAmount` ← **ไม่ใส่ `%`** · Value:
+
+```text
+0
+```
 
 ### Step 2 — เปิด Excel และอ่านแผ่น Orders
 
 1. ลาก **Launch Excel**
 2. ตั้งค่า:
    - Launch Excel: with the following document (หรือเทียบเท่าใน designer)
-   - Document path: `%WorkingRoot%\sales-report.xlsm` ← **ใช้** ตัวแปร (มี `%`)  
+   - Document path: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%WorkingRoot%\sales-report.xlsm
+```
+
      (หรือ working copy ของ `orders-input.xlsx` แล้วค่อย Save as `.xlsm` ทีหลัง — แนะนำเปิด `.xlsm` ที่มี macro พร้อม)
 3. ชื่อ produced variable: `Excel` ← **ไม่ใส่ `%`**  
    (อ้างอิงด้วย `%Excel%`)
 4. ลาก **Read from Excel worksheet** วางหลัง Launch Excel
 5. ตั้งค่า:
-   - Excel instance: `%Excel%` ← **ใช้** (มี `%`)
-   - Worksheet: `Orders`
+   - Excel instance: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%Excel%
+```
+
+   - Worksheet: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+Orders
+```
+
    - First line of range contains column names: เปิด
 6. ชื่อ produced variable: `Orders` ← **ไม่ใส่ `%`**  
    (อ้างอิงด้วย `%Orders%`)
@@ -93,18 +143,67 @@
 
 1. ลาก **For each**
 2. ตั้งค่า:
-   - Value to iterate: `%Orders%` ← **ใช้** (มี `%`)
+   - Value to iterate: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%Orders%
+```
+
    - Store into: `CurrentRow` ← **ไม่ใส่ `%`**
 3. **ภายใน For each** ลาก **If**
 4. เงื่อนไข (ใช้ OR ตามที่ designer รองรับ):
-   - `%CurrentRow['Region']%` Equal to `BKK`  
-   - **หรือ** `%CurrentRow['Amount']%` Greater than or equal to `10000`  
+   - ฝั่งซ้าย (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%CurrentRow['Region']%
+```
+
+     ตัวดำเนินการ **Equal to** · ฝั่งขวา (คัดลอกด้านล่างวางในช่อง)
+
+```text
+BKK
+```
+
+   - **หรือ** ฝั่งซ้าย (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%CurrentRow['Amount']%
+```
+
+     ตัวดำเนินการ **Greater than or equal to** · ฝั่งขวา (คัดลอกด้านล่างวางในช่อง)
+
+```text
+10000
+```
+
    (ถ้า Amount เป็น text ให้แปลงเป็นตัวเลขก่อนเทียบ)
 5. **ภายใน If** ตั้ง Tier:
-   - ลาก **If** ซ้อน: Amount >= `12000` → **Set variable** Name `Tier` = Value `Gold` ← **ไม่ใส่ `%` ใน Name**
-   - **Else** → Name `Tier` = Value `Silver` → **End**
+   - ลาก **If** ซ้อน: Amount >= (คัดลอกด้านล่างวางในช่อง)
+
+```text
+12000
+```
+
+     → **Set variable** Name: `Tier` ← **ไม่ใส่ `%`** · Value:
+
+```text
+Gold
+```
+
+   - **Else** → Name: `Tier` ← Value:
+
+```text
+Silver
+```
+
+     → **End**
 6. ยังอยู่ในกิ่งกรอง: ลาก **Insert row into data table**
-   - Data table: `%Filtered%` ← **ใช้** (มี `%`)
+   - Data table: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%Filtered%
+```
+
    - ค่าแถว: คัดลอกฟิลด์จาก `%CurrentRow%` + `%Tier%`
 7. ปิด **End** (If กรอง) แล้ว **End** (For each)
 
@@ -121,7 +220,13 @@ End
 
 ### Step 5 — สรุปยอด Amount
 
-1. **หลัง** End ของ For each ลาก **For each** บน `%Filtered%` (หรือรวมยอดระหว่างแทรกแถวก็ได้)
+1. **หลัง** End ของ For each ลาก **For each** บน (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%Filtered%
+```
+
+   (หรือรวมยอดระหว่างแทรกแถวก็ได้)
 2. ในลูป: **Increase variable** เลือก `SumAmount` (ไม่มี `%`) / หรือคำนวณด้วยนิพจน์ที่ใช้ `%SumAmount%`
 3. ตอนอ้างอิงต่อใช้ `%SumAmount%`
 
@@ -129,12 +234,46 @@ End
 
 1. ลาก **Write to Excel worksheet**
 2. ตั้งค่า (sheet Filtered):
-   - Excel instance: `%Excel%`
-   - Worksheet: `Filtered` (สร้างใหม่ถ้ายังไม่มี ตามที่ action รองรับ)
-   - Value to write: `%Filtered%` (หรือเขียนทีละช่วงให้ได้ตารางครบ)
-3. ลาก **Write to Excel worksheet** อีกชุดสำหรับ sheet `Summary`
+   - Excel instance: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%Excel%
+```
+
+   - Worksheet: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+Filtered
+```
+
+     (สร้างใหม่ถ้ายังไม่มี ตามที่ action รองรับ)
+   - Value to write: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%Filtered%
+```
+
+     (หรือเขียนทีละช่วงให้ได้ตารางครบ)
+3. ลาก **Write to Excel worksheet** อีกชุดสำหรับ sheet Summary
 4. ตั้งค่าตัวอย่าง:
-   - เซลล์ Label เช่น `TotalAmount` / Value = `%SumAmount%`
+   - Worksheet: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+Summary
+```
+
+   - เซลล์ Label เช่น (คัดลอกด้านล่างวางในช่อง)
+
+```text
+TotalAmount
+```
+
+   - Value = (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%SumAmount%
+```
+
    - เพิ่มแถว Label อื่นได้ถ้าต้องการ (เช่นจำนวนแถวที่ผ่านเงื่อนไข)
 
 ### Step 7 — Mission M: Run Excel macro
@@ -142,8 +281,18 @@ End
 1. ตรวจว่า workbook เป็น `.xlsm` และมี macro ชื่อ `FormatSummary` (ตาม [`assets/vba/README.md`](assets/vba/README.md))
 2. ลาก **Run Excel macro**
 3. ตั้งค่า:
-   - Excel instance: `%Excel%`
-   - Macro: `FormatSummary`
+   - Excel instance: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%Excel%
+```
+
+   - Macro: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+FormatSummary
+```
+
 4. กด Save ในหน้าต่าง action
 
 ### Step 8 — บันทึก output แบบรันซ้ำได้ แล้วปิด Excel
@@ -152,14 +301,39 @@ End
 
 1. ลาก **If file exists**
 2. ตั้งค่า:
-   - File path: `%OutputPath%` (`C:\PAD-Labs\output\lab06\orders-report.xlsm`)
-3. **ภายใน If** ลาก **Delete file** → File: `%OutputPath%`
+   - File path: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%OutputPath%
+```
+
+3. **ภายใน If** ลาก **Delete file** → File: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%OutputPath%
+```
+
 4. ปิดด้วย **End**
 5. ลาก **Save document as** (หรือชื่อเทียบเท่าในกลุ่ม Excel ที่บันทึกเป็น path ใหม่)
-   - Excel instance: `%Excel%`
-   - Document path: `%OutputPath%`
+   - Excel instance: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%Excel%
+```
+
+   - Document path: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%OutputPath%
+```
+
 6. ลาก **Close Excel**
-   - Excel instance: `%Excel%`
+   - Excel instance: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%Excel%
+```
+
    - ก่อนปิด: อย่าลืมว่าบันทึกแล้ว
 
 > ทางเลือกที่ผ่านเกณฑ์เช่นกัน: เปิดไฟล์ output เดิมแล้ว **Save document** (ไม่ as) — แต่ใน Lab นี้แนะนำ If exists → Delete → Save document as ให้ชัด

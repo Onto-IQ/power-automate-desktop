@@ -15,12 +15,36 @@
 
 ## Setup บนเครื่อง (ทำก่อนเปิด designer)
 
-1. สร้างโฟลเดอร์ `C:\PAD-Labs\working\lab04\` และ `C:\PAD-Labs\output\lab04\`
-2. คัดลอกทั้งโฟลเดอร์ [`assets/inbox`](assets/inbox/) ไปยัง `C:\PAD-Labs\working\lab04\inbox`
+1. สร้างโฟลเดอร์ working และ output (คัดลอก path):
+
+```text
+C:\PAD-Labs\working\lab04\
+```
+
+```text
+C:\PAD-Labs\output\lab04\
+```
+
+2. คัดลอกทั้งโฟลเดอร์ [`assets/inbox`](assets/inbox/) ไปยัง:
+
+```text
+C:\PAD-Labs\working\lab04\inbox
+```
+
 3. เตรียมโฟลเดอร์ปลายทางภายใต้ working (หรือให้ Flow สร้างใน Hands-on):
-   - `C:\PAD-Labs\working\lab04\approved`
-   - `C:\PAD-Labs\working\lab04\rejected`
-   - `C:\PAD-Labs\working\lab04\review`
+
+```text
+C:\PAD-Labs\working\lab04\approved
+```
+
+```text
+C:\PAD-Labs\working\lab04\rejected
+```
+
+```text
+C:\PAD-Labs\working\lab04\review
+```
+
 4. อ่านกฎใน [`assets/business-rules.md`](assets/business-rules.md)
 
 > ถ้าใช้ไดรฟ์อื่นได้ — แต่ต้องใช้ path นั้นใน `%WorkingRoot%` ให้สม่ำเสมอทั้ง flow
@@ -45,7 +69,7 @@
 | Inbox samples | [`assets/inbox/`](assets/inbox/) |
 | Rules | [`assets/business-rules.md`](assets/business-rules.md) |
 | Expected | [`assets/expected-routing.csv`](assets/expected-routing.csv) |
-| Log | `C:\PAD-Labs\output\lab04\routing-log.csv` |
+| Log | ดู code block ใน Step 6 |
 
 ### Expected routing (จาก expected-routing.csv)
 
@@ -64,7 +88,13 @@
 ### Step 0 — สร้าง flow
 
 1. เปิด Power Automate for desktop → **New flow**
-2. ชื่อ: `Lab04_ConditionalAutomation` → **Create**
+2. ชื่อ flow (คัดลอกได้):
+
+```text
+Lab04_ConditionalAutomation
+```
+
+3. กด **Create**
 
 > **กฎตัวแปรใน PAD (อ่านก่อนทำ Step ถัดไป)**  
 > - ช่อง **Name** ของ **Set variable**, ชื่อ **produced variable**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
@@ -76,38 +106,119 @@
 1. ลาก **Set variable**
 2. ตั้งค่า:
    - Name: `WorkingRoot` ← **ไม่ใส่ `%`**
-   - Value: `C:\PAD-Labs\working\lab04`
+   - Value: (คัดลอกด้านล่างวางในช่อง Value — หรือ path ที่คุณใช้จริง)
+
+```text
+C:\PAD-Labs\working\lab04
+```
+
 3. เพิ่ม **Set variable** อีก 3 ตัว (Name ไม่มี `%`):
-   - Name `ApprovedCount` = Value `0`
-   - Name `RejectedCount` = Value `0`
-   - Name `ReviewCount` = Value `0`
+   - Name: `ApprovedCount` ← Value:
+
+```text
+0
+```
+
+   - Name: `RejectedCount` ← Value:
+
+```text
+0
+```
+
+   - Name: `ReviewCount` ← Value:
+
+```text
+0
+```
+
 4. (แนะนำ) ตั้งตัวแปรข้อความ log เริ่มต้น:
-   - Name `RoutingLog` = Value `FileName,Folder,Priority,Status` ← **ไม่ใส่ `%` ใน Name**  
-     (บรรทัดหัวตาราง CSV)
+   - Name: `RoutingLog` ← **ไม่ใส่ `%`**
+   - Value: (คัดลอกด้านล่างวางในช่อง Value — บรรทัดหัวตาราง CSV)
+
+```text
+FileName,Folder,Priority,Status
+```
 
 ### Step 2 — สร้างโฟลเดอร์ปลายทาง
 
 ทำซ้ำ 3 ชุด (อย่า hardcode คนละไดรฟ์กับ `%WorkingRoot%`)
 
-| ชุด | If folder exists (path) | Create folder |
-|-----|-------------------------|---------------|
-| approved | `%WorkingRoot%\approved` | Folder name `approved` into `%WorkingRoot%` |
-| rejected | `%WorkingRoot%\rejected` | Folder name `rejected` into `%WorkingRoot%` |
-| review | `%WorkingRoot%\review` | Folder name `review` into `%WorkingRoot%` |
+**ชุด approved — If folder exists (คัดลอก path):**
+
+```text
+%WorkingRoot%\approved
+```
+
+Create folder: ชื่อโฟลเดอร์
+
+```text
+approved
+```
+
+Into:
+
+```text
+%WorkingRoot%
+```
+
+**ชุด rejected — If folder exists:**
+
+```text
+%WorkingRoot%\rejected
+```
+
+Create folder ชื่อ:
+
+```text
+rejected
+```
+
+Into:
+
+```text
+%WorkingRoot%
+```
+
+**ชุด review — If folder exists:**
+
+```text
+%WorkingRoot%\review
+```
+
+Create folder ชื่อ:
+
+```text
+review
+```
+
+Into:
+
+```text
+%WorkingRoot%
+```
 
 ขั้นตอนต่อหนึ่งชุด:
 
-1. ลาก **If folder exists**
-2. Folder path = ตามตาราง
-3. ในกิ่ง **Else** ลาก **Create folder** ตามตาราง
-4. ปิดด้วย **End**
+1. ลาก **If folder exists** → วาง path จาก code block ด้านบน
+2. ในกิ่ง **Else** ลาก **Create folder** ตามชื่อ + Into จาก code block
+3. ปิดด้วย **End**
 
 ### Step 3 — ดึงรายการไฟล์จาก inbox
 
 1. ลาก **Get files in folder**
 2. ตั้งค่า:
-   - Folder: `%WorkingRoot%\inbox`
-   - File filter: `*.txt` (หรือ `*` ถ้าต้องการรวม csv ที่เกี่ยวข้อง)
+   - Folder: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%WorkingRoot%\inbox
+```
+
+   - File filter: (คัดลอกด้านล่างวางในช่อง — หรือ `*` ถ้าต้องการรวม csv ที่เกี่ยวข้อง)
+
+```text
+*.txt
+```
+
    - Include subfolders: ปิด
 3. ชื่อ produced variable: `InboxFiles` ← **ไม่ใส่ `%`**  
    (เวลาอ้างอิงทีหลังใช้ `%InboxFiles%`)
@@ -116,7 +227,12 @@
 
 1. ลาก **For each**
 2. ตั้งค่า:
-   - Value to iterate: `%InboxFiles%` ← **ใช้** ตัวแปร (มี `%`)
+   - Value to iterate: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%InboxFiles%
+```
+
    - Store into: `CurrentFile` ← **ไม่ใส่ `%`**
 3. **ภายใน For each** เลือกอย่างน้อยหนึ่งวิธีอ่านค่า:
 
@@ -130,7 +246,12 @@
 
 **วิธีสำรอง — อ่านเนื้อหาไฟล์**
 
-1. ลาก **Read text from file** → File path: `%CurrentFile%` ← **ใช้** (มี `%`)
+1. ลาก **Read text from file** → File path: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%CurrentFile%
+```
+
 2. ชื่อ produced: `FileText` ← **ไม่ใส่ `%`**
 3. ดึงบรรทัด `Priority:` และ `Status:` ไปใส่ตัวแปร `Priority` / `Status` (Trim ช่องว่าง; อ้างอิงด้วย `%Priority%` / `%Status%`)
 
@@ -142,24 +263,103 @@
 
 1. ลาก **If**
 2. เงื่อนไขแบบ AND:
-   - `%Priority%` Equal to `High`
-   - **และ** `%Status%` Equal to `Ready`
+   - ฝั่งซ้าย (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%Priority%
+```
+
+     ตัวดำเนินการ **Equal to** · ฝั่งขวา (คัดลอกด้านล่างวางในช่อง)
+
+```text
+High
+```
+
+   - **และ** ฝั่งซ้าย (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%Status%
+```
+
+     ตัวดำเนินการ **Equal to** · ฝั่งขวา (คัดลอกด้านล่างวางในช่อง)
+
+```text
+Ready
+```
+
 3. **ภายใน If** ลาก **Move file(s)**
-   - File(s) to move: `%CurrentFile%` ← ไม่ใช่ทั้งลิสต์
-   - Destination folder: `%WorkingRoot%\approved\`
+   - File(s) to move: (คัดลอกด้านล่างวางในช่อง — ไม่ใช่ทั้งลิสต์)
+
+```text
+%CurrentFile%
+```
+
+   - Destination folder: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%WorkingRoot%\approved\
+```
+
 4. ลาก **Increase variable** → เลือกตัวแปร `ApprovedCount` (ไม่มี `%` ในรายการเลือก) แล้ว + `1`
-5. ต่อท้าย log (Set variable / Append): เพิ่มแถว  
-   `%FileNameOnly%,approved,%Priority%,%Status%`
+5. ต่อท้าย log (Set variable / Append): เพิ่มแถว (คัดลอกด้านล่างเป็นสูตรตัวอย่าง)
+
+```text
+%FileNameOnly%,approved,%Priority%,%Status%
+```
 
 6. เพิ่ม **Else if** เงื่อนไขแบบ OR:
-   - `%Priority%` Equal to `Low`
-   - **หรือ** `%Status%` Equal to `Invalid`
-   - **Move file(s)** `%CurrentFile%` → `%WorkingRoot%\rejected\`
+   - ฝั่งซ้าย (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%Priority%
+```
+
+     **Equal to** ฝั่งขวา:
+
+```text
+Low
+```
+
+   - **หรือ** ฝั่งซ้าย (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%Status%
+```
+
+     **Equal to** ฝั่งขวา:
+
+```text
+Invalid
+```
+
+   - **Move file(s)** File(s):
+
+```text
+%CurrentFile%
+```
+
+     Destination:
+
+```text
+%WorkingRoot%\rejected\
+```
+
    - **Increase variable** `RejectedCount` + 1
    - Append log → folder `rejected`
 
 7. เพิ่ม **Else**:
-   - **Move file(s)** `%CurrentFile%` → `%WorkingRoot%\review\`
+   - **Move file(s)** File(s):
+
+```text
+%CurrentFile%
+```
+
+     Destination:
+
+```text
+%WorkingRoot%\review\
+```
+
    - **Increase variable** `ReviewCount` + 1
    - Append log → folder `review`
 
@@ -188,11 +388,24 @@ End
 
 1. **หลัง** End ของ For each ลาก **Write text to file**
 2. ตั้งค่า:
-   - File path: `C:\PAD-Labs\output\lab04\routing-log.csv`
-   - Text to write: `%RoutingLog%` (หรือข้อความ CSV ที่สะสมไว้)
+   - File path: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+C:\PAD-Labs\output\lab04\routing-log.csv
+```
+
+   - Text to write: (คัดลอกด้านล่างวางในช่อง — หรือข้อความ CSV ที่สะสมไว้)
+
+```text
+%RoutingLog%
+```
+
    - If file exists: Overwrite
-3. (แนะนำ) เขียนบรรทัดสรุปเพิ่ม หรือไฟล์สรุปสั้น ๆ เช่น  
-   `Approved=%ApprovedCount%; Rejected=%RejectedCount%; Review=%ReviewCount%`
+3. (แนะนำ) เขียนบรรทัดสรุปเพิ่ม หรือไฟล์สรุปสั้น ๆ เช่น (คัดลอกด้านล่าง):
+
+```text
+Approved=%ApprovedCount%; Rejected=%RejectedCount%; Review=%ReviewCount%
+```
 
 ### Step 7 — รันและเทียบ expected
 

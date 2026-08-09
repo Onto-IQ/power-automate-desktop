@@ -50,6 +50,33 @@ Callout มาตรฐานที่ควรมีใกล้ Step แรก
 > ช่องอื่นที่ต้องดึงค่าตัวแปร = ใช้ `%WorkingRoot%` (มี `%` ครบสองด้าน)
 ```
 
+## กติกา “ค่าที่ต้องวางในช่อง” = fenced code block (copy ได้ง่าย)
+
+ผู้เรียนเป็น user ทั่วไป — **ทุกค่าที่ต้องพิมพ์/วางลงช่องใน PAD** ให้ใส่ใน fenced code block (` ```text `) เพื่อกด Copy บน GitHub/viewer ได้
+
+| ใส่ fenced block | คงเป็น inline \`...\` ได้ |
+|------------------|---------------------------|
+| Path โฟลเดอร์/ไฟล์ (`C:\PAD-Labs\...`) | ชื่อตัวแปรตอนสร้าง (`WorkingRoot`) |
+| URL ของ Lab Hub | ชื่อ Action ทางการ |
+| ข้อความ Value ยาว / สูตร summary | ชื่อ UI element สั้น |
+| เนื้อหาหลายบรรทัด (Notepad, email body) | คำอธิบายสั้น ๆ |
+| Username/password demo ของ Lab | — |
+
+รูปแบบที่แนะนำ:
+
+````markdown
+- Name: `WorkingRoot` ← **ไม่ใส่ `%`**
+- Value: (คัดลอกด้านล่างวางในช่อง Value)
+
+```text
+C:\PAD-Labs\working\lab02
+```
+````
+
+อย่าฝัง path ยาวไว้ในประโยคอย่างเดียวโดยไม่มี code block แยก — ผู้เรียนจะ copy พลาดช่องว่าง/เครื่องหมาย
+
+---
+
 ## กติกาเขียน “Hands-on ทีละขั้น”
 
 แต่ละ Step ต้องมีอย่างน้อย:

@@ -15,10 +15,28 @@
 
 ## Setup บนเครื่อง (ทำก่อนเปิด designer)
 
-1. สร้างโฟลเดอร์ `C:\PAD-Labs\working\lab08\` และ `C:\PAD-Labs\output\lab08\`
-2. คัดลอก [`assets/leads-input.xlsx`](assets/leads-input.xlsx) (หรือสร้างจาก [`assets/leads-input.csv`](assets/leads-input.csv)) ไป `C:\PAD-Labs\working\lab08\`
+1. สร้างโฟลเดอร์ (คัดลอกได้):
+
+```text
+C:\PAD-Labs\working\lab08\
+```
+
+```text
+C:\PAD-Labs\output\lab08\
+```
+
+2. คัดลอก [`assets/leads-input.xlsx`](assets/leads-input.xlsx) (หรือสร้างจาก [`assets/leads-input.csv`](assets/leads-input.csv)) ไป:
+
+```text
+C:\PAD-Labs\working\lab08\
+```
+
 3. คัดลอก [`assets/roundtrip-proof.txt`](assets/roundtrip-proof.txt) ไป working (สำหรับ Challenge J)
-4. Output เป้าหมาย: `C:\PAD-Labs\output\lab08\leads-output.xlsx`
+4. Output เป้าหมาย (คัดลอกได้):
+
+```text
+C:\PAD-Labs\output\lab08\leads-output.xlsx
+```
 
 > ถ้าใช้ไดรฟ์อื่น ให้คง path นั้นใน `%WorkingRoot%` / `%OutputPath%` ทั้ง flow
 
@@ -45,7 +63,7 @@
 | Output template | [`assets/leads-output-template.csv`](assets/leads-output-template.csv) |
 | Files proof mock | [`assets/roundtrip-proof.txt`](assets/roundtrip-proof.txt) |
 | Schema | [`shared/DATA-SCHEMAS.md`](../../shared/DATA-SCHEMAS.md) |
-| Your output | `C:\PAD-Labs\output\lab08\leads-output.xlsx` |
+| Your output | ดู code block ใน Setup / Step 1 |
 
 ### Mapping Excel → Form
 
@@ -63,7 +81,13 @@
 ### Step 0 — สร้าง flow
 
 1. เปิด Power Automate for desktop → **New flow**
-2. ชื่อ: `Lab08_ExcelWebRoundtrip` → **Create**
+2. ชื่อ flow (คัดลอกได้):
+
+```text
+Lab08_ExcelWebRoundtrip
+```
+
+3. กด **Create**
 
 > **กฎตัวแปรใน PAD (อ่านก่อนทำ Step ถัดไป)**  
 > - ช่อง **Name** ของ **Set variable**, ชื่อ **produced variable**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
@@ -73,17 +97,41 @@
 ### Step 1 — ตั้ง path
 
 1. ลาก **Set variable** (Name ไม่มี `%`):
-   - Name `WorkingRoot` = Value `C:\PAD-Labs\working\lab08`
-   - Name `OutputPath` = Value `C:\PAD-Labs\output\lab08\leads-output.xlsx`
+   - Name: `WorkingRoot` ← Value:
+
+```text
+C:\PAD-Labs\working\lab08
+```
+
+   - Name: `OutputPath` ← Value:
+
+```text
+C:\PAD-Labs\output\lab08\leads-output.xlsx
+```
 
 ### Step 2 — อ่าน Leads จาก Excel
 
 1. ลาก **Launch Excel**
-2. ตั้งค่า: เปิด `%WorkingRoot%\leads-input.xlsx` ← **ใช้** (มี `%`)
+2. ตั้งค่า: Document path (คัดลอก):
+
+```text
+%WorkingRoot%\leads-input.xlsx
+```
+
 3. ชื่อ produced: `Excel` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%Excel%`)
 4. ลาก **Read from Excel worksheet**
-   - Excel instance: `%Excel%` ← **ใช้** (มี `%`)
-   - Worksheet: `Leads`
+   - Excel instance: (คัดลอก)
+
+```text
+%Excel%
+```
+
+   - Worksheet: (คัดลอก)
+
+```text
+Leads
+```
+
    - First line of range contains column names: เปิด
 5. ชื่อ produced: `Leads` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%Leads%`)
 
@@ -93,34 +141,87 @@
 
 1. ลาก **Launch new Microsoft Edge** (หรือ **Launch new Chrome**)
 2. ตั้งค่า:
-   - Initial URL: `https://ontoiq.tech/pad/06-login.html`
+   - Initial URL: (คัดลอก)
+
+```text
+https://ontoiq.tech/pad/06-login.html
+```
+
 3. ชื่อ produced: `Browser` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%Browser%`)
-4. ลาก **Wait for web page content** จนช่อง login พร้อม (เช่น `#txt-username`)
+4. ลาก **Wait for web page content** จนช่อง login พร้อม — selector ที่แนะนำ (คัดลอกได้):
+
+```text
+#txt-username
+```
+
 5. ลาก **Populate text field on web page**
-   - UI element: `#txt-username` → Text: `demo`
+   - UI element: `#txt-username`
+   - Text: (คัดลอก — username)
+
+```text
+demo
+```
+
 6. ลาก **Populate text field on web page**
-   - `#txt-password` → `demo`
-7. ลาก **Press button on web page** → `#btn-login`
+   - UI element: `#txt-password`
+   - Text: (คัดลอก — password)
+
+```text
+demo
+```
+
+7. ลาก **Press button on web page** → selector (คัดลอกได้):
+
+```text
+#btn-login
+```
+
 8. ลาก **Wait for web page content** จนสำเร็จ / dashboard พร้อมก่อนเข้าลูป
 
 ### Step 4 — For each lead ที่ Status = New
 
 1. ลาก **For each**
-   - Value to iterate: `%Leads%` ← **ใช้** (มี `%`)
+   - Value to iterate: (คัดลอก)
+
+```text
+%Leads%
+```
+
    - Store into: `CurrentLead` ← **ไม่ใส่ `%`**
 2. **ภายใน For each** ลาก **If**
-   - เงื่อนไข: Status ของแถว Equal to `New`
+   - เงื่อนไข: Status ของแถว Equal to (คัดลอก):
+
+```text
+New
+```
+
 3. (แนะนำ Challenge) **Else** / If ซ้อน: ถ้า Email ว่าง → ข้ามแถว
-4. งาน submit ทั้งหมดอยู่ **ภายใน** กิ่ง `Status=New`
+4. งาน submit ทั้งหมดอยู่ **ภายใน** กิ่ง Status = New
 
 ### Step 5 — Mission W: Priority=High ใช้ Wizard (07)
 
 ยังอยู่ภายในกิ่ง New:
 
 1. ลาก **If**
-   - `%CurrentLead['Priority']%` Equal to `High`
+   - ฝั่งซ้าย (คัดลอก):
+
+```text
+%CurrentLead['Priority']%
+```
+
+   Equal to (คัดลอก):
+
+```text
+High
+```
+
 2. **ภายใน If (High):**
-   - **Go to web page** → `https://ontoiq.tech/pad/07-wizard.html`
+   - **Go to web page** → URL (คัดลอก):
+
+```text
+https://ontoiq.tech/pad/07-wizard.html
+```
+
    - **Wait for web page content**
    - ทำ Wizard ครบทุก step ด้วย **Populate text field on web page** / **Press button on web page** / **Click link on web page** ตามที่หน้ามี
    - อ่านข้อความผลลัพธ์ → **Set variable** Name: `WebResult` ← **ไม่ใส่ `%`**
@@ -131,7 +232,12 @@
 
 ในกิ่ง Else ของ Priority:
 
-1. **Go to web page** → `https://ontoiq.tech/pad/01-forms.html`
+1. **Go to web page** → URL (คัดลอก):
+
+```text
+https://ontoiq.tech/pad/01-forms.html
+```
+
 2. **Wait for web page content** จนฟอร์มพร้อม
 3. **Populate text field on web page** ตาม mapping:
    - Name ← FullName
@@ -147,37 +253,91 @@
 หลัง submit สำเร็จ (ทั้ง Wizard และ Forms):
 
 1. **Set variable** / อัปเดตคอลัมน์ของแถวหรือตาราง (Name ไม่มี `%`):
-   - Status = `Submitted`
-   - WebResult = `%WebResult%` ← **ใช้** ค่าที่เก็บไว้ (มี `%`)
-   - Name `SubmittedAt` = เวลาปัจจุบัน (อ้างอิงด้วย `%SubmittedAt%`)
-2. ออกแบบให้ `%Leads%` (หรือตารางผลแยก) เก็บค่าอัปเดตครบก่อนเขียน Excel ท้าย flow
+   - Status ← Value:
+
+```text
+Submitted
+```
+
+   - WebResult ← Value (คัดลอก):
+
+```text
+%WebResult%
+```
+
+   - Name: `SubmittedAt` = เวลาปัจจุบัน (อ้างอิงด้วย `%SubmittedAt%`)
+2. ออกแบบให้ตาราง leads เก็บค่าอัปเดตครบก่อนเขียน Excel ท้าย flow — อ้างอิง (คัดลอก):
+
+```text
+%Leads%
+```
 
 ### Step 8 — Challenge I / J (ทางเลือก แต่มีในเกณฑ์ Challenge)
 
 **Mission I — Iframe**
 
-1. ในลูป: **If** Company Contains `Fabrikam` (แถวแรกที่เข้าเงื่อนไข)
-2. **Go to web page** → `https://ontoiq.tech/pad/08-iframe.html`
+1. ในลูป: **If** Company Contains (คัดลอก):
+
+```text
+Fabrikam
+```
+
+   (แถวแรกที่เข้าเงื่อนไข)
+2. **Go to web page** → URL (คัดลอก):
+
+```text
+https://ontoiq.tech/pad/08-iframe.html
+```
+
 3. สลับเข้า iframe ที่ถูกต้องแล้ว Populate / Submit ตามหน้า
 4. บันทึกผลลง WebResult หรือ Notes
 
 **Mission J — Files proof**
 
 1. **หลัง** submit สำเร็จอย่างน้อย 1 แถว (นอกหรือท้ายลูปก็ได้ตามออกแบบ)
-2. **Go to web page** → `https://ontoiq.tech/pad/05-files.html`
-3. Upload `%WorkingRoot%\roundtrip-proof.txt`
+2. **Go to web page** → URL (คัดลอก):
+
+```text
+https://ontoiq.tech/pad/05-files.html
+```
+
+3. Upload path (คัดลอก):
+
+```text
+%WorkingRoot%\roundtrip-proof.txt
+```
+
 4. บันทึกผลในคอลัมน์ `WebResult` หรือ sheet `Artifacts`
 
 ### Step 9 — เขียนกลับ Excel + รันซ้ำได้ + ปิดทรัพยากร
 
 1. ลาก **If file exists**
-   - File path: `%OutputPath%`
-2. **ภายใน If** → **Delete file** → `%OutputPath%`
+   - File path: (คัดลอก)
+
+```text
+%OutputPath%
+```
+
+2. **ภายใน If** → **Delete file** → (คัดลอก):
+
+```text
+%OutputPath%
+```
+
 3. **End**
 4. **Write to Excel worksheet** ทั้งตารางกลับ sheet `Leads` หรือ `Results` (ใช้ `%Excel%` หรือ Launch Excel ใหม่สำหรับ output ตามที่ออกแบบ)
-5. **Save document as** → `%OutputPath%`
+5. **Save document as** → (คัดลอก):
+
+```text
+%OutputPath%
+```
+
 6. **Close Excel**
-7. **Close web browser** → `%Browser%`
+7. **Close web browser** → (คัดลอก):
+
+```text
+%Browser%
+```
 
 ### Step 10 — รันและตรวจ
 

@@ -15,9 +15,28 @@
 
 ## Setup บนเครื่อง (ทำก่อนเปิด designer)
 
-1. สร้างโฟลเดอร์ `C:\PAD-Labs\working\lab09\` และ `C:\PAD-Labs\logs\lab09\`
-2. คัดลอกไฟล์ใน [`assets/`](assets/) ไป `C:\PAD-Labs\working\lab09\`
-3. เตรียม path log: `C:\PAD-Labs\logs\lab09\error-log.csv`
+1. สร้างโฟลเดอร์ (คัดลอกได้):
+
+```text
+C:\PAD-Labs\working\lab09\
+```
+
+```text
+C:\PAD-Labs\logs\lab09\
+```
+
+2. คัดลอกไฟล์ใน [`assets/`](assets/) ไป:
+
+```text
+C:\PAD-Labs\working\lab09\
+```
+
+3. เตรียม path log (คัดลอกได้):
+
+```text
+C:\PAD-Labs\logs\lab09\error-log.csv
+```
+
 4. อ่านสคริปต์ fault: [`assets/fault-injection.md`](assets/fault-injection.md)
 
 ## Test Cases (เจตนาให้พัง / กู้)
@@ -49,7 +68,7 @@
 |--|------|
 | Fault script | [`assets/fault-injection.md`](assets/fault-injection.md) |
 | Log template | [`assets/error-log-template.csv`](assets/error-log-template.csv) |
-| Your log | `C:\PAD-Labs\logs\lab09\error-log.csv` |
+| Your log | ดู code block ใน Setup / Step 1 |
 | Missing path hint | [`assets/missing-file-path.txt`](assets/missing-file-path.txt) |
 | Bad URL hint | [`assets/bad-url.txt`](assets/bad-url.txt) |
 
@@ -60,7 +79,13 @@
 ### Step 0 — สร้าง flow
 
 1. เปิด Power Automate for desktop → **New flow**
-2. ชื่อ: `Lab09_ErrorHandling` → **Create**
+2. ชื่อ flow (คัดลอกได้):
+
+```text
+Lab09_ErrorHandling
+```
+
+3. กด **Create**
 
 > **กฎตัวแปรใน PAD (อ่านก่อนทำ Step ถัดไป)**  
 > - ช่อง **Name** ของ **Set variable**, ชื่อ **produced variable**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
@@ -70,25 +95,78 @@
 ### Step 1 — Init ตัวแปรและ header log
 
 1. ลาก **Set variable** (Name ไม่มี `%`):
-   - Name `WorkingRoot` = Value `C:\PAD-Labs\working\lab09`
-   - Name `ErrorLogPath` = Value `C:\PAD-Labs\logs\lab09\error-log.csv`
-   - Name `RetryCount` = Value `0`
-   - Name `Fatal` = Value `False` (หรือตามที่ designer รองรับ)
+   - Name: `WorkingRoot` ← Value:
+
+```text
+C:\PAD-Labs\working\lab09
+```
+
+   - Name: `ErrorLogPath` ← Value:
+
+```text
+C:\PAD-Labs\logs\lab09\error-log.csv
+```
+
+   - Name: `RetryCount` ← Value:
+
+```text
+0
+```
+
+   - Name: `Fatal` ← Value:
+
+```text
+False
+```
+
+     (หรือตามที่ designer รองรับ)
 2. นโยบายรันซ้ำสำหรับ log: เลือกระหว่าง Overwrite ตอนเริ่ม หรือ Append ทั้งรอบ — ให้ชัดเจน
 3. ลาก **Write text to file**
-   - File path: `%ErrorLogPath%`
+   - File path: (คัดลอก)
+
+```text
+%ErrorLogPath%
+```
+
    - Text: header ตาม [`assets/error-log-template.csv`](assets/error-log-template.csv)
    - If file exists: Overwrite (รอบเริ่มต้น) หรือตามนโยบายที่ประกาศใน Acceptance
 
 ### Step 2 — Case A: Missing file + On block error + Get last error
 
-1. อ่าน path ที่ตั้งใจให้พังจาก `%WorkingRoot%\missing-file-path.txt` (ด้วย **Read text from file**) → ชื่อ produced: `MissingPath` ← **ไม่ใส่ `%`**
+1. อ่าน path ที่ตั้งใจให้พังจาก File path (คัดลอก):
+
+```text
+%WorkingRoot%\missing-file-path.txt
+```
+
+   (ด้วย **Read text from file**) → ชื่อ produced: `MissingPath` ← **ไม่ใส่ `%`**
 2. ลาก **On block error** ครอบชุด action ของ Case A
-3. **ภายในบล็อก** ลาก action ที่จะล้ม เช่น **Read text from file** / **Get files in folder** ไปที่ `%MissingPath%` ← **ใช้** (มี `%`) (path ที่ไม่มีจริง)
+3. **ภายในบล็อก** ลาก action ที่จะล้ม เช่น **Read text from file** / **Get files in folder** ไปที่ (คัดลอก):
+
+```text
+%MissingPath%
+```
+
+   (path ที่ไม่มีจริง)
 4. ในหน้านโยบาย **On block error** (หรือกิ่ง Exception):
    - ลาก **Get last error**
    - ชื่อ produced variable: `LastError` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%LastError%`)
-   - **Write text to file** append แถว log: Case=`A`, Message=`%LastError.Message%`, Location=`%LastError.Location%`
+   - **Write text to file** append แถว log — Case Value:
+
+```text
+A
+```
+
+     Message / Location (คัดลอก):
+
+```text
+%LastError.Message%
+```
+
+```text
+%LastError.Location%
+```
+
    - ตั้งให้ **Continue** flow ไป Case ถัดไป — อย่าหยุดทั้ง flow
 5. ปิดบล็อกตามโครง designer
 
@@ -96,42 +174,94 @@
 
 ### Step 3 — Case B: Bad URL + screenshot
 
-1. **Read text from file** → ชื่อ produced: `BadUrl` ← **ไม่ใส่ `%`** จาก `bad-url.txt` (อ้างอิงด้วย `%BadUrl%`)
+1. **Read text from file** → ชื่อ produced: `BadUrl` ← **ไม่ใส่ `%`** จากไฟล์ใน working (อ้างอิงด้วย `%BadUrl%`)
 2. ลาก **On block error** (จุดที่ 2 ตามเกณฑ์อย่างน้อย 2 จุด) ครอบการเปิดเพจ
 3. **ภายในบล็อก:**
-   - **Launch new Microsoft Edge** หรือ **Launch new Chrome** (ถ้ายังไม่มี `%Browser%`) / **Go to web page** ไป `%BadUrl%`
+   - **Launch new Microsoft Edge** หรือ **Launch new Chrome** (ถ้ายังไม่มี `%Browser%`) / **Go to web page** ไป URL (คัดลอก):
+
+```text
+%BadUrl%
+```
+
 4. เมื่อ error:
-   - **Get last error** → log Case=`B`
-   - ถ้ายังมี browser instance: **Take screenshot of web page** บันทึกใต้ `C:\PAD-Labs\logs\lab09\`
+   - **Get last error** → log Case Value:
+
+```text
+B
+```
+
+   - ถ้ายังมี browser instance: **Take screenshot of web page** บันทึกใต้โฟลเดอร์ (คัดลอก):
+
+```text
+C:\PAD-Labs\logs\lab09\
+```
+
    - Continue ไป Case C
 
 ### Step 4 — Case C: Flaky wait + On error → Retry
 
-1. **Go to web page** → `https://ontoiq.tech/pad/11-delay.html`
+1. **Go to web page** → URL (คัดลอก):
+
+```text
+https://ontoiq.tech/pad/11-delay.html
+```
+
 2. ลาก **Wait for web page content** รอ element ที่จะพร้อมช้า
 3. เปิดการตั้งค่า **On error** ของ action นี้ (ไอคอน/แท็บ On error ในหน้าต่าง action — ไม่ใช่ชื่อ Action ว่า Try-Catch):
    - **Retry** action ตามจำนวนที่จำกัด (รวมแล้วไม่เกินแนว 3 ครั้ง) และ/หรือ
-   - ใช้ **Loop** / **Loop condition** กับ `%RetryCount%` สูงสุด 3 แล้วค่อยถือว่าล้มเหลวแบบควบคุม
-4. เมื่อสำเร็จหรือหมดรอบ: append log Case=`C` (สำเร็จหรือหมด retry ให้ระบุใน Notes)
+   - ใช้ **Loop** / **Loop condition** กับ (คัดลอก):
+
+```text
+%RetryCount%
+```
+
+     สูงสุด 3 แล้วค่อยถือว่าล้มเหลวแบบควบคุม
+4. เมื่อสำเร็จหรือหมดรอบ: append log Case Value:
+
+```text
+C
+```
+
+   (สำเร็จหรือหมด retry ให้ระบุใน Notes)
 
 ### Step 5 — Case D: Dialogs
 
-1. **Go to web page** → `https://ontoiq.tech/pad/04-dialogs.html`
+1. **Go to web page** → URL (คัดลอก):
+
+```text
+https://ontoiq.tech/pad/04-dialogs.html
+```
+
 2. Interact กับปุ่มที่ขึ้น alert/confirm ตามหน้า
 3. จัดการ dialog ด้วย action ที่เหมาะสม (กดยอมรับ/ยกเลิกตามที่หน้า Lab ออกแบบ) โดยครอบด้วย **On block error** หรือ **On error** ถ้าจำเป็น
-4. Log `DIALOG_HANDLED` ลง `%ErrorLogPath%`
+4. Log ข้อความ (คัดลอก) ลง `%ErrorLogPath%`:
+
+```text
+DIALOG_HANDLED
+```
+
 5. Continue
 
 ### Step 6 — Case E: Recovery happy path (Forms)
 
 เป้าหมาย: หลังมี error จาก A–D แล้ว flow ยังทำงานต่อได้
 
-1. **Go to web page** → `https://ontoiq.tech/pad/01-forms.html`
+1. **Go to web page** → URL (คัดลอก):
+
+```text
+https://ontoiq.tech/pad/01-forms.html
+```
+
 2. **Wait for web page content**
 3. **Populate text field on web page** กรอกค่าจำลองครบช่องบังคับ
 4. **Press button on web page** Submit
-5. Log `RECOVERY_OK` ลง error-log
-6. ถ้าขั้นตอนนี้พัง: **Get last error** แล้ว **Set variable** Name `Fatal` ← **ไม่ใส่ `%`** ตามนโยบาย — แต่เกณฑ์ผ่านต้องการให้ Case E สำเร็จหลัง error ก่อนหน้า
+5. Log ข้อความ (คัดลอก) ลง error-log:
+
+```text
+RECOVERY_OK
+```
+
+6. ถ้าขั้นตอนนี้พัง: **Get last error** แล้ว **Set variable** Name: `Fatal` ← **ไม่ใส่ `%`** ตามนโยบาย — แต่เกณฑ์ผ่านต้องการให้ Case E สำเร็จหลัง error ก่อนหน้า
 
 ### Step 7 — Challenge Cases F–I (ทำอย่างน้อย 2)
 
@@ -140,13 +270,56 @@
 | Case | ขั้นสั้น ๆ |
 |------|------------|
 | F | ไป `10-ocr.html` → อ่านค่า → ถ้าไม่ตรง log `OCR_MISMATCH` แล้ว continue |
-| G | ไป `05-files.html` → upload path ผิด → จับ error → upload `%WorkingRoot%\recovery-upload.txt` |
+| G | ไป `05-files.html` → upload path ผิด → จับ error → upload recovery file |
 | H | ไป `08-iframe.html` → พลาด frame แล้วกู้ด้วย iframe ที่ถูก |
 | I | ไป `12-api.html` → เรียก endpoint ผิด → log → เรียก health ได้ 2xx |
 
+URL / path ที่ใช้ใน Challenge (คัดลอกได้):
+
+**Case F**
+
+```text
+https://ontoiq.tech/pad/10-ocr.html
+```
+
+Log เมื่อไม่ตรง:
+
+```text
+OCR_MISMATCH
+```
+
+**Case G**
+
+```text
+https://ontoiq.tech/pad/05-files.html
+```
+
+Upload กู้:
+
+```text
+%WorkingRoot%\recovery-upload.txt
+```
+
+**Case H**
+
+```text
+https://ontoiq.tech/pad/08-iframe.html
+```
+
+**Case I**
+
+```text
+https://ontoiq.tech/pad/12-api.html
+```
+
 ### Step 8 — Cleanup แม้เกิด error
 
-1. ท้าย Main (และในกิ่ง error ระดับ flow ถ้ารองรับ): **Close web browser** ถ้า `%Browser%` ยังเปิด
+1. ท้าย Main (และในกิ่ง error ระดับ flow ถ้ารองรับ): **Close web browser** ถ้ายังเปิด — Browser instance (คัดลอก):
+
+```text
+%Browser%
+```
+
 2. ถ้าเปิด Excel ระหว่างทดสอบ: **Close Excel**
 3. อย่าปล่อย instance ค้างหลัง Run
 

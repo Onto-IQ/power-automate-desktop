@@ -15,9 +15,28 @@
 
 ## Setup บนเครื่อง (ทำก่อนเปิด designer)
 
-1. สร้างโฟลเดอร์ `C:\PAD-Labs\working\lab05\` และ `C:\PAD-Labs\output\lab05\`
-2. คัดลอกทั้งโฟลเดอร์ [`assets/batch`](assets/batch/) ไปยัง `C:\PAD-Labs\working\lab05\batch`
-3. สร้างโฟลเดอร์ว่าง `C:\PAD-Labs\working\lab05\processed\` (หรือให้ Flow สร้าง)
+1. สร้างโฟลเดอร์ working และ output (คัดลอก path):
+
+```text
+C:\PAD-Labs\working\lab05\
+```
+
+```text
+C:\PAD-Labs\output\lab05\
+```
+
+2. คัดลอกทั้งโฟลเดอร์ [`assets/batch`](assets/batch/) ไปยัง:
+
+```text
+C:\PAD-Labs\working\lab05\batch
+```
+
+3. สร้างโฟลเดอร์ว่าง (หรือให้ Flow สร้าง):
+
+```text
+C:\PAD-Labs\working\lab05\processed\
+```
+
 4. ตรวจว่าใน `batch` มีอย่างน้อย: `batch-01.csv`, `batch-02.csv`, `batch-03.csv`
 
 > ถ้าใช้ไดรฟ์อื่นได้ — แต่ต้องใช้ path นั้นใน `%WorkingRoot%` ให้สม่ำเสมอทั้ง flow
@@ -28,8 +47,8 @@
 |--|------|
 | Batch files | [`assets/batch/`](assets/batch/) |
 | Expected summary | [`assets/expected-batch-summary.csv`](assets/expected-batch-summary.csv) |
-| Processed marker folder | `C:\PAD-Labs\working\lab05\processed\` |
-| Your output | `C:\PAD-Labs\output\lab05\batch-summary.csv` |
+| Processed marker folder | ดู code block ใน Setup |
+| Your output | ดู code block ใน Step 9 |
 
 ### ไฟล์ batch
 
@@ -49,7 +68,13 @@ Schema ในแต่ละไฟล์ (ตัวอย่าง `batch-01.csv
 ### Step 0 — สร้าง flow
 
 1. เปิด Power Automate for desktop → **New flow**
-2. ชื่อ: `Lab05_LoopingFilesData` → **Create**
+2. ชื่อ flow (คัดลอกได้):
+
+```text
+Lab05_LoopingFilesData
+```
+
+3. กด **Create**
 
 > **กฎตัวแปรใน PAD (อ่านก่อนทำ Step ถัดไป)**  
 > - ช่อง **Name** ของ **Set variable**, ชื่อ **produced variable**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
@@ -61,26 +86,60 @@ Schema ในแต่ละไฟล์ (ตัวอย่าง `batch-01.csv
 1. ลาก **Set variable**
 2. ตั้งค่า:
    - Name: `WorkingRoot` ← **ไม่ใส่ `%`**
-   - Value: `C:\PAD-Labs\working\lab05`
+   - Value: (คัดลอกด้านล่างวางในช่อง Value — หรือ path ที่คุณใช้จริง)
+
+```text
+C:\PAD-Labs\working\lab05
+```
+
 3. ลาก **Set variable**:
    - Name: `GrandTotal` ← **ไม่ใส่ `%`**
-   - Value: `0`
+   - Value: (คัดลอกด้านล่างวางในช่อง Value)
+
+```text
+0
+```
 
 ### Step 2 — สร้างโฟลเดอร์ processed (ถ้ายังไม่มี)
 
 1. ลาก **If folder exists**
-2. Folder path: `%WorkingRoot%\processed`
+2. Folder path: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%WorkingRoot%\processed
+```
+
 3. ในกิ่ง **Else** ลาก **Create folder**
-   - Folder name: `processed`
-   - Into: `%WorkingRoot%`
+   - Folder name: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+processed
+```
+
+   - Into: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%WorkingRoot%
+```
+
 4. ปิดด้วย **End**
 
 ### Step 3 — ดึงรายการ CSV จาก batch
 
 1. ลาก **Get files in folder**
 2. ตั้งค่า:
-   - Folder: `%WorkingRoot%\batch`
-   - File filter: `*.csv`
+   - Folder: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%WorkingRoot%\batch
+```
+
+   - File filter: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+*.csv
+```
+
    - Include subfolders: ปิด
 3. ชื่อ produced variable: `BatchFiles` ← **ไม่ใส่ `%`**  
    (เวลาอ้างอิงทีหลังใช้ `%BatchFiles%`)
@@ -96,14 +155,33 @@ Schema ในแต่ละไฟล์ (ตัวอย่าง `batch-01.csv
 
 1. ลาก **For each**
 2. ตั้งค่า:
-   - Value to iterate: `%BatchFiles%` ← **ใช้** (มี `%`)
+   - Value to iterate: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%BatchFiles%
+```
+
    - Store into: `CurrentFile` ← **ไม่ใส่ `%`**
 3. **ภายใน For each** ลาก **Get file path part** เพื่อได้ชื่อไฟล์
-   - File path: `%CurrentFile%` ← **ใช้** (มี `%`)
+   - File path: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%CurrentFile%
+```
+
    - ส่วนที่ต้องการ: Name / File name
    - ชื่อ produced: `FileName` ← **ไม่ใส่ `%`**
-4. ลาก **Set variable**: Name `TotalAmount` = Value `0` ← **ไม่ใส่ `%` ใน Name**
-5. ลาก **Set variable**: Name `RowCount` = Value `0`
+4. ลาก **Set variable**: Name: `TotalAmount` ← **ไม่ใส่ `%`** · Value:
+
+```text
+0
+```
+
+5. ลาก **Set variable**: Name: `RowCount` ← **ไม่ใส่ `%`** · Value:
+
+```text
+0
+```
 
 ### Step 6 — อ่าน CSV ของไฟล์ปัจจุบัน
 
@@ -122,12 +200,27 @@ Schema ในแต่ละไฟล์ (ตัวอย่าง `batch-01.csv
 
 1. ลาก **For each** ซ้อน
 2. ตั้งค่า:
-   - Value to iterate: `%FileTable%` ← **ใช้** (มี `%`)
+   - Value to iterate: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%FileTable%
+```
+
    - Store into: `CurrentRow` ← **ไม่ใส่ `%`**
 3. **ภายในลูปชั้นใน:**
-   - อ่าน `%CurrentRow%['Amount']` (หรือคอลัมน์ Amount ตามชื่อจริง)
+   - อ่าน Amount จากแถว (คัดลอกด้านล่างเป็นนิพจน์ตัวอย่าง — หรือคอลัมน์ Amount ตามชื่อจริง)
+
+```text
+%CurrentRow%['Amount']
+```
+
    - ถ้าเป็นข้อความ: ใช้ **Convert text to number** → ชื่อ produced: `AmountNumber` ← **ไม่ใส่ `%`**
-   - ลาก **Increase variable** / Set variable: ใช้ `%TotalAmount%` = `%TotalAmount% + %AmountNumber%` ← **ใช้** ตัวแปร (มี `%`)
+   - ลาก **Increase variable** / Set variable: ใช้นิพจน์ (คัดลอกด้านล่างวางในช่อง Value ถ้า designer รองรับ)
+
+```text
+%TotalAmount% + %AmountNumber%
+```
+
    - **Increase variable** เลือก `RowCount` (ไม่มี `%`) + `1`
 4. ปิด **End** ของ For each ชั้นใน
 
@@ -135,15 +228,50 @@ Schema ในแต่ละไฟล์ (ตัวอย่าง `batch-01.csv
 
 ยังอยู่ภายใน For each ไฟล์ หลังรวมยอด:
 
-1. ลาก **Insert row into data table** เข้า `%SummaryTable%`
+1. ลาก **Insert row into data table** เข้า (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%SummaryTable%
+```
+
 2. ค่า:
-   - FileName = `%FileName%`
-   - RowCount = `%RowCount%`
-   - TotalAmount = `%TotalAmount%`
-3. ลาก **Increase variable** / Set: `%GrandTotal%` = `%GrandTotal% + %TotalAmount%`
+   - FileName = (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%FileName%
+```
+
+   - RowCount = (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%RowCount%
+```
+
+   - TotalAmount = (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%TotalAmount%
+```
+
+3. ลาก **Increase variable** / Set: นิพจน์ (คัดลอกด้านล่าง)
+
+```text
+%GrandTotal% + %TotalAmount%
+```
+
 4. ลาก **Move file(s)** (หรือ **Copy file(s)** แล้วค่อยลบต้นทางก็ได้)
-   - File(s): `%CurrentFile%`
-   - Destination: `%WorkingRoot%\processed\`
+   - File(s): (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%CurrentFile%
+```
+
+   - Destination: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%WorkingRoot%\processed\
+```
+
 5. ปิด **End** ของ For each ชั้นนอก
 
 โครงที่ได้ควรคล้าย:
@@ -170,9 +298,20 @@ End
    (Write CSV / วนสร้างข้อความ — ให้ตรงรูป [`assets/expected-batch-summary.csv`](assets/expected-batch-summary.csv))
 2. ลาก **Write text to file** (หรือ action เขียน CSV)
 3. ตั้งค่า:
-   - File path: `C:\PAD-Labs\output\lab05\batch-summary.csv`
+   - File path: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+C:\PAD-Labs\output\lab05\batch-summary.csv
+```
+
    - If file exists: Overwrite
-4. ตรวจว่า `%GrandTotal%` ควรได้ `46500` (เก็บใน Variables pane หรือเขียนท้ายไฟล์ก็ได้)
+4. ตรวจว่า `%GrandTotal%` ควรได้ (คัดลอกด้านล่างเป็นค่าเป้าหมาย):
+
+```text
+46500
+```
+
+   (เก็บใน Variables pane หรือเขียนท้ายไฟล์ก็ได้)
 
 ### Step 10 — รันและตรวจ
 
@@ -188,8 +327,19 @@ End
 
 จำลองรอไฟล์:
 
-1. **Set variable** Name: `RetryCount` ← **ไม่ใส่ `%`** = Value `0`
-2. ใช้ **Loop condition** / Do until จน `%RetryCount% > 3` **หรือ** **If file exists** ที่ path ที่คาดหวัง
+1. **Set variable** Name: `RetryCount` ← **ไม่ใส่ `%`** · Value:
+
+```text
+0
+```
+
+2. ใช้ **Loop condition** / Do until จนเงื่อนไขแนว (คัดลอกด้านล่างเป็นนิพจน์ตัวอย่าง)
+
+```text
+%RetryCount% > 3
+```
+
+   **หรือ** **If file exists** ที่ path ที่คาดหวัง
 3. ในลูป: **Increase variable** เลือก `RetryCount` (ไม่มี `%`) และ (ถ้าต้องการ) Wait สั้น ๆ
 4. ไม่บังคับในเกณฑ์ผ่าน — ใช้ฝึกเงื่อนไขออกจากลูป
 
