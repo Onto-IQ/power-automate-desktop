@@ -54,9 +54,18 @@ Tbl_Employees
 
 ### Step 3 — Extract
 
-1. **Extract data from web page** · Browser: `%Browser%`
-2. live web helper เลือกทั้งตาราง `#tbl-employees`
-3. Variables produced: `StaticTable`
+1. ให้เบราว์เซอร์ของ flow เปิดค้างที่:
+
+```text
+https://pad.ontoiq.tech/pad/03-table.html
+```
+
+   (ถ้ายังไม่เปิด — รันถึง Launch ก่อน หรือเปิด URL นี้ใน instance ที่ `%Browser%` ชี้)
+2. **Extract data from web page** · Browser: `%Browser%`  
+   → PAD จะเปิด **live web helper** บนหน้านั้น
+3. ใน live web helper เลือกโหมด **Extract Entire HTML Table**
+4. ชี้ตารางพนักงาน (`#tbl-employees` · คอลัมน์ Emp ID / Name / Department / Salary)
+5. Variables produced: `StaticTable`
 
 ### Step 4 — เขียน CSV จากแถวตาราง
 

@@ -57,8 +57,19 @@ https://pad.ontoiq.tech/pad/09-ajax-table.html
 
 ### Step 3 — Extract
 
-1. **Extract data from web page** → Variables produced: `AjaxTable`
-2. Map คอลัมน์ใกล้เคียง: OrderId, Customer, Amount, Region (ชื่อจริงบนหน้าอาจต่าง)
+1. ให้เบราว์เซอร์ของ flow เปิดค้างที่:
+
+```text
+https://pad.ontoiq.tech/pad/09-ajax-table.html
+```
+
+   และมีแถวในตารางแล้ว (หลัง Refresh + Wait ใน Step 2)
+2. **Extract data from web page** · Browser: `%Browser%`  
+   → PAD จะเปิด **live web helper** บนหน้านั้น
+3. ใน live web helper เลือกโหมด **Extract Entire HTML Table**
+4. ชี้ตารางออเดอร์ (`#tbl-orders`)
+5. Variables produced: `AjaxTable`
+6. Map คอลัมน์ใกล้เคียง: OrderId, Customer, Amount, Region (ชื่อจริงบนหน้าอาจต่าง)
 
 ### Step 4 — กรองแล้วเก็บแถว
 

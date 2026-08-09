@@ -37,7 +37,9 @@ Variables produced: `Browser`
 1. **Loop** หรือ **Loop while** (เงื่อนไข เช่น `%PageCount% < %MaxPages%`)
 2. ในลูป:
    - **Wait for web page content** · Contain element · ตาราง `#tbl-products` (Rename เป็น `Tbl_Products` ได้)
-   - **Extract data from web page** → `PageTable`
+   - ให้หน้ายังอยู่ที่ [19-catalog](https://pad.ontoiq.tech/pad/19-catalog.html) (หลังกด Next แล้วก็ยังต้องเป็นหน้านี้)
+   - **Extract data from web page** · Browser: `%Browser%` → **live web helper** → เลือก **Extract Entire HTML Table** → ชี้ `#tbl-products` → Variables produced: `PageTable`  
+     (รอบแรกตั้งค่า helper; รอบถัดไปใช้ extract เดิมบนตารางหน้าปัจจุบัน)
    - **For each** `%PageTable%` → Insert เข้า `%CatalogHits%`
    - เพิ่ม `PageCount` += 1
    - หาปุ่ม **Next**:
