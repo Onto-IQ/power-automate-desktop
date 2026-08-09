@@ -15,3 +15,7 @@ Trainocate_Outline_Power Automate Desktop (2 days) ake.pdf
 
 # Local ops notes (server access — do not publish)
 ops/*.local.md
+
+# Authoring guides (course writers only — not published for learners)
+authoring/**
+!authoring/README.md

@@ -30,7 +30,7 @@
 | พิมพ์ค่าในช่อง Folder / path / text ที่ต้องการดึงตัวแปร | ใส่ — `%WorkingRoot%\inbox` |
 | Variables pane แสดงชื่อ | มักเห็นเป็น `%WorkingRoot%` หลังสร้างแล้ว — เป็นเรื่องปกติ |
 
-รายละเอียดการเขียนใน Lab: [`HANDS-ON-LAB-TEMPLATE.md`](HANDS-ON-LAB-TEMPLATE.md)
+รายละเอียดการเขียนกฎ `%` ใน Lab: [`PAD-FUNDAMENTALS.md`](PAD-FUNDAMENTALS.md)
 
 ## Variable & Data Table Contract
 

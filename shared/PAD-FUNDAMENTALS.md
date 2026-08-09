@@ -65,7 +65,7 @@ PAD คือเครื่องมือของ Microsoft ที่ให�
 | Folder / File path / Text ที่ต้องการดึงค่า | มี `%` | `%WorkingRoot%\inbox` |
 
 หลังสร้างแล้ว Variables pane มักแสดงเป็น `%WorkingRoot%` — เป็นเรื่องปกติ  
-รายละเอียดการเขียนใน Lab: [`HANDS-ON-LAB-TEMPLATE.md`](HANDS-ON-LAB-TEMPLATE.md)
+รายละเอียดกฎ `%`: [`PAD-FUNDAMENTALS.md`](PAD-FUNDAMENTALS.md)
 
 ## การรันและดีบัก
 
@@ -126,7 +126,7 @@ C:\PAD-Labs\
 
 | หัวข้อ | ไฟล์ |
 |--------|------|
-| แม่แบบความรู้แต่ละบท | [`LESSON-TEMPLATE.md`](LESSON-TEMPLATE.md) |
-| แม่แบบจับมือทำ | [`HANDS-ON-LAB-TEMPLATE.md`](HANDS-ON-LAB-TEMPLATE.md) |
+| ตารางสอน 12 ชม. | [`CLASSROOM-SCHEDULE-12H.md`](CLASSROOM-SCHEDULE-12H.md) |
+| ติดตั้งก่อนเรียน | [`PRECLASS-SETUP.md`](PRECLASS-SETUP.md) |
 | Selector บน Lab Hub | [`SELECTOR-CONVENTIONS.md`](SELECTOR-CONVENTIONS.md) |
 | Coding guidelines (official) | https://learn.microsoft.com/power-automate/guidance/desktop-flow-coding-guidelines/ |
