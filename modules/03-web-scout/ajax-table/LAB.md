@@ -158,23 +158,32 @@ End
 
 ### Step 5 — เขียน `%Hits%` ลง CSV
 
-ทำ**หลัง** End ของ For each ใน Step 4 (อย่าเขียนไฟล์ข้างในลูปกรอง)
+ทำ**หลัง** End ของ For each ใน Step 4
 
-เป้าหมายของ Step นี้: แปลงตาราง `%Hits%` เป็นข้อความ CSV เก็บในตัวแปร `CsvBody` แล้วเขียนลงไฟล์
+เป้าหมาย: เขียนหัวตารางครั้งแรก แล้ว**วนแถว** append ทีละบรรทัดลงไฟล์  
+(ไม่ต่อสตริงขึ้นบรรทัดใหม่ใน Set variable — ใน PAD มัก Syntax error)
 
-#### 5.1 เริ่มต้นข้อความด้วยหัวตาราง
+กำหนด path ไว้ใช้ซ้ำ (คัดลอก):
 
-1. ลาก **Set variable**
-2. Name: `CsvBody` ← **ไม่ใส่ `%`**
-3. Value: (คัดลอกด้านล่างวางในช่อง Value)
+```text
+C:\PAD-Labs\output\lab03\ajax-orders.csv
+```
+
+#### 5.1 เขียนหัวตาราง (สร้าง/ทับไฟล์ใหม่)
+
+1. ลาก **Write text to file** (ค้นคำว่า `Write text to file`)
+2. **File path:** วาง path ด้านบน
+3. **Text to write:** (คัดลอก)
 
 ```text
 Order ID,Customer,Amount,Status
 ```
 
-ตอนนี `%CsvBody%` มีแค่บรรทัดหัวตาราง
+4. **If file exists:** **Overwrite**
+5. Encoding: แนะนำ **UTF-8** (ถ้ามี)
+6. กด **Save**
 
-#### 5.2 วนแต่ละแถวใน `%Hits%` แล้วต่อข้อความ
+#### 5.2 วน `%Hits%` แล้ว Append ทีละแถว
 
 1. ลาก **For each**
 2. Value to iterate: (คัดลอก)
@@ -184,50 +193,31 @@ Order ID,Customer,Amount,Status
 ```
 
 3. Store into: `HitRow` ← **ไม่ใส่ `%`**
-4. **ภายใน For each** — สร้างข้อความ**หนึ่งแถว**ก่อน: ลาก **Set variable**
+4. **ภายใน For each** ลาก **Set variable**
 5. Name: `CsvLine` ← **ไม่ใส่ `%`**
-6. Value: (คัดลอกทั้งก้อนวางในช่อง Value)
+6. Value: (คัดลอกทั้งก้อน)
 
 ```text
 %HitRow['Order ID'] + ',' + HitRow['Customer'] + ',' + HitRow['Amount'] + ',' + HitRow['Status']%
 ```
 
-ความหมาย: เอา 4 คอลัมน์ของแถวปัจจุบันมาต่อด้วยเครื่องหมาย `,`
+ความหมาย: รวม 4 คอลัมน์เป็นข้อความหนึ่งบรรทัดคั่นด้วย `,`
 
-7. ยัง**ภายใน For each** — ต่อแถวนี้เข้าข้อความรวม: ลาก **Set variable** อีกตัว
-8. Name: `CsvBody` ← **ไม่ใส่ `%`** (ชื่อเดิม — จะอัปเดตค่า)
-9. Value: (คัดลอกทั้งก้อนวางในช่อง Value)
-
-```text
-%CsvBody + '
-' + CsvLine%
-```
-
-ความหมาย: เอา `%CsvBody%` เดิม + ขึ้นบรรทัดใหม่ + `%CsvLine%` ที่เพิ่งสร้าง
-
-> ใช้ `%...%` **คู่เดียวครอบทั้งนิพจน์** — อย่าเขียน `%CsvBody% + %CsvLine%` (จะ Syntax error)
-
-10. **End** For each
-
-#### 5.3 เขียนไฟล์
-
-1. **หลัง End** ของ For each ลาก **Write text to file** (ค้นคำว่า `Write text to file`)
-2. **File path:** (คัดลอก)
+7. ยัง**ภายใน For each** ลาก **Write text to file** อีกตัว
+8. **File path:** path เดิม (`...\ajax-orders.csv`)
+9. **Text to write:** (คัดลอก)
 
 ```text
-C:\PAD-Labs\output\lab03\ajax-orders.csv
+%CsvLine%
 ```
 
-3. **Text to write:** (คัดลอก)
+   หลังวาง `%CsvLine%` ในช่อง Text ให้**กด Enter หนึ่งครั้ง**ท้ายข้อความ (หรือใช้ action **Append line to text file** ถ้ามี) เพื่อไม่ให้แถวติดกันในบรรทัดเดียว
+10. **If file exists:** **Append** ← สำคัญ ต้องเป็น Append ไม่ใช่ Overwrite
+11. Encoding: UTF-8 (ให้ตรงกับข้อ 5.1)
+12. กด **Save**
+13. **End** For each
 
-```text
-%CsvBody%
-```
-
-4. **If file exists:** **Overwrite**
-5. Encoding: แนะนำ **UTF-8** (ถ้ามีช่องให้เลือก)
-6. กด **Save**
-7. หลังรัน flow เปิด `C:\PAD-Labs\output\lab03\ajax-orders.csv` ตรวจหัวตาราง + แถวที่ผ่านเกณฑ์
+หลังรัน เปิดไฟล์ตรวจ: บรรทัดแรกเป็นหัวตาราง บรรทัดถัดไปเป็นแถวที่ผ่าน MinAmount
 
 ### Step 6 — ปิดเบราว์เซอร์ + Replay
 
@@ -246,7 +236,7 @@ C:\PAD-Labs\output\lab03\ajax-orders.csv
 - [ ] Flow ชื่อ `Lab03_AjaxTable`
 - [ ] มี Wait จนมีแถวก่อน Extract
 - [ ] มีไฟล์ `ajax-orders.csv` ภายใต้ `C:\PAD-Labs\output\lab03\`
-- [ ] CSV มีหัวตาราง + แถวที่ผ่านเกณฑ์ MinAmount
+- [ ] CSV มีหัวตาราง + แถวที่ผ่านเกณฑ์ MinAmount (เขียนด้วย Overwrite แล้ว Append)
 - [ ] ปิดเบราว์เซอร์ท้าย flow
 
 ## Troubleshooting
@@ -261,8 +251,9 @@ C:\PAD-Labs\output\lab03\ajax-orders.csv
 | Data table / New value(s) สลับกัน | Data table = `%Hits%` · New value(s) = `%AjaxRow%` |
 | If ไม่เข้า · Hits ว่างหลังรัน | ตรวจ `%MinAmount%` = `1500` (ข้อมูลจริงสูงสุด ~2400) · หรือ Convert text to number ก่อนเทียบ |
 | Column count ไม่ตรง | `%Hits%` ต้องมี 4 คอลัมน์ชื่อเดียวกับ `%AjaxTable%` |
-| หา Write CSV / เขียนไฟล์ไม่เจอ | ค้น **Write text to file** · Text = `%CsvBody%` · path ตาม Step 5 |
-| CSV ว่าง / มีแต่หัวตาราง | `%Hits%` ว่าง — กลับไปตรวจ If + MinAmount=1500 |
+| หา Write CSV / เขียนไฟล์ไม่เจอ | ค้น **Write text to file** · หัวตาราง = Overwrite · แถวในลูป = **Append** |
+| CSV มีแค่แถวสุดท้าย | ในลูปต้องเป็น **Append** ไม่ใช่ Overwrite |
+| Syntax error ตอนต่อ CsvBody + บรรทัดใหม่ | ไม่ต้องทำแบบนั้นแล้ว — ใช้ Append ตาม Step 5 |
 | สับสนกับหลายหน้า | Lab นี้ไม่มี Next — ใช้ [Catalog](../catalog/README.md) |
 
 ## Cleanup
