@@ -40,45 +40,44 @@ https://pad.ontoiq.tech/pad/03-table.html
 1. **Wait for web page content**
 2. Web browser instance: `%Browser%`
 3. Wait for web page to: **Contain element**
-4. UI element: picker ชี้ตาราง Emp ID / Name / Department / Salary  
-   - ชื่ออัตโนมัติอาจเป็น `Table 'Emp …'` — ปกติ
-5. **Save**
-6. แผง **UI Elements** → Rename เป็น:
+4. UI element: picker ชี้ตาราง Emp ID / Name / Department / Salary
+5. ชื่ออัตโนมัติอาจเป็น `Table 'Emp …'` — ปกติ
+6. **Save**
+7. แผง **UI Elements** → Rename เป็น:
 
 ```text
 Tbl_Employees
 ```
 
-> ไม่มีช่องใน Wait ให้พิมพ์ `#tbl-employees`  
-> Tips: คลิกขวา `Tbl_Employees` → **Edit** = Selector builder · ตรวจว่ามี `id`/`#tbl-employees` (Hints บนหน้า)
+8. ไม่มีช่องใน Wait ให้พิมพ์ `#tbl-employees`
+9. Tips: คลิกขวา `Tbl_Employees` → **Edit** = Selector builder · ตรวจว่ามี `id` / `#tbl-employees` (Hints บนหน้า)
 
 ### Step 3 — Extract
 
-1. ให้เบราว์เซอร์ของ flow เปิดค้างที่:
+1. ให้เบราว์เซอร์ของ flow เปิดค้างที่ URL ด้านล่าง (ถ้ายังไม่เปิด — รันถึง Launch ก่อน หรือเปิด URL นี้ใน instance ที่ `%Browser%` ชี้)
 
 ```text
 https://pad.ontoiq.tech/pad/03-table.html
 ```
 
-   (ถ้ายังไม่เปิด — รันถึง Launch ก่อน หรือเปิด URL นี้ใน instance ที่ `%Browser%` ชี้)
-2. **Extract data from web page** · Browser: `%Browser%`  
-   → PAD จะเปิด **live web helper** บนหน้านั้น
-3. ใน live web helper เลือกโหมด **Extract Entire HTML Table**
+2. **Extract data from web page** · Browser: `%Browser%`
+3. PAD จะเปิด **live web helper** บนหน้านั้น
 4. ชี้ตารางพนักงาน (`#tbl-employees` · คอลัมน์ Emp ID / Name / Department / Salary)
-5. Variables produced: `StaticTable`
+5. **คลิกขวา** บนตาราง/เซลล์ในตาราง
+6. เลือก **Extract Entire HTML Table**
+7. Variables produced: `StaticTable`
 
 ### Step 4 — เขียน CSV จากแถวตาราง
 
 1. แปลง `%StaticTable%` เป็นข้อความ CSV (วน **For each** Store into `StaticRow` แล้วประกอบข้อความ หรือใช้ action เขียน CSV ที่มีใน designer)
-2. **Write text to file** (หรือเทียบเท่า):
+2. **Write text to file** (หรือเทียบเท่า) ไปที่:
 
 ```text
 C:\PAD-Labs\output\lab03\static-table.csv
 ```
 
-   If file exists: Overwrite · แนะนำ UTF-8
-
-ตัวอย่างคอลัมน์ผล: Emp ID, Name, Department, Salary (ตามที่ extract ได้)
+3. If file exists: Overwrite · แนะนำ UTF-8
+4. ตัวอย่างคอลัมน์ผล: Emp ID, Name, Department, Salary (ตามที่ extract ได้)
 
 ### Step 5 — ปิดเบราว์เซอร์
 

@@ -34,8 +34,8 @@ Lab03_AjaxTable
 BKK
 ```
 
-4. (แนะนำ) **Create new data table** → Variables produced: `Hits`  
-   คอลัมน์อย่างน้อย: OrderId, Customer, Amount, Region, Notes
+4. (แนะนำ) **Create new data table** → Variables produced: `Hits`
+5. คอลัมน์อย่างน้อย: OrderId, Customer, Amount, Region, Notes
 
 ### Step 1 — Launch
 
@@ -50,39 +50,39 @@ https://pad.ontoiq.tech/pad/09-ajax-table.html
 ### Step 2 — โหลดแถวแล้ว Wait
 
 1. ถ้าหน้าขึ้นว่าง: กด/คลิก **Refresh orders** (`#btn-refresh-orders`) ด้วย **Press button** / **Click link**
-2. **Wait for web page content** · `%Browser%` · **Contain element**  
-   - ชี้ตาราง `#tbl-orders` หรือแถวข้อมูลแรก  
-   - **อย่า** ใช้ Wait วินาทีอย่างเดียวเป็นเกณฑ์หลัก
-3. (ทางเลือก) Rename UI element เป็น `Tbl_Orders`
+2. **Wait for web page content** · `%Browser%` · **Contain element**
+3. ชี้ตาราง `#tbl-orders` หรือแถวข้อมูลแรก
+4. **อย่า** ใช้ Wait วินาทีอย่างเดียวเป็นเกณฑ์หลัก
+5. (ทางเลือก) Rename UI element เป็น `Tbl_Orders`
 
 ### Step 3 — Extract
 
-1. ให้เบราว์เซอร์ของ flow เปิดค้างที่:
+1. ให้เบราว์เซอร์ของ flow เปิดค้างที่ URL ด้านล่าง และมีแถวในตารางแล้ว (หลัง Refresh + Wait ใน Step 2)
 
 ```text
 https://pad.ontoiq.tech/pad/09-ajax-table.html
 ```
 
-   และมีแถวในตารางแล้ว (หลัง Refresh + Wait ใน Step 2)
-2. **Extract data from web page** · Browser: `%Browser%`  
-   → PAD จะเปิด **live web helper** บนหน้านั้น
-3. ใน live web helper เลือกโหมด **Extract Entire HTML Table**
+2. **Extract data from web page** · Browser: `%Browser%`
+3. PAD จะเปิด **live web helper** บนหน้านั้น
 4. ชี้ตารางออเดอร์ (`#tbl-orders`)
-5. Variables produced: `AjaxTable`
-6. Map คอลัมน์ใกล้เคียง: OrderId, Customer, Amount, Region (ชื่อจริงบนหน้าอาจต่าง)
+5. **คลิกขวา** บนตาราง/เซลล์ในตาราง
+6. เลือก **Extract Entire HTML Table**
+7. Variables produced: `AjaxTable`
+8. Map คอลัมน์ใกล้เคียง: OrderId, Customer, Amount, Region (ชื่อจริงบนหน้าอาจต่าง)
 
 ### Step 4 — กรองแล้วเก็บแถว
 
 1. **For each** · Value to iterate: `%AjaxTable%` · Store into: `AjaxRow`
 2. ภายในลูป **If** เช่น Amount >= `%MinAmount%` และ/หรือ Region ตรง `%TargetRegion%`
-3. เมื่อผ่าน: **Insert row** เข้า `%Hits%`  
-   - Notes ถ้า Amount ≥ MinAmount:
+3. เมื่อผ่าน: **Insert row** เข้า `%Hits%`
+4. Notes ถ้า Amount ≥ MinAmount ใส่ค่า:
 
 ```text
 PRIORITY HIT
 ```
 
-4. **End** If + For each
+5. **End** If + For each
 
 ### Step 5 — เขียน CSV
 
