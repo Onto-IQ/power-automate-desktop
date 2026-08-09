@@ -187,28 +187,44 @@ https://pad.ontoiq.tech/pad/03-table.html
 %Browser%
 ```
 
-3. **Wait for web page to:** เลือก **Contain element**  
-   (ไม่ใช่ช่องพิมพ์ CSS เปล่า ๆ — PAD ให้เลือก UI element)
+3. **Wait for web page to:** เลือก **Contain element**
 4. **UI element:** กดเพิ่ม/เลือก element → ใช้ picker ชี้**ตารางทั้งตาราง**บนหน้า `03-table.html` (คอลัมน์ Emp ID, Name, Department, Salary)  
    - ชื่อที่ PAD ตั้งให้อัตโนมัติอาจยาวแบบ `Table 'Emp … 45000'` — เป็นเรื่องปกติ
-   - ในแผง **UI Elements** แนะนำ Rename เป็น:
+5. กด **Save** ในหน้าต่าง Wait (ปิด action ก่อน ถ้าจะไปแก้ชื่อ element)
+6. เปิดแผง **UI Elements** (ใน designer — มักอยู่มุมขวา/ด้านล่าง) → หา element ตารางที่เพิ่งจับ → **Rename** เป็น:
 
 ```text
 Tbl_Employees
 ```
 
-5. เปิด selector ของ `Tbl_Employees` → ล็อกให้มี `id` / CSS เป็น (คัดลอกเพื่อตรวจใน Selector Builder):
+7. **Check UI element state** / **Fail with timeout error:** ปล่อย Off ตามค่าเริ่มต้นได้ — กลับไปเปิด Wait ถ้ายังไม่ได้ Save
 
-```text
-#tbl-employees
-```
+> **จบ Hands-on หลักของ A1 ตรงนี้ได้** — ไม่มีช่องในหน้า Wait ให้พิมพ์ `#tbl-employees`  
+> ค่า `#tbl-employees` จาก Hints บนหน้า ใช้ตอน**ตรวจ/แก้ selector** (Tips ด้านล่าง) ไม่ใช่ช่องกรอกใน Wait
 
-   ที่มาของค่านี้: กล่อง **Hints:** บนหน้า `03-table.html` (ไม่ใช่ hub index)
-6. **Check UI element state** / **Fail with timeout error:** ปล่อย Off ตามค่าเริ่มต้นได้ใน Lab นี้ แล้วกด **Save**
+#### Tips (ทางเลือก) — เปิด Selector builder จากเมนู Edit
 
-> ถ้า Wait เลือก element ผิด (เช่น ปุ่มกรอง) → ลบแล้ว capture ตารางใหม่  
+**หาเมนู Edit ที่ไหน:** อยู่ที่แผง **UI Elements** ของ designer — **ไม่มี** ปุ่ม Edit ในหน้าต่าง action **Wait for web page content**
+
+ขั้นตอนทีละคลิก:
+
+1. ใน designer มองแผง **UI Elements**  
+   - มักอยู่ด้านขวา หรือแท็บล่างชื่อ **UI elements**  
+   - ถ้าไม่เห็น: เมนูดู/View ของ designer → เปิดแผง UI elements (ชื่ออาจเป็น **UI elements**)
+2. ในรายการ element หาชื่อ `Tbl_Employees` (หรือชื่อยาว `Table 'Emp …'` ถ้ายังไม่ Rename)
+3. **คลิกขวา** ที่ชื่อ element นั้น → ในเมนูบริบทเลือก **Edit**  
+   - บางเครื่องมีไอคอนดินสอ (✎) ข้างชื่อ element → กดไอคอนนั้นแทนได้ ผลเดียวกัน
+4. หน้าต่างที่เปิดคือ **Selector builder** (แก้ selector ของ element)
+5. ใน Selector builder:
+   - ถ้ามีสวิตช์/แท็บข้อความ (text) ให้เปิดเพื่อดู CSS
+   - ตรวจว่ามี `id` = `tbl-employees` หรือข้อความประมาณ `#tbl-employees`
+6. กด **Test selector** (เลือกแท็บเบราว์เซอร์หน้า `03-table` ถ้าขึ้นให้เลือก) แล้ว **Save**
+
+อ้างอิงทางการ: [UI elements — Edit](https://learn.microsoft.com/power-automate/desktop-flows/ui-elements) · [Test a selector](https://learn.microsoft.com/power-automate/desktop-flows/test-selectors)
+
+> สรุปสั้น: **UI Elements → คลิกขวา `Tbl_Employees` → Edit** = Selector builder  
 > อย่าใช้ `#tbl-products` — นั่นของ Mission P (`19-catalog.html`)  
-> **Lab Hub index** (`https://pad.ontoiq.tech/pad/`) ใช้ดูแผนที่โมดูลตอน Setup — **ไม่ใช่** ขั้นตอนของ Wait
+> **Lab Hub index** ใช้ดูแผนที่โมดูลตอน Setup — ไม่ใช่ขั้น Wait
 
 ### Step A2 — Extract ตาราง
 
@@ -685,8 +701,10 @@ https://ontoiq.tech/pad/18-popup.html
 
 | อาการ | แก้ |
 |-------|-----|
-| Mission A ไม่รู้จะ Wait อะไร | **Contain element** → picker ชี้ตาราง → ล็อก selector `#tbl-employees` (Hints บน `03-table`) — อย่าใช้ `#tbl-products` |
-| ชื่อ UI element เป็น `Table 'Emp …'` | Rename ใน UI Elements เป็น `Tbl_Employees` ได้ — ไม่ต้องหาชื่อนี้บนหน้าเว็บ |
+| Mission A ไม่รู้จะ Wait อะไร | **Contain element** → picker ชี้ตาราง → Rename เป็น `Tbl_Employees` ในแผง UI Elements |
+| หาช่องพิมพ์ `#tbl-employees` ใน Wait ไม่เจอ | ถูกต้องที่ไม่มี — ตรวจ selector ที่ **UI Elements → คลิกขวา element → Edit** |
+| หาเมนู Edit ไม่เจอ | ต้องคลิกขวาที่ชื่อในแผง **UI Elements** (หรือไอคอนดินสอ) — ไม่ใช่ในฟอร์ม Wait |
+| ชื่อ UI element เป็น `Table 'Emp …'` | Rename ในแผง **UI Elements** เป็น `Tbl_Employees` |
 | AJAX ว่าง | เพิ่ม Wait / รอ element แถวแรก |
 | Upload ไม่ติด | ตรวจ path ไฟล์ mock และ selector ของ input file |
 | Iframe กรอกไม่ได้ | Set current iframe ก่อน Populate; กลับ parent หลังจบ |
