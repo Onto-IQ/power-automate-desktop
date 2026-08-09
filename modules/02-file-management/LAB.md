@@ -109,67 +109,80 @@ C:\PAD-Labs\working\lab02
 
 ### Step 2 — สร้างโฟลเดอร์ปลายทาง (csv / txt / ignored)
 
-ทำซ้ำ 3 ชุด ตามตาราง (อย่า hardcode คนละไดรฟ์กับ `%WorkingRoot%`)
+ทำซ้ำ 3 ชุด (csv / txt / ignored) — อย่า hardcode คนละไดรฟ์กับ `%WorkingRoot%`
 
-**ชุด csv — If folder exists (คัดลอก path):**
+> **สำคัญ:** ค่าเริ่มต้นของ **If folder exists** คือตรวจว่าโฟลเดอร์ **มีอยู่แล้ว**  
+> - กิ่ง **Then** = มีแล้ว → **ว่าง** (ไม่ต้องทำอะไร)  
+> - กิ่ง **Else** = ยังไม่มี → วาง **Create folder** ที่นี่เท่านั้น
+
+ขั้นตอนต่อหนึ่งชุด:
+
+1. ลาก **If folder exists** → ช่อง Folder path วาง path จากตารางด้านล่าง  
+2. **ข้ามกิ่ง Then** (ว่าง)  
+3. ในกิ่ง **Else** ลาก **Create folder** → ชื่อโฟลเดอร์ + Into จากตาราง  
+4. ปิดด้วย **End**
+
+| ชุด | Folder path (`If folder exists`) | ชื่อโฟลเดอร์ (`Create folder` ใน **Else**) | Into |
+|-----|----------------------------------|---------------------------------------------|------|
+| csv | `%WorkingRoot%\archive\csv` | `csv` | `%WorkingRoot%\archive` |
+| txt | `%WorkingRoot%\archive\txt` | `txt` | `%WorkingRoot%\archive` |
+| ignored | `%WorkingRoot%\archive\ignored` | `ignored` | `%WorkingRoot%\archive` |
+
+คัดลอกทีละช่อง:
+
+**csv — Folder path**
 
 ```text
 %WorkingRoot%\archive\csv
 ```
 
-Create folder: ชื่อโฟลเดอร์
+**csv — ชื่อโฟลเดอร์ (Else → Create folder)**
 
 ```text
 csv
 ```
 
-Into:
+**csv — Into (Else → Create folder)**
 
 ```text
 %WorkingRoot%\archive
 ```
 
-**ชุด txt — If folder exists:**
+**txt — Folder path**
 
 ```text
 %WorkingRoot%\archive\txt
 ```
 
-Create folder ชื่อ:
+**txt — ชื่อโฟลเดอร์ (Else)**
 
 ```text
 txt
 ```
 
-Into:
+**txt — Into (Else)**
 
 ```text
 %WorkingRoot%\archive
 ```
 
-**ชุด ignored — If folder exists:**
+**ignored — Folder path**
 
 ```text
 %WorkingRoot%\archive\ignored
 ```
 
-Create folder ชื่อ:
+**ignored — ชื่อโฟลเดอร์ (Else)**
 
 ```text
 ignored
 ```
 
-Into:
+**ignored — Into (Else)**
 
 ```text
 %WorkingRoot%\archive
 ```
-
-ขั้นตอนต่อหนึ่งชุด:
-
-1. ลาก **If folder exists** → วาง path จาก code block ด้านบน
-2. ในกิ่ง **Else** ลาก **Create folder** ตามชื่อ + Into จาก code block
-3. ปิดด้วย **End**
 
 โครงที่ได้ควรคล้าย:
 
