@@ -213,13 +213,13 @@ Silver
 ```
 
    - **Into location:** **End of data table**
-   - **New value(s):** ใส่รายการตามลำดับคอลัมน์ของ `%Filtered%` (รวม Tier) เช่น:
+   - **New value(s):** ใส่ list ตามลำดับคอลัมน์ของ `%Filtered%` (**ห้ามซ้อน `%` ข้างใน**):
 
 ```text
-%[%CurrentRow['OrderId']%, %CurrentRow['Customer']%, %CurrentRow['Product']%, %CurrentRow['Amount']%, %CurrentRow['OrderDate']%, %CurrentRow['Region']%, %Tier%]%
+%[CurrentRow['OrderId'], CurrentRow['Customer'], CurrentRow['Product'], CurrentRow['Amount'], CurrentRow['OrderDate'], CurrentRow['Region'], Tier]%
 ```
 
-   (ถ้าคอลัมน์ของ `%Filtered%` ตรง `%Orders%` ยกเว้น Tier ให้สร้าง list ให้ครบทุกคอลัมน์ตามที่สร้างตารางไว้)
+   (จำนวนค่าต้องเท่าจำนวนคอลัมน์ของ `%Filtered%` ตามที่สร้างตารางไว้)
 7. ปิด **End** (If กรอง) แล้ว **End** (For each)
 
 โครงภายในลูป:
