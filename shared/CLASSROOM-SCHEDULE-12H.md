@@ -26,7 +26,7 @@
 | รหัส | ในห้อง (Core) | Optional / บ้าน |
 |------|----------------|-----------------|
 | 01 | บังคับ | Challenge แถวที่ 2 |
-| 01b | Notepad อย่างน้อย (แนะนำทำ) | Calculator = ถ้าเหลือเวลา |
+| 01b | Notepad (`Lab01b_Notepad`) | Calculator แยก flow (`Lab01b_Calculator`) |
 | 02 | บังคับครบ | Delete inbox หลัง Copy |
 | 03 | Mission A + C | B, D, P, E–H |
 | 04 | บังคับ | — |
@@ -46,7 +46,7 @@
 | 09:15–09:45 | 30 | Fundamentals + ตรวจพรีคลาส | [`PAD-FUNDAMENTALS.md`](PAD-FUNDAMENTALS.md) · [`PRECLASS-SETUP.md`](PRECLASS-SETUP.md) | คนที่ยังไม่ติดตั้ง → TA ช่วยทันที |
 | 09:45–10:35 | 50 | Lab 01 Record & Replay | [`modules/01-record-replay/`](../modules/01-record-replay/) | Demo 10 + ทำ 40 |
 | 10:35–10:45 | 10 | พักสั้น | — | |
-| 10:45–11:25 | 40 | Lab 01b (โฟกัส Notepad) | [`modules/01b-desktop-ui-elements/`](../modules/01b-desktop-ui-elements/) | Calculator = optional |
+| 10:45–11:25 | 40 | Lab 01b Notepad | [`modules/01b-notepad/`](../modules/01b-notepad/) | Calculator optional: [`01b-calculator`](../modules/01b-calculator/) |
 | 11:25–12:15 | 50 | Lab 02 File Management | [`modules/02-file-management/`](../modules/02-file-management/) | เน้นกฎ `%` |
 | 12:15–13:15 | 60 | พักกลางวัน | — | |
 | 13:15–14:15 | 60 | Lab 03 Web Scout (A + C) | [`modules/03-web-scout/`](../modules/03-web-scout/) | ตัด Challenge ในห้อง |

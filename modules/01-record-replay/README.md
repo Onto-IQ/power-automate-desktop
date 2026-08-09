@@ -33,5 +33,5 @@
 
 ## บทที่เกี่ยวข้อง
 
-- Desktop UI พื้นฐาน (Notepad/Calculator): [Lab 01b](../01b-desktop-ui-elements/README.md)
+- Desktop UI พื้นฐาน: [Lab 01b Notepad](../01b-notepad/README.md) · [Lab 01b Calculator](../01b-calculator/README.md) *(optional)*
 - Desktop Element UI เต็มรูปแบบ (วัน 2): [Lab 07 Contoso Invoice Ops](../07-contoso-invoice-ops/README.md)
