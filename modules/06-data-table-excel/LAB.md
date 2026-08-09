@@ -178,13 +178,21 @@ BKK
 
    (ถ้า Amount เป็น text ให้แปลงเป็นตัวเลขก่อนเทียบ)
 5. **ภายใน If** ตั้ง Tier:
-   - ลาก **If** ซ้อน: Amount >= (คัดลอกด้านล่างวางในช่อง)
+   - ลาก **If** ซ้อน
+   - ฝั่งซ้าย (คัดลอก):
+
+```text
+%CurrentRow['Amount']%
+```
+
+   - ตัวดำเนินการ: **Greater than or equal to**
+   - ฝั่งขวา (คัดลอก):
 
 ```text
 12000
 ```
 
-     → **Set variable** Name: `Tier` ← **ไม่ใส่ `%`** · Value:
+   - **ภายใน If ซ้อน** → **Set variable** Name: `Tier` ← **ไม่ใส่ `%`** · Value:
 
 ```text
 Gold
@@ -196,7 +204,7 @@ Gold
 Silver
 ```
 
-     → **End**
+   - → **End** (ปิด If ซ้อน)
 6. ยังอยู่ในกิ่งกรอง: ลาก **Insert row into data table**
    - Data table: (คัดลอกด้านล่างวางในช่อง)
 
@@ -204,15 +212,15 @@ Silver
 %Filtered%
 ```
 
-   - ค่าแถว: คัดลอกฟิลด์จาก `%CurrentRow%` + `%Tier%`
+   - ใส่ค่าคอลัมน์จากแถวปัจจุบัน (พิมพ์/วางเอง) เช่น `%CurrentRow['OrderId']%`, `%CurrentRow['Region']%`, `%CurrentRow['Amount']%` + `%Tier%`
 7. ปิด **End** (If กรอง) แล้ว **End** (For each)
 
 โครงภายในลูป:
 
 ```text
 For each CurrentRow in Orders
-  If Region = BKK OR Amount >= 10000
-    If Amount >= 12000 → Tier = Gold Else → Tier = Silver
+  If %CurrentRow['Region']% = BKK OR %CurrentRow['Amount']% >= 10000
+    If %CurrentRow['Amount']% >= 12000 → Tier = Gold Else → Tier = Silver
     Insert row into Filtered (+ Tier)
   End
 End
@@ -227,8 +235,15 @@ End
 ```
 
    (หรือรวมยอดระหว่างแทรกแถวก็ได้)
-2. ในลูป: **Increase variable** เลือก `SumAmount` (ไม่มี `%`) / หรือคำนวณด้วยนิพจน์ที่ใช้ `%SumAmount%`
-3. ตอนอ้างอิงต่อใช้ `%SumAmount%`
+2. Store into: `FilteredRow` ← **ไม่ใส่ `%`**
+3. ในลูป: อ่าน Amount แล้วบวกเข้า `SumAmount` — ใช้ (คัดลอก):
+
+```text
+%FilteredRow['Amount']%
+```
+
+   (ถ้าเป็นข้อความ: **Convert text to number** ก่อน)
+4. ตอนอ้างอิงต่อใช้ `%SumAmount%`
 
 ### Step 6 — เขียน sheet Filtered และ Summary
 
@@ -399,8 +414,9 @@ FormatSummary
 |-------|-----|
 | Save as รอบสองล้ม (ไฟล์ซ้ำ) | ก่อน **Save document as** ใช้ **If file exists** → **Delete file** — ดู [`shared/BEST-PRACTICES.md`](../../shared/BEST-PRACTICES.md) ส่วน Excel |
 | File locked | ปิด Excel UI ที่เปิดไฟล์อยู่ |
-| Column not found | ตรวจชื่อ header ให้ตรง schema |
+| Column not found | ตรวจชื่อ header ให้ตรง schema · อ้างคอลัมน์ด้วย `%CurrentRow['Amount']%` (พิมพ์เอง) |
 | Number format | Convert text to number |
+| หาคอลัมน์ใน If ไม่เจอ | ไม่มีในรายการตัวแปร — วาง `%CurrentRow['Region']%` / `%CurrentRow['Amount']%` |
 | Macro disabled / not found | ตรวจ Trust Center + ชื่อ macro = `FormatSummary` + ไฟล์เป็น `.xlsm` |
 | VBA project access | ดูขั้นตอน import ใน `assets/vba/README.md` |
 

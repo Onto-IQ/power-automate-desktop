@@ -20,7 +20,7 @@ C:\PAD-Labs\output\lab03\
 Lab03_Catalog
 ```
 
-2. **Create new data table** → `CatalogHits` (คอลัมน์ตามที่ extract ได้ เช่น Product, Price, …)
+2. **Create new data table** → `CatalogHits` · คอลัมน์: SKU, Product, Price, Category
 3. **Set variable** `MaxPages` ← `10` (safety)
 4. **Set variable** `PageCount` ← `0`
 
@@ -45,12 +45,30 @@ https://pad.ontoiq.tech/pad/19-catalog.html
 7. **คลิกขวา** บนตาราง/เซลล์ในตาราง
 8. เลือก **Extract Entire HTML Table** · Variables produced: `PageTable`
 9. รอบแรกตั้งค่า helper · รอบถัดไปใช้ extract เดิมบนตารางหน้าปัจจุบัน
-10. **For each** `%PageTable%` → Insert เข้า `%CatalogHits%`
-11. เพิ่ม `PageCount` += 1
-12. หาปุ่ม **Next**
-13. ถ้ากดได้ → **Click** Next แล้ววนต่อ
-14. ถ้า disabled / ไม่มี → **Exit loop**
-15. **End** loop
+10. ลาก **For each** · Value to iterate: (คัดลอก)
+
+```text
+%PageTable%
+```
+
+11. Store into: `ProductRow` ← **ไม่ใส่ `%`**
+12. **ภายใน For each** ลาก **Insert row into data table** · Data table: (คัดลอก)
+
+```text
+%CatalogHits%
+```
+
+13. ใส่ค่าจากแถว (พิมพ์/วางเอง — ไม่มีคอลัมน์ในรายการตัวแปร):
+    - SKU ← `%ProductRow['SKU']%`
+    - Product ← `%ProductRow['Product']%`
+    - Price ← `%ProductRow['Price']%`
+    - Category ← `%ProductRow['Category']%`
+14. **End** For each
+15. เพิ่ม `PageCount` += 1
+16. หาปุ่ม **Next**
+17. ถ้ากดได้ → **Click** Next แล้ววนต่อ
+18. ถ้า disabled / ไม่มี → **Exit loop**
+19. **End** loop
 
 เป้าหมาย: รวมแถวประมาณ **24** รายการ (ตามที่ hub ออกแบบ)
 
@@ -82,6 +100,7 @@ C:\PAD-Labs\output\lab03\catalog-products.csv
 |-------|-----|
 | ได้แค่หน้าแรก | ตรวจว่ามี Click Next + Wait หลังเปลี่ยนหน้า |
 | วนไม่จบ | ใช้ MaxPages + Exit เมื่อ Next ใช้ไม่ได้ |
+| หาคอลัมน์ Product ในรายการตัวแปรไม่เจอ | พิมพ์/วาง `%ProductRow['Product']%` เอง |
 | สับสนกับ 03-table | 03-table ไม่มี Next — Lab นี้อยู่บน 19-catalog |
 
 ## Cleanup

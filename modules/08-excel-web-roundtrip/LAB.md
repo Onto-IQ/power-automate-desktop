@@ -189,13 +189,20 @@ demo
 
    - Store into: `CurrentLead` ← **ไม่ใส่ `%`**
 2. **ภายใน For each** ลาก **If**
-   - เงื่อนไข: Status ของแถว Equal to (คัดลอก):
+   - ฝั่งซ้าย (คัดลอก — พิมพ์เอง ไม่มีคอลัมน์ในรายการตัวแปร):
+
+```text
+%CurrentLead['Status']%
+```
+
+   - ตัวดำเนินการ: **Equal to**
+   - ฝั่งขวา (คัดลอก):
 
 ```text
 New
 ```
 
-3. (แนะนำ Challenge) **Else** / If ซ้อน: ถ้า Email ว่าง → ข้ามแถว
+3. (แนะนำ Challenge) **Else** / If ซ้อน: ถ้า Email ว่าง → ข้ามแถว — ใช้ `%CurrentLead['Email']%`
 4. งาน submit ทั้งหมดอยู่ **ภายใน** กิ่ง Status = New
 
 ### Step 5 — Mission W: Priority=High ใช้ Wizard (07)
@@ -405,6 +412,7 @@ https://ontoiq.tech/pad/05-files.html
 | Save as รอบสองล้ม (ไฟล์ซ้ำ) | **If file exists** → **Delete file** ก่อน Save as |
 | ฟอร์ม validation | ตรวจรูปแบบ email/date |
 | Element ไม่เจอ | เพิ่ม **Wait for web page content** ก่อน Interact |
+| หา Status / Priority ใน If ไม่เจอ | พิมพ์/วาง `%CurrentLead['Status']%` / `%CurrentLead['Priority']%` |
 
 ## Cleanup
 

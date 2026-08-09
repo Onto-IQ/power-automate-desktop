@@ -347,58 +347,72 @@ Selectors คงที่:
 
 ### Step 5 — Price engine (Discount + VAT)
 
-ตาม [`assets/pricing-rules.md`](assets/pricing-rules.md) สำหรับแต่ละแถวที่มี Amount/ราคา:
+ตาม [`assets/pricing-rules.md`](assets/pricing-rules.md) สำหรับแต่ละแถวที่มี Amount หรือ Price:
 
-1. ในลูปบน (คัดลอก):
+1. ลาก **For each** · Value to iterate: (คัดลอก)
 
 ```text
 %Products%
 ```
 
-   (หรือตารางที่ scout ได้):
-   - ถ้า Amount >= (คัดลอก):
+   Store into: `ProductRow` ← **ไม่ใส่ `%`**
+2. อ่านราคาจากแถว — ใช้คอลัมน์ที่มีจริง (พิมพ์/วางเอง):
+
+```text
+%ProductRow['Amount']%
+```
+
+   หรือถ้ามาจาก catalog:
+
+```text
+%ProductRow['Price']%
+```
+
+   ถ้าเป็นข้อความ: **Convert text to number** → Name: `AmountNumber` ← **ไม่ใส่ `%`**
+3. **If** · ฝั่งซ้าย `%AmountNumber%` (หรือค่าตัวเลขจากข้อ 2) · **Greater than or equal to** · ฝั่งขวา (คัดลอก):
 
 ```text
 15000
 ```
 
-     → Name: `DiscountRate` ← Value:
+   → Name: `DiscountRate` ← Value:
 
 ```text
 0.10
 ```
 
-   - Else if Amount >= (คัดลอก):
+4. **Else if** · ฝั่งซ้ายเดียวกัน · **Greater than or equal to** · ฝั่งขวา (คัดลอก):
 
 ```text
 10000
 ```
 
-     → Value:
+   → Name: `DiscountRate` ← Value:
 
 ```text
 0.05
 ```
 
-   - Else → Value:
+5. **Else** → Name: `DiscountRate` ← Value:
 
 ```text
 0.00
 ```
 
-2. คำนวณด้วย **Set variable** / การคำนวณใน PAD (Name ไม่มี `%`; ตอนอ้างอิงใช้ `%...%`):
-   - Name: `DiscountAmount` = Amount * DiscountRate
-   - Name: `NetBeforeTax` = Amount - DiscountAmount
-   - Name: `TaxAmount` = NetBeforeTax * (คัดลอกอัตรา VAT):
+6. คำนวณด้วย **Set variable** (Name ไม่มี `%`; ตอนอ้างอิงใช้ `%...%`):
+   - Name: `DiscountAmount` ← `%AmountNumber% * %DiscountRate%`
+   - Name: `NetBeforeTax` ← `%AmountNumber% - %DiscountAmount%`
+   - Name: `TaxAmount` ← `%NetBeforeTax% * 0.07` (VAT):
 
 ```text
 0.07
 ```
 
-   - Name: `GrandTotal` = NetBeforeTax + TaxAmount
-3. สร้าง/เติม Data table **Variables produced:** `Priced` ← **ไม่ใส่ `%`** ให้มีคอลัมน์ด้านบนครบ (อ้างอิงด้วย `%Priced%`)
-4. รวมยอด Summary: Sum Amount, Sum Discount, Sum Tax, Sum GrandTotal
-5. เทียบมือกับ [`assets/expected-pricing-examples.csv`](assets/expected-pricing-examples.csv) สำหรับเคสเดียวกัน
+   - Name: `GrandTotal` ← `%NetBeforeTax% + %TaxAmount%`
+7. **Insert row into data table** `%Priced%` (สร้างตารางก่อนถ้ายังไม่มี — Variables produced: `Priced`) ด้วยค่าจากแถว + ค่าที่คำนวณได้
+8. รวมยอด Summary: Sum Amount, Sum Discount, Sum Tax, Sum GrandTotal
+9. **End** For each
+10. เทียบมือกับ [`assets/expected-pricing-examples.csv`](assets/expected-pricing-examples.csv) สำหรับเคสเดียวกัน
 
 ### Step 6 — SF_SubmitLeadForms: Excel → Web → อัปเดตสถานะ
 
@@ -409,35 +423,47 @@ Selectors คงที่:
 ```
 
    → Store into: `CurrentLead` ← **ไม่ใส่ `%`**
-2. **If** Status Equal to (คัดลอก):
+2. **If** · ฝั่งซ้าย (คัดลอก):
+
+```text
+%CurrentLead['Status']%
+```
+
+   Equal to (คัดลอก):
 
 ```text
 New
 ```
 
-   - **If** Priority Equal to (คัดลอก):
+3. **ภายในกิ่ง New** ลาก **If** · ฝั่งซ้าย (คัดลอก):
+
+```text
+%CurrentLead['Priority']%
+```
+
+   Equal to (คัดลอก):
 
 ```text
 High
 ```
 
-     → **Go to web page** URL (คัดลอก):
+   → **Go to web page** URL (คัดลอก):
 
 ```text
 https://ontoiq.tech/pad/07-wizard.html
 ```
 
-     ทำ Wizard ครบ (Mission VIP)
-   - **Else** → **Go to web page** URL (คัดลอก):
+   ทำ Wizard ครบ (Mission VIP)
+4. **Else** (Priority ไม่ใช่ High) → **Go to web page** URL (คัดลอก):
 
 ```text
 https://ontoiq.tech/pad/01-forms.html
 ```
 
-     → **Populate text field on web page** + **Press button on web page**
-3. อัปเดต Status / WebResult / SubmittedAt ของแถว
-4. **Increase variable** เลือก `SubmittedCount` (ไม่มี `%`) เมื่อสำเร็จ
-5. **End** For each
+   → **Populate text field on web page** + **Press button on web page** (ใช้ `%CurrentLead['...']%` ตามคอลัมน์ฟอร์ม)
+5. อัปเดต Status / WebResult / SubmittedAt ของแถว
+6. **Increase variable** เลือก `SubmittedCount` (ไม่มี `%`) เมื่อสำเร็จ
+7. **End** If (Status) แล้ว **End** For each
 
 **Mission Files (05):** หลังมีผล scout/submit — ไป URL (คัดลอก):
 
@@ -641,6 +667,7 @@ Skipped
 | Excel lock | **Close Excel** + ปิดหน้าต่าง Excel |
 | Save as รอบสองล้ม (ไฟล์ซ้ำ) | **If file exists** → **Delete file** ก่อน Save as — ดู Best Practices |
 | Catalog ได้ไม่ครบ | ตรวจว่า Loop หยุดเมื่อ Next disabled ไม่ใช่หลังหน้าแรก |
+| หาคอลัมน์ใน If ไม่เจอ | พิมพ์/วาง `%ProductRow['Price']%` หรือ `%CurrentLead['Status']%` — ไม่มีในรายการตัวแปร |
 
 ## Cleanup
 

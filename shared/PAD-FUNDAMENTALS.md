@@ -63,9 +63,23 @@ PAD คือเครื่องมือของ Microsoft ที่ให�
 | **For each** → Store into | ไม่มี `%` | `CurrentFile` |
 | เปลี่ยนชื่อในส่วน **Variables produced** | ไม่มี `%` | `InboxFiles` |
 | Folder / File path / Text ที่ต้องการดึงค่า | มี `%` | `%WorkingRoot%\inbox` |
+| คอลัมน์ของแถวใน **For each** (Data table) | มี `%` + ชื่อคอลัมน์ใน `['...']` | `%CurrentRow['Amount']%` |
 
-หลังสร้างแล้ว Variables pane มักแสดงเป็น `%WorkingRoot%` — เป็นเรื่องปกติ  
-รายละเอียดกฎ `%`: [`PAD-FUNDAMENTALS.md`](PAD-FUNDAMENTALS.md)
+หลังสร้างแล้ว Variables pane มักแสดงเป็น `%WorkingRoot%` — เป็นเรื่องปกติ
+
+### อ้างคอลัมน์ในแถว Data table (สำคัญ)
+
+ตอน **For each** ตาราง แล้วต้องการค่าในคอลัมน์ไปใส่ **If** / **Set variable** / **Populate**:
+
+- ในรายการตัวแปรมักเห็นแค่ `%CurrentRow%` (ทั้งแถว) — **ไม่มีรายการย่อยเป็นคอลัมน์**
+- ต้อง**พิมพ์/วางเอง**ในช่อง เช่น:
+
+```text
+%CurrentRow['Amount']%
+```
+
+- ชื่อใน `['...']` ต้อง**ตรง header** (เช่น `Order ID` มีช่องว่างได้: `%AjaxRow['Order ID']%`)
+- รูปแบบที่ผิดบ่อย: `%CurrentRow%['Amount']` (วงเล็บอยู่นอก `%`)
 
 ## การรันและดีบัก
 
