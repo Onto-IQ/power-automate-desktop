@@ -73,7 +73,7 @@ Click Btn_Seven, Btn_Plus, Btn_Eight, Btn_Equals
 | อาการ | สาเหตุที่พบบ่อย | วิธีสังเกต |
 |-------|-----------------|------------|
 | Selector หลุด | โหมดเครื่องคิดเลขไม่ใช่ Standard | Recapture หลังสลับโหมด |
-| ได้ 15 แต่เกณฑ์ไม่ผ่าน | ไม่อ่านจาก display | ไม่มี `%CalcResult%` |
+| ได้ 15 แต่เกณฑ์ไม่ผ่าน | อ่าน window title / ใช้ Equal to | `%CalcResult%` เป็น `Display is 15` — เปลี่ยนเป็นอ่าน UI element + **Contains** |
 | Replay เปิดแอปซ้อน | ไม่ Close ก่อนรอบใหม่ | มีหลาย Calculator |
 
 ## 8. คำถามทบทวน

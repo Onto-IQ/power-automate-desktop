@@ -72,10 +72,15 @@ calc
 
 ### Step 4 — อ่านค่าจาก display
 
-1. ลาก action ที่อ่านข้อความจาก UI element (เช่น **Get details of UI element in window**)
-2. ชี้ `Txt_CalcDisplay`
-3. **Variables produced:** `CalcResult` ← **ไม่ใส่ `%`**  
+ใช้ **Get details of UI element in window** ชี้ element ช่องแสดงผล — **อย่าใช้** **Get details of window** → Get window title
+
+1. ลาก **Get details of UI element in window**
+2. UI element: `Txt_CalcDisplay` (ช่องแสดงผลที่ capture ใน Step 2)
+3. Attribute / รายละเอียดที่อ่าน: เลือกข้อความของ control (เช่น Name / Value / Text ตามที่ designer แสดงหลัง Test — ต้องมีเลขผลลัพธ์)
+4. **Variables produced:** `CalcResult` ← **ไม่ใส่ `%`**  
    (อ้างอิงด้วย `%CalcResult%`)
+
+> ถ้าใช้ Get window title จะได้ข้อความแบบ accessibility เช่น `Display is 15` ไม่ใช่ค่าในช่องแสดงผลโดยตรง — แล้วยังไม่ใช่ปัญหา Data type (ยังเป็น Text อยู่)
 
 ### Step 5 — ตรวจว่าได้ 15
 
@@ -86,11 +91,14 @@ calc
 %CalcResult%
 ```
 
-   ตัวดำเนินการ **Contains** (หรือ Equal to) · ฝั่งขวา (คัดลอก — ถ้า display มีทศนิยม/เครื่องหมาย ให้ Contains แล้วปรับตามค่าจริง):
+   ตัวดำเนินการ **Contains** (แนะนำ) · ฝั่งขวา (คัดลอก):
 
 ```text
 15
 ```
+
+> ใช้ **Contains** ไม่ใช้ **Equal to** เป็นหลัก — ค่าที่อ่านได้มักเป็นข้อความ เช่น `15` หรือบางเครื่อง `Display is 15` / มีทศนิยม  
+> แก้ที่เงื่อนไข If + แหล่งที่อ่าน (UI element) — **ไม่ต้องเปลี่ยน Data type** ของตัวแปร
 
 3. ในกิ่ง **Else**:
    - ลาก **Set variable** Name: `CalcError` ← **ไม่ใส่ `%`**
@@ -151,6 +159,8 @@ ApplicationFrameWindow
 
 | ผิด | ถูก |
 |-----|-----|
+| ใช้ Get window title แล้วได้ `Display is 15` | ใช้ **Get details of UI element in window** ชี้ `Txt_CalcDisplay` |
+| If แบบ Equal to `15` แล้วเข้า Else | เปลี่ยนเป็น **Contains** `15` — ไม่ต้องแก้ Data type |
 | พิมพ์ `%CalcResult%` ในช่อง Variables produced | ใช้ชื่อเปล่า `CalcResult` |
 | คลิกด้วยพิกัดจอ | Capture UI Elements แล้ว Click |
 | ปิดด้วย class อย่างเดียวเหมือน Notepad | ใส่ **Window title** `Calculator` (หรือชื่อภาษาเครื่อง) — อย่าปล่อย title ว่างกับ class `ApplicationFrameWindow` |
@@ -183,6 +193,7 @@ ApplicationFrameWindow
 
 | อาการ | แก้ |
 |-------|-----|
+| `%CalcResult%` เป็น `Display is 15` แล้วเข้า Else | อย่าใช้ Get window title — เปลี่ยนเป็น **Get details of UI element in window** + If **Contains** `15` |
 | Selector หลุด | Recapture หลังสลับโหมด Standard และอย่าใช้พิกัดจอ |
 | แอปเปิดซ้อนหลายตัว | **Close window** หรือ **Terminate process** ก่อนรันใหม่ |
 | คลิกไม่ได้ / UIPI | ดู [UIPI issues](https://learn.microsoft.com/troubleshoot/power-platform/power-automate/desktop-flows/ui-automation/uipi-issues) |
