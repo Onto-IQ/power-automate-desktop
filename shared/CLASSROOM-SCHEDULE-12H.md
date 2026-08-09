@@ -28,7 +28,7 @@
 | 01 | บังคับ | Challenge แถวที่ 2 |
 | 01b | Notepad (`Lab01b_Notepad`) | Calculator แยก flow (`Lab01b_Calculator`) |
 | 02 | บังคับครบ | Delete inbox หลัง Copy |
-| 03 | Mission A + C | B, D, P, E–H |
+| 03 | Static Table + AJAX Table | Catalog, Controls, Files · Iframe/API โบนัส |
 | 04 | บังคับ | — |
 | 05 | บังคับ | Do until challenge |
 | 06 | อ่าน/กรอง/เขียน Excel | Macro FormatSummary |
@@ -49,10 +49,10 @@
 | 10:45–11:25 | 40 | Lab 01b Notepad | [`modules/01b-notepad/`](../modules/01b-notepad/) | Calculator optional: [`01b-calculator`](../modules/01b-calculator/) |
 | 11:25–12:15 | 50 | Lab 02 File Management | [`modules/02-file-management/`](../modules/02-file-management/) | เน้นกฎ `%` |
 | 12:15–13:15 | 60 | พักกลางวัน | — | |
-| 13:15–14:15 | 60 | Lab 03 Web Scout (A + C) | [`modules/03-web-scout/`](../modules/03-web-scout/) | ตัด Challenge ในห้อง |
-| 14:15–14:45 | 30 | บัฟเฟอร์ช่วยเหลือ + ทบทวนวัน 1 | คู่มือ TA บนเครื่องทีม (`ops/TA-CHEATSHEET.md`) | จบเมื่อ Core 01/02/03A+C ผ่าน |
+| 13:15–14:15 | 60 | Lab 03 Core: Static + AJAX | [`static-table`](../modules/03-web-scout/static-table/) · [`ajax-table`](../modules/03-web-scout/ajax-table/) | Index: [`03-web-scout`](../modules/03-web-scout/) · Catalog/Controls/Files = optional/บ้าน |
+| 14:15–14:45 | 30 | บัฟเฟอร์ช่วยเหลือ + ทบทวนวัน 1 | คู่มือ TA บนเครื่องทีม (`ops/TA-CHEATSHEET.md`) | จบเมื่อ Core 01/02/03 Static+AJAX ผ่าน |
 
-**เกณฑ์ผ่านวัน 1:** Flow 01 รันซ้ำได้ · Lab 02 มี summary ถูก · Lab 03 extract ได้อย่างน้อย 1 ตาราง (+ AJAX มี Wait)
+**เกณฑ์ผ่านวัน 1:** Flow 01 รันซ้ำได้ · Lab 02 มี summary ถูก · Lab 03 มี `Lab03_StaticTable` + `Lab03_AjaxTable` (AJAX มี Wait)
 
 ---
 
@@ -92,7 +92,7 @@
 
 ## สิ่งที่ห้ามในห้อง (ลดงาน)
 
-- อย่าไล่ทำ Challenge ทุก Mission ของ Lab 03/08/09/10 ในเวลาคอร์ส  
+- อย่าไล่ทำ Lab 03 optional (Catalog/Controls/Files) และ Challenge ของ Lab 08/09/10 ในเวลาคอร์ส  
 - อย่าให้ทั้งห้องรอคนที่ยังติดตั้งไม่เสร็จเกิน 15 นาทีเช้าวัน 1 — แยกคลื่นกับ TA  
 - อย่าเปิด Outlook ส่งจริง — **DraftOnly** เท่านั้น  
 

@@ -1,40 +1,79 @@
-# Lab 03 — Web Scout
+# Lab 03 — Web Scout (แผนที่บท)
 
-**วัน:** 1 · **ระดับ:** Intermediate · **เวลาโดยประมาณ:** อ่านความรู้ 20–30 นาที + Lab 60–90 นาที  
-**ทักษะ:** Launch browser, Extract HTML table, Controls, Wait for AJAX, Files download/upload, บันทึกผลลงไฟล์
+**วัน:** 1 · **ระดับ:** Intermediate  
+**บทบาท:** Index — lab ย่อยอยู่**ในโฟลเดอร์นี้** (flow แยก) ไม่ใช่ Mission รวมใน flow เดียว
 
-## ลำดับการเรียน (จับมือทำ)
+เลิกโครง Mission A–D/P + `%ScoutResults%` / `SourcePage` ร่วมแล้ว — แต่ละ lab มี flow และ CSV ของตัวเองใต้ `C:\PAD-Labs\output\lab03\`
 
-| ขั้น | ไฟล์ | ทำอะไร |
-|------|------|--------|
-| 0 | [`shared/PAD-FUNDAMENTALS.md`](../../shared/PAD-FUNDAMENTALS.md) | พื้นฐาน PAD / กฎ `%` (ถ้ายังไม่คุ้น designer) |
-| 1 | **[LESSON.md](LESSON.md)** | อ่านความรู้: Scout missions, Extract, AJAX, catalog loop |
-| 2 | **[LAB.md](LAB.md)** | Setup + Hands-on Mission A–D / P ใน designer |
+## ลำดับเรียนที่แนะนำ
 
-## วัตถุประสงค์
+| ลำดับ | Lab | Flow | สถานะ | หน้า Hub |
+|------|-----|------|--------|----------|
+| 1 | [Static Table](static-table/README.md) | `Lab03_StaticTable` | **Core** | [03-table](https://pad.ontoiq.tech/pad/03-table.html) · `#tbl-employees` |
+| 2 | [AJAX Table](ajax-table/README.md) | `Lab03_AjaxTable` | **Core** | [09-ajax-table](https://pad.ontoiq.tech/pad/09-ajax-table.html) · `#tbl-orders` |
+| 3 | [Catalog](catalog/README.md) | `Lab03_Catalog` | Optional (pagination) | [19-catalog](https://pad.ontoiq.tech/pad/19-catalog.html) · Next loop |
+| 4 | [Controls](controls/README.md) | `Lab03_Controls` | Optional | [02-controls](https://pad.ontoiq.tech/pad/02-controls.html) |
+| 5 | [Files](files/README.md) | `Lab03_Files` | Optional | [05-files](https://pad.ontoiq.tech/pad/05-files.html) |
 
-- ทำ **Web Scout** แบบสนุก: เก็บข้อมูลจากหลายหน้าบน PAD Lab Hub
-- Extract ตาราง static และรอตาราง dynamic (AJAX)
-- ส่งออกผลเป็น CSV
+```mermaid
+flowchart LR
+  index[03-web-scout]
+  index --> staticLab[static-table]
+  index --> ajaxLab[ajax-table]
+  index --> controlsLab[controls]
+  index --> filesLab[files]
+  index --> catalogLab[catalog]
+```
+
+## แยกประเภทตาราง (อย่าสับสน)
+
+| หน้า | ลักษณะ | Lab |
+|------|--------|-----|
+| 03-table | Static หน้าเดียว — **ไม่มี** Prev/Next | [Static Table](static-table/README.md) |
+| 09-ajax-table | แถวโผล่หลังโหลด — Wait ก่อน Extract | [AJAX Table](ajax-table/README.md) |
+| 19-catalog | มี **Next** หลายหน้า | [Catalog](catalog/README.md) |
+
+## ในห้อง (Core)
+
+ทำ **Static + AJAX** ตาม [`shared/CLASSROOM-SCHEDULE-12H.md`](../../shared/CLASSROOM-SCHEDULE-12H.md)  
+Catalog / Controls / Files = บ้านหรือถ้าเวลาเหลือ
+
+## โบนัส (ไม่แยกโฟลเดอร์รอบนี้)
+
+- Iframe: [08-iframe](https://pad.ontoiq.tech/pad/08-iframe.html) (ดู hub)
+- API mock: [12-api](https://pad.ontoiq.tech/pad/12-api.html) (ดู hub)
 
 ## Prerequisites
 
-- PAD + browser extension (แนะนำ baseline **2607+** — ดู [PAD version matrix](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop))
+- PAD + browser extension (แนะนำ **2607+**)
 - อ่าน [`shared/SELECTOR-CONVENTIONS.md`](../../shared/SELECTOR-CONVENTIONS.md)
+- พื้นฐาน: [`shared/PAD-FUNDAMENTALS.md`](../../shared/PAD-FUNDAMENTALS.md)
 
-## Assets / Output
+## Output รวม
 
-| | Path |
-|--|------|
-| Criteria | [`assets/scout-criteria.csv`](assets/scout-criteria.csv) |
-| Upload mock | [`assets/upload-sample.txt`](assets/upload-sample.txt) |
-| Scout brief | [`assets/scout-brief.md`](assets/scout-brief.md) |
-| Output template | [`assets/scout-results-template.csv`](assets/scout-results-template.csv) |
-| Expected shape | [`assets/expected-scout-results.csv`](assets/expected-scout-results.csv) |
-| Your output | `C:\PAD-Labs\output\lab03\scout-results.csv` |
-| Downloads | `C:\PAD-Labs\output\lab03\downloads\` |
+```text
+C:\PAD-Labs\output\lab03\
+  static-table.csv
+  ajax-orders.csv
+  catalog-products.csv      (optional)
+  controls-result.csv       (optional)
+  …
+C:\PAD-Labs\downloads\      (Files lab)
+```
+
+## โครงสร้างโฟลเดอร์
+
+```text
+modules/03-web-scout/
+├── README.md           ← คุณอยู่ที่นี่
+├── static-table/       ← Core
+├── ajax-table/         ← Core
+├── catalog/            ← Optional
+├── controls/           ← Optional
+└── files/              ← Optional
+```
 
 ## บทที่เกี่ยวข้อง
 
-- พื้นฐานเว็บก่อนหน้า: [Lab 01 Record & Replay](../01-record-replay/README.md)
-- ใช้แนวคิดไฟล์: [Lab 02 File Management](../02-file-management/README.md)
+- ก่อนหน้า: [Lab 01](../01-record-replay/README.md) · [Lab 02](../02-file-management/README.md)
+- ต่อ: [Lab 08](../08-excel-web-roundtrip/README.md) · [Lab 10 Capstone](../10-capstone-sales-ops/README.md)

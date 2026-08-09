@@ -82,7 +82,7 @@ Get-ChildItem $root
 |-----|-------------|
 | 01 | `C:\PAD-Labs\working\lab01\` ← จาก `modules/01-record-replay/assets/` |
 | 02 | `C:\PAD-Labs\working\lab02\inbox\` ← จาก `modules/02-file-management/assets/inbox/` |
-| 03 | สร้าง `C:\PAD-Labs\output\lab03\` (ว่างก็ได้) |
+| 03 | สร้าง `C:\PAD-Labs\output\lab03\` · (Files optional) คัดลอก `modules/03-web-scout/files/assets/upload-sample.txt` → `C:\PAD-Labs\working\lab03\` · criteria AJAX อยู่ที่ `modules/03-web-scout/ajax-table/assets/` |
 | 04+ | ตาม `LAB.md` ของแต่ละบทในวันที่ 2 |
 
 สร้างโฟลเดอร์ lab ย่อยเพิ่มได้ด้วย:

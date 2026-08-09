@@ -1,0 +1,45 @@
+# Lab 03 — Catalog (ความรู้)
+
+**หน้าปก:** [README.md](README.md) · **ลงมือทำ:** [LAB.md](LAB.md)
+
+**Optional (pagination)** · อ่านประมาณ 10–15 นาที
+
+## 1. บทนี้เรียนอะไร
+
+- ตารางที่มี **Prev / Next** — ต้องวนหน้าแล้ว Extract ทีละหน้า
+- ต่างจาก [03-table](https://pad.ontoiq.tech/pad/03-table.html) ที่เป็น static หน้าเดียว
+
+## 2. เปรียบเทียบสั้น ๆ
+
+| หน้า | Pagination |
+|------|------------|
+| 03-table | ไม่มี |
+| 09-ajax-table | ไม่มี (แต่ต้อง Wait แถว) |
+| **19-catalog** | **มี Next** |
+
+## 3. หน้าเป้าหมาย
+
+| | |
+|--|--|
+| URL | https://pad.ontoiq.tech/pad/19-catalog.html |
+| Table | `#tbl-products` |
+| เป้า | รวมประมาณ 24 รายการ (หลายหน้า) |
+
+## 4. แนวคิดหลัก
+
+```text
+Launch → Loop:
+  Extract #tbl-products → เก็บแถว
+  ถ้ามี Next ที่กดได้ → กด Next → Wait ตาราง
+  ไม่มี Next → ออกจากลูป
+Write CSV → Close
+```
+
+ใส่ **MaxPages** / เงื่อนไขหยุด เพื่อไม่วนไม่รู้จบ
+
+## 5. อ้างอิง
+
+- [Web automation](https://learn.microsoft.com/power-automate/desktop-flows/automation-web)
+- [`shared/SELECTOR-CONVENTIONS.md`](../../../shared/SELECTOR-CONVENTIONS.md)
+
+**ถัดไป:** [LAB.md](LAB.md)

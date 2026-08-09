@@ -21,14 +21,14 @@
 | โมดูล | URL | ทักษะ |
 |-------|-----|--------|
 | 01 Forms | https://ontoiq.tech/pad/01-forms.html | Fill text, validate, submit |
-| 02 Controls | https://ontoiq.tech/pad/02-controls.html | Click, dropdown, checkbox, radio |
-| 03 Table | https://ontoiq.tech/pad/03-table.html | Extract HTML table · `#tbl-employees` |
+| 02 Controls | https://pad.ontoiq.tech/pad/02-controls.html | Dropdown/checkbox · Lab: [`controls`](../modules/03-web-scout/controls/) *(optional)* |
+| 03 Table | https://pad.ontoiq.tech/pad/03-table.html | Static extract · `#tbl-employees` · **ไม่มี** pagination · Lab: [`static-table`](../modules/03-web-scout/static-table/) |
 | 04 Dialogs | https://ontoiq.tech/pad/04-dialogs.html | Alert / confirm / modal |
-| 05 Files | https://ontoiq.tech/pad/05-files.html | Download / upload |
+| 05 Files | https://pad.ontoiq.tech/pad/05-files.html | Download / upload · Lab: [`files`](../modules/03-web-scout/files/) *(optional)* |
 | 06 Login | https://ontoiq.tech/pad/06-login.html | Auth `demo` / `demo` |
 | 07 Wizard | https://ontoiq.tech/pad/07-wizard.html | Multi-step |
 | 08 Iframe | https://ontoiq.tech/pad/08-iframe.html | Switch iframe |
-| 09 AJAX Table | https://ontoiq.tech/pad/09-ajax-table.html | Wait dynamic rows |
+| 09 AJAX Table | https://pad.ontoiq.tech/pad/09-ajax-table.html | Wait dynamic rows · `#tbl-orders` · Lab: [`ajax-table`](../modules/03-web-scout/ajax-table/) |
 | 10 OCR | https://ontoiq.tech/pad/10-ocr.html | OCR compare |
 | 11 Delay | https://ontoiq.tech/pad/11-delay.html | Countdown / gate |
 | 12 API | https://ontoiq.tech/pad/12-api.html | HTTP mock |
@@ -38,6 +38,9 @@
 | 16 Shadow DOM | https://ontoiq.tech/pad/16-shadow.html | Shadow root |
 | 17 Cross iframe | https://ontoiq.tech/pad/17-cross-iframe.html | Cross-origin |
 | 18 Popup | https://ontoiq.tech/pad/18-popup.html | Popup / new tab |
+| 19 Catalog | https://pad.ontoiq.tech/pad/19-catalog.html | Pagination · `#tbl-products` + Next loop · Lab: [`catalog`](../modules/03-web-scout/catalog/) *(optional)* |
+
+> **อย่าสับสน:** `03-table` = static หน้าเดียว · `19-catalog` = มี Next · `09-ajax` = Wait แถว (ไม่มี pagination) — ดู [Lab 03 index](../modules/03-web-scout/README.md)
 
 ## Wait Strategy
 
