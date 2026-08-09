@@ -27,11 +27,13 @@ Lab03_Files
 
 ### Step 1 — Launch
 
+1. **Launch** Edge/Chrome · Initial URL:
+
 ```text
 https://pad.ontoiq.tech/pad/05-files.html
 ```
 
-Variables produced: `Browser`
+2. Variables produced: `Browser`
 
 ### Step 2 — Download
 
@@ -42,19 +44,17 @@ Variables produced: `Browser`
 ### Step 3 — Upload
 
 1. หา input อัปโหลดบนหน้า
-2. ส่ง path:
+2. ส่ง path (หรือ path ที่คุณคัดลอก sample ไว้):
 
 ```text
 C:\PAD-Labs\working\lab03\upload-sample.txt
 ```
 
-   (หรือ path ที่คุณคัดลอก sample ไว้)
-
 3. Submit / Confirm ตาม UI หน้า
 
 ### Step 4 — ปิด
 
-**Close web browser** · `%Browser%`
+1. **Close web browser** · `%Browser%`
 
 ## Acceptance
 

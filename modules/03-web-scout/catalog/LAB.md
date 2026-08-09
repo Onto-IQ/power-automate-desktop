@@ -26,36 +26,43 @@ Lab03_Catalog
 
 ### Step 1 — Launch
 
+1. **Launch** Edge/Chrome · Initial URL:
+
 ```text
 https://pad.ontoiq.tech/pad/19-catalog.html
 ```
 
-Variables produced: `Browser`
+2. Variables produced: `Browser`
 
 ### Step 2 — Loop หน้า + Extract
 
 1. **Loop** หรือ **Loop while** (เงื่อนไข เช่น `%PageCount% < %MaxPages%`)
-2. ในลูป:
-   - **Wait for web page content** · Contain element · ตาราง `#tbl-products` (Rename เป็น `Tbl_Products` ได้)
-   - ให้หน้ายังอยู่ที่ [19-catalog](https://pad.ontoiq.tech/pad/19-catalog.html) (หลังกด Next แล้วก็ยังต้องเป็นหน้านี้)
-   - **Extract data from web page** · Browser: `%Browser%` → **live web helper** → เลือก **Extract Entire HTML Table** → ชี้ `#tbl-products` → Variables produced: `PageTable`  
-     (รอบแรกตั้งค่า helper; รอบถัดไปใช้ extract เดิมบนตารางหน้าปัจจุบัน)
-   - **For each** `%PageTable%` → Insert เข้า `%CatalogHits%`
-   - เพิ่ม `PageCount` += 1
-   - หาปุ่ม **Next**:
-     - ถ้ากดได้ → **Click** Next แล้ววนต่อ
-     - ถ้า disabled / ไม่มี → **Exit loop**
-3. **End** loop
+2. ในลูป: **Wait for web page content** · Contain element · ตาราง `#tbl-products` (Rename เป็น `Tbl_Products` ได้)
+3. ให้หน้ายังอยู่ที่ [19-catalog](https://pad.ontoiq.tech/pad/19-catalog.html) (หลังกด Next แล้วยังต้องเป็นหน้านี้)
+4. **Extract data from web page** · Browser: `%Browser%`
+5. PAD จะเปิด **live web helper** บนหน้านั้น
+6. ชี้ `#tbl-products`
+7. **คลิกขวา** บนตาราง/เซลล์ในตาราง
+8. เลือก **Extract Entire HTML Table** · Variables produced: `PageTable`
+9. รอบแรกตั้งค่า helper · รอบถัดไปใช้ extract เดิมบนตารางหน้าปัจจุบัน
+10. **For each** `%PageTable%` → Insert เข้า `%CatalogHits%`
+11. เพิ่ม `PageCount` += 1
+12. หาปุ่ม **Next**
+13. ถ้ากดได้ → **Click** Next แล้ววนต่อ
+14. ถ้า disabled / ไม่มี → **Exit loop**
+15. **End** loop
 
 เป้าหมาย: รวมแถวประมาณ **24** รายการ (ตามที่ hub ออกแบบ)
 
 ### Step 3 — เขียน CSV + ปิด
 
+1. เขียนผลเป็น:
+
 ```text
 C:\PAD-Labs\output\lab03\catalog-products.csv
 ```
 
-**Close web browser** · `%Browser%`
+2. **Close web browser** · `%Browser%`
 
 ### Step 4 — Replay
 

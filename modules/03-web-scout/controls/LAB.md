@@ -20,13 +20,13 @@ Lab03_Controls
 
 ### Step 1 — Launch
 
-Initial URL:
+1. Initial URL:
 
 ```text
 https://pad.ontoiq.tech/pad/02-controls.html
 ```
 
-Variables produced: `Browser`
+2. Variables produced: `Browser`
 
 ### Step 2 — ตั้งค่า control
 
@@ -38,19 +38,20 @@ Variables produced: `Browser`
 
 ทำอย่างน้อยหนึ่งอย่าง:
 
-- **Write text to file** → `C:\PAD-Labs\output\lab03\controls-result.csv`  
-  ตัวอย่างเนื้อหา:
+1. **Write text to file** → `C:\PAD-Labs\output\lab03\controls-result.csv`
+2. ตัวอย่างเนื้อหา:
 
 ```text
 SelectedOption,CheckState
 (ค่าที่อ่านได้),(ค่าที่อ่านได้)
 ```
 
-- หรือ **Take screenshot** → `C:\PAD-Labs\output\lab03\controls.png`
+3. หรือ **Take screenshot** → `C:\PAD-Labs\output\lab03\controls.png`
 
 ### Step 4 — ปิด
 
-**Close web browser** · `%Browser%` · Replay 1–2 ครั้ง
+1. **Close web browser** · `%Browser%`
+2. Replay 1–2 ครั้ง
 
 ## Acceptance
 
