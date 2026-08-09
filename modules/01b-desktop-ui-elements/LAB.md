@@ -151,9 +151,20 @@ PAD Lab 01b — Desktop UI Elements
 ### Step A7 — ปิด Notepad
 
 1. ลาก **Close window**
-2. ชี้หน้าต่าง Notepad
+2. ตั้งค่า (แนะนำสำหรับ Lab นี้ — เพราะชื่อหน้าต่าง Notepad **เปลี่ยนหลัง Save As**):
+   - Find window mode: **By title and/or class**
+   - Window title: **ปล่อยว่าง**
+   - Window class: (คัดลอก)
+
+```text
+Notepad
+```
+
 3. ถ้ามี Save dialog หลังปิด ให้มี UI element ของ Don't Save / Yes ตามสถานการณ์จริง
 4. กด Save
+
+> อย่าล็อกด้วย title แบบ `Untitled - Notepad` อย่างเดียว — หลังบันทึกไฟล์ title จะเป็นเช่น `notepad-output.txt - Notepad` แล้ว Close จะหาไม่เจอ  
+> ปิด Notepad อื่นที่เปิดค้างก่อนรัน Lab — mode นี้ปิดทุกหน้าต่าง class `Notepad`
 
 ### Step A8 — รันตรวจ Part A
 
@@ -302,6 +313,7 @@ Unexpected calculator result
 | อาการ | แก้ |
 |-------|-----|
 | ข้อความใน Notepad ไม่ครบ / ขาดตัว | เปิด **Simulate action** ใน **Populate text field in window** |
+| Close Notepad ไม่เจอหลัง Save As | title เปลี่ยนแล้ว | ใช้ **By title and/or class** + Window class `Notepad` (title ว่าง) |
 | Calculator selector หลุด | Recapture หลังสลับโหมด Standard และอย่าใช้พิกัดจอ |
 | มี Save dialog ของ Notepad | เพิ่ม UI element ของ Save As / Yes-No ให้ครบ |
 | แอปเปิดซ้อนหลายตัว | ใช้ **Close window** หรือ **Terminate process** ก่อน **Run application** ใหม่ |
