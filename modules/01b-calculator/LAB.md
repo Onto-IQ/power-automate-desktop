@@ -114,7 +114,7 @@ Unexpected calculator result
 Calculator
 ```
 
-   - Window class: (ทางเลือก ถ้า title อย่างเดียวเจอหลายบาน)
+   - Window class: (ทางเลือก ถ้า title อย่างเดียวเจอหลายหน้าต่าง)
 
 ```text
 ApplicationFrameWindow
