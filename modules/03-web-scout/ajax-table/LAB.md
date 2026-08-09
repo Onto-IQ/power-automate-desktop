@@ -10,7 +10,7 @@
 C:\PAD-Labs\output\lab03\
 ```
 
-อ่าน [`assets/scout-criteria.csv`](assets/scout-criteria.csv): `MinAmount=10000`, `TargetRegion=BKK`
+อ่าน [`assets/scout-criteria.csv`](assets/scout-criteria.csv): `MinAmount=10000`
 
 ## Hands-on
 
@@ -28,14 +28,8 @@ Lab03_AjaxTable
 10000
 ```
 
-3. **Set variable** Name `TargetRegion` ← Value:
-
-```text
-BKK
-```
-
-4. (แนะนำ) **Create new data table** → Variables produced: `Hits`
-5. คอลัมน์อย่างน้อย: OrderId, Customer, Amount, Region, Notes
+3. (แนะนำ) **Create new data table** → Variables produced: `Hits`
+4. คอลัมน์ของ `Hits` ให้ตรง header บนหน้า: Order ID, Customer, Amount, Status, Notes
 
 ### Step 1 — Launch
 
@@ -77,14 +71,16 @@ https://pad.ontoiq.tech/pad/09-ajax-table.html
 5. **คลิกขวา** บนตาราง/เซลล์ในตาราง
 6. เลือก **Extract Entire HTML Table**
 7. Variables produced: `AjaxTable`
-8. Map คอลัมน์ใกล้เคียง: OrderId, Customer, Amount, Region (ชื่อจริงบนหน้าอาจต่าง)
+8. เปิดดู `%AjaxTable%` ใน Variables pane (หรือ preview หลัง Extract) — **ไม่ต้อง Map คอลัมน์เอง**
+9. ชื่อคอลัมน์มาจาก header จริงบนหน้าแล้ว: `Order ID`, `Customer`, `Amount`, `Status`
+10. จำชื่อเหล่านี้ไว้ใช้ตอน Step 4 (เช่น อ้าง Amount ด้วยชื่อคอลัมน์จริง ไม่ใช่ชื่อที่ตั้งเอง)
 
 ### Step 4 — กรองแล้วเก็บแถว
 
 1. **For each** · Value to iterate: `%AjaxTable%` · Store into: `AjaxRow`
-2. ภายในลูป **If** เช่น Amount >= `%MinAmount%` และ/หรือ Region ตรง `%TargetRegion%`
-3. เมื่อผ่าน: **Insert row** เข้า `%Hits%`
-4. Notes ถ้า Amount ≥ MinAmount ใส่ค่า:
+2. ภายในลูป **If** Amount ของแถว >= `%MinAmount%` (ใช้คอลัมน์ `Amount` จาก `%AjaxRow%`)
+3. เมื่อผ่าน: **Insert row** เข้า `%Hits%` (ใส่ค่าจากแถว เช่น Order ID, Customer, Amount, Status)
+4. Notes ใส่ค่า:
 
 ```text
 PRIORITY HIT
