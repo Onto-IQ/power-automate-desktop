@@ -111,19 +111,19 @@ C:\PAD-Labs\working\lab02
 
 ทำซ้ำ 3 ชุด (csv / txt / ignored) — อย่า hardcode คนละไดรฟ์กับ `%WorkingRoot%`
 
-> **สำคัญ:** ค่าเริ่มต้นของ **If folder exists** คือตรวจว่าโฟลเดอร์ **มีอยู่แล้ว**  
-> - กิ่ง **Then** = มีแล้ว → **ว่าง** (ไม่ต้องทำอะไร)  
-> - กิ่ง **Else** = ยังไม่มี → วาง **Create folder** ที่นี่เท่านั้น
+> **ตั้งค่า If folder:** เลือก **Doesn't exist** (ไม่ใช้ค่าเริ่มต้น Exists)  
+> แปลว่า “ถ้าโฟลเดอร์**ยังไม่มี** → ทำในกิ่ง Then” — วาง **Create folder** ใน Then ได้เลย **ไม่ต้องใช้ Else**
 
 ขั้นตอนต่อหนึ่งชุด:
 
-1. ลาก **If folder exists** → ช่อง Folder path วาง path จากตารางด้านล่าง  
-2. **ข้ามกิ่ง Then** (ว่าง)  
-3. ในกิ่ง **Else** ลาก **Create folder** → ชื่อโฟลเดอร์ + Into จากตาราง  
-4. ปิดด้วย **End**
+1. ลาก **If folder exists**  
+2. ตั้ง **If folder** = **Doesn't exist**  
+3. ช่อง Folder path วาง path จากตารางด้านล่าง  
+4. **ในกิ่ง Then** ลาก **Create folder** → ชื่อโฟลเดอร์ + Into จากตาราง  
+5. ปิดด้วย **End** (ไม่ต้องเพิ่ม Else)
 
-| ชุด | Folder path (`If folder exists`) | ชื่อโฟลเดอร์ (`Create folder` ใน **Else**) | Into |
-|-----|----------------------------------|---------------------------------------------|------|
+| ชุด | Folder path | ชื่อโฟลเดอร์ (`Create folder` ใน **Then**) | Into |
+|-----|-------------|---------------------------------------------|------|
 | csv | `%WorkingRoot%\archive\csv` | `csv` | `%WorkingRoot%\archive` |
 | txt | `%WorkingRoot%\archive\txt` | `txt` | `%WorkingRoot%\archive` |
 | ignored | `%WorkingRoot%\archive\ignored` | `ignored` | `%WorkingRoot%\archive` |
@@ -136,13 +136,13 @@ C:\PAD-Labs\working\lab02
 %WorkingRoot%\archive\csv
 ```
 
-**csv — ชื่อโฟลเดอร์ (Else → Create folder)**
+**csv — ชื่อโฟลเดอร์ (Then → Create folder)**
 
 ```text
 csv
 ```
 
-**csv — Into (Else → Create folder)**
+**csv — Into (Then → Create folder)**
 
 ```text
 %WorkingRoot%\archive
@@ -154,13 +154,13 @@ csv
 %WorkingRoot%\archive\txt
 ```
 
-**txt — ชื่อโฟลเดอร์ (Else)**
+**txt — ชื่อโฟลเดอร์ (Then)**
 
 ```text
 txt
 ```
 
-**txt — Into (Else)**
+**txt — Into (Then)**
 
 ```text
 %WorkingRoot%\archive
@@ -172,13 +172,13 @@ txt
 %WorkingRoot%\archive\ignored
 ```
 
-**ignored — ชื่อโฟลเดอร์ (Else)**
+**ignored — ชื่อโฟลเดอร์ (Then)**
 
 ```text
 ignored
 ```
 
-**ignored — Into (Else)**
+**ignored — Into (Then)**
 
 ```text
 %WorkingRoot%\archive
@@ -187,8 +187,7 @@ ignored
 โครงที่ได้ควรคล้าย:
 
 ```text
-If folder exists %WorkingRoot%\archive\csv
-Else
+If folder doesn't exist %WorkingRoot%\archive\csv
   Create folder csv into %WorkingRoot%\archive
 End
 (… txt …)
@@ -358,7 +357,7 @@ C:\PAD-Labs\output\lab02\summary.txt
 ```
 
    - If file exists: Overwrite
-6. (ทางเลือก) สร้างโฟลเดอร์ `output\lab02` ด้วย **If folder exists** / **Create folder** ก่อนเขียนไฟล์
+6. (ทางเลือก) สร้างโฟลเดอร์ `output\lab02` ด้วย **If folder exists** (**Doesn't exist**) + **Create folder** ใน Then ก่อนเขียนไฟล์
 
 ### Step 7 — รันและตรวจ
 
@@ -386,6 +385,7 @@ CSV=2; TXT=2; IGNORED=1; Done
 | **Copy file(s)** ใส่ `%InboxFiles%` ในลูป | ใส่ `%CurrentFile%` (ใช้ตัวแปรไฟล์ปัจจุบัน) |
 | **Get files in folder** จาก `%WorkingRoot%` | จาก `%WorkingRoot%\inbox` |
 | Hardcode `D:\...` ปนกับ `%WorkingRoot%` คนละราก | ใช้ `%WorkingRoot%` ทั้ง flow ตอนอ้างอิง path |
+| ลืมตั้ง **Doesn't exist** แล้ววาง Create ใน Then | ตั้ง **If folder** = **Doesn't exist** แล้ว Create ใน Then |
 | มีแค่สาขา `.csv` | ต้องมี `.txt` และ Else (ignored) |
 | ไม่เขียน `summary.txt` | Step 6 บังคับตามเกณฑ์ผ่าน |
 
