@@ -18,7 +18,7 @@
 ## 2) ติดตั้ง Power Automate for desktop
 
 - [ ] ติดตั้งจาก [Install Power Automate for desktop](https://learn.microsoft.com/power-automate/desktop-flows/install) (MSI หรือ Microsoft Store)
-- [ ] แนะนำเวอร์ชัน **2607+** สำหรับคอร์สรอบ Aug 2026 — ดู [`SOURCES-AUG2026.md`](SOURCES-AUG2026.md)
+- [ ] แนะนำเวอร์ชัน **2607+** สำหรับคอร์สรอบ Aug 2026 — ดู [PAD version matrix](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop)
 - [ ] เปิด PAD ได้ถึงหน้า **Console** (มีปุ่ม New flow)
 
 ## 3) Browser + Extension

@@ -145,7 +145,7 @@ Recorder มักเก็บค่าที่พิมพ์จริงเ�
 | Web automation | https://learn.microsoft.com/power-automate/desktop-flows/automation-web |
 | Web actions | https://learn.microsoft.com/power-automate/desktop-flows/actions-reference/webautomation |
 | Actions pane | https://learn.microsoft.com/power-automate/desktop-flows/actions-pane |
-| รายการแหล่งใน Lab Kit | [`shared/SOURCES-AUG2026.md`](../../shared/SOURCES-AUG2026.md) |
+| รายการแหล่งใน Lab Kit | [PAD version matrix](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop) |
 
 ---
 

@@ -151,7 +151,7 @@ Copy คงไฟล์ต้นทางไว้ใน inbox; Move ย้า�
 | Getting started (file backup pattern) | https://learn.microsoft.com/power-automate/desktop-flows/getting-started-freeorg |
 | Folder actions | https://learn.microsoft.com/power-automate/desktop-flows/actions-reference/folder |
 | File actions | https://learn.microsoft.com/power-automate/desktop-flows/actions-reference/file |
-| รายการแหล่งใน Lab Kit | [`shared/SOURCES-AUG2026.md`](../../shared/SOURCES-AUG2026.md) |
+| รายการแหล่งใน Lab Kit | [PAD version matrix](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop) |
 
 ---
 

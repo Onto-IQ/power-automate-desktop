@@ -3,7 +3,7 @@
 อ่านเอกสารนี้ **ก่อนทำ Lab แรก** หรือเมื่อสับสนเรื่องตัวแปร / การรัน / หน้าจอ designer  
 ชื่อผลิตภัณฑ์ทางการคือ **Power Automate for desktop** (ย่อ **PAD**) — สร้างสิ่งที่เรียกว่า **desktop flow**
 
-อ้างอิงช่วงสิงหาคม 2026: [`SOURCES-AUG2026.md`](SOURCES-AUG2026.md) · ชื่อ Action: [`OFFICIAL-TERMINOLOGY.md`](OFFICIAL-TERMINOLOGY.md)
+อ้างอิงเวอร์ชัน PAD: [https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop) · ชื่อ Action: [`OFFICIAL-TERMINOLOGY.md`](OFFICIAL-TERMINOLOGY.md)
 
 ## RPA คืออะไร (ภาษาคน)
 

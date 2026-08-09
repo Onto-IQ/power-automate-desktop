@@ -13,8 +13,9 @@ DesktopFlows/
 Power Automate Desktop.pptx
 Trainocate_Outline_Power Automate Desktop (2 days) ake.pdf
 
-# Local ops notes (server access — do not publish)
-ops/*.local.md
+# Ops / classroom staff notes (local only — not published for learners)
+ops/**
+!ops/README.md
 
 # Authoring guides (course writers only — not published for learners)
 authoring/**

@@ -63,7 +63,7 @@ C:\PAD-Labs\working\lab10\
 | 2 | **19** | https://ontoiq.tech/pad/19-catalog.html | **สินค้า + ราคา แบบ pagination (หลัก)** |
 | 3 | 06 + 01 | Login แล้ว Forms | session + follow-up leads |
 
-> Catalog: Loop Extract → Click `#btn-next-page` จน disabled (หน้า 3/3, รวม ~24 รายการ) — รายละเอียดใน [`shared/WEB-HUB-REQUESTS.md`](../../shared/WEB-HUB-REQUESTS.md)
+> Catalog: Loop Extract → Click `#btn-next-page` จน disabled (หน้า 3/3, รวม ~24 รายการ) — ใช้หน้า catalog บน Lab Hub
 
 Login URL (คัดลอกได้):
 

@@ -21,7 +21,7 @@
 
 ## Prerequisites
 
-- ติดตั้ง PAD แล้ว (แนะนำ baseline **2607+** — ดู [`shared/SOURCES-AUG2026.md`](../../shared/SOURCES-AUG2026.md))
+- ติดตั้ง PAD แล้ว (แนะนำ baseline **2607+** — ดู [PAD version matrix](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop))
 - มี `notepad.exe` และ Calculator ของ Windows (`calc.exe` หรือแอป Calculator)
 
 ## Assets / Output
