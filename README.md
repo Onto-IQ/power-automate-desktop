@@ -9,10 +9,11 @@
 | Element UI (Desktop) | [Contoso Invoicing](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/tree/master/power-automate-desktop/contoso-invoice-app) · ดูรายละเอียดใน Lab [07](modules/07-contoso-invoice-ops/README.md) |
 | Sample packs อ้างอิง | [Microsoft Learn — power-automate-desktop](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/tree/master/power-automate-desktop) |
 | PAD baseline (Aug 2026) | **2607+** (Installer ~2.70.x) — ดู [PAD version matrix](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop) |
-| Course Outline (ไฟล์ท้องถิ่น) | `Trainocate_Outline_Power Automate Desktop (2 days) ake.pdf` |
-| สไลด์ประกอบ (ไฟล์ท้องถิ่น) | `Power Automate Desktop.pptx` |
+| Course Outline (local) | `slides/Trainocate_Outline_Power Automate Desktop (2 days) ake.pdf` |
+| สไลด์ประกอบ (local) | `slides/Power Automate Desktop.pptx` |
 
-> ไฟล์ PPTX/PDF เก็บไว้ในเครื่องสำหรับสอน — ไม่ได้เผยแพร่ใน GitHub repo  
+> ไฟล์ PPTX/PDF อยู่ที่ [`slides/`](slides/) บนเครื่องทีมสอน — ไม่ได้เผยแพร่ใน GitHub repo  
+
 > แต่ละบทแยกเป็น **LESSON.md** (ความรู้) + **LAB.md** (จับมือทำ) · หน้าปกอยู่ที่ `README.md` ของโฟลเดอร์ Lab · พื้นฐานร่วม: [`shared/PAD-FUNDAMENTALS.md`](shared/PAD-FUNDAMENTALS.md)
 
 ---
@@ -161,6 +162,7 @@ power-automate-desktop/
 │   └── CLASSROOM-SCHEDULE-12H.md
 ├── authoring/                         ← คู่มือผู้เขียน (local)
 ├── ops/                               ← ทีมสอน / Lab Hub (local)
+├── slides/                            ← PPTX/PDF หลักสูตร (local)
 ├── modules/
 │   ├── 01-record-replay/
 │   │   ├── README.md                  ← หน้าปก / สารบัญบท
@@ -171,7 +173,7 @@ power-automate-desktop/
 │   ├── 02-file-management/            ← ตัวอย่างมาตรฐานโครงสร้าง 3 ไฟล์
 │   ├── …
 │   └── 10-capstone-sales-ops/
-└── (ไฟล์สไลด์/outline เก็บท้องถิ่น — ไม่ขึ้น GitHub)
+└── …
 ```
 
 แต่ละ **Module** มี 3 เอกสารหลัก:
@@ -182,7 +184,7 @@ power-automate-desktop/
 - `assets/` — mock input / expected output เมื่อ Module นั้นต้องการไฟล์ตัวอย่าง
 
 > โฟลเดอร์รากของบทเรียนคือ **`modules/`** — คำว่า **Lab** ยังใช้กับไฟล์ `LAB.md` และการอ้างอิงแบบ Lab 01, Lab 02 ตามเดิม  
-> คู่มือทีมอยู่ที่ [`authoring/`](authoring/) และ [`ops/`](ops/) บนเครื่องทีมพัฒนา (ไม่เผยแพร่ใน GitHub สำหรับผู้เรียน)
+> คู่มือทีมอยู่ที่ [`authoring/`](authoring/) · [`ops/`](ops/) · [`slides/`](slides/) บนเครื่องทีมพัฒนา (ไม่เผยแพร่ใน GitHub สำหรับผู้เรียน)
 ---
 
 ## วิธีเริ่มต้น (ผู้เรียน)
