@@ -9,6 +9,7 @@
 | Element UI (Desktop) | [Contoso Invoicing](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/tree/master/power-automate-desktop/contoso-invoice-app) · ดูรายละเอียดใน Lab [07](modules/07-contoso-invoice-ops/README.md) |
 | Sample packs อ้างอิง | [Microsoft Learn — power-automate-desktop](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/tree/master/power-automate-desktop) |
 | PAD baseline (Aug 2026) | **2607+** (Installer ~2.70.x) — ดู [PAD version matrix](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop) |
+| GitHub Release | [Releases](https://github.com/Onto-IQ/power-automate-desktop/releases) · [`CHANGELOG.md`](CHANGELOG.md) |
 | Course Outline (local) | `slides/Trainocate_Outline_Power Automate Desktop (2 days) ake.pdf` |
 | สไลด์ประกอบ (local) | `slides/Power Automate Desktop.pptx` |
 
