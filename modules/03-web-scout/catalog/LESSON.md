@@ -27,11 +27,22 @@
 
 ## 4. แนวคิดหลัก
 
+Lab นี้ใช้ **ลูปซ้อนลูป** เพราะงานมีสองระดับที่ต่างกัน:
+
+| ชั้น | Action | วนอะไร |
+|------|--------|--------|
+| นอก | **Loop condition** | ทีละ **หน้า** (กด Next จนครบ / disabled) |
+| ใน | **For each** | ทีละ **แถว** ของตารางหน้าปัจจุบัน → Insert เข้า `CatalogHits` |
+
+หน้าหนึ่งได้ตารางหนึ่งชุด (`PageTable`) — ต้องวนแถวในหน้านั้นก่อน แล้วค่อยพลิกหน้า วนหน้าถัดไป ไม่ใช่ลูปเดียวที่ทำทั้งสองอย่าง
+
 ```text
-Launch → Loop:
-  Extract #tbl-products → เก็บแถว
-  ถ้ามี Next ที่กดได้ → กด Next → Wait ตาราง
-  ไม่มี Next → ออกจากลูป
+Launch → เก็บ Btn_NextPage → Loop condition (หน้า):
+  Wait ตาราง → Extract #tbl-products → PageTable
+  For each แถวใน PageTable → Insert เข้า CatalogHits
+  Increase variable · Variable name=%PageCount% · Increase by=1
+  ถ้า Next กดได้ → กด Btn_NextPage → วนหน้าต่อ
+  ถ้า Next disabled → Exit loop
 Write CSV → Close
 ```
 
