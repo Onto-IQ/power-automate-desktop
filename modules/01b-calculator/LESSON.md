@@ -66,7 +66,7 @@ Click Btn_Seven, Btn_Plus, Btn_Eight, Btn_Equals
 |--------|------------|------------|----------------|
 | คลิกปุ่ม | **UI Element** | พิกัด X,Y | ใช้ UI Element เป็นหลัก |
 | ตรวจผล | อ่าน `%CalcResult%` แล้ว **If** | ดูด้วยตาอย่างเดียว | Acceptance บังคับอ่านจาก display |
-| ปิดแอป | **Close window** | **Terminate process** | Close ก่อน |
+| ปิดแอป | **Close window** + title | **Terminate process** | Close ก่อน; title คงที่กว่า Notepad — อย่าปิดด้วย class UWP อย่างเดียว |
 
 ## 7. จุดที่มือใหม่พลาดบ่อย
 

@@ -105,9 +105,26 @@ Unexpected calculator result
 
 ### Step 6 — ปิด Calculator
 
-1. ลาก **Close window** ชี้หน้าต่าง Calculator
-2. ถ้าปิดไม่สำเร็จเป็นครั้งคราว ใช้ **Terminate process** เป็นทางสำรอง (ระวังอย่าปิด process อื่น)
-3. กด Save
+1. ลาก **Close window**
+2. ตั้งค่า (แนะนำ — **ไม่ใช้แบบ Notepad ที่ปล่อย title ว่าง**):
+   - Find window mode: **By title and/or class**
+   - Window title: (คัดลอก — หรือชื่อตามภาษา UI ของเครื่อง เช่น `เครื่องคิดเลข`)
+
+```text
+Calculator
+```
+
+   - Window class: (ทางเลือก ถ้า title อย่างเดียวเจอหลายบาน)
+
+```text
+ApplicationFrameWindow
+```
+
+3. ถ้าปิดไม่สำเร็จเป็นครั้งคราว ใช้ **Terminate process** เป็นทางสำรอง — process ที่พบบ่อยคือ `CalculatorApp` (ระวังอย่าปิด process อื่น)
+4. กด Save
+
+> **ทำไมไม่เหมือน Notepad:** Notepad ใช้ class `Notepad` เพราะ title เปลี่ยนหลัง Save As  
+> Calculator title ค่อนข้างคงที่ แต่ class `ApplicationFrameWindow` เป็นของแอป Store/UWP หลายตัว — **ห้ามปล่อย title ว่างแล้วปิดด้วย class อย่างเดียว**
 
 ### Step 7 — รันตรวจ
 
@@ -136,6 +153,7 @@ Unexpected calculator result
 |-----|-----|
 | พิมพ์ `%CalcResult%` ในช่อง Variables produced | ใช้ชื่อเปล่า `CalcResult` |
 | คลิกด้วยพิกัดจอ | Capture UI Elements แล้ว Click |
+| ปิดด้วย class อย่างเดียวเหมือน Notepad | ใส่ **Window title** `Calculator` (หรือชื่อภาษาเครื่อง) — อย่าปล่อย title ว่างกับ class `ApplicationFrameWindow` |
 | ได้ 15 แต่ไม่อ่านจาก display | เก็บ `%CalcResult%` แล้ว **If** ตรวจ |
 | เปิดแอปซ้อนตอน Replay | Close / Terminate ก่อนรันรอบใหม่ |
 
