@@ -47,7 +47,7 @@ C:\PAD-Labs\working\lab02\archive
 |--|------|
 | Mock inbox | [`assets/inbox/`](assets/inbox/) |
 | Expected mapping | [`assets/expected/expected-manifest.csv`](assets/expected/expected-manifest.csv) |
-| Output summary | ดู code block ใน Step 6 |
+| Output summary | ดู code block ใน Step 5 |
 
 | ไฟล์ใน inbox | การจัดการ |
 |--------------|-----------|
@@ -216,123 +216,165 @@ End
 
 อ้างอิงทางการ: action นี้คืน **List of files** แล้วนำไปวนด้วย **For each** — ตาม [Getting started](https://learn.microsoft.com/power-automate/desktop-flows/getting-started-freeorg)
 
-### Step 4 — วนทีละไฟล์ + อ่านนามสกุล
+### Step 4 — วนทีละไฟล์ + อ่านนามสกุล + แยก Copy
 
-1. ลาก **For each**
-2. ตั้งค่า:
-   - Value to iterate: (คัดลอก)
+เป้าหมายของ Step นี้: ทำบล็อกใน workspace ให้**หน้าตาเหมือนภาพอ้างอิง**ด้านล่าง (ลำดับและย่อหน้าต้องตรง)
+
+![โครง For each + If ใน Lab 02](assets/reference-loop-if-copy.png)
+
+> **ก่อนเริ่ม:** action ทั้งหมดใน Step นี้ต้องอยู่ **ภายใน For each** (เยื้องเข้าไป) — อย่าวางข้างนอกลูป
+
+#### 4.1 สร้างลูป For each
+
+1. ลาก **For each** ลง workspace (หลัง **Get files in folder**)
+2. เปิด action แล้วตั้งค่า:
+   - **Value to iterate:** (คัดลอก)
 
 ```text
 %InboxFiles%
 ```
 
-   - Store into: `CurrentFile` ← **ไม่ใส่ `%`**  
-     (ชื่ออื่นเช่น `CurrentItem` ก็ได้ แต่ต้องใช้ชื่อเดียวกันทั้งลูป)
-3. **ภายใน For each** ลาก **Get file path part**
-4. ตั้งค่า:
-   - File path: (คัดลอก — ไฟล์ปัจจุบัน ไม่ใช่ทั้งลิสต์)
+   - **Store into:** `CurrentFile` ← **ไม่ใส่ `%`**
+
+บนจอควรเห็นบรรทัดคล้าย: `For each CurrentFile in InboxFiles`
+
+#### 4.2 ภายในลูป — อ่านนามสกุล
+
+1. ลาก **Get file path part** ไปวาง **ระหว่าง** บรรทัด For each กับ End ของลูป (เยื้องเข้า)
+2. ตั้งค่า:
+   - **File path:** (คัดลอก — ไฟล์ปัจจุบันเท่านั้น **ห้าม** `%InboxFiles%`)
 
 ```text
 %CurrentFile%
 ```
 
-   - ส่วนที่ต้องการ: Extension (หรือเลือกให้ได้ extension)
-5. **Variables produced:** `FileExtension` ← **ไม่ใส่ `%`**  
-   (อ้างอิงด้วย `%FileExtension%`)
+   - เลือกให้ได้ **Extension** (นามสกุล)
+3. ในส่วน **Variables produced** ตั้งชื่อ: `FileExtension` ← **ไม่ใส่ `%`**
 
-### Step 5 — แยกตามนามสกุลแล้ว Copy ทีละไฟล์
+บนจอควรเห็นคล้าย: เก็บ extension ลง `FileExtension`
 
-ยังอยู่ **ภายใน For each** หลัง Get file path part:
+#### 4.3 ภายในลูป — สร้าง If / Else if / Else
 
-1. ลาก **If**
-2. เงื่อนไข: ฝั่งซ้าย (คัดลอก)
+ยังอยู่ **ภายใน For each** และวาง **หลัง** Get file path part:
+
+1. ลาก **If** ลงในลูป
+2. ตั้งเงื่อนไข If:
+   - ฝั่งซ้าย:
 
 ```text
 %FileExtension%
 ```
 
-   ตัวดำเนินการ **Equal to** · ฝั่งขวา (คัดลอก — ถ้าค่าใน Variables ไม่มีจุด ให้ใช้ `csv` แทน):
+   - ตัวดำเนินการ: **Equal to**
+   - ฝั่งขวา: (ถ้าใน Variables pane เห็นค่าไม่มีจุด ให้ใช้ `csv` แทน)
 
 ```text
 .csv
 ```
 
-3. **ภายใน If** ลาก **Copy file(s)**
-4. ตั้งค่าให้ถูก:
-   - File(s) to copy: (คัดลอก — **ห้าม** ใส่ `%InboxFiles%`)
-
-```text
-%CurrentFile%
-```
-
-   - Destination folder:
-
-```text
-%WorkingRoot%\archive\csv\
-```
-
-   - If file exists: Overwrite (หรือตามนโยบายที่ชัด)
-5. **Variables produced** (ถ้ามี): `CopiedFiles` ← ไม่ใส่ `%` — ไม่บังคับใช้ต่อ
-6. ลาก **Increase variable** → เลือกตัวแปร `CsvCount` (ไม่มี `%` ในรายการเลือก) แล้ว + `1`
-
-7. เพิ่ม **Else if**: ฝั่งขวา
+3. คลิกแถบ/เมนูของบล็อก If เพื่อเพิ่ม **Else if** แล้วตั้งเงื่อนไข:
+   - ฝั่งซ้าย: `%FileExtension%` · Equal to · ฝั่งขวา:
 
 ```text
 .txt
 ```
 
-   - **Copy file(s)**  
-     File(s):
+4. เพิ่ม **Else** (กิ่งสุดท้าย — ไม่มีเงื่อนไข)
+
+โครงบนจอต้องเป็น 3 กิ่ง: **If** → **Else if** → **Else** แล้วตามด้วย **End** ของ If
+
+#### 4.4 กิ่ง If (`.csv`) — Copy + นับ
+
+วาง **ภายในกิ่ง If** เท่านั้น (เยื้องเข้าใต้ `If FileExtension = '.csv'`):
+
+1. ลาก **Copy file(s)**
+2. ตั้งค่า:
+   - **File(s) to copy:**
 
 ```text
 %CurrentFile%
 ```
 
-     Destination:
+   - **Destination folder:**
+
+```text
+%WorkingRoot%\archive\csv\
+```
+
+   - **If file exists:** Overwrite
+3. **Variables produced** (ถ้ามี): `CopiedFiles` ← ไม่บังคับใช้ต่อ
+4. ลาก **Increase variable** → เลือก `CsvCount` → เพิ่มทีละ `1`
+
+#### 4.5 กิ่ง Else if (`.txt`) — Copy + นับ
+
+วาง **ภายในกิ่ง Else if** เท่านั้น:
+
+1. **Copy file(s)**
+   - File(s):
+
+```text
+%CurrentFile%
+```
+
+   - Destination:
 
 ```text
 %WorkingRoot%\archive\txt\
 ```
 
-   - **Increase variable** `TxtCount` + 1
+   - If file exists: Overwrite
+2. **Increase variable** → `TxtCount` + `1`
 
-8. เพิ่ม **Else**:
-   - **Copy file(s)** (หรือ **Move file(s)**)  
-     File(s):
+#### 4.6 กิ่ง Else (อื่น ๆ เช่น `.tmp`) — Copy + นับ
+
+วาง **ภายในกิ่ง Else** เท่านั้น:
+
+1. **Copy file(s)**
+   - File(s):
 
 ```text
 %CurrentFile%
 ```
 
-     Destination:
+   - Destination:
 
 ```text
 %WorkingRoot%\archive\ignored\
 ```
 
-   - **Increase variable** `IgnoredCount` + 1
+   - If file exists: Overwrite
+2. **Increase variable** → `IgnoredCount` + `1`
 
-9. ปิดด้วย **End** (If) แล้ว **End** (For each)
+#### 4.7 ตรวจก่อนไป Step ถัดไป
 
-โครงภายในลูป:
+เทียบกับภาพอ้างอิง — ต้องครบทุกข้อ:
+
+- [ ] มี **For each** … **End** ครอบทั้งชุด
+- [ ] ในลูปมี **Get file path part** ก่อน If
+- [ ] มี **If** / **Else if** / **Else** / **End**
+- [ ] แต่ละกิ่งมี **Copy file(s)** ใช้ `%CurrentFile%` (ไม่ใช่ `%InboxFiles%`)
+- [ ] แต่ละกิ่งมี **Increase variable** คนละตัวนับ (`CsvCount` / `TxtCount` / `IgnoredCount`)
+- [ ] ปลายทางเป็น `archive\csv\` · `archive\txt\` · `archive\ignored\` ตามกิ่ง
+
+โครงย่อ (เทียบจอ):
 
 ```text
 For each CurrentFile in InboxFiles
   Get file path part → FileExtension
   If FileExtension = '.csv'
-    Copy CurrentFile → archive\csv\
+    Copy CurrentFile → %WorkingRoot%\archive\csv\
     Increase CsvCount
   Else if FileExtension = '.txt'
-    Copy CurrentFile → archive\txt\
+    Copy CurrentFile → %WorkingRoot%\archive\txt\
     Increase TxtCount
   Else
-    Copy CurrentFile → archive\ignored\
+    Copy CurrentFile → %WorkingRoot%\archive\ignored\
     Increase IgnoredCount
   End
 End
 ```
 
-### Step 6 — เขียน summary.txt
+### Step 5 — เขียน summary.txt
 
 1. **หลัง** End ของ For each ลาก **Set variable**
 2. Name: `SummaryText` ← **ไม่ใส่ `%`**
@@ -359,7 +401,7 @@ C:\PAD-Labs\output\lab02\summary.txt
    - If file exists: Overwrite
 6. (ทางเลือก) สร้างโฟลเดอร์ `output\lab02` ด้วย **If folder exists** (**Doesn't exist**) + **Create folder** ใน Then ก่อนเขียนไฟล์
 
-### Step 7 — รันและตรวจ
+### Step 6 — รันและตรวจ
 
 1. กด **Run**
 2. เปิดโฟลเดอร์ `archive\csv`, `archive\txt`, `archive\ignored` เทียบตารางด้านบน
@@ -387,7 +429,8 @@ CSV=2; TXT=2; IGNORED=1; Done
 | Hardcode `D:\...` ปนกับ `%WorkingRoot%` คนละราก | ใช้ `%WorkingRoot%` ทั้ง flow ตอนอ้างอิง path |
 | ลืมตั้ง **Doesn't exist** แล้ววาง Create ใน Then | ตั้ง **If folder** = **Doesn't exist** แล้ว Create ใน Then |
 | มีแค่สาขา `.csv` | ต้องมี `.txt` และ Else (ignored) |
-| ไม่เขียน `summary.txt` | Step 6 บังคับตามเกณฑ์ผ่าน |
+| ไม่เขียน `summary.txt` | Step 5 บังคับตามเกณฑ์ผ่าน |
+| Copy / Increase อยู่นอกลูปหรือนอกกิ่ง If | ต้องเยื้องเข้าใน For each และในกิ่งที่ถูกต้อง — เทียบภาพอ้างอิง |
 
 ---
 
