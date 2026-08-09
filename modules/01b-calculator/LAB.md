@@ -53,15 +53,24 @@ calc
 
 ### Step 2 — Capture ปุ่มและช่องแสดงผล
 
-1. เปิด UI Picker → **Ctrl + Left Click** จับทีละปุ่ม:
-   - `7` → ชื่อใน PAD: `Btn_Seven`
-   - `+` → `Btn_Plus`
-   - `8` → `Btn_Eight`
-   - `=` → `Btn_Equals`
-2. จับช่องแสดงผล (Display) → ชื่อ `Txt_CalcDisplay`
-3. กด **Test** ใน Selector Builder แต่ละตัว
+> **`Txt_CalcDisplay` ไม่ได้อยู่ใน Calculator** — เป็นชื่อที่ **คุณตั้งเองในแผง UI Elements** ของ PAD หลังจับช่องแสดงผล (เหมือน `Btn_Seven`)
 
-> บน Windows 11 ชื่อปุ่มอาจเป็น Automation name ตามภาษาของเครื่อง — ใช้ชื่อที่ตั้งเองใน PAD ตามด้านบนได้
+1. เปิด UI Picker → **Ctrl + Left Click** จับทีละปุ่ม:
+   - ปุ่ม `7` → ใน UI Elements ตั้งชื่อเป็น `Btn_Seven`
+   - ปุ่ม `+` → `Btn_Plus`
+   - ปุ่ม `8` → `Btn_Eight`
+   - ปุ่ม `=` → `Btn_Equals`
+2. จับช่องแสดงผลด้านบน (ตัวเลขผลลัพธ์) — PAD อาจตั้งชื่อเริ่มต้นแบบ `Text 'Display is 0'` หรือคล้ายกัน
+3. ในแผง **UI Elements** → คลิกขวา / Rename element นั้นเป็น:
+
+```text
+Txt_CalcDisplay
+```
+
+4. เปิด Selector ของ `Txt_CalcDisplay` → กด **Test**
+5. ถ้า selector อิงข้อความ `Display is 0` / `Display is 15` เป็นหลัก ให้ปรับให้เสถียรขึ้น (เช่นใช้ AutomationId / attribute ที่ไม่เปลี่ยนตามตัวเลข) แล้ว Test อีกครั้ง
+
+> บน Windows 11 ชื่อที่ PAD โชว์ตอนจับมักเป็น accessibility text ตามภาษาเครื่อง — **ชื่อใน PAD ที่เราตั้งเอง** (`Txt_CalcDisplay`) คนละอย่างกับข้อความบนจอ
 
 ### Step 3 — คลิกลำดับ 7 + 8 =
 
@@ -72,15 +81,15 @@ calc
 
 ### Step 4 — อ่านค่าจาก display
 
-ใช้ **Get details of UI element in window** ชี้ element ช่องแสดงผล — **อย่าใช้** **Get details of window** → Get window title
+ใช้ **Get details of UI element in window** ชี้ element ที่ rename เป็น `Txt_CalcDisplay` แล้ว — **อย่าใช้** Get window title
 
 1. ลาก **Get details of UI element in window**
-2. UI element: `Txt_CalcDisplay` (ช่องแสดงผลที่ capture ใน Step 2)
-3. Attribute / รายละเอียดที่อ่าน: เลือกข้อความของ control (เช่น Name / Value / Text ตามที่ designer แสดงหลัง Test — ต้องมีเลขผลลัพธ์)
-4. **Variables produced:** `CalcResult` ← **ไม่ใส่ `%`**  
-   (อ้างอิงด้วย `%CalcResult%`)
+2. UI element: เลือก `Txt_CalcDisplay`  
+   (ถ้ายังเห็นชื่อเดิม `Text 'Display is 0'` → ไป Rename ใน UI Elements ให้เป็น `Txt_CalcDisplay` ก่อน)
+3. Attribute: ลอง **Own Text** / Name / Value ตามที่มีในรายการ — ค่าที่ได้อาจเป็น `15` หรือ `Display is 15` ก็ใช้ได้
+4. **Variables produced:** `CalcResult` ← **ไม่ใส่ `%`**
 
-> ถ้าใช้ Get window title จะได้ข้อความแบบ accessibility เช่น `Display is 15` ไม่ใช่ค่าในช่องแสดงผลโดยตรง — แล้วยังไม่ใช่ปัญหา Data type (ยังเป็น Text อยู่)
+> ตัวอย่างจากเครื่องจริง: Own Text ได้ `Display is 15` — เป็นเรื่องปกติของ Calculator ไม่ใช่ Data type ผิด
 
 ### Step 5 — ตรวจว่าได้ 15
 
@@ -159,8 +168,9 @@ ApplicationFrameWindow
 
 | ผิด | ถูก |
 |-----|-----|
-| ใช้ Get window title แล้วได้ `Display is 15` | ใช้ **Get details of UI element in window** ชี้ `Txt_CalcDisplay` |
-| If แบบ Equal to `15` แล้วเข้า Else | เปลี่ยนเป็น **Contains** `15` — ไม่ต้องแก้ Data type |
+| หา `Txt_CalcDisplay` ไม่เจอใน Calculator | ชื่อนี้ตั้งเองในแผง **UI Elements** — จับช่องแสดงผลแล้ว Rename จากเช่น `Text 'Display is 0'` |
+| ใช้ Get window title / Equal to แล้วเข้า Else | อ่านจาก UI element + If **Contains** `15` |
+| If แบบ Equal to `15` แล้วเข้า Else ทั้งที่ Own Text เป็น `Display is 15` | เปลี่ยนเป็น **Contains** `15` — ไม่ต้องแก้ Data type |
 | พิมพ์ `%CalcResult%` ในช่อง Variables produced | ใช้ชื่อเปล่า `CalcResult` |
 | คลิกด้วยพิกัดจอ | Capture UI Elements แล้ว Click |
 | ปิดด้วย class อย่างเดียวเหมือน Notepad | ใส่ **Window title** `Calculator` (หรือชื่อภาษาเครื่อง) — อย่าปล่อย title ว่างกับ class `ApplicationFrameWindow` |
@@ -193,8 +203,9 @@ ApplicationFrameWindow
 
 | อาการ | แก้ |
 |-------|-----|
-| `%CalcResult%` เป็น `Display is 15` แล้วเข้า Else | อย่าใช้ Get window title — เปลี่ยนเป็น **Get details of UI element in window** + If **Contains** `15` |
-| Selector หลุด | Recapture หลังสลับโหมด Standard และอย่าใช้พิกัดจอ |
+| หา `Txt_CalcDisplay` ไม่เจอ | ไม่ใช่ชื่อในแอป — จับช่องแสดงผลแล้ว **Rename** ใน UI Elements เป็น `Txt_CalcDisplay` |
+| `%CalcResult%` เป็น `Display is 15` แล้วเข้า Else | If ใช้ **Contains** `15` (Equal to จะไม่ผ่าน) |
+| Selector หลุดหลังคำนวณ | อย่าล็อก Name เป็น `Display is 0` — ปรับ selector ให้เสถียรแล้ว Test |
 | แอปเปิดซ้อนหลายตัว | **Close window** หรือ **Terminate process** ก่อนรันใหม่ |
 | คลิกไม่ได้ / UIPI | ดู [UIPI issues](https://learn.microsoft.com/troubleshoot/power-platform/power-automate/desktop-flows/ui-automation/uipi-issues) |
 
