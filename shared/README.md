@@ -1,8 +1,6 @@
 # Shared resources
 
-เอกสารกลางของ Lab Kit
-
-## สำหรับผู้เรียน / ใช้ในห้อง
+เอกสารกลางของ Lab Kit ที่**เผยแพร่ใน repo** สำหรับผู้เรียน / TA / วิทยากร
 
 | ไฟล์ | คำอธิบาย |
 |------|----------|
@@ -18,13 +16,7 @@
 | [WEB-HUB-REQUESTS.md](WEB-HUB-REQUESTS.md) | สถานะหน้า Lab Hub (รวม 19 Catalog) |
 | [generate_mock_xlsx.py](generate_mock_xlsx.py) | สร้างไฟล์ `.xlsx` จาก CSV ใน Modules 06, 07, 08, 10 |
 
-## สำหรับผู้เขียนหลักสูตร (ภายใน — ไม่ต้องแจกผู้เรียน)
-
-| ไฟล์ | คำอธิบาย |
-|------|----------|
-| [WRITING-STYLE.md](WRITING-STYLE.md) | สไตล์ภาษาและโทนเอกสารผู้เรียน |
-| [LESSON-TEMPLATE.md](LESSON-TEMPLATE.md) | แม่แบบ `LESSON.md` |
-| [HANDS-ON-LAB-TEMPLATE.md](HANDS-ON-LAB-TEMPLATE.md) | แม่แบบ `LAB.md` |
+คู่มือเขียน Module (แม่แบบ LESSON/LAB, สไตล์ภาษา) อยู่ที่ [`../authoring/`](../authoring/) บนเครื่องทีมพัฒนา — **ไม่ขึ้น GitHub**
 
 ## โครงสร้างเอกสารต่อหนึ่ง Module
 
@@ -35,8 +27,6 @@ modules/<module>/
   LAB.md      ← จับมือทำ
   assets/     ← ข้อมูลตัวอย่าง (ถ้ามี)
 ```
-
-> รากโฟลเดอร์บทเรียน = `modules/` · ไฟล์แบบฝึกหัดยังชื่อ `LAB.md`
 
 ## Regenerating Excel mocks
 

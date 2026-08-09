@@ -69,7 +69,7 @@
 
 รายละเอียดเพิ่มเติม: [`shared/SELECTOR-CONVENTIONS.md`](shared/SELECTOR-CONVENTIONS.md) · ชื่อ Action ทางการ: [`shared/OFFICIAL-TERMINOLOGY.md`](shared/OFFICIAL-TERMINOLOGY.md) · อ้างอิง Aug 2026: [`shared/SOURCES-AUG2026.md`](shared/SOURCES-AUG2026.md)
 
-> **ตัวแปรใน PAD:** ตอนสร้างชื่อ (Set variable / Store into / ชื่อ produced) **ไม่ใส่ `%`** — ตอนใช้ในช่องอื่นใช้ `%ชื่อ%` — ดู [`shared/BEST-PRACTICES.md`](shared/BEST-PRACTICES.md) และ [`shared/HANDS-ON-LAB-TEMPLATE.md`](shared/HANDS-ON-LAB-TEMPLATE.md)
+> **ตัวแปรใน PAD:** ตอนสร้างชื่อ (Set variable / Store into / ชื่อ produced) **ไม่ใส่ `%`** — ตอนใช้ในช่องอื่นใช้ `%ชื่อ%` — ดู [`shared/BEST-PRACTICES.md`](shared/BEST-PRACTICES.md) และ [`shared/PAD-FUNDAMENTALS.md`](shared/PAD-FUNDAMENTALS.md)
 
 สำหรับ Desktop UI ของ Contoso ดู UI map ใน [`modules/07-contoso-invoice-ops/assets/ui-map.md`](modules/07-contoso-invoice-ops/assets/ui-map.md)
 
@@ -155,10 +155,11 @@
 ```text
 power-automate-desktop/
 ├── README.md                          ← คุณอยู่ที่นี่
-├── shared/                            ← พื้นฐาน + แม่แบบ + schema
-│   ├── PAD-FUNDAMENTALS.md            ← อ่านก่อน Lab แรก
-│   ├── LESSON-TEMPLATE.md
-│   └── HANDS-ON-LAB-TEMPLATE.md
+├── shared/                            ← พื้นฐาน + เอกสารผู้เรียน/TA
+│   ├── PAD-FUNDAMENTALS.md            ← อ่านก่อน Module แรก
+│   ├── PRECLASS-SETUP.md
+│   └── CLASSROOM-SCHEDULE-12H.md
+├── authoring/                         ← คู่มือผู้เขียน (local; ดู README ในโฟลเดอร์)
 ├── modules/
 │   ├── 01-record-replay/
 │   │   ├── README.md                  ← หน้าปก / สารบัญบท
@@ -175,12 +176,12 @@ power-automate-desktop/
 แต่ละ **Module** มี 3 เอกสารหลัก:
 
 - `README.md` — หน้าปกบท: meta, ลำดับเรียน, prerequisites, ลิงก์ LESSON/LAB
-- `LESSON.md` — เอกสารความรู้เต็ม (ศัพท์ แนวคิด คำถามทบทวน) ตาม [`shared/LESSON-TEMPLATE.md`](shared/LESSON-TEMPLATE.md)
-- `LAB.md` — Setup + Hands-on ทีละขั้นใน designer ตาม [`shared/HANDS-ON-LAB-TEMPLATE.md`](shared/HANDS-ON-LAB-TEMPLATE.md)
+- `LESSON.md` — เอกสารความรู้เต็ม (ศัพท์ แนวคิด คำถามทบทวน)
+- `LAB.md` — Setup + Hands-on ทีละขั้นใน designer
 - `assets/` — mock input / expected output เมื่อ Module นั้นต้องการไฟล์ตัวอย่าง
 
-> โฟลเดอร์รากของบทเรียนคือ **`modules/`** (ไม่ใช่ `labs/`) — คำว่า **Lab** ยังใช้กับไฟล์ `LAB.md` และการอ้างอิงแบบ Lab 01, Lab 02 ตามเดิม
-
+> โฟลเดอร์รากของบทเรียนคือ **`modules/`** — คำว่า **Lab** ยังใช้กับไฟล์ `LAB.md` และการอ้างอิงแบบ Lab 01, Lab 02 ตามเดิม  
+> คู่มือเขียนเอกสารอยู่ที่ [`authoring/`](authoring/) บนเครื่องทีมพัฒนา (ไม่เผยแพร่ใน GitHub สำหรับผู้เรียน)
 ---
 
 ## วิธีเริ่มต้น (ผู้เรียน)
