@@ -34,10 +34,24 @@ https://pad.ontoiq.tech/pad/19-catalog.html
 
 2. Variables produced: `Browser`
 
+### Step 1b — เก็บ UI element ปุ่ม Next (ทำก่อนลูป)
+
+1. เปิดแผง **UI Elements** → **Add UI element** (หรือ Add element) ด้วย UI Picker
+2. ชี้ปุ่ม **Next** บนหน้า (`#btn-next-page`)
+3. **Save** แล้ว Rename เป็น:
+
+```text
+Btn_NextPage
+```
+
+4. (ทางเลือก) เก็บตาราง `#tbl-products` แล้ว Rename เป็น `Tbl_Products` — ใช้กับ Wait ในลูปได้
+
+อย่าข้ามขั้นนี้ — ในลูปต้องอ้าง `Btn_NextPage` ไม่ใช่ไปหาปุ่มใหม่ทุกครั้ง
+
 ### Step 2 — Loop หน้า + Extract
 
 1. **Loop condition** (First operand / Operator / Second operand — เช่น `%PageCount%` · **Less than (<)** · `%MaxPages%`)
-2. ในลูป: **Wait for web page content** · Contain element · ตาราง `#tbl-products` (Rename เป็น `Tbl_Products` ได้)
+2. ในลูป: **Wait for web page content** · Contain element · ตาราง `#tbl-products` / `Tbl_Products`
 3. ให้หน้ายังอยู่ที่ [19-catalog](https://pad.ontoiq.tech/pad/19-catalog.html) (หลังกด Next แล้วยังต้องเป็นหน้านี้)
 4. **Extract data from web page** · Browser: `%Browser%`
 5. PAD จะเปิด **live web helper** บนหน้านั้น
@@ -74,10 +88,9 @@ https://pad.ontoiq.tech/pad/19-catalog.html
 ```
 14. **End** For each
 15. เพิ่ม `PageCount` += 1
-16. หาปุ่ม **Next**
-17. ถ้ากดได้ → **Click** Next แล้ววนต่อ
-18. ถ้า disabled / ไม่มี → **Exit loop**
-19. **End** loop
+16. ตรวจปุ่ม **Next** (`Btn_NextPage`) — ถ้ายังกดได้ → **Press button on web page** (หรือ **Click link on web page**) · UI element: `Btn_NextPage` · Browser: `%Browser%` แล้ววนต่อ
+17. ถ้า disabled / กดไม่ได้ → **Exit loop**
+18. **End** loop
 
 เป้าหมาย: รวมแถวประมาณ **24** รายการ (ตามที่ hub ออกแบบ)
 
@@ -98,6 +111,7 @@ C:\PAD-Labs\output\lab03\catalog-products.csv
 ## Acceptance
 
 - [ ] Flow ชื่อ `Lab03_Catalog`
+- [ ] มี UI element `Btn_NextPage` (เก็บก่อนเข้าลูป)
 - [ ] มีการกด Next อย่างน้อยหนึ่งครั้ง (ถ้ามีหลายหน้า)
 - [ ] CSV มีแถวรวมหลายหน้า (~24)
 - [ ] มี MaxPages / เงื่อนไขหยุด
@@ -107,8 +121,9 @@ C:\PAD-Labs\output\lab03\catalog-products.csv
 
 | อาการ | แก้ |
 |-------|-----|
-| ได้แค่หน้าแรก | ตรวจว่ามี Click Next + Wait หลังเปลี่ยนหน้า |
-| วนไม่จบ | ใช้ MaxPages + Exit เมื่อ Next ใช้ไม่ได้ |
+| กด Next ไม่ได้ / หาปุ่มไม่เจอ | ทำ Step 1b ก่อน — Add UI element แล้ว Rename `Btn_NextPage` |
+| ได้แค่หน้าแรก | ตรวจว่ามี Press/Click `Btn_NextPage` + Wait หลังเปลี่ยนหน้า |
+| วนไม่จบ | ใช้ MaxPages + Exit เมื่อ Next disabled |
 | หาคอลัมน์ Product ในรายการตัวแปรไม่เจอ | พิมพ์/วาง `%ProductRow['Product']%` เอง |
 | สับสนกับ 03-table | 03-table ไม่มี Next — Lab นี้อยู่บน 19-catalog |
 
