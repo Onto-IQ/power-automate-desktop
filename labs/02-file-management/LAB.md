@@ -15,9 +15,28 @@
 
 ## Setup บนเครื่อง (ทำก่อนเปิด designer)
 
-1. สร้างโฟลเดอร์ `C:\PAD-Labs\working\lab02\` และ `C:\PAD-Labs\output\lab02\`
-2. คัดลอกทั้งโฟลเดอร์ [`assets/inbox`](assets/inbox/) ไปยัง `C:\PAD-Labs\working\lab02\inbox`
-3. สร้างโฟลเดอร์ว่าง `C:\PAD-Labs\working\lab02\archive` (ถ้ายังไม่มี)
+1. สร้างโฟลเดอร์ working และ output (คัดลอกได้):
+
+```text
+C:\PAD-Labs\working\lab02\
+```
+
+```text
+C:\PAD-Labs\output\lab02\
+```
+
+2. คัดลอกทั้งโฟลเดอร์ [`assets/inbox`](assets/inbox/) ไปยัง:
+
+```text
+C:\PAD-Labs\working\lab02\inbox
+```
+
+3. สร้างโฟลเดอร์ว่าง (ถ้ายังไม่มี):
+
+```text
+C:\PAD-Labs\working\lab02\archive
+```
+
 4. ตรวจว่าใน `inbox` มีไฟล์อย่างน้อย: `order-1001.csv`, `order-1002.csv`, `readme-note.txt`, `invoice-demo.txt`, `skip-me.tmp`
 
 > ถ้าใช้ไดรฟ์อื่น (เช่น `D:\PAD-Labs\...`) ได้ — แต่ต้องใช้ path นั้นใน `%WorkingRoot%` ให้สม่ำเสมอทั้ง flow
@@ -28,7 +47,7 @@
 |--|------|
 | Mock inbox | [`assets/inbox/`](assets/inbox/) |
 | Expected mapping | [`assets/expected/expected-manifest.csv`](assets/expected/expected-manifest.csv) |
-| Output summary | `C:\PAD-Labs\output\lab02\summary.txt` |
+| Output summary | ดู code block ใน Step 6 |
 
 | ไฟล์ใน inbox | การจัดการ |
 |--------------|-----------|
@@ -43,7 +62,13 @@
 ### Step 0 — สร้าง flow
 
 1. เปิด Power Automate for desktop → **New flow**
-2. ชื่อ: `Lab02_FileManagement` → **Create**
+2. ชื่อ flow (คัดลอกได้):
+
+```text
+Lab02_FileManagement
+```
+
+3. กด **Create**
 
 > **กฎตัวแปรใน PAD (อ่านก่อนทำ Step ถัดไป)**  
 > - ช่อง **Name** ของ **Set variable**, ชื่อ **produced variable**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
@@ -55,12 +80,30 @@
 1. ลาก **Set variable** ลง workspace
 2. ตั้งค่า:
    - Name: `WorkingRoot` ← **ไม่ใส่ `%`**
-   - Value: `C:\PAD-Labs\working\lab02`  
-     (หรือ path ที่คุณใช้จริง — ช่อง Value เป็นข้อความธรรมดา ยังไม่ต้องมี `%`)
+   - Value: (คัดลอกด้านล่างวางในช่อง Value — หรือ path ที่คุณใช้จริง)
+
+```text
+C:\PAD-Labs\working\lab02
+```
+
 3. เพิ่ม **Set variable** อีก 3 ตัว (Name ไม่มี `%`):
-   - Name `CsvCount` = Value `0`
-   - Name `TxtCount` = Value `0`
-   - Name `IgnoredCount` = Value `0`
+   - Name: `CsvCount` ← Value:
+
+```text
+0
+```
+
+   - Name: `TxtCount` ← Value:
+
+```text
+0
+```
+
+   - Name: `IgnoredCount` ← Value:
+
+```text
+0
+```
 
 > Tip (2606+): ถ้า Variables pane รองรับ **Default value** ตั้งค่าเริ่มต้นที่นั่นได้ — แต่ใน Lab นี้ใช้ Set variable ก็ผ่านเกณฑ์
 
@@ -68,18 +111,65 @@
 
 ทำซ้ำ 3 ชุด ตามตาราง (อย่า hardcode คนละไดรฟ์กับ `%WorkingRoot%`)
 
-| ชุด | If folder exists (path) | Create folder |
-|-----|-------------------------|---------------|
-| csv | `%WorkingRoot%\archive\csv` | Folder name `csv` into `%WorkingRoot%\archive` |
-| txt | `%WorkingRoot%\archive\txt` | Folder name `txt` into `%WorkingRoot%\archive` |
-| ignored | `%WorkingRoot%\archive\ignored` | Folder name `ignored` into `%WorkingRoot%\archive` |
+**ชุด csv — If folder exists (คัดลอก path):**
+
+```text
+%WorkingRoot%\archive\csv
+```
+
+Create folder: ชื่อโฟลเดอร์
+
+```text
+csv
+```
+
+Into:
+
+```text
+%WorkingRoot%\archive
+```
+
+**ชุด txt — If folder exists:**
+
+```text
+%WorkingRoot%\archive\txt
+```
+
+Create folder ชื่อ:
+
+```text
+txt
+```
+
+Into:
+
+```text
+%WorkingRoot%\archive
+```
+
+**ชุด ignored — If folder exists:**
+
+```text
+%WorkingRoot%\archive\ignored
+```
+
+Create folder ชื่อ:
+
+```text
+ignored
+```
+
+Into:
+
+```text
+%WorkingRoot%\archive
+```
 
 ขั้นตอนต่อหนึ่งชุด:
 
-1. ลาก **If folder exists**
-2. Folder path = ตามตาราง
-3. ในกิ่ง **Else** ลาก **Create folder** ตามตาราง
-4. ปิดด้วย **End**
+1. ลาก **If folder exists** → วาง path จาก code block ด้านบน
+2. ในกิ่ง **Else** ลาก **Create folder** ตามชื่อ + Into จาก code block
+3. ปิดด้วย **End**
 
 โครงที่ได้ควรคล้าย:
 
@@ -96,8 +186,18 @@ End
 
 1. ลาก **Get files in folder**
 2. ตั้งค่า:
-   - Folder: `%WorkingRoot%\inbox` ← **ใช้** ตัวแปร (มี `%`) และต่อ `\inbox` — **ไม่ใช่** แค่ `%WorkingRoot%`
-   - File filter: `*`
+   - Folder: (คัดลอก — **ใช้** ตัวแปร มี `%` และต่อ `\inbox`)
+
+```text
+%WorkingRoot%\inbox
+```
+
+   - File filter:
+
+```text
+*
+```
+
    - Include subfolders: ปิด
 3. ชื่อ produced variable: `InboxFiles` ← **ไม่ใส่ `%`**  
    (เวลาอ้างอิงทีหลังใช้ `%InboxFiles%`)
@@ -108,12 +208,22 @@ End
 
 1. ลาก **For each**
 2. ตั้งค่า:
-   - Value to iterate: `%InboxFiles%` ← **ใช้** ตัวแปร (มี `%`)
+   - Value to iterate: (คัดลอก)
+
+```text
+%InboxFiles%
+```
+
    - Store into: `CurrentFile` ← **ไม่ใส่ `%`**  
      (ชื่ออื่นเช่น `CurrentItem` ก็ได้ แต่ต้องใช้ชื่อเดียวกันทั้งลูป)
 3. **ภายใน For each** ลาก **Get file path part**
 4. ตั้งค่า:
-   - File path: `%CurrentFile%` ← **ใช้** ไฟล์ปัจจุบัน (มี `%`) ไม่ใช่ทั้งลิสต์
+   - File path: (คัดลอก — ไฟล์ปัจจุบัน ไม่ใช่ทั้งลิสต์)
+
+```text
+%CurrentFile%
+```
+
    - ส่วนที่ต้องการ: Extension (หรือเลือกให้ได้ extension)
 5. ชื่อ produced: `FileExtension` ← **ไม่ใส่ `%`**  
    (อ้างอิงด้วย `%FileExtension%`)
@@ -123,22 +233,71 @@ End
 ยังอยู่ **ภายใน For each** หลัง Get file path part:
 
 1. ลาก **If**
-2. เงื่อนไข: `%FileExtension%` **Equal to** `.csv`  
-   (ถ้าค่าที่ได้ไม่มีจุด ให้เทียบ `csv` หรือต่อ `.` ให้ตรงกับที่ action คืนจริง — ดู Variables pane ตอน Run next action)
+2. เงื่อนไข: ฝั่งซ้าย (คัดลอก)
+
+```text
+%FileExtension%
+```
+
+   ตัวดำเนินการ **Equal to** · ฝั่งขวา (คัดลอก — ถ้าค่าใน Variables ไม่มีจุด ให้ใช้ `csv` แทน):
+
+```text
+.csv
+```
+
 3. **ภายใน If** ลาก **Copy file(s)**
 4. ตั้งค่าให้ถูก:
-   - File(s) to copy: `%CurrentFile%` ← **ห้าม** ใส่ `%InboxFiles%`
-   - Destination folder: `%WorkingRoot%\archive\csv\`
+   - File(s) to copy: (คัดลอก — **ห้าม** ใส่ `%InboxFiles%`)
+
+```text
+%CurrentFile%
+```
+
+   - Destination folder:
+
+```text
+%WorkingRoot%\archive\csv\
+```
+
    - If file exists: Overwrite (หรือตามนโยบายที่ชัด)
 5. ชื่อ produced list (ถ้ามี): `CopiedFiles` ← ไม่ใส่ `%` — ไม่บังคับใช้ต่อ
 6. ลาก **Increase variable** → เลือกตัวแปร `CsvCount` (ไม่มี `%` ในรายการเลือก) แล้ว + `1`
 
-7. เพิ่ม **Else if**: `%FileExtension%` Equal to `.txt`
-   - **Copy file(s)** `%CurrentFile%` → `%WorkingRoot%\archive\txt\`
+7. เพิ่ม **Else if**: ฝั่งขวา
+
+```text
+.txt
+```
+
+   - **Copy file(s)**  
+     File(s):
+
+```text
+%CurrentFile%
+```
+
+     Destination:
+
+```text
+%WorkingRoot%\archive\txt\
+```
+
    - **Increase variable** `TxtCount` + 1
 
 8. เพิ่ม **Else**:
-   - **Copy file(s)** (หรือ **Move file(s)**) `%CurrentFile%` → `%WorkingRoot%\archive\ignored\`
+   - **Copy file(s)** (หรือ **Move file(s)**)  
+     File(s):
+
+```text
+%CurrentFile%
+```
+
+     Destination:
+
+```text
+%WorkingRoot%\archive\ignored\
+```
+
    - **Increase variable** `IgnoredCount` + 1
 
 9. ปิดด้วย **End** (If) แล้ว **End** (For each)
@@ -165,13 +324,26 @@ End
 
 1. **หลัง** End ของ For each ลาก **Set variable**
 2. Name: `SummaryText` ← **ไม่ใส่ `%`**
-3. Value: พิมพ์ข้อความที่ **แทรกตัวแปรด้วย `%`** เช่น  
-   `CSV=%CsvCount%; TXT=%TxtCount%; IGNORED=%IgnoredCount%; Done`  
-   (ตรงนี้ `%CsvCount%` คือการ **ใช้** ค่าตัวแปร — ถูกต้องแล้ว)
+3. Value: (คัดลอกทั้งบรรทัด — `%CsvCount%` คือการ **ใช้** ค่าตัวแปร มี `%` ถูกต้องแล้ว)
+
+```text
+CSV=%CsvCount%; TXT=%TxtCount%; IGNORED=%IgnoredCount%; Done
+```
+
 4. ลาก **Write text to file**
 5. ตั้งค่า:
-   - File path: `C:\PAD-Labs\output\lab02\summary.txt`
-   - Text to write: `%SummaryText%` ← **ใช้** ตัวแปร (มี `%`)
+   - File path: (คัดลอก)
+
+```text
+C:\PAD-Labs\output\lab02\summary.txt
+```
+
+   - Text to write: (คัดลอก)
+
+```text
+%SummaryText%
+```
+
    - If file exists: Overwrite
 6. (ทางเลือก) สร้างโฟลเดอร์ `output\lab02` ด้วย **If folder exists** / **Create folder** ก่อนเขียนไฟล์
 
@@ -179,7 +351,12 @@ End
 
 1. กด **Run**
 2. เปิดโฟลเดอร์ `archive\csv`, `archive\txt`, `archive\ignored` เทียบตารางด้านบน
-3. เปิด `summary.txt` ต้องได้แนว `CSV=2; TXT=2; IGNORED=1; Done`
+3. เปิด `summary.txt` ต้องได้แนว:
+
+```text
+CSV=2; TXT=2; IGNORED=1; Done
+```
+
 4. รันซ้ำรอบสอง — ต้องไม่พัง (มี overwrite / If exists ชัด)
 
 ### Challenge (ทางเลือก)

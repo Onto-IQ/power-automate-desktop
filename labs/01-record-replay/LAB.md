@@ -15,26 +15,54 @@
 
 ## Setup บนเครื่อง (ทำก่อนเปิด designer)
 
-1. สร้างโฟลเดอร์ `C:\PAD-Labs\working\lab01\`
-2. คัดลอก [`assets/sample-form-input.csv`](assets/sample-form-input.csv) ไปที่ `C:\PAD-Labs\working\lab01\`
-3. เปิดหน้า https://ontoiq.tech/pad/01-forms.html ในเบราว์เซอร์ด้วยมือหนึ่งครั้ง เพื่อยืนยันว่าโหลดได้ตามปกติ
+1. สร้างโฟลเดอร์ working (คัดลอก path):
+
+```text
+C:\PAD-Labs\working\lab01\
+```
+
+2. คัดลอก [`assets/sample-form-input.csv`](assets/sample-form-input.csv) ไปโฟลเดอร์ด้านบน
+3. เปิด URL นี้ในเบราว์เซอร์ด้วยมือหนึ่งครั้ง เพื่อยืนยันว่าโหลดได้:
+
+```text
+https://ontoiq.tech/pad/01-forms.html
+```
 
 ## Input / Output
 
 | | Path / ค่า |
 |--|------------|
 | Input mock | [`assets/sample-form-input.csv`](assets/sample-form-input.csv) |
-| Web UI | https://ontoiq.tech/pad/01-forms.html |
+| Web UI | `https://ontoiq.tech/pad/01-forms.html` |
 | Expected | ฟอร์มถูกกรอกตามแถวแรก และ submit สำเร็จ โดยมีข้อความยืนยันบนหน้า |
 
 ### ข้อมูลตัวอย่าง (แถวแรก — ใช้ใน Hands-on)
 
-| Field | Value |
-|-------|-------|
-| Name | Somchai Demo |
-| Email | somchai.demo@example.com |
-| Date | 2026-08-08 |
-| Message | Hello from Lab 01 Record & Replay |
+คัดลอกทีละค่าไปวางในช่อง **Value** ของ **Set variable**:
+
+**Name / FullName**
+
+```text
+Somchai Demo
+```
+
+**Email**
+
+```text
+somchai.demo@example.com
+```
+
+**Date / FormDate**
+
+```text
+2026-08-08
+```
+
+**Message**
+
+```text
+Hello from Lab 01 Record & Replay
+```
 
 ---
 
@@ -43,7 +71,13 @@
 ### Step 0 — สร้าง flow
 
 1. เปิด Power Automate for desktop → **New flow**
-2. ชื่อ: `Lab01_RecordReplay` → **Create**
+2. ชื่อ flow (คัดลอกได้):
+
+```text
+Lab01_RecordReplay
+```
+
+3. กด **Create**
 
 > **กฎตัวแปรใน PAD (อ่านก่อนทำ Step ถัดไป)**  
 > - ช่อง **Name** ของ **Set variable**, ชื่อ **produced variable**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
@@ -55,11 +89,31 @@
 1. ใน Actions Pane ค้นหา **Set variable** แล้วลากลง workspace
 2. ตั้งค่า:
    - Name: `FullName` ← **ไม่ใส่ `%`**
-   - Value: `Somchai Demo`
+   - Value: (คัดลอกด้านล่างวางในช่อง Value)
+
+```text
+Somchai Demo
+```
+
 3. เพิ่ม **Set variable** อีก 3 ตัว (Name ไม่มี `%`; วางต่อท้าย Step 1):
-   - Name `Email` = Value `somchai.demo@example.com`
-   - Name `FormDate` = Value `2026-08-08`
-   - Name `Message` = Value `Hello from Lab 01 Record & Replay`
+
+   - Name: `Email` ← Value:
+
+```text
+somchai.demo@example.com
+```
+
+   - Name: `FormDate` ← Value:
+
+```text
+2026-08-08
+```
+
+   - Name: `Message` ← Value:
+
+```text
+Hello from Lab 01 Record & Replay
+```
 
 > Tip: แถวที่สองใน CSV (`Nicha Example` …) เก็บไว้ทำ Challenge ได้ — ไม่บังคับในเกณฑ์ผ่าน
 
@@ -67,7 +121,12 @@
 
 1. ใน Actions Pane ค้นหา **Launch new Microsoft Edge** (หรือ **Launch new Chrome**) แล้วลากลง workspace **หลัง** ชุด Set variable
 2. ตั้งค่า:
-   - Initial URL: `https://ontoiq.tech/pad/01-forms.html`
+   - Initial URL: (คัดลอกด้านล่าง)
+
+```text
+https://ontoiq.tech/pad/01-forms.html
+```
+
    - Window state: Normal (หรือตามที่ designer เสนอ)
 3. ชื่อ produced variable: `Browser` ← **ไม่ใส่ `%`**  
    (เวลาอ้างอิงทีหลังใช้ `%Browser%`)
@@ -78,7 +137,18 @@
 1. ลาก **Wait for web page content** วางหลัง Launch
 2. ตั้งค่า:
    - Browser instance: `%Browser%`
-   - Wait for: element / text ที่ชี้ช่องชื่อ เช่น `#txt-name` หรือ `[data-pad=...]` ตามที่เห็นบนหน้า
+   - Wait for: element / text ที่ชี้ช่องชื่อ — selector ที่แนะนำ (คัดลอกได้):
+
+```text
+#txt-name
+```
+
+   หรือ
+
+```text
+[data-pad="txt-name"]
+```
+
 3. กด Save
 
 > อย่ารอด้วย Wait วินาทีอย่างเดียวเป็นเกณฑ์หลัก — ใช้ Wait for web page content ตาม [Web automation](https://learn.microsoft.com/power-automate/desktop-flows/automation-web)
@@ -88,7 +158,7 @@
 ถ้าต้องการให้ PAD จับ UI Elements ให้:
 
 1. ใน designer กด **Record** (Web recorder)
-2. กรอกฟอร์มด้วยมือหนึ่งรอบด้วยค่าจากตารางด้านบน แล้วกด Submit
+2. กรอกฟอร์มด้วยมือหนึ่งรอบด้วยค่าจาก code block ในตารางด้านบน แล้วกด Submit
 3. หยุด Record
 4. กลับมาที่ workspace — จะมีชุด action / UI Elements จาก Recorder
 
@@ -104,11 +174,38 @@
 2. ตั้งค่า:
    - Browser instance: `%Browser%`
    - UI element: ช่อง Name (เช่น `#txt-name`) — ตั้งชื่อ element ใน PAD ว่า `Txt_Name`
-   - Text to fill-in: `%FullName%`
-3. ทำซ้ำอีก 3 ครั้งสำหรับ:
-   - Email → `%Email%` (element `Txt_Email`)
-   - Date → `%FormDate%` (element `Txt_Date` หรือ control วันที่บนหน้า)
-   - Message → `%Message%` (element `Txt_Message`)
+   - Text to fill-in: (คัดลอก)
+
+```text
+%FullName%
+```
+
+3. ทำซ้ำอีก 3 ครั้ง:
+
+   - Email → Text:
+
+```text
+%Email%
+```
+
+     (element `Txt_Email`)
+
+   - Date → Text:
+
+```text
+%FormDate%
+```
+
+     (element `Txt_Date` หรือ control วันที่บนหน้า)
+
+   - Message → Text:
+
+```text
+%Message%
+```
+
+     (element `Txt_Message`)
+
 4. แต่ละ action กด Save
 
 ### Step 6 — Submit ฟอร์ม
@@ -116,7 +213,13 @@
 1. ลาก **Press button on web page** (หรือ **Click link on web page** ถ้าเป็นลิงก์/ปุ่มแบบลิงก์)
 2. ตั้งค่า:
    - Browser instance: `%Browser%`
-   - UI element: ปุ่ม submit เช่น `[data-pad="btn-submit"]` — ตั้งชื่อ `Btn_Submit`
+   - UI element: ปุ่ม submit — selector ที่แนะนำ:
+
+```text
+[data-pad="btn-submit"]
+```
+
+     ตั้งชื่อใน PAD ว่า `Btn_Submit`
 3. กด Save
 
 ### Step 7 — เก็บหลักฐานความสำเร็จ
@@ -134,7 +237,13 @@
 
 1. ลาก **Take screenshot of web page**
 2. Browser instance: `%Browser%`
-3. บันทึกไฟล์ไปที่ `C:\PAD-Labs\output\lab01\submit-proof.png` (สร้างโฟลเดอร์ก่อนถ้ายังไม่มี)
+3. บันทึกไฟล์ไปที่ path (คัดลอกได้):
+
+```text
+C:\PAD-Labs\output\lab01\submit-proof.png
+```
+
+   (สร้างโฟลเดอร์ `C:\PAD-Labs\output\lab01\` ก่อนถ้ายังไม่มี)
 
 ### Step 8 — ปิดเบราว์เซอร์
 

@@ -16,8 +16,26 @@
 
 ## Setup บนเครื่อง (ทำก่อนเปิด designer)
 
-1. สร้างโฟลเดอร์ `C:\PAD-Labs\working\lab10\`, `C:\PAD-Labs\output\lab10\`, `C:\PAD-Labs\logs\lab10\`
-2. คัดลอกไฟล์ใน [`assets/`](assets/) ไป `C:\PAD-Labs\working\lab10\`
+1. สร้างโฟลเดอร์ (คัดลอกได้):
+
+```text
+C:\PAD-Labs\working\lab10\
+```
+
+```text
+C:\PAD-Labs\output\lab10\
+```
+
+```text
+C:\PAD-Labs\logs\lab10\
+```
+
+2. คัดลอกไฟล์ใน [`assets/`](assets/) ไป:
+
+```text
+C:\PAD-Labs\working\lab10\
+```
+
 3. อ่าน brief: [`assets/mission-brief.md`](assets/mission-brief.md)
 4. อ่าน pricing: [`assets/pricing-rules.md`](assets/pricing-rules.md) และตัวอย่าง [`assets/expected-pricing-examples.csv`](assets/expected-pricing-examples.csv)
 5. เปิด Outlook Desktop อย่างน้อยหนึ่งครั้งให้มี profile พร้อมก่อนรัน flow
@@ -47,8 +65,29 @@
 
 > Catalog: Loop Extract → Click `#btn-next-page` จน disabled (หน้า 3/3, รวม ~24 รายการ) — รายละเอียดใน [`shared/WEB-HUB-REQUESTS.md`](../../shared/WEB-HUB-REQUESTS.md)
 
-Login: https://ontoiq.tech/pad/06-login.html (`demo`/`demo`)  
-Form follow-up: https://ontoiq.tech/pad/01-forms.html
+Login URL (คัดลอกได้):
+
+```text
+https://ontoiq.tech/pad/06-login.html
+```
+
+Username:
+
+```text
+demo
+```
+
+Password:
+
+```text
+demo
+```
+
+Form follow-up URL (คัดลอกได้):
+
+```text
+https://ontoiq.tech/pad/01-forms.html
+```
 
 ### Phase 1 missions / challenges (เลือกให้ครบชุดที่ขาด)
 
@@ -86,7 +125,7 @@ Form follow-up: https://ontoiq.tech/pad/01-forms.html
 ## Outlook Safety
 
 - ใช้เฉพาะอีเมลใน `recipients.csv` (โดเมน `.mock.local`)
-- Subject ขึ้นต้นด้วย `[PAD-LAB-MOCK]`
+- Subject ขึ้นต้นด้วย `[PAD-LAB-MOCK]` — ดู code block ใน Step 8
 - ค่า `SendMode=DraftOnly` — อย่าเปลี่ยนเป็น Send จริงในชั้นเรียนสาธารณะ
 
 ---
@@ -96,8 +135,14 @@ Form follow-up: https://ontoiq.tech/pad/01-forms.html
 ### Step 0 — สร้าง flow และ Subflows
 
 1. เปิด Power Automate for desktop → **New flow**
-2. ชื่อ: `Lab10_CapstoneSalesOps` → **Create**
-3. สร้าง Subflows ตามตารางด้านบน (อย่างน้อย 3 ชื่อ)
+2. ชื่อ flow (คัดลอกได้):
+
+```text
+Lab10_CapstoneSalesOps
+```
+
+3. กด **Create**
+4. สร้าง Subflows ตามตารางด้านบน (อย่างน้อย 3 ชื่อ)
 
 > **กฎตัวแปรใน PAD (อ่านก่อนทำ Step ถัดไป)**  
 > - ช่อง **Name** ของ **Set variable**, ชื่อ **produced variable**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
@@ -107,21 +152,79 @@ Form follow-up: https://ontoiq.tech/pad/01-forms.html
 ### Step 1 — SF_InitPaths
 
 1. ลาก **Set variable** (Name ไม่มี `%`):
-   - Name `WorkingRoot` = Value `C:\PAD-Labs\working\lab10`
-   - Name `OutputRoot` = Value `C:\PAD-Labs\output\lab10`
-   - Name `LogPath` = Value `C:\PAD-Labs\logs\lab10\capstone-error-log.csv`
-   - Name `ReportPath` = Value `C:\PAD-Labs\output\lab10\sales-ops-report.xlsx`
-   - Name `SubmittedCount` = Value `0`, Name `ScoutHitCount` = Value `0`
-   - Name `MailStatus` = Value `Skipped`
-   - Name `SendMode` = Value `DraftOnly`
-2. **If folder exists** / **Create folder** สำหรับ output, logs, และโฟลเดอร์ evidence (เช่น `output\lab10\evidence`)
-3. เขียน header log ที่ `%LogPath%` ด้วย **Write text to file**
+   - Name: `WorkingRoot` ← Value:
+
+```text
+C:\PAD-Labs\working\lab10
+```
+
+   - Name: `OutputRoot` ← Value:
+
+```text
+C:\PAD-Labs\output\lab10
+```
+
+   - Name: `LogPath` ← Value:
+
+```text
+C:\PAD-Labs\logs\lab10\capstone-error-log.csv
+```
+
+   - Name: `ReportPath` ← Value:
+
+```text
+C:\PAD-Labs\output\lab10\sales-ops-report.xlsx
+```
+
+   - Name: `SubmittedCount` ← Value:
+
+```text
+0
+```
+
+   - Name: `ScoutHitCount` ← Value:
+
+```text
+0
+```
+
+   - Name: `MailStatus` ← Value:
+
+```text
+Skipped
+```
+
+   - Name: `SendMode` ← Value:
+
+```text
+DraftOnly
+```
+
+2. **If folder exists** / **Create folder** สำหรับ output, logs, และโฟลเดอร์ evidence เช่น:
+
+```text
+%OutputRoot%\evidence
+```
+
+3. เขียน header log ที่ File path (คัดลอก):
+
+```text
+%LogPath%
+```
+
+   ด้วย **Write text to file**
 
 ใน Main: **Run subflow** `SF_InitPaths`
 
 ### Step 2 — SF_ReadExcelSheet: อ่าน leads (+ targets)
 
-1. **Launch Excel** → เปิด `%WorkingRoot%\leads.xlsx` ← **ใช้** (มี `%`) (หรือแปลงจาก CSV)
+1. **Launch Excel** → Document path (คัดลอก):
+
+```text
+%WorkingRoot%\leads.xlsx
+```
+
+   (หรือแปลงจาก CSV)
 2. ชื่อ produced: `Excel` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%Excel%`)
 3. **Read from Excel worksheet** sheet leads → ชื่อ produced: `Leads` ← **ไม่ใส่ `%`** (first line = column names; อ้างอิงด้วย `%Leads%`)
 4. อ่าน `scout-targets.csv` / sheet ที่เกี่ยวข้องถ้ามี → ใช้เป็นรายการหน้า scout
@@ -132,72 +235,237 @@ Form follow-up: https://ontoiq.tech/pad/01-forms.html
 วางงานเสี่ยงภายใต้ **On block error** (ระดับชุดใหญ่) — เมื่อพังให้ **Run subflow** `SF_LogError` + **Get last error** แล้ว cleanup
 
 1. **Launch new Microsoft Edge** หรือ **Launch new Chrome**
-   - Initial URL: `https://ontoiq.tech/pad/06-login.html`
+   - Initial URL: (คัดลอก)
+
+```text
+https://ontoiq.tech/pad/06-login.html
+```
+
 2. ชื่อ produced: `Browser` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%Browser%`)
 3. **Wait for web page content**
-4. **Populate text field on web page** `#txt-username` = `demo`
-5. **Populate text field on web page** `#txt-password` = `demo`
-6. **Press button on web page** `#btn-login`
+4. **Populate text field on web page** `#txt-username` → Text (คัดลอก — username):
+
+```text
+demo
+```
+
+5. **Populate text field on web page** `#txt-password` → Text (คัดลอก — password):
+
+```text
+demo
+```
+
+6. **Press button on web page** → selector (คัดลอกได้):
+
+```text
+#btn-login
+```
+
 7. **Wait for web page content** จนเข้าสู่ session ได้
 
 ### Step 4 — Web Scout: AJAX + Catalog pagination (บังคับ)
 
 **AJAX (09)**
 
-1. **Go to web page** → `https://ontoiq.tech/pad/09-ajax-table.html`
+1. **Go to web page** → URL (คัดลอก):
+
+```text
+https://ontoiq.tech/pad/09-ajax-table.html
+```
+
 2. **Wait for web page content** จนมีแถว
-3. **Extract data from web page** (ใช้ **live web helper**) → append เข้า `%ScoutResults%` ← **ใช้** (มี `%`) / ตารางออเดอร์  
+3. **Extract data from web page** (ใช้ **live web helper**) → append เข้า (คัดลอก):
+
+```text
+%ScoutResults%
+```
+
+   / ตารางออเดอร์  
    (ถ้ายังไม่มี: ชื่อ produced ของตาราง = `ScoutResults` ← **ไม่ใส่ `%`**)
 
 **Catalog pagination (19) — ต้องมี**
 
-1. **Go to web page** → `https://ontoiq.tech/pad/19-catalog.html`
-2. **Wait for web page content** → `#tbl-products`
-3. **Create new data table** → ชื่อ produced: `Products` ← **ไม่ใส่ `%`** (ถ้ายังไม่มี; อ้างอิงด้วย `%Products%`)
-4. **Extract data from web page** ตาราง Product + Price → append เข้า `%Products%`
-5. ลาก **Loop** / **Loop condition** ตราบที่ Next ยังใช้ได้:
-   - **Click link on web page** หรือ **Press button on web page** → `#btn-next-page` / `[data-pad="page-next"]`
-   - **Wait for web page content** ตาราง
-   - **Extract data from web page** ต่อ → append `%Products%`
-6. เมื่อ Next **disabled** (หน้า 3/3, รวม ~24 รายการ) → ออกจากลูป
-7. อัปเดต `%ScoutHitCount%` ตามเกณฑ์ที่ match criteria
+1. **Go to web page** → URL (คัดลอก):
 
-Selectors คงที่: `#tbl-products`, `#btn-next-page`, `#lbl-page`
+```text
+https://ontoiq.tech/pad/19-catalog.html
+```
+
+2. **Wait for web page content** → selector (คัดลอกได้):
+
+```text
+#tbl-products
+```
+
+3. **Create new data table** → ชื่อ produced: `Products` ← **ไม่ใส่ `%`** (ถ้ายังไม่มี; อ้างอิงด้วย `%Products%`)
+4. **Extract data from web page** ตาราง Product + Price → append เข้า (คัดลอก):
+
+```text
+%Products%
+```
+
+5. ลาก **Loop** / **Loop condition** ตราบที่ Next ยังใช้ได้:
+   - **Click link on web page** หรือ **Press button on web page** → selector (คัดลอกได้):
+
+```text
+#btn-next-page
+```
+
+     หรือ
+
+```text
+[data-pad="page-next"]
+```
+
+   - **Wait for web page content** ตาราง
+   - **Extract data from web page** ต่อ → append (คัดลอก):
+
+```text
+%Products%
+```
+
+6. เมื่อ Next **disabled** (หน้า 3/3, รวม ~24 รายการ) → ออกจากลูป
+7. อัปเดตตัวนับ scout ตามเกณฑ์ที่ match criteria — อ้างอิง (คัดลอก):
+
+```text
+%ScoutHitCount%
+```
+
+Selectors คงที่:
+
+```text
+#tbl-products
+```
+
+```text
+#btn-next-page
+```
+
+```text
+#lbl-page
+```
 
 ### Step 5 — Price engine (Discount + VAT)
 
 ตาม [`assets/pricing-rules.md`](assets/pricing-rules.md) สำหรับแต่ละแถวที่มี Amount/ราคา:
 
-1. ในลูปบน `%Products%` (หรือตารางที่ scout ได้):
-   - ถ้า Amount >= 15000 → `DiscountRate` = `0.10`
-   - Else if Amount >= 10000 → `0.05`
-   - Else → `0.00`
+1. ในลูปบน (คัดลอก):
+
+```text
+%Products%
+```
+
+   (หรือตารางที่ scout ได้):
+   - ถ้า Amount >= (คัดลอก):
+
+```text
+15000
+```
+
+     → Name: `DiscountRate` ← Value:
+
+```text
+0.10
+```
+
+   - Else if Amount >= (คัดลอก):
+
+```text
+10000
+```
+
+     → Value:
+
+```text
+0.05
+```
+
+   - Else → Value:
+
+```text
+0.00
+```
+
 2. คำนวณด้วย **Set variable** / การคำนวณใน PAD (Name ไม่มี `%`; ตอนอ้างอิงใช้ `%...%`):
-   - Name `DiscountAmount` = Amount * DiscountRate
-   - Name `NetBeforeTax` = Amount - DiscountAmount
-   - Name `TaxAmount` = NetBeforeTax * `0.07`
-   - Name `GrandTotal` = NetBeforeTax + TaxAmount
+   - Name: `DiscountAmount` = Amount * DiscountRate
+   - Name: `NetBeforeTax` = Amount - DiscountAmount
+   - Name: `TaxAmount` = NetBeforeTax * (คัดลอกอัตรา VAT):
+
+```text
+0.07
+```
+
+   - Name: `GrandTotal` = NetBeforeTax + TaxAmount
 3. สร้าง/เติม Data table ชื่อ produced: `Priced` ← **ไม่ใส่ `%`** ให้มีคอลัมน์ด้านบนครบ (อ้างอิงด้วย `%Priced%`)
 4. รวมยอด Summary: Sum Amount, Sum Discount, Sum Tax, Sum GrandTotal
 5. เทียบมือกับ [`assets/expected-pricing-examples.csv`](assets/expected-pricing-examples.csv) สำหรับเคสเดียวกัน
 
 ### Step 6 — SF_SubmitLeadForms: Excel → Web → อัปเดตสถานะ
 
-1. **For each** → Value to iterate: `%Leads%` ← **ใช้** (มี `%`) → Store into: `CurrentLead` ← **ไม่ใส่ `%`**
-2. **If** Status Equal to `New`:
-   - **If** Priority Equal to `High` → **Go to web page** `07-wizard.html` ทำ Wizard ครบ (Mission VIP)
-   - **Else** → **Go to web page** `01-forms.html` → **Populate text field on web page** + **Press button on web page**
+1. **For each** → Value to iterate: (คัดลอก)
+
+```text
+%Leads%
+```
+
+   → Store into: `CurrentLead` ← **ไม่ใส่ `%`**
+2. **If** Status Equal to (คัดลอก):
+
+```text
+New
+```
+
+   - **If** Priority Equal to (คัดลอก):
+
+```text
+High
+```
+
+     → **Go to web page** URL (คัดลอก):
+
+```text
+https://ontoiq.tech/pad/07-wizard.html
+```
+
+     ทำ Wizard ครบ (Mission VIP)
+   - **Else** → **Go to web page** URL (คัดลอก):
+
+```text
+https://ontoiq.tech/pad/01-forms.html
+```
+
+     → **Populate text field on web page** + **Press button on web page**
 3. อัปเดต Status / WebResult / SubmittedAt ของแถว
 4. **Increase variable** เลือก `SubmittedCount` (ไม่มี `%`) เมื่อสำเร็จ
 5. **End** For each
 
-**Mission Files (05):** หลังมีผล scout/submit — ไป `05-files.html` download/upload แล้วเก็บหลักฐานใต้ `output\lab10\evidence\`
+**Mission Files (05):** หลังมีผล scout/submit — ไป URL (คัดลอก):
+
+```text
+https://ontoiq.tech/pad/05-files.html
+```
+
+download/upload แล้วเก็บหลักฐานใต้:
+
+```text
+%OutputRoot%\evidence\
+```
 
 ### Step 7 — SF_WriteExcelReport + นโยบายรันซ้ำ
 
 1. ลาก **If file exists**
-   - File path: `%ReportPath%` ← **ใช้** (มี `%`)
-2. **ภายใน If** → **Delete file** → `%ReportPath%`
+   - File path: (คัดลอก)
+
+```text
+%ReportPath%
+```
+
+2. **ภายใน If** → **Delete file** → (คัดลอก):
+
+```text
+%ReportPath%
+```
+
 3. **End**
 4. **Launch Excel** (เอกสารใหม่) ถ้ายังไม่มี instance สำหรับรายงาน
 5. **Write to Excel worksheet** อย่างน้อย sheet:
@@ -206,25 +474,73 @@ Selectors คงที่: `#tbl-products`, `#btn-next-page`, `#lbl-page`
    - `Results` — สถานะ leads
    - `Summary` — ยอดรวม + SubmittedCount + MailStatus
    - (แนะนำ) `Scout` notes จาก challenge
-6. **Save document as** → `%ReportPath%`
+6. **Save document as** → (คัดลอก):
+
+```text
+%ReportPath%
+```
+
 7. ยังไม่ต้อง Close ถ้า Step 8 ต้องแนบไฟล์จาก path นี้ — หรือ Close แล้วแนบจาก disk ก็ได้
 
 ### Step 8 — SF_SendOutlookDraft (DraftOnly)
 
-1. อ่านผู้รับจาก `%WorkingRoot%\recipients.csv` — ใช้เฉพาะโดเมน `.mock.local`
+1. อ่านผู้รับจาก File path (คัดลอก):
+
+```text
+%WorkingRoot%\recipients.csv
+```
+
+   — ใช้เฉพาะโดเมน `.mock.local`
 2. สร้างข้อความตาม [`assets/email-template.md`](assets/email-template.md)
-   - Subject ขึ้นต้น `[PAD-LAB-MOCK]`
+   - Subject (คัดลอกโครง — แทนค่าตัวเลขจริงตอนรัน):
+
+```text
+[PAD-LAB-MOCK] Scout Ops Report — {SubmittedCount} follows-ups, {ScoutHitCount} scout hits
+```
+
 3. ใช้ Outlook actions ใน PAD สร้างข้อความใหม่ → บันทึกเป็น **Draft** (ไม่ Send)
-4. Attach `%ReportPath%`
-5. **Set variable** Name `MailStatus` = Value `DraftCreated` ← **ไม่ใส่ `%` ใน Name**
-6. ถ้า Outlook ไม่พร้อม: log แล้วตั้ง Name `MailStatus` = `Skipped` — อย่า Send ออกนอก Lab
+4. Attach (คัดลอก):
+
+```text
+%ReportPath%
+```
+
+5. **Set variable** Name: `MailStatus` ← Value:
+
+```text
+DraftCreated
+```
+
+   ← **ไม่ใส่ `%` ใน Name**
+6. ถ้า Outlook ไม่พร้อม: log แล้วตั้ง Name: `MailStatus` ← Value:
+
+```text
+Skipped
+```
+
+   — อย่า Send ออกนอก Lab
 
 ### Step 9 — Error log + Cleanup
 
 ใน `SF_LogError` (เรียกจาก **On block error** / **On error**):
 
 1. **Get last error** → ชื่อ produced: `LastError` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%LastError%`)
-2. Append `%LogPath%` ด้วย `%LastError.Message%` / `.Location%`
+2. Append File path (คัดลอก):
+
+```text
+%LogPath%
+```
+
+   ด้วย (คัดลอก):
+
+```text
+%LastError.Message%
+```
+
+```text
+%LastError.Location%
+```
+
 3. (แนะนำ) **Take screenshot of web page** ถ้า browser ยังเปิด
 
 ท้าย Main (ทั้งกรณีสำเร็จและหลังกู้):
@@ -240,7 +556,13 @@ Selectors คงที่: `#tbl-products`, `#btn-next-page`, `#lbl-page`
 3. ตรวจเลข pricing กับตัวอย่าง
 4. ตรวจ Draft ใน Outlook + ไฟล์แนบ
 5. มี error log (อย่างน้อย header)
-6. รันครั้งที่ 2 ด้วย `%ReportPath%` เดิม — ต้องไม่พังเพราะชื่อไฟล์ซ้ำ
+6. รันครั้งที่ 2 ด้วย path เดิม (คัดลอก):
+
+```text
+%ReportPath%
+```
+
+   — ต้องไม่พังเพราะชื่อไฟล์ซ้ำ
 
 ### Challenge (โบนัส)
 

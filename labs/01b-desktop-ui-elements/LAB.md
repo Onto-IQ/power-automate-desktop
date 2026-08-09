@@ -19,8 +19,13 @@
 
 ## Setup บนเครื่อง (ทำก่อนเปิด designer)
 
-1. สร้างโฟลเดอร์ `C:\PAD-Labs\output\lab01b\`
-2. เปิด [`assets/notepad-message.txt`](assets/notepad-message.txt) อ่านข้อความที่จะใช้กรอก (หรือคัดลอกไฟล์ไป working ก็ได้)
+1. สร้างโฟลเดอร์ output (คัดลอก path):
+
+```text
+C:\PAD-Labs\output\lab01b\
+```
+
+2. เปิด [`assets/notepad-message.txt`](assets/notepad-message.txt) อ่านข้อความที่จะใช้กรอก (หรือคัดลอกไฟล์ไป working ก็ได้) — เนื้อหาเต็มอยู่ใน Step A1
 3. ปิด Notepad / Calculator ที่เปิดค้างอยู่ก่อนรัน Lab
 
 ## Input / Output
@@ -28,7 +33,7 @@
 | | Path |
 |--|------|
 | ข้อความ Notepad | [`assets/notepad-message.txt`](assets/notepad-message.txt) |
-| Output (ทางเลือก) | `C:\PAD-Labs\output\lab01b\notepad-output.txt` |
+| Output (ทางเลือก) | ดู code block ใน Step A1 (`OutFile`) |
 
 ---
 
@@ -37,8 +42,14 @@
 ### Step A0 — สร้าง flow (และ Subflow แนะนำ)
 
 1. เปิด Power Automate for desktop → **New flow**
-2. ชื่อ: `Lab01b_DesktopUIElements` → **Create**
-3. (แนะนำ) สร้าง Subflow ชื่อ `SF_Notepad` และ `SF_Calculator` แล้วเรียกจาก Main ใน Challenge — ใน Hands-on หลักวางใน Main ก็ผ่านเกณฑ์ได้
+2. ชื่อ flow (คัดลอกได้):
+
+```text
+Lab01b_DesktopUIElements
+```
+
+3. กด **Create**
+4. (แนะนำ) สร้าง Subflow ชื่อ `SF_Notepad` และ `SF_Calculator` แล้วเรียกจาก Main ใน Challenge — ใน Hands-on หลักวางใน Main ก็ผ่านเกณฑ์ได้
 
 > **กฎตัวแปรใน PAD (อ่านก่อนทำ Step ถัดไป)**  
 > - ช่อง **Name** ของ **Set variable**, ชื่อ **produced variable**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
@@ -50,20 +61,40 @@
 1. ใน Actions Pane ค้นหา **Set variable** แล้วลากลง workspace
 2. ตั้งค่า:
    - Name: `NotepadPath` ← **ไม่ใส่ `%`**
-   - Value: `C:\Windows\System32\notepad.exe`
+   - Value: (คัดลอกด้านล่างวางในช่อง Value)
+
+```text
+C:\Windows\System32\notepad.exe
+```
+
 3. เพิ่ม **Set variable** (Name ไม่มี `%`):
    - Name: `OutFile` ← **ไม่ใส่ `%`**
-   - Value: `C:\PAD-Labs\output\lab01b\notepad-output.txt`
+   - Value: (คัดลอกด้านล่างวางในช่อง Value)
+
+```text
+C:\PAD-Labs\output\lab01b\notepad-output.txt
+```
+
 4. เพิ่ม **Set variable**:
    - Name: `NoteText` ← **ไม่ใส่ `%`**
-   - Value: วางเนื้อหาจาก `notepad-message.txt` ทั้งไฟล์ เช่น  
-     `PAD Lab 01b — Desktop UI Elements` + บรรทัดถัดไปตามไฟล์
+   - Value: (คัดลอกด้านล่างวางในช่อง Value — เนื้อหาเต็มจาก `notepad-message.txt`)
+
+```text
+PAD Lab 01b — Desktop UI Elements
+ข้อความนี้ถูกพิมพ์ลง Notepad โดย Power Automate Desktop
+วันที่เป้าหมาย: 2026-08-08
+```
 
 ### Step A2 — เปิด Notepad
 
 1. ลาก **Run application** วางหลังชุด Set variable
 2. ตั้งค่า:
-   - Application path: `%NotepadPath%`
+   - Application path: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%NotepadPath%
+```
+
    - Window style: Normal (หรือตามที่มี)
 3. Produced / รอให้แอปเริ่มได้ตามค่าในหน้าต่าง action
 4. กด Save
@@ -87,7 +118,12 @@
 1. ลาก **Populate text field in window**
 2. ตั้งค่า:
    - UI element: `Edit_NotepadBody`
-   - Text to fill-in: `%NoteText%`
+   - Text to fill-in: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%NoteText%
+```
+
 3. กด Save
 
 ### Step A6 — บันทึกไฟล์
@@ -95,7 +131,12 @@
 1. ลาก **Send keys** (หรือใช้เมนู Save ผ่าน **Click UI element in window** ถ้า capture เมนูได้)
 2. ตั้งค่าให้ส่ง `Ctrl+S` ไปที่หน้าต่าง Notepad
 3. เมื่อมี Save As:
-   - Capture ช่องชื่อไฟล์ → **Populate text field in window** ด้วย `%OutFile%`
+   - Capture ช่องชื่อไฟล์ → **Populate text field in window** ด้วย (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%OutFile%
+```
+
    - Capture ปุ่ม Save → **Press button in window** หรือ **Click UI element in window**
 4. จัดการ dialog ทับไฟล์ (Yes/Replace) ถ้ามี — capture UI element ให้ครบ
 
@@ -109,7 +150,11 @@
 ### Step A8 — รันตรวจ Part A
 
 1. กด **Run**
-2. ตรวจว่ามีไฟล์ `C:\PAD-Labs\output\lab01b\notepad-output.txt` หรืออย่างน้อย populate สำเร็จแล้วปิดอย่างปลอดภัย
+2. ตรวจว่ามีไฟล์ตาม path นี้ (หรืออย่างน้อย populate สำเร็จแล้วปิดอย่างปลอดภัย):
+
+```text
+C:\PAD-Labs\output\lab01b\notepad-output.txt
+```
 
 ---
 
@@ -120,8 +165,12 @@
 ### Step B1 — เปิด Calculator
 
 1. ลาก **Run application**
-2. ตั้งค่า Application path เป็น path ของ Calculator บนเครื่อง เช่น  
-   `calc` / แอป Calculator ตามที่ Windows เปิดได้  
+2. ตั้งค่า Application path เป็น path ของ Calculator บนเครื่อง เช่น (คัดลอกด้านล่างวางในช่อง — หรือ path จริงบนเครื่องคุณ):
+
+```text
+calc
+```
+
    (บนเครื่องคุณลองเปิดจาก Run `calc` แล้วดู path จริงถ้าจำเป็น)
 3. กด Save
 
@@ -154,10 +203,26 @@
 ### Step B5 — ตรวจว่าได้ 15
 
 1. ลาก **If**
-2. เงื่อนไข: `%CalcResult%` **Contains** (หรือ Equal to) `15`  
-   (ถ้ารูปแบบ display มีทศนิยม/เครื่องหมาย ให้ Contains `15` แล้วปรับตามค่าจริงใน Variables pane)
+2. เงื่อนไข: ฝั่งซ้าย (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%CalcResult%
+```
+
+   ตัวดำเนินการ **Contains** (หรือ Equal to) · ฝั่งขวา (คัดลอกด้านล่างวางในช่อง — ถ้ารูปแบบ display มีทศนิยม/เครื่องหมาย ให้ Contains แล้วปรับตามค่าจริงใน Variables pane):
+
+```text
+15
+```
+
 3. ในกิ่ง **Else**:
-   - ลาก **Set variable** Name: `CalcError` ← **ไม่ใส่ `%`** = Value `Unexpected calculator result`
+   - ลาก **Set variable** Name: `CalcError` ← **ไม่ใส่ `%`**
+   - Value: (คัดลอกด้านล่างวางในช่อง Value)
+
+```text
+Unexpected calculator result
+```
+
    - และ/หรือ **Display message** แจ้งว่าค่าไม่ตรง
 4. ปิดด้วย **End**
 
