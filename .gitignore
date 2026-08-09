@@ -12,3 +12,6 @@ DesktopFlows/
 *.pdf
 Power Automate Desktop.pptx
 Trainocate_Outline_Power Automate Desktop (2 days) ake.pdf
+
+# Local ops notes (server access — do not publish)
+ops/*.local.md
