@@ -69,15 +69,48 @@ https://pad.ontoiq.tech/pad/03-table.html
 
 ### Step 4 — เขียน CSV จากแถวตาราง
 
-1. แปลง `%StaticTable%` เป็นข้อความ CSV (วน **For each** Store into `StaticRow` แล้วประกอบข้อความ หรือใช้ action เขียน CSV ที่มีใน designer)
-2. **Write text to file** (หรือเทียบเท่า) ไปที่:
+1. ลาก **For each**
+2. Value to iterate: (คัดลอกด้านล่างวางในช่อง)
+
+```text
+%StaticTable%
+```
+
+3. Store into: `StaticRow` ← **ไม่ใส่ `%`**
+4. **ภายใน For each** ประกอบข้อความ CSV หนึ่งแถวด้วย **Set variable** / ต่อสตริง — อ้างคอลัมน์ด้วย (พิมพ์/วางเอง ไม่มีในรายการตัวแปร):
+
+```text
+%StaticRow['Emp ID']%
+```
+
+```text
+%StaticRow['Name']%
+```
+
+```text
+%StaticRow['Department']%
+```
+
+```text
+%StaticRow['Salary']%
+```
+
+5. เก็บรวมทุกแถวในตัวแปรข้อความ (เช่น `CsvBody`) คั่นด้วย comma + ขึ้นบรรทัดใหม่ — หรือใช้ action แปลง Data table เป็นข้อความถ้ามีใน designer
+6. **ก่อนลูป** แนะนำใส่หัวตาราง:
+
+```text
+Emp ID,Name,Department,Salary
+```
+
+7. **หลัง End** ของ For each ลาก **Write text to file** ไปที่:
 
 ```text
 C:\PAD-Labs\output\lab03\static-table.csv
 ```
 
-3. If file exists: Overwrite · แนะนำ UTF-8
-4. ตัวอย่างคอลัมน์ผล: Emp ID, Name, Department, Salary (ตามที่ extract ได้)
+8. If file exists: Overwrite · แนะนำ UTF-8
+
+> **หาคอลัมน์ในรายการตัวแปรไม่เจอ:** ปกติ — ต้องพิมพ์ `%StaticRow['ชื่อคอลัมน์']%` ให้ตรง header บนหน้า
 
 ### Step 5 — ปิดเบราว์เซอร์
 
@@ -101,6 +134,7 @@ C:\PAD-Labs\output\lab03\static-table.csv
 |-------|-----|
 | หา Next ไม่เจอ | ถูกแล้ว — ใช้ [Lab 03 Catalog](../catalog/README.md) ถ้าต้องการหลายหน้า |
 | หา Edit selector ไม่เจอ | แผง UI Elements → คลิกขวา element → **Edit** (ไม่อยู่ในฟอร์ม Wait) |
+| หาคอลัมน์ Emp ID ในรายการตัวแปรไม่เจอ | พิมพ์/วาง `%StaticRow['Emp ID']%` เอง |
 
 ## Cleanup
 

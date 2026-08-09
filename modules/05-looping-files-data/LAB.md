@@ -208,13 +208,13 @@ processed
 
    - Store into: `CurrentRow` ← **ไม่ใส่ `%`**
 3. **ภายในลูปชั้นใน:**
-   - อ่าน Amount จากแถว (คัดลอกด้านล่างเป็นนิพจน์ตัวอย่าง — หรือคอลัมน์ Amount ตามชื่อจริง)
+   - อ่าน Amount จากแถว — ฝั่ง Value / นิพจน์ (คัดลอกด้านล่างวางในช่อง — **พิมพ์เอง** ไม่มีคอลัมน์ในรายการตัวแปร)
 
 ```text
-%CurrentRow%['Amount']
+%CurrentRow['Amount']%
 ```
 
-   - ถ้าเป็นข้อความ: ใช้ **Convert text to number** → **Variables produced:** `AmountNumber` ← **ไม่ใส่ `%`**
+   - ถ้าเป็นข้อความ: ใช้ **Convert text to number** จาก `%CurrentRow['Amount']%` → **Variables produced:** `AmountNumber` ← **ไม่ใส่ `%`**
    - ลาก **Increase variable** / Set variable: ใช้นิพจน์ (คัดลอกด้านล่างวางในช่อง Value ถ้า designer รองรับ)
 
 ```text
@@ -389,6 +389,7 @@ C:\PAD-Labs\output\lab05\batch-summary.csv
 | อาการ | แก้ |
 |-------|-----|
 | Amount เป็น text | Convert text to number |
+| หาคอลัมน์ Amount ไม่เจอ | พิมพ์/วาง `%CurrentRow['Amount']%` (อย่าใช้ `%CurrentRow%['Amount']`) |
 | Header นับเป็นแถว | Skip first line / set column names |
 | ไฟล์ใน batch หายหลังรัน | คาดได้ถ้าใช้ Move — กู้จาก `assets/batch` ก่อนรันซ้ำ |
 | Summary ว่าง | ตรวจว่า Insert row อยู่ภายใน For each ไฟล์ หลังลูปแถว |

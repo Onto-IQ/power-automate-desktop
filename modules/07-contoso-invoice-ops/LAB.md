@@ -242,7 +242,32 @@ C:\PAD-Labs\logs\lab07\contoso-run-log.csv
 ```
 
    - Store into: `CurrentInvoice` ← **ไม่ใส่ `%`**
-2. **ภายใน For each** ตั้งตัวแปร Name: `InvoiceId` ← **ไม่ใส่ `%`** จากคอลัมน์ของแถว (อ้างอิงด้วย `%InvoiceId%`)
+2. **ภายใน For each** ตั้งค่าจากคอลัมน์ของแถวด้วย **Set variable** (Name **ไม่มี `%`**) — ฝั่ง Value คัดลอกวาง (พิมพ์เอง ไม่มีคอลัมน์ในรายการตัวแปร):
+   - Name: `InvoiceId` ← Value:
+
+```text
+%CurrentInvoice['InvoiceId']%
+```
+
+   - Name: `Account` ← Value:
+
+```text
+%CurrentInvoice['Account']%
+```
+
+   - Name: `AmountText` ← Value:
+
+```text
+%CurrentInvoice['Amount']%
+```
+
+   - Name: `ProcessFlag` ← Value:
+
+```text
+%CurrentInvoice['ProcessFlag']%
+```
+
+   (คอลัมน์อื่นเช่น Contact / InvoiceDate ดึงแบบเดียวกันเมื่อต้องใช้)
 3. ลาก **On block error** ครอบทั้งชุดงานของแถว (ตั้งแต่ validate จนถึงบันทึก Results)
 4. ในนโยบายของบล็อก: เมื่อ error → ไปรันขั้นตอนกู้ (หรือ **Run subflow** `SF_LogRowError`) แล้ว **Continue** แถวถัดไป — **ห้าม** Terminate ทั้ง flow เพราะ UI แถวเดียวพัง
 
@@ -305,7 +330,7 @@ Create
 Create
 ```
 
-1. **If** Amount >= (คัดลอก):
+1. **If** Amount >= 10000 — ฝั่งซ้ายใช้ตัวเลขจากแถว (ถ้ายังเป็นข้อความ: **Convert text to number** จาก `%CurrentInvoice['Amount']%` หรือ `%AmountText%` ก่อน) แล้วเปรียบเทียบ **Greater than or equal to** กับ (คัดลอก):
 
 ```text
 10000
@@ -562,6 +587,7 @@ Failed
 | Contoso เปิดไม่ได้ / exception | ตรวจไฟล์ Excel ใต้ `Documents\Contoso Invoicing` — Sensitivity อย่าเป็น Confidential ([Q&A](https://learn.microsoft.com/answers/questions/2244882/how-to-resolve-contoso-invoicing-app-issue)) |
 | Excel locked | ปิด workbook ที่เปิดซ้อน |
 | Save as รอบสองล้ม (ไฟล์ซ้ำ) | ก่อน Save as ที่ `invoice-run-results.xlsx` ใช้ **If file exists** → **Delete file** |
+| หาคอลัมน์ InvoiceId / Amount ไม่เจอ | พิมพ์/วาง `%CurrentInvoice['InvoiceId']%` / `%CurrentInvoice['Amount']%` |
 | UIPI / ส่ง input ไม่ได้ | รัน PAD กับ Contoso ที่สิทธิ์ elevation เดียวกัน — [UIPI issues](https://learn.microsoft.com/troubleshoot/power-platform/power-automate/desktop-flows/ui-automation/uipi-issues) |
 
 ## Cleanup
