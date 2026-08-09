@@ -173,7 +173,7 @@ Expected สรุปแนว [`assets/expected-summary.csv`](assets/expected-s
 | Excel actions | https://learn.microsoft.com/power-automate/desktop-flows/actions-reference/excel |
 | Excel troubleshooting | https://learn.microsoft.com/troubleshoot/power-platform/power-automate/desktop-flows/office-automation/excel/troubleshoot-excel-errors |
 | Coding guidelines | https://learn.microsoft.com/power-automate/guidance/desktop-flow-coding-guidelines/ |
-| รายการแหล่งใน Lab Kit | [`shared/SOURCES-AUG2026.md`](../../shared/SOURCES-AUG2026.md) |
+| รายการแหล่งใน Lab Kit | [PAD version matrix](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop) |
 
 ---
 

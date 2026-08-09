@@ -187,7 +187,7 @@ R1 = ข้อมูลไม่ผ่าน validate → <code>Rejected</code>;
 | Contoso sample app | https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/tree/master/power-automate-desktop/contoso-invoice-app |
 | UI automation actions | https://learn.microsoft.com/power-automate/desktop-flows/actions-reference/uiautomation |
 | Handle errors | https://learn.microsoft.com/power-automate/desktop-flows/errors |
-| รายการแหล่งใน Lab Kit | [`shared/SOURCES-AUG2026.md`](../../shared/SOURCES-AUG2026.md) |
+| รายการแหล่งใน Lab Kit | [PAD version matrix](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop) |
 
 ---
 

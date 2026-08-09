@@ -151,7 +151,7 @@ Lab นี้ใช้ <strong>Populate text field in window</strong> (แอป
 | UI automation actions | https://learn.microsoft.com/power-automate/desktop-flows/actions-reference/uiautomation |
 | System actions | https://learn.microsoft.com/power-automate/desktop-flows/actions-reference/system |
 | UIPI troubleshooting | https://learn.microsoft.com/troubleshoot/power-platform/power-automate/desktop-flows/ui-automation/uipi-issues |
-| รายการแหล่งใน Lab Kit | [`shared/SOURCES-AUG2026.md`](../../shared/SOURCES-AUG2026.md) |
+| รายการแหล่งใน Lab Kit | [PAD version matrix](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop) |
 
 ---
 

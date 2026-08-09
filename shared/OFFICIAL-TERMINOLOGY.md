@@ -3,7 +3,7 @@
 เอกสารนี้ช่วยให้ชื่อ Action และศัพท์ใน Lab Kit สอดคล้องกับ Microsoft Learn  
 ช่วง **สิงหาคม 2026** (PAD baseline **2607+**) และยังคง keyphrase ภาษาอังกฤษตามทางการ โดยไม่แปลชื่อ Action
 
-รายการลิงก์เต็ม: [`SOURCES-AUG2026.md`](SOURCES-AUG2026.md)
+เวอร์ชัน PAD: [PAD version matrix](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop)
 
 | หัวข้อ | URL |
 |--------|-----|

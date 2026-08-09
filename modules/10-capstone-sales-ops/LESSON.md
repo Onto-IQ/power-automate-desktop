@@ -183,7 +183,7 @@ Web Scraping (รวม pagination), Excel Pricing, Error Handling + log, Output
 | Web actions | https://learn.microsoft.com/power-automate/desktop-flows/actions-reference/webautomation |
 | Handle errors | https://learn.microsoft.com/power-automate/desktop-flows/errors |
 | Excel actions | https://learn.microsoft.com/power-automate/desktop-flows/actions-reference/excel |
-| รายการแหล่งใน Lab Kit | [`shared/SOURCES-AUG2026.md`](../../shared/SOURCES-AUG2026.md) |
+| รายการแหล่งใน Lab Kit | [PAD version matrix](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop) |
 
 ---
 

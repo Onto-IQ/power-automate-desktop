@@ -8,7 +8,7 @@
 | Web UI (Lab Hub) | [https://ontoiq.tech/pad/](https://ontoiq.tech/pad/) |
 | Element UI (Desktop) | [Contoso Invoicing](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/tree/master/power-automate-desktop/contoso-invoice-app) · ดูรายละเอียดใน Lab [07](modules/07-contoso-invoice-ops/README.md) |
 | Sample packs อ้างอิง | [Microsoft Learn — power-automate-desktop](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/tree/master/power-automate-desktop) |
-| PAD baseline (Aug 2026) | **2607+** (Installer ~2.70.x) — ดู [`shared/SOURCES-AUG2026.md`](shared/SOURCES-AUG2026.md) |
+| PAD baseline (Aug 2026) | **2607+** (Installer ~2.70.x) — ดู [PAD version matrix](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop) |
 | Course Outline (ไฟล์ท้องถิ่น) | `Trainocate_Outline_Power Automate Desktop (2 days) ake.pdf` |
 | สไลด์ประกอบ (ไฟล์ท้องถิ่น) | `Power Automate Desktop.pptx` |
 
@@ -67,7 +67,7 @@
 2. หลีกเลี่ยง selector ที่อ้าง index หรือ xpath ยาว เพราะเปราะเมื่อหน้าเว็บเปลี่ยนโครงสร้าง
 3. ใส่ **Wait for web page content** ก่อน Interact กับ element แบบ dynamic เช่น AJAX, Delay หรือ Popup
 
-รายละเอียดเพิ่มเติม: [`shared/SELECTOR-CONVENTIONS.md`](shared/SELECTOR-CONVENTIONS.md) · ชื่อ Action ทางการ: [`shared/OFFICIAL-TERMINOLOGY.md`](shared/OFFICIAL-TERMINOLOGY.md) · อ้างอิง Aug 2026: [`shared/SOURCES-AUG2026.md`](shared/SOURCES-AUG2026.md)
+รายละเอียดเพิ่มเติม: [`shared/SELECTOR-CONVENTIONS.md`](shared/SELECTOR-CONVENTIONS.md) · ชื่อ Action ทางการ: [`shared/OFFICIAL-TERMINOLOGY.md`](shared/OFFICIAL-TERMINOLOGY.md) · เวอร์ชัน PAD: [PAD version matrix](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop)
 
 > **ตัวแปรใน PAD:** ตอนสร้างชื่อ (Set variable / Store into / ชื่อ produced) **ไม่ใส่ `%`** — ตอนใช้ในช่องอื่นใช้ `%ชื่อ%` — ดู [`shared/BEST-PRACTICES.md`](shared/BEST-PRACTICES.md) และ [`shared/PAD-FUNDAMENTALS.md`](shared/PAD-FUNDAMENTALS.md)
 
@@ -78,7 +78,7 @@
 ## แผนการเรียน 2 วัน
 
 > **สอนในห้อง 12 ชม.:** ใช้ตาราง Core/Optional และหน้าที่ TA ใน [`shared/CLASSROOM-SCHEDULE-12H.md`](shared/CLASSROOM-SCHEDULE-12H.md)  
-> **ผู้เรียนก่อนวันเรียน:** [`shared/PRECLASS-SETUP.md`](shared/PRECLASS-SETUP.md) · **TA ในห้อง:** [`shared/TA-CHEATSHEET.md`](shared/TA-CHEATSHEET.md)
+> **ผู้เรียนก่อนวันเรียน:** [`shared/PRECLASS-SETUP.md`](shared/PRECLASS-SETUP.md) · **ทีมสอน (local):** `ops/` (TA cheat sheet, Lab Hub status)
 
 ### วันที่ 1 — Fundamentals & Core Actions
 
@@ -155,11 +155,12 @@
 ```text
 power-automate-desktop/
 ├── README.md                          ← คุณอยู่ที่นี่
-├── shared/                            ← พื้นฐาน + เอกสารผู้เรียน/TA
+├── shared/                            ← พื้นฐาน + เอกสารผู้เรียน
 │   ├── PAD-FUNDAMENTALS.md            ← อ่านก่อน Module แรก
 │   ├── PRECLASS-SETUP.md
 │   └── CLASSROOM-SCHEDULE-12H.md
-├── authoring/                         ← คู่มือผู้เขียน (local; ดู README ในโฟลเดอร์)
+├── authoring/                         ← คู่มือผู้เขียน (local)
+├── ops/                               ← ทีมสอน / Lab Hub (local)
 ├── modules/
 │   ├── 01-record-replay/
 │   │   ├── README.md                  ← หน้าปก / สารบัญบท
@@ -181,7 +182,7 @@ power-automate-desktop/
 - `assets/` — mock input / expected output เมื่อ Module นั้นต้องการไฟล์ตัวอย่าง
 
 > โฟลเดอร์รากของบทเรียนคือ **`modules/`** — คำว่า **Lab** ยังใช้กับไฟล์ `LAB.md` และการอ้างอิงแบบ Lab 01, Lab 02 ตามเดิม  
-> คู่มือเขียนเอกสารอยู่ที่ [`authoring/`](authoring/) บนเครื่องทีมพัฒนา (ไม่เผยแพร่ใน GitHub สำหรับผู้เรียน)
+> คู่มือทีมอยู่ที่ [`authoring/`](authoring/) และ [`ops/`](ops/) บนเครื่องทีมพัฒนา (ไม่เผยแพร่ใน GitHub สำหรับผู้เรียน)
 ---
 
 ## วิธีเริ่มต้น (ผู้เรียน)

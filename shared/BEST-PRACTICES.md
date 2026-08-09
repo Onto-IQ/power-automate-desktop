@@ -2,7 +2,7 @@
 
 เอกสารนี้รวบรวมแนวทางตั้งชื่อตัวแปร โครงสร้าง flow และจุดควรระวังเวลาทำ Lab  
 อ้างอิงชื่อ Action ทางการได้จาก [`OFFICIAL-TERMINOLOGY.md`](OFFICIAL-TERMINOLOGY.md) และ [Handle errors](https://learn.microsoft.com/power-automate/desktop-flows/errors)  
-แหล่งอ้างอิงช่วงสิงหาคม 2026: [`SOURCES-AUG2026.md`](SOURCES-AUG2026.md) · Coding guidelines: [desktop-flow-coding-guidelines](https://learn.microsoft.com/power-automate/guidance/desktop-flow-coding-guidelines/)
+แหล่งอ้างอิงเวอร์ชัน: [PAD version matrix](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop) · Coding guidelines: [desktop-flow-coding-guidelines](https://learn.microsoft.com/power-automate/guidance/desktop-flow-coding-guidelines/)
 
 ## Aug 2026 notes (ไม่บังคับในเกณฑ์ผ่าน)
 

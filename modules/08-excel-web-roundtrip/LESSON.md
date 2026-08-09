@@ -163,7 +163,7 @@ I = <code>08-iframe.html</code> (Company มี Fabrikam); J = <code>05-files.ht
 | Web automation | https://learn.microsoft.com/power-automate/desktop-flows/automation-web |
 | Web actions | https://learn.microsoft.com/power-automate/desktop-flows/actions-reference/webautomation |
 | Excel actions | https://learn.microsoft.com/power-automate/desktop-flows/actions-reference/excel |
-| รายการแหล่งใน Lab Kit | [`shared/SOURCES-AUG2026.md`](../../shared/SOURCES-AUG2026.md) |
+| รายการแหล่งใน Lab Kit | [PAD version matrix](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop) |
 
 ---
 

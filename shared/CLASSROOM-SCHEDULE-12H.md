@@ -3,7 +3,7 @@
 ใช้เมื่อสอนหลักสูตร PAD 2 วัน (6+6 ชม.)  
 เป้า: **ตรงเวลา** โดยแยก **Core ในห้อง** กับ **Optional / Challenge บ้าน**
 
-อ่านคู่กับ: [`PRECLASS-SETUP.md`](PRECLASS-SETUP.md) · [`TA-CHEATSHEET.md`](TA-CHEATSHEET.md) · [`PAD-FUNDAMENTALS.md`](PAD-FUNDAMENTALS.md)
+อ่านคู่กับ: [`PRECLASS-SETUP.md`](PRECLASS-SETUP.md) · [`PAD-FUNDAMENTALS.md`](PAD-FUNDAMENTALS.md)
 
 ## หลักการคุมเวลา
 
@@ -50,7 +50,7 @@
 | 11:25–12:15 | 50 | Lab 02 File Management | [`modules/02-file-management/`](../modules/02-file-management/) | เน้นกฎ `%` |
 | 12:15–13:15 | 60 | พักกลางวัน | — | |
 | 13:15–14:15 | 60 | Lab 03 Web Scout (A + C) | [`modules/03-web-scout/`](../modules/03-web-scout/) | ตัด Challenge ในห้อง |
-| 14:15–14:45 | 30 | บัฟเฟอร์ช่วยเหลือ + ทบทวนวัน 1 | [`TA-CHEATSHEET.md`](TA-CHEATSHEET.md) | จบเมื่อ Core 01/02/03A+C ผ่าน |
+| 14:15–14:45 | 30 | บัฟเฟอร์ช่วยเหลือ + ทบทวนวัน 1 | คู่มือ TA บนเครื่องทีม (`ops/TA-CHEATSHEET.md`) | จบเมื่อ Core 01/02/03A+C ผ่าน |
 
 **เกณฑ์ผ่านวัน 1:** Flow 01 รันซ้ำได้ · Lab 02 มี summary ถูก · Lab 03 extract ได้อย่างน้อย 1 ตาราง (+ AJAX มี Wait)
 
@@ -102,4 +102,4 @@
 - [ ] ตัดสินใจเส้นทางวัน 2 (A หรือ B)  
 - [ ] ทดสอบ Lab Hub + (ถ้าเส้น A) Contoso บนเครื่อง demo  
 - [ ] แบ่งโซนโต๊ะให้ TA1 / TA2  
-- [ ] พิมพ์หรือเปิด [`TA-CHEATSHEET.md`](TA-CHEATSHEET.md) ให้ TA
+- [ ] ทีมสอนเปิด `ops/TA-CHEATSHEET.md` (local) ให้ TA

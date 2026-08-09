@@ -15,8 +15,11 @@
 | `WRITING-STYLE.md` | สไตล์ภาษาและโทนเอกสารผู้เรียน |
 | `LESSON-TEMPLATE.md` | แม่แบบ `LESSON.md` |
 | `HANDS-ON-LAB-TEMPLATE.md` | แม่แบบ `LAB.md` |
+| `SOURCES-AUG2026.md` | รายการอ้างอิง official/blog สำหรับรอบ Aug 2026 |
 
 ถ้าเครื่องใหม่ยังไม่มีไฟล์เหล่านี้ ให้คัดลอกจากเครื่องทีม หรือจาก backup ภายใน — **อย่า commit กลับขึ้น repo สาธารณะ**
+
+เอกสาร ops ในห้อง / Lab Hub: [`../ops/`](../ops/)
 
 ## เอกสารใน repo ที่ผู้เรียนใช้ได้
 

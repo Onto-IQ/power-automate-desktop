@@ -161,7 +161,7 @@ On block error ครอบหลาย action เป็นบล็อก; On e
 | Handle errors (หลักของ Lab) | https://learn.microsoft.com/power-automate/desktop-flows/errors |
 | Actions pane / On error | https://learn.microsoft.com/power-automate/desktop-flows/actions-pane |
 | Official terminology (Lab Kit) | [`shared/OFFICIAL-TERMINOLOGY.md`](../../shared/OFFICIAL-TERMINOLOGY.md) |
-| รายการแหล่งใน Lab Kit | [`shared/SOURCES-AUG2026.md`](../../shared/SOURCES-AUG2026.md) |
+| รายการแหล่งใน Lab Kit | [PAD version matrix](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop) |
 
 ---
 

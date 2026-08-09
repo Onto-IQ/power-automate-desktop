@@ -19,7 +19,7 @@
 
 ## Prerequisites
 
-- PAD ติดตั้งแล้ว (แนะนำ baseline **2607+** — ดู [`shared/SOURCES-AUG2026.md`](../../shared/SOURCES-AUG2026.md))
+- PAD ติดตั้งแล้ว (แนะนำ baseline **2607+** — ดู [PAD version matrix](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop))
 - ไม่จำเป็นต้องใช้ Web UI
 
 ## Assets / Output
