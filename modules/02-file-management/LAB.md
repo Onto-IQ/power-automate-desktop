@@ -389,7 +389,7 @@ CSV=%CsvCount%; TXT=%TxtCount%; IGNORED=%IgnoredCount%; Done
    - File path: (คัดลอก)
 
 ```text
-C:\PAD-Labs\output\lab02\summary.txt
+%WorkingRoot%\summary.txt
 ```
 
    - Text to write: (คัดลอก)
