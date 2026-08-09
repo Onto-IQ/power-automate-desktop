@@ -61,18 +61,17 @@ https://pad.ontoiq.tech/pad/19-catalog.html
 ```
 
     - **Into location:** **End of data table**
-    - **New value(s):** ใส่ทั้งแถว — ถ้าคอลัมน์ของ `%CatalogHits%` ตรงกับ `%PageTable%` ให้ใช้ (คัดลอก):
+    - **New value(s):** ถ้าคอลัมน์ตรงกัน ใช้ (คัดลอก):
 
 ```text
 %ProductRow%
 ```
 
-    - หรือใส่เป็นรายการตามลำดับคอลัมน์ SKU, Product, Price, Category:
+    - หรือใส่เป็น list (**ห้ามซ้อน `%` ข้างใน**):
 
 ```text
-%[%ProductRow['SKU']%, %ProductRow['Product']%, %ProductRow['Price']%, %ProductRow['Category']%]%
+%[ProductRow['SKU'], ProductRow['Product'], ProductRow['Price'], ProductRow['Category']]%
 ```
-
 14. **End** For each
 15. เพิ่ม `PageCount` += 1
 16. หาปุ่ม **Next**

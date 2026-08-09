@@ -80,6 +80,7 @@ PAD คือเครื่องมือของ Microsoft ที่ให�
 
 - ชื่อใน `['...']` ต้อง**ตรง header** (เช่น `Order ID` มีช่องว่างได้: `%AjaxRow['Order ID']%`)
 - รูปแบบที่ผิดบ่อย: `%CurrentRow%['Amount']` (วงเล็บอยู่นอก `%`)
+- ใน **list / New value(s)** ใช้ `%...%` คู่เดียว — **ห้ามซ้อน** เช่น ถูก: `%[CurrentRow['Amount'], Tier]%` · ผิด: `%[%CurrentRow['Amount']%, %Tier%]%`
 
 ## การรันและดีบัก
 
