@@ -36,7 +36,7 @@ https://pad.ontoiq.tech/pad/19-catalog.html
 
 ### Step 2 — Loop หน้า + Extract
 
-1. **Loop** หรือ **Loop while** (เงื่อนไข เช่น `%PageCount% < %MaxPages%`)
+1. **Loop condition** (First operand / Operator / Second operand — เช่น `%PageCount%` · **Less than (<)** · `%MaxPages%`)
 2. ในลูป: **Wait for web page content** · Contain element · ตาราง `#tbl-products` (Rename เป็น `Tbl_Products` ได้)
 3. ให้หน้ายังอยู่ที่ [19-catalog](https://pad.ontoiq.tech/pad/19-catalog.html) (หลังกด Next แล้วยังต้องเป็นหน้านี้)
 4. **Extract data from web page** · Browser: `%Browser%`
