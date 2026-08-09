@@ -160,51 +160,74 @@ End
 
 ทำ**หลัง** End ของ For each ใน Step 4 (อย่าเขียนไฟล์ข้างในลูปกรอง)
 
+เป้าหมายของ Step นี้: แปลงตาราง `%Hits%` เป็นข้อความ CSV เก็บในตัวแปร `CsvBody` แล้วเขียนลงไฟล์
+
+#### 5.1 เริ่มต้นข้อความด้วยหัวตาราง
+
 1. ลาก **Set variable**
 2. Name: `CsvBody` ← **ไม่ใส่ `%`**
-3. Value: หัวตาราง (คัดลอกด้านล่างวางในช่อง)
+3. Value: (คัดลอกด้านล่างวางในช่อง Value)
 
 ```text
 Order ID,Customer,Amount,Status
 ```
 
-4. ลาก **For each**
-5. Value to iterate: (คัดลอก)
+ตอนนี `%CsvBody%` มีแค่บรรทัดหัวตาราง
+
+#### 5.2 วนแต่ละแถวใน `%Hits%` แล้วต่อข้อความ
+
+1. ลาก **For each**
+2. Value to iterate: (คัดลอก)
 
 ```text
 %Hits%
 ```
 
-6. Store into: `HitRow` ← **ไม่ใส่ `%`**
-7. **ภายใน For each** ลาก **Set variable** · Name: `CsvBody` ← Value: (คัดลอกทั้งก้อน — **คู่ `%` นอกสุดคู่เดียว**)
+3. Store into: `HitRow` ← **ไม่ใส่ `%`**
+4. **ภายใน For each** — สร้างข้อความ**หนึ่งแถว**ก่อน: ลาก **Set variable**
+5. Name: `CsvLine` ← **ไม่ใส่ `%`**
+6. Value: (คัดลอกทั้งก้อนวางในช่อง Value)
+
+```text
+%HitRow['Order ID'] + ',' + HitRow['Customer'] + ',' + HitRow['Amount'] + ',' + HitRow['Status']%
+```
+
+ความหมาย: เอา 4 คอลัมน์ของแถวปัจจุบันมาต่อด้วยเครื่องหมาย `,`
+
+7. ยัง**ภายใน For each** — ต่อแถวนี้เข้าข้อความรวม: ลาก **Set variable** อีกตัว
+8. Name: `CsvBody` ← **ไม่ใส่ `%`** (ชื่อเดิม — จะอัปเดตค่า)
+9. Value: (คัดลอกทั้งก้อนวางในช่อง Value)
 
 ```text
 %CsvBody + '
-' + HitRow['Order ID'] + ',' + HitRow['Customer'] + ',' + HitRow['Amount'] + ',' + HitRow['Status']%
+' + CsvLine%
 ```
 
-> ผิด: `%CsvBody% + HitRow['Amount']%` (ตัด `%` กลางทาง)  
-> ถูก: `%CsvBody + HitRow['Amount']%` (ชื่อตัวแปรอยู่ใน `%...%` คู่เดียว)  
-> ทางเลือก: ใช้ action แปลง Data table เป็นข้อความถ้ามีในเวอร์ชัน PAD ของคุณ แล้วข้ามข้อ 4–8 ได้
-8. **End** For each
-9. **หลัง End** ลาก **Write text to file** (ค้น Actions Pane คำว่า `Write text to file`)
-10. ตั้งค่า:
-    - **File path:** (คัดลอก)
+ความหมาย: เอา `%CsvBody%` เดิม + ขึ้นบรรทัดใหม่ + `%CsvLine%` ที่เพิ่งสร้าง
+
+> ใช้ `%...%` **คู่เดียวครอบทั้งนิพจน์** — อย่าเขียน `%CsvBody% + %CsvLine%` (จะ Syntax error)
+
+10. **End** For each
+
+#### 5.3 เขียนไฟล์
+
+1. **หลัง End** ของ For each ลาก **Write text to file** (ค้นคำว่า `Write text to file`)
+2. **File path:** (คัดลอก)
 
 ```text
 C:\PAD-Labs\output\lab03\ajax-orders.csv
 ```
 
-    - **Text to write:** (คัดลอก)
+3. **Text to write:** (คัดลอก)
 
 ```text
 %CsvBody%
 ```
 
-    - **If file exists:** **Overwrite**
-    - Encoding: แนะนำ **UTF-8** (ถ้ามีช่องให้เลือก)
-11. กด **Save** ของ action
-12. เปิดโฟลเดอร์ `C:\PAD-Labs\output\lab03\` ตรวจว่ามี `ajax-orders.csv` หลังรัน (Step 6)
+4. **If file exists:** **Overwrite**
+5. Encoding: แนะนำ **UTF-8** (ถ้ามีช่องให้เลือก)
+6. กด **Save**
+7. หลังรัน flow เปิด `C:\PAD-Labs\output\lab03\ajax-orders.csv` ตรวจหัวตาราง + แถวที่ผ่านเกณฑ์
 
 ### Step 6 — ปิดเบราว์เซอร์ + Replay
 
