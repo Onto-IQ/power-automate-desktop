@@ -206,13 +206,20 @@ Silver
 
    - → **End** (ปิด If ซ้อน)
 6. ยังอยู่ในกิ่งกรอง: ลาก **Insert row into data table**
-   - Data table: (คัดลอกด้านล่างวางในช่อง)
+   - **Data table:** (คัดลอก)
 
 ```text
 %Filtered%
 ```
 
-   - ใส่ค่าคอลัมน์จากแถวปัจจุบัน (พิมพ์/วางเอง) เช่น `%CurrentRow['OrderId']%`, `%CurrentRow['Region']%`, `%CurrentRow['Amount']%` + `%Tier%`
+   - **Into location:** **End of data table**
+   - **New value(s):** ใส่รายการตามลำดับคอลัมน์ของ `%Filtered%` (รวม Tier) เช่น:
+
+```text
+%[%CurrentRow['OrderId']%, %CurrentRow['Customer']%, %CurrentRow['Product']%, %CurrentRow['Amount']%, %CurrentRow['OrderDate']%, %CurrentRow['Region']%, %Tier%]%
+```
+
+   (ถ้าคอลัมน์ของ `%Filtered%` ตรง `%Orders%` ยกเว้น Tier ให้สร้าง list ให้ครบทุกคอลัมน์ตามที่สร้างตารางไว้)
 7. ปิด **End** (If กรอง) แล้ว **End** (For each)
 
 โครงภายในลูป:
