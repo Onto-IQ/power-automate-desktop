@@ -368,6 +368,6 @@ C:\PAD-Labs\output\lab01\submit-proof.png
 
 ## อ้างอิงเพิ่มใน Lab Kit
 
-- Desktop UI พื้นฐาน (Notepad/Calculator): [Lab 01b](../01b-desktop-ui-elements/README.md)
+- Desktop UI พื้นฐาน: [Lab 01b Notepad](../01b-notepad/README.md) · [Lab 01b Calculator](../01b-calculator/README.md) *(optional)*
 - Desktop Element UI เต็มรูปแบบ (วัน 2): [Lab 07 Contoso Invoice Ops](../07-contoso-invoice-ops/README.md)
 - Microsoft sample desktop UI: [contoso-invoice-app](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/tree/master/power-automate-desktop/contoso-invoice-app)

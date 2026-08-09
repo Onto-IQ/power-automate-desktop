@@ -89,7 +89,7 @@
 | What is RPA? | แนวคิด RPA, ประโยชน์, Cloud vs Desktop Flows | — |
 | Getting Started | ติดตั้ง PAD, Workspace, Actions Pane, Variables, Recorder | [`PAD-FUNDAMENTALS`](shared/PAD-FUNDAMENTALS.md) |
 | First Automation | Desktop Recorder, Record & Replay | [01 Record & Replay](modules/01-record-replay/README.md) |
-| UI Elements | Selectors และการเปิด/ปิด/โฟกัสแอป | [01b Notepad/Calculator](modules/01b-desktop-ui-elements/README.md) · Contoso เต็มรูปแบบใน Lab 07 |
+| UI Elements | Selectors และการเปิด/ปิด/โฟกัสแอป | [01b Notepad](modules/01b-notepad/README.md) · [01b Calculator](modules/01b-calculator/README.md) *(optional)* · Contoso เต็มรูปแบบใน Lab 07 |
 | File & Folder | Create/Copy/Move/Rename, Read/Write Text | [02 File Management](modules/02-file-management/README.md) |
 | Web Automation | Launch browser, Fill form, Extract table | [03 Web Scout](modules/03-web-scout/README.md) |
 
@@ -115,7 +115,8 @@
 | # | หน้าปก | ความรู้ | Lab | ทักษะหลัก | UI เป้าหมาย |
 |---|--------|--------|-----|-----------|-------------|
 | 01 | [Record & Replay](modules/01-record-replay/README.md) | [LESSON](modules/01-record-replay/LESSON.md) | [LAB](modules/01-record-replay/LAB.md) | Recorder และการกรอกฟอร์มเบื้องต้น | [01 Forms](https://ontoiq.tech/pad/01-forms.html) |
-| 01b | [Desktop UI Elements](modules/01b-desktop-ui-elements/README.md) | [LESSON](modules/01b-desktop-ui-elements/LESSON.md) | [LAB](modules/01b-desktop-ui-elements/LAB.md) | Selectors บน Notepad และ Calculator | Windows apps |
+| 01b | [Notepad](modules/01b-notepad/README.md) | [LESSON](modules/01b-notepad/LESSON.md) | [LAB](modules/01b-notepad/LAB.md) | UI Elements + Populate Notepad | Windows Notepad |
+| 01b | [Calculator](modules/01b-calculator/README.md) *(optional)* | [LESSON](modules/01b-calculator/LESSON.md) | [LAB](modules/01b-calculator/LAB.md) | Click ปุ่ม + อ่าน display | Windows Calculator |
 | 02 | [File Management](modules/02-file-management/README.md) | [LESSON](modules/02-file-management/LESSON.md) | [LAB](modules/02-file-management/LAB.md) | File/Folder actions | — |
 | 03 | [Web Scout](modules/03-web-scout/README.md) | [LESSON](modules/03-web-scout/LESSON.md) | [LAB](modules/03-web-scout/LAB.md) | Table, Controls, AJAX, Files (+ Iframe/API challenge) | [02](https://ontoiq.tech/pad/02-controls.html) · [03](https://ontoiq.tech/pad/03-table.html) · [05](https://ontoiq.tech/pad/05-files.html) · [09](https://ontoiq.tech/pad/09-ajax-table.html) · [19](https://ontoiq.tech/pad/19-catalog.html) |
 | 04 | [Conditional Automation](modules/04-conditional-automation/README.md) | [LESSON](modules/04-conditional-automation/LESSON.md) | [LAB](modules/04-conditional-automation/LAB.md) | If/Else ตาม business rules | — |
@@ -170,7 +171,8 @@ power-automate-desktop/
 │   │   ├── LESSON.md                  ← ความรู้ (อ่านก่อน)
 │   │   ├── LAB.md                     ← จับมือทำทีละขั้น
 │   │   └── assets/
-│   ├── 01b-desktop-ui-elements/
+│   ├── 01b-notepad/
+│   ├── 01b-calculator/
 │   ├── 02-file-management/            ← ตัวอย่างมาตรฐานโครงสร้าง 3 ไฟล์
 │   ├── …
 │   └── 10-capstone-sales-ops/

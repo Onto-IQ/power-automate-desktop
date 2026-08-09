@@ -1,3 +1,3 @@
-PAD Lab 01b — Desktop UI Elements
+PAD Lab 01b — Notepad
 ข้อความนี้ถูกพิมพ์ลง Notepad โดย Power Automate Desktop
 วันที่เป้าหมาย: 2026-08-08
