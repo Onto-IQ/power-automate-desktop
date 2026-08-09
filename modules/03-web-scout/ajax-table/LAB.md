@@ -15,7 +15,7 @@ C:\PAD-Labs\output\lab03\
 
 ## Hands-on
 
-### Step 0 — สร้าง flow + criteria + ตาราง Hits
+### Step 0 — สร้าง flow + criteria
 
 1. **New flow** → ชื่อ:
 
@@ -29,21 +29,7 @@ Lab03_AjaxTable
 1500
 ```
 
-3. **บังคับ:** ลาก **Create new data table** (ค้น Actions Pane คำว่า `Create new data table`)
-4. กด **Edit** ในฟอร์ม action เพื่อเปิดตัวสร้างตาราง
-5. ใช้ปุ่ม **+** เพิ่มคอลัมน์ให้ได้ 4 คอลัมน์ แล้วตั้งชื่อให้ตรงกับ header บนหน้าทุกตัวอักษร:
-
-```text
-Order ID
-Customer
-Amount
-Status
-```
-
-6. ไม่ต้องใส่แถวข้อมูลตอนนี้ (0 rows ก็ได้) → **Save** ตัวสร้างตาราง
-7. **Variables produced:** เปลี่ยนชื่อเป็น `Hits` ← **ไม่ใส่ `%`**  
-   (อ้างอิงทีหลังด้วย `%Hits%`)
-8. ตรวจใน Variables pane ว่ามี `%Hits%` ก่อนไป Step 1 — **ถ้ายังไม่มี `%Hits%` จะ Insert ไม่ได้**
+> ยัง**ไม่**สร้างตาราง `Hits` ในขั้นนี้ — จะสร้างหลัง Extract เพื่อให้ชื่อคอลัมน์ตรงกับ `%AjaxTable%` จริง
 
 ### Step 1 — Launch
 
@@ -85,9 +71,27 @@ https://pad.ontoiq.tech/pad/09-ajax-table.html
 5. **คลิกขวา** บนตาราง/เซลล์ในตาราง
 6. เลือก **Extract Entire HTML Table**
 7. Variables produced: `AjaxTable`
-8. เปิดดู `%AjaxTable%` ใน Variables pane (หรือ preview หลัง Extract) — **ไม่ต้อง Map คอลัมน์เอง**
-9. ชื่อคอลัมน์มาจาก header จริงบนหน้าแล้ว: `Order ID`, `Customer`, `Amount`, `Status`
-10. จำชื่อเหล่านี้ไว้ใช้ตอน Step 4 (เช่น อ้าง Amount ด้วยชื่อคอลัมน์จริง ไม่ใช่ชื่อที่ตั้งเอง)
+8. กด **Run** ถึงขั้น Extract (หรือ Run next action) แล้วเปิด `%AjaxTable%` ใน Variables pane
+9. **จดชื่อคอลัมน์จริง** ที่ PAD แสดง (อาจไม่ตรงกับที่เดาไว้ เช่น มี/ไม่มีช่องว่าง) — ตัวอย่างที่พบบ่อย:
+
+```text
+Order ID
+Customer
+Amount
+Status
+```
+
+10. ใช้ชื่อจาก Variables pane เป็นแหล่งจริง — **อย่าเดาเอง**
+
+### Step 3b — สร้าง `%Hits%` ให้ชื่อคอลัมน์ตรง `%AjaxTable%`
+
+1. ลาก **Create new data table** (วาง**หลัง** Extract ใน workspace)
+2. กด **Edit**
+3. เพิ่ม 4 คอลัมน์ แล้วตั้งชื่อ**คัดลอกจาก Variables pane ของ `%AjaxTable%` ทีละชื่อ** (ตัวอักษร/ช่องว่างต้องเหมือนกันทุกประการ)
+4. 0 rows ก็ได้ → **Save**
+5. **Variables produced:** `Hits` ← **ไม่ใส่ `%`**
+6. ตรวจว่า `%Hits%` มีชื่อคอลัมน์**ชุดเดียวกับ** `%AjaxTable%`  
+   ถ้าไม่ตรง: แก้ชื่อคอลัมน์ใน `Hits` ให้เหมือนก่อนไป Step 4
 
 ### Step 4 — กรองแล้วเก็บแถวลง `%Hits%`
 
@@ -104,10 +108,18 @@ https://pad.ontoiq.tech/pad/09-ajax-table.html
 3. Store into: `AjaxRow` ← **ไม่ใส่ `%`**
 4. **ภายใน For each** (ต้องวางเยื้องเข้าไปในลูป) ลาก **If** (ค้นคำว่า `If`)
 5. ตั้งเงื่อนไข:
-   - ฝั่งซ้าย / First operand: (คัดลอก — พิมพ์เอง)
+   - ฝั่งซ้าย / First operand: อ้างคอลัมน์ Amount ด้วย**ชื่อจริงจาก Variables pane**  
+     ตัวอย่างถ้าชื่อเป็น `Amount` (คัดลอก):
 
 ```text
 %AjaxRow['Amount']%
+```
+
+     ถ้าชื่อใน pane ไม่ใช่ `Amount` ให้ใส่ชื่อนั้นแทนใน `['...']`  
+     หรือใช้ลำดับคอลัมน์ (ช่องที่ 3 จากซ้าย = index 2):
+
+```text
+%AjaxRow[2]%
 ```
 
    - ตัวดำเนินการ: **Greater than or equal to**
@@ -173,7 +185,8 @@ C:\PAD-Labs\output\lab03\ajax-orders.csv
 
 1. ลาก **Write text to file** (ค้นคำว่า `Write text to file`)
 2. **File path:** วาง path ด้านบน
-3. **Text to write:** (คัดลอก)
+3. **Text to write:** พิมพ์ชื่อคอลัมน์ของ `%Hits%` คั่นด้วย `,` **ตามลำดับใน Variables pane**  
+   ตัวอย่าง (ใช้ได้เมื่อชื่อตรงชุดนี้):
 
 ```text
 Order ID,Customer,Amount,Status
@@ -185,6 +198,8 @@ Order ID,Customer,Amount,Status
 
 #### 5.2 วน `%Hits%` แล้ว Append ทีละแถว
 
+ใช้**ลำดับคอลัมน์ (index)** จะชัวร์กว่าชื่อ — ไม่พังเมื่อชื่อใน `Hits` ไม่ตรงที่พิมพ์
+
 1. ลาก **For each**
 2. Value to iterate: (คัดลอก)
 
@@ -193,51 +208,48 @@ Order ID,Customer,Amount,Status
 ```
 
 3. Store into: `HitRow` ← **ไม่ใส่ `%`**
-4. **ภายใน For each** สร้างข้อความหนึ่งบรรทัดทีละขั้น (อย่าเขียนสูตรยาวบรรทัดเดียว):
-5. ลาก **Set variable** · Name: `CsvLine` ← **ไม่ใส่ `%`** · Value: (คัดลอก)
+4. **ภายใน For each** ลาก **Set variable** · Name: `CsvLine` ← Value: (คัดลอก)
 
 ```text
-%HitRow['Order ID']%
+%HitRow[0]%
 ```
 
-6. ลาก **Set variable** อีกตัว · Name: `CsvLine` · Value: (คัดลอกทั้งก้อน)
+5. ลาก **Set variable** · Name: `CsvLine` · Value: (คัดลอก)
 
 ```text
-%CsvLine + ',' + HitRow['Customer']%
+%CsvLine + ',' + HitRow[1]%
 ```
 
-7. ลาก **Set variable** อีกตัว · Name: `CsvLine` · Value: (คัดลอกทั้งก้อน)
+6. ลาก **Set variable** · Name: `CsvLine` · Value: (คัดลอก)
 
 ```text
-%CsvLine + ',' + HitRow['Amount']%
+%CsvLine + ',' + HitRow[2]%
 ```
 
-8. ลาก **Set variable** อีกตัว · Name: `CsvLine` · Value: (คัดลอกทั้งก้อน)
+7. ลาก **Set variable** · Name: `CsvLine` · Value: (คัดลอก)
 
 ```text
-%CsvLine + ',' + HitRow['Status']%
+%CsvLine + ',' + HitRow[3]%
 ```
 
-ตอนนี้ `%CsvLine%` ควรได้ข้อความแบบ: `ORD-1003,Chai,2400,Paid`
+ความหมาย: คอลัมน์ที่ 1→`[0]`, ที่ 2→`[1]`, ที่ 3→`[2]`, ที่ 4→`[3]` ตามลำดับในตาราง
 
-9. **ภายใน For each เดิม** ลาก **Write text to file** เพิ่มอีกหนึ่ง action
-10. **File path:** path เดิม (`...\ajax-orders.csv`)
-11. **Text to write:** (คัดลอก)
+8. **ภายใน For each เดิม** ลาก **Write text to file** เพิ่มอีกหนึ่ง action
+9. **File path:** path เดิม (`...\ajax-orders.csv`)
+10. **Text to write:** (คัดลอก)
 
 ```text
 %CsvLine%
 ```
 
-    หลังวาง `%CsvLine%` ในช่อง Text ให้**กด Enter หนึ่งครั้ง**ท้ายข้อความ (หรือใช้ action **Append line to text file** ถ้ามี) เพื่อไม่ให้แถวติดกันในบรรทัดเดียว
-12. **If file exists:** **Append** ← สำคัญ ต้องเป็น Append ไม่ใช่ Overwrite
-13. Encoding: UTF-8 (ให้ตรงกับข้อ 5.1)
-14. กด **Save**
-15. **End** For each
+    หลังวาง `%CsvLine%` ให้**กด Enter หนึ่งครั้ง**ท้ายข้อความ (หรือใช้ **Append line to text file** ถ้ามี)
+11. **If file exists:** **Append** ← ต้องเป็น Append ไม่ใช่ Overwrite
+12. Encoding: UTF-8 (ให้ตรงกับข้อ 5.1)
+13. กด **Save**
+14. **End** For each
 
 หลังรัน เปิดไฟล์ตรวจ: บรรทัดแรกเป็นหัวตาราง บรรทัดถัดไปเป็นแถวที่ผ่าน MinAmount
 
-> ถ้า `%HitRow['Order ID']%` ยัง error: ลองใช้ลำดับคอลัมน์แทนชื่อ  
-> `%HitRow[0]%` แล้วต่อ `,` กับ `%HitRow[1]%` … `%HitRow[3]%` (0=Order ID, 1=Customer, 2=Amount, 3=Status)
 ### Step 6 — ปิดเบราว์เซอร์ + Replay
 
 1. ลาก **Close web browser** · Web browser instance: (คัดลอก)
@@ -263,7 +275,8 @@ Order ID,Customer,Amount,Status
 | อาการ | แก้ |
 |-------|-----|
 | หา “Insert into Hits” ไม่เจอ | ไม่มีชื่อนี้ — ค้น **Insert row into data table** แล้วตั้ง Data table = `%Hits%` |
-| `%Hits%` ไม่มีใน `{x}` | ยังไม่ได้ทำ Step 0 **Create new data table** + rename เป็น `Hits` |
+| `%Hits%` ไม่มีใน `{x}` | ยังไม่ได้ทำ Step 3b **Create new data table** |
+| ชื่อคอลัมน์ Hits ไม่ตรงตัวแปร / อ้าง `['Order ID']` พัง | สร้าง `Hits` **หลัง** Extract · คัดลอกชื่อจาก `%AjaxTable%` ใน Variables pane · หรือใช้ `%HitRow[0]%` … `%HitRow[3]%` |
 | Insert อยู่นอก If / นอก For each | ลากให้วางเยื้องเข้าในกิ่ง If (ภายในลูป) |
 | ตารางว่างตอน Extract | กด Refresh แล้ว Wait จนมีแถว/ตาราง |
 | หาคอลัมน์ Amount ใน If ไม่เจอ | พิมพ์หรือวาง `%AjaxRow['Amount']%` ในฝั่งซ้ายเอง |
@@ -272,7 +285,7 @@ Order ID,Customer,Amount,Status
 | Column count ไม่ตรง | `%Hits%` ต้องมี 4 คอลัมน์ชื่อเดียวกับ `%AjaxTable%` |
 | หา Write CSV / เขียนไฟล์ไม่เจอ | ค้น **Write text to file** · หัวตารางใช้ Overwrite · แถวในลูปใช้ **Append** |
 | CSV มีแค่แถวสุดท้าย | ในลูปต้องเลือก **Append** ไม่ใช่ Overwrite |
-| Syntax error ตอนสร้าง CsvLine | อย่าต่อ 4 คอลัมน์ในสูตรเดียว — ทำทีละขั้นตาม Step 5.2 หรือใช้ `%HitRow[0]%` … `%HitRow[3]%` |
+| Syntax error ตอนสร้าง CsvLine | ใช้ index `%HitRow[0]%` … `%HitRow[3]%` ตาม Step 5.2 · อย่าต่อ 4 คอลัมน์ในสูตรเดียว |
 | สับสนกับหลายหน้า | Lab นี้ไม่มีปุ่ม Next — ใช้ [Catalog](../catalog/README.md) |
 
 ## Cleanup
