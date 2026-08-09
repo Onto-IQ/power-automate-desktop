@@ -129,17 +129,96 @@ End  (Loop condition)
 
 ### Step 3 — เขียน CSV + ปิด
 
-1. เขียนผลเป็น:
+ทำ**หลัง** End ของ Loop condition ใน Step 2
+
+เป้าหมาย: เขียนหัวตารางก่อนหนึ่งครั้ง แล้ว**วนแถว** `%CatalogHits%` เพื่อ Append ลงไฟล์ทีละบรรทัด  
+(อย่าต่อข้อความด้วยการขึ้นบรรทัดใหม่ใน Set variable — ใน PAD มักเกิด Syntax error)
+
+กำหนด path ไว้ใช้ซ้ำ (คัดลอก):
 
 ```text
 C:\PAD-Labs\output\lab03\catalog-products.csv
 ```
 
-2. **Close web browser** · `%Browser%`
+#### 3.1 เขียนหัวตาราง (สร้าง/ทับไฟล์ใหม่)
+
+1. ลาก **Write text to file** (ค้นคำว่า `Write text to file`)
+2. **File path:** วาง path ด้านบน
+3. **Text to write:**
+
+```text
+SKU,Product,Price,Category
+```
+
+4. **If file exists:** **Overwrite**
+5. Encoding: แนะนำ **UTF-8** (ถ้ามี)
+6. กด **Save**
+
+#### 3.2 วน `%CatalogHits%` แล้ว Append ทีละแถว
+
+ใช้**ลำดับคอลัมน์ (index)** จะชัวร์กว่าชื่อ
+
+1. ลาก **For each**
+2. Value to iterate: (คัดลอก)
+
+```text
+%CatalogHits%
+```
+
+3. Store into: `CatalogRow` ← **ไม่ใส่ `%`**
+4. **ภายใน For each** ลาก **Set variable** · Name: `CsvLine` ← Value: (คัดลอก)
+
+```text
+%CatalogRow[0]%
+```
+
+5. ลาก **Set variable** · Name: `CsvLine` · Value: (คัดลอก)
+
+```text
+%CsvLine + ',' + CatalogRow[1]%
+```
+
+6. ลาก **Set variable** · Name: `CsvLine` · Value: (คัดลอก)
+
+```text
+%CsvLine + ',' + CatalogRow[2]%
+```
+
+7. ลาก **Set variable** · Name: `CsvLine` · Value: (คัดลอก)
+
+```text
+%CsvLine + ',' + CatalogRow[3]%
+```
+
+ความหมาย: SKU→`[0]`, Product→`[1]`, Price→`[2]`, Category→`[3]`
+
+8. **ภายใน For each เดิม** ลาก **Write text to file** เพิ่มอีกหนึ่ง action
+9. **File path:** path เดิม (`...\catalog-products.csv`)
+10. **Text to write:** (คัดลอก)
+
+```text
+%CsvLine%
+```
+
+11. หลังวาง `%CsvLine%` ในช่อง Text ให้กด Enter หนึ่งครั้งท้ายข้อความ (หรือใช้ **Append line to text file** ถ้ามีใน Actions Pane)
+12. **If file exists:** **Append** ← ต้องเป็น Append ไม่ใช่ Overwrite
+13. Encoding: UTF-8 (ให้ตรงกับข้อ 3.1)
+14. กด **Save**
+15. **End** For each
+
+หลังรัน เปิดไฟล์ตรวจ: บรรทัดแรกเป็นหัวตาราง · ถัดไปประมาณ **24** แถวข้อมูล (ไม่ใช่แถวหน้า 3 ซ้ำยาว)
+
+#### 3.3 ปิดเบราว์เซอร์
+
+1. ลาก **Close web browser** · Web browser instance: (คัดลอก)
+
+```text
+%Browser%
+```
 
 ### Step 4 — Replay
 
-รัน 2 ครั้ง · ตรวจจำนวนแถวใน CSV
+รัน 2 ครั้ง · ตรวจจำนวนแถวใน CSV (~24 + หัวตาราง)
 
 ## Acceptance
 
@@ -161,6 +240,9 @@ C:\PAD-Labs\output\lab03\catalog-products.csv
 | วนไม่จบ | ใช้ MaxPages เป็น safety + Exit เมื่อ Disabled = True |
 | If Disabled ไม่เข้า | ลองเทียบ `True` / `true` · ตรวจว่า Attribute name เป็น **Disabled** |
 | หาคอลัมน์ Product ในรายการตัวแปรไม่เจอ | พิมพ์/วาง `%ProductRow['Product']%` เอง |
+| หา Write CSV / เขียนไฟล์ไม่เจอ | ค้น **Write text to file** · หัวตารางใช้ Overwrite · แถวในลูปใช้ **Append** |
+| CSV มีแค่แถวสุดท้าย | ในลูปต้องเลือก **Append** ไม่ใช่ Overwrite |
+| Syntax error ตอนสร้าง CsvLine | ใช้ index `%CatalogRow[0]%` … `%CatalogRow[3]%` ตาม Step 3.2 · อย่าต่อ 4 คอลัมน์ในสูตรเดียว |
 | สับสนกับ 03-table | 03-table ไม่มี Next — Lab นี้อยู่บน 19-catalog |
 
 ## Cleanup
