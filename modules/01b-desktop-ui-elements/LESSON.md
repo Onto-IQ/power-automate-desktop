@@ -89,7 +89,6 @@ Run Calculator → Click Btn_Seven, Plus, Eight, Equals
 | กรอกข้อความ | **Populate text field in window** | **Populate text field on web page** | in window = แอป Windows; on web page = เว็บ |
 | ปิดแอป | **Close window** | **Terminate process** | Close ก่อน; Terminate เป็นทางสำรอง |
 | ตรวจผล Calculator | อ่าน `%CalcResult%` แล้ว **If** | ดูด้วยตาอย่างเดียว | Acceptance บังคับอ่านจาก display |
-| จัดโครง flow | Main ทั้งก้อน | Subflow `SF_Notepad` / `SF_Calculator` | Challenge แนะนำแยก Subflow |
 
 ## 7. กฎ `%` และ Variables pane
 

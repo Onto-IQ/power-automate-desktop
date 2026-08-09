@@ -13,7 +13,7 @@
 
 ## วัตถุประสงค์
 
-- ใช้ **Recorder** สร้าง flow สำหรับกรอกฟอร์มบนเว็บ
+- ใช้ **Recorder** สร้าง flow สำหรับกรอกฟอร์มบนเว็บ **ครบทุกช่อง** (ชื่อ อีเมล จำนวนเงิน วันที่ หมายเหตุ) แล้ว Submit
 - ตรวจและปรับ **UI Elements** หลัง Record ให้ selector เสถียรขึ้น
 - Replay flow ให้ได้ผลลัพธ์ซ้ำกันได้อย่างน่าเชื่อถือ
 
@@ -21,6 +21,7 @@
 
 - ติดตั้ง PAD พร้อม browser extension แล้ว (แนะนำ baseline **2607+** — ดู [PAD version matrix](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop))
 - เข้าถึงหน้า [01 Forms](https://ontoiq.tech/pad/01-forms.html) ได้
+- **ปิด Browser Autofill** ในโปรไฟล์ที่ใช้กับ PAD (Save passwords / Autofill forms + Microsoft Autofill extension) — ถ้าเปิดไว้ Replay มักกรอกได้แค่ช่องแรก; ดู [LAB Troubleshooting](LAB.md#troubleshooting) และ [community](https://community.powerplatform.com/forums/thread/details/?threadid=5b9067f5-2fec-4e44-b05e-9549f05ea7bd)
 
 ## Assets / Output
 

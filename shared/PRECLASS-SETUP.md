@@ -26,6 +26,10 @@
 - [ ] ติดตั้ง **Microsoft Edge** หรือ **Google Chrome**
 - [ ] ติดตั้ง **Power Automate** browser extension ตามที่ตัวติดตั้ง PAD แนะนำ
 - [ ] ทดสอบ: เปิด [01 Forms](https://ontoiq.tech/pad/01-forms.html) แล้วโหลดหน้าได้
+- [ ] **ปิด Browser Autofill ในโปรไฟล์ที่ใช้กับ PAD** (สำคัญต่อ Lab 01 Record & Replay):
+  - ปิดหรือปิดใช้ชั่วคราว extension **Microsoft Autofill** ถ้ามี — community ยืนยันว่าทับปุ่ม/ช่อง login แล้ว automation ไปต่อไม่ได้ ([thread](https://community.powerplatform.com/forums/thread/details/?threadid=5b9067f5-2fec-4e44-b05e-9549f05ea7bd))
+  - Edge/Chrome → Settings → Autofill และ Passwords → ปิด **Save passwords** และ **Autofill forms / addresses** ขณะเรียน Lab เว็บ
+  - หลังจบคอร์สเปิดกลับได้
 
 ## 4) โปรแกรมเสริมตาม Lab
 

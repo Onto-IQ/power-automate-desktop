@@ -10,14 +10,14 @@
 
 - อธิบายได้ว่า **Web Recorder** ช่วยจับขั้นตอนบนเว็บอย่างไร และทำไมต้องตรวจ UI Elements หลัง Record
 - เปิดเบราว์เซอร์ด้วย **Launch new Microsoft Edge** / **Launch new Chrome** แล้วรอหน้าพร้อมด้วย **Wait for web page content**
-- กรอกฟอร์มด้วย **Populate text field on web page** จากตัวแปร (ไม่ hardcode) แล้วกด Submit ด้วย **Press button on web page**
+- กรอกฟอร์ม**ครบทุกช่อง** ด้วย **Populate text field on web page** จากตัวแปร (ไม่ hardcode) แล้วกด Submit ด้วย **Press button on web page**
 - เก็บหลักฐานสำเร็จด้วย **Extract data from web page** หรือ **Take screenshot of web page** แล้วปิดด้วย **Close web browser**
 - เข้าใจกฎ `%` ตอนสร้างชื่อตัวแปร vs ตอนอ้างอิงค่า
 
 ## 2. เรื่องราวจากงานจริง
 
-สมมติทีมบริการลูกค้าต้องกรอกฟอร์มติดต่อบนเว็บซ้ำ ๆ ทุกวัน — ชื่อ อีเมล วันที่ และข้อความ — แล้วกด Submit ให้ได้ข้อความยืนยัน  
-ถ้าทำมือทุกครั้งจะช้าและพิมพ์ผิดได้ง่าย งานของบทนี้คือสร้าง **desktop flow** ที่เปิดหน้า [01 Forms](https://ontoiq.tech/pad/01-forms.html) กรอกจากตัวแปรตามแถวตัวอย่าง แล้ว Replay ให้ผ่านอย่างน้อยสองครั้งติดกันโดย selector ยังเสถียร
+สมมติทีมบริการลูกค้าต้องกรอกฟอร์มติดต่อบนเว็บซ้ำ ๆ ทุกวัน — ชื่อ อีเมล จำนวนเงิน วันที่ และหมายเหตุ — แล้วกด Submit ให้ได้ข้อความยืนยัน  
+ถ้าทำมือทุกครั้งจะช้าและพิมพ์ผิดได้ง่าย งานของบทนี้คือสร้าง **desktop flow** ที่เปิดหน้า [01 Forms](https://ontoiq.tech/pad/01-forms.html) กรอก**ครบทุกช่อง**จากตัวแปรตามแถวตัวอย่าง แล้ว Replay ให้ผ่านอย่างน้อยสองครั้งติดกันโดย selector ยังเสถียร
 
 ## 3. ศัพท์ทีละคำ
 
@@ -33,12 +33,13 @@
 
 ## 4. แนวคิดหลัก
 
-แนวคิดสำคัญ: **ตั้งค่าตัวแปร → เปิดเบราว์เซอร์ → รอหน้าพร้อม → กรอกด้วยตัวแปร → Submit → เก็บหลักฐาน → ปิดเบราว์เซอร์**  
-Recorder เป็นทางลัดจับ UI Elements ได้ แต่หลัง Record ต้องแทน hardcode ด้วย `%...%` และตรวจ selector ให้เสถียร
+แนวคิดสำคัญ: **ตั้งค่าตัวแปร → เปิดเบราว์เซอร์ → รอหน้าพร้อม → Record กรอกฟอร์ม → แทน hardcode ด้วยตัวแปร → Submit → เก็บหลักฐาน → ปิดเบราว์เซอร์**  
+Recorder คือเส้นทางหลักของบทนี้ — หลัง Record งานที่ตั้งใจให้ทำคือแทนค่าเป็น `%...%`  
+ก่อน Record/Replay ให้ **ปิด Browser Autofill** (และ Microsoft Autofill extension ถ้ามี) เพื่อไม่ให้ suggestion ทับช่องถัดไป — อาการที่ดูเหมือน “กรอกได้แค่ช่อง Name” มักมาจาก Autofill ไม่ใช่จาก Recorder
 
 ```mermaid
 flowchart TD
-  vars[Set variable FullName Email FormDate Message]
+  vars[Set variable FullName Email Amount FormDate Message]
   launch[Launch browser → Browser]
   wait1[Wait for web page content]
   fill[Populate ช่องด้วยตัวแปร]
@@ -52,10 +53,10 @@ flowchart TD
 Pseudo-flow:
 
 ```text
-FullName, Email, FormDate, Message = ค่าจากแถวแรกของ CSV
+FullName, Email, Amount, FormDate, Message = ค่าจากแถวแรกของ CSV
 Browser = Launch Edge/Chrome ไป https://ontoiq.tech/pad/01-forms.html
 รอให้ช่องฟอร์มพร้อม
-Populate Txt_Name ← %FullName%, Txt_Email ← %Email%, …
+Populate ครบ 5 ช่อง: Txt_Name ← %FullName%, Txt_Email ← %Email%, Txt_Amount ← %Amount%, Txt_Date ← %FormDate%, Txt_Note ← %Message%
 Press Btn_Submit
 รอข้อความยืนยัน → Extract เป็น SubmitResult และ/หรือ Screenshot
 Close %Browser%
@@ -95,8 +96,10 @@ Run ซ้ำรอบสอง — ต้องผ่านเหมือน�
 
 | อาการ | สาเหตุที่พบบ่อย | วิธีสังเกต |
 |-------|-----------------|------------|
+| กรอกได้แค่ช่องแรก / ช่องถัดไปไม่เข้า | **Browser Autofill** ทับฟอร์มหรือแย่งโฟกัส | เห็นกล่อง suggestion ขณะ Record/Run — ปิด Autofill แล้ว Replay |
+| กรอกไม่ครบ 5 ช่อง (ขาด Amount เป็นต้น) | ยังไม่ Populate ทุกช่องบนหน้า | ตรวจ workspace ว่ามี Populate ครบ Name/Email/Amount/Date/Note |
 | กรอกค่าตายตัวทุกครั้ง | ยังไม่แทน hardcode จาก Recorder | เปิด action Populate ดู Text to fill-in |
-| Submit ไม่เกิดผล | ไม่มี Wait ก่อน Interact | รันทีละขั้น — หน้ายังไม่พร้อม |
+| Submit ไม่เกิดผล | ไม่มี Wait ก่อน Interact หรือ Autofill ทับปุ่ม | รันทีละขั้น — หน้ายังไม่พร้อม / มี overlay |
 | Replay รอบสองพัง | Selector อิงข้อความ/ตำแหน่งหลวม | เปิด UI Elements ตรวจ `id` / `data-pad` |
 | Extension ไม่ทำงาน | ยังไม่ติดตั้งหรือเบราว์เซอร์ค้าง | รีสตาร์ทเบราว์เซอร์ + ตรวจ extension PAD |
 | หน้าต่างค้างหลังรัน | ลืม Close web browser | ดูท้าย workspace |
@@ -114,7 +117,7 @@ Run ซ้ำรอบสอง — ต้องผ่านเหมือน�
 
 <details>
 <summary>เฉลย</summary>
-Recorder มักเก็บค่าที่พิมพ์จริงเป็น hardcode — ต้องเปลี่ยนเป็น <code>%FullName%</code>, <code>%Email%</code> ฯลฯ เพื่อ Replay ด้วยตัวแปรและใช้แถวข้อมูลอื่นได้
+Recorder มักเก็บค่าที่พิมพ์จริงเป็น hardcode — ต้องเปลี่ยนเป็น <code>%FullName%</code>, <code>%Email%</code>, <code>%Amount%</code>, <code>%FormDate%</code>, <code>%Message%</code> ให้ครบทุกช่องบนฟอร์ม
 </details>
 
 **3.** ก่อน Populate / Submit ควรมี action ใดเป็นหลัก?
@@ -143,8 +146,9 @@ Recorder มักเก็บค่าที่พิมพ์จริงเ�
 | แหล่ง | URL |
 |-------|-----|
 | Web automation | https://learn.microsoft.com/power-automate/desktop-flows/automation-web |
-| Web actions | https://learn.microsoft.com/power-automate/desktop-flows/actions-reference/webautomation |
+| Web actions (Populate / Emulate typing) | https://learn.microsoft.com/power-automate/desktop-flows/actions-reference/webautomation |
 | Actions pane | https://learn.microsoft.com/power-automate/desktop-flows/actions-pane |
+| Community: Autofill ขัด PAD | https://community.powerplatform.com/forums/thread/details/?threadid=5b9067f5-2fec-4e44-b05e-9549f05ea7bd |
 | รายการแหล่งใน Lab Kit | [PAD version matrix](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop) |
 
 ---
