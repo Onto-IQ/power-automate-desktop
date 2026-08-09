@@ -100,7 +100,7 @@ Run Calculator → Click Btn_Seven, Plus, Eight, Equals
 
 | อาการ | สาเหตุที่พบบ่อย | วิธีสังเกต |
 |-------|-----------------|------------|
-| พิมพ์ไม่เข้า Notepad | ยังไม่ Focus / Wait | หน้าต่างอยู่ด้านหลัง |
+| พิมพ์ไม่เข้า Notepad | ยังไม่ Wait หรือหน้าต่างอยู่ด้านหลัง | ตรวจว่ามี **Wait for window content**; ถ้ายังไม่เข้าค่อยเพิ่ม **Focus window** |
 | Save As ไม่ครบ | ลืม capture ช่อง path / ปุ่ม Yes | dialog ค้างตอนรัน |
 | Calculator selector หลุด | โหมดเครื่องคิดเลขเปลี่ยน / พิกัดจอ | Recapture หลัง Standard mode |
 | ได้ 15 แต่เกณฑ์ไม่ผ่าน | ไม่อ่านจาก display | ไม่มี `%CalcResult%` ใน Variables |
