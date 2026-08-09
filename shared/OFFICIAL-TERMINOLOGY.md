@@ -1,7 +1,9 @@
 # Official terminology — Power Automate for desktop
 
 เอกสารนี้ช่วยให้ชื่อ Action และศัพท์ใน Lab Kit สอดคล้องกับ Microsoft Learn  
-(ตรวจอ้างอิงล่าสุดปี 2026) และยังคง keyphrase ภาษาอังกฤษตามทางการ โดยไม่แปลชื่อ Action
+ช่วง **สิงหาคม 2026** (PAD baseline **2607+**) และยังคง keyphrase ภาษาอังกฤษตามทางการ โดยไม่แปลชื่อ Action
+
+รายการลิงก์เต็ม: [`SOURCES-AUG2026.md`](SOURCES-AUG2026.md)
 
 | หัวข้อ | URL |
 |--------|-----|
@@ -11,6 +13,11 @@
 | Web actions | https://learn.microsoft.com/power-automate/desktop-flows/actions-reference/webautomation |
 | UI automation | https://learn.microsoft.com/power-automate/desktop-flows/actions-reference/uiautomation |
 | Excel actions | https://learn.microsoft.com/power-automate/desktop-flows/actions-reference/excel |
+| Folder actions | https://learn.microsoft.com/power-automate/desktop-flows/actions-reference/folder |
+| File actions | https://learn.microsoft.com/power-automate/desktop-flows/actions-reference/file |
+| Coding guidelines | https://learn.microsoft.com/power-automate/guidance/desktop-flow-coding-guidelines/ |
+| Getting started (file pattern) | https://learn.microsoft.com/power-automate/desktop-flows/getting-started-freeorg |
+| PAD 2607 notes | https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop/2607 |
 | System actions | https://learn.microsoft.com/power-automate/desktop-flows/actions-reference/system |
 
 ## Product naming

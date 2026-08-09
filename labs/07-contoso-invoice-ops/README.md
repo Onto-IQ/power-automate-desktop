@@ -21,10 +21,19 @@ Lab นี้โฟกัส **Element UI บนแอป Windows จริง**
 
 | รายการ | หมายเหตุ |
 |--------|----------|
-| PAD | พร้อม Desktop UI automation |
+| PAD | พร้อม Desktop UI automation (แนะนำ baseline **2607+**) |
 | Excel | อ่าน/เขียน workbook |
 | Contoso Invoicing | ติดตั้งจาก zip ด้านล่าง |
 | Lab 06 | แนะนำให้ทำมาก่อน (Data Table / Excel) |
+
+## อ้างอิง (Aug 2026)
+
+| แหล่ง | URL |
+|-------|-----|
+| Contoso setup (Learn) | [Set up Contoso Invoicing](https://learn.microsoft.com/training/modules/input-parameters/2-set-up) |
+| Contoso sample app | [contoso-invoice-app (GitHub)](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/tree/master/power-automate-desktop/contoso-invoice-app) |
+| UI automation actions | [actions-reference/uiautomation](https://learn.microsoft.com/power-automate/desktop-flows/actions-reference/uiautomation) |
+| Handle errors | [desktop-flows/errors](https://learn.microsoft.com/power-automate/desktop-flows/errors) |
 
 ## Setup — ติดตั้ง Contoso Invoicing
 
@@ -50,11 +59,12 @@ Lab นี้โฟกัส **Element UI บนแอป Windows จริง**
 
 ใน Lab Kit นี้มี **mock ครบใน `assets/`** อยู่แล้ว — sample packs ด้านบนเป็นของเสริมให้ใกล้เคียงคอร์ส Microsoft
 
-## Setup — โฟลเดอร์ทำงาน
+## Setup บนเครื่อง (โฟลเดอร์ทำงาน)
 
-1. สร้าง Flow ชื่อ `Lab07_ContosoInvoiceOps`
-2. คัดลอก `assets/` → `C:\PAD-Labs\working\lab07\`
-3. สร้าง `C:\PAD-Labs\output\lab07\` และ `C:\PAD-Labs\logs\lab07\`
+1. สร้างโฟลเดอร์ `C:\PAD-Labs\working\lab07\`, `C:\PAD-Labs\output\lab07\`, `C:\PAD-Labs\logs\lab07\`
+2. คัดลอกทั้งโฟลเดอร์ [`assets/`](assets/) ไปยัง `C:\PAD-Labs\working\lab07\`
+3. สร้างโฟลเดอร์ว่าง `C:\PAD-Labs\output\lab07\filed` (ถ้ายังไม่มี)
+4. จด path ของ Contoso `.exe` (เปิดแอปมือ → Task Manager → Open file location) ไว้ใส่ `%ContosoPath%`
 
 ## Input / Output
 
@@ -82,44 +92,6 @@ Lab นี้โฟกัส **Element UI บนแอป Windows จริง**
 
 รายละเอียด: [`assets/business-rules.md`](assets/business-rules.md)
 
-## PAD Action Sequence (แนะนำ — ซับซ้อน / ครบ)
-
-### A. Init
-1. ตั้ง `%WorkingRoot%`, `%OutputRoot%`, `%LogPath%`
-2. Create folder ถ้ายังไม่มี: `filed`, logs
-3. อ่าน Excel/CSV → `%Invoices%`
-4. สร้าง `%Results%` (คอลัมน์ตาม expected)
-5. เขียน header log
-
-### B. Launch Contoso (ครั้งเดียว)
-1. **Run application** ไปยัง path ของ Contoso Invoicing  
-   (หาจาก Start Menu / Task Manager → Open file location แล้วเก็บใน `%ContosoPath%`)
-2. **Wait for window content** จนหน้าต่างหลักพร้อม
-3. **Focus window** Contoso
-4. Capture UI Elements สำคัญเก็บใน repository ของ Flow (ดู ui-map)
-
-### C. Process loop
-สำหรับแต่ละแถวใน `%Invoices%`:
-
-1. **On block error** ครอบทั้งแถว
-2. Evaluate R1–R2 ด้วย If/Else → ถ้า Rejected/Skipped บันทึก Results แล้ว `Next`
-3. Navigate ไปหน้าสร้าง Invoice (เมนู/ปุ่มตาม ui-map)
-4. **Populate text field in window** / Set drop-down สำหรับ Account, Contact, Amount, Date, Status
-5. Save / Submit invoice
-6. (ถ้าทำได้) อ่านค่า confirmation หรือตรวจว่าแถวโผล่ใน grid
-7. ทำ R5 แนบ/คัดลอกไฟล์
-8. Add row ลง `%Results%` = `Created` / `Created-HighPriority`
-9. On error: **Get last error** → `%LastError%` → append log ด้วย `%LastError.Message%` → Results=`Failed` → continue
-
-### D. Post-process
-1. (Challenge) **Extract data from window** จาก invoice grid บางส่วนเทียบกับจำนวนที่ Created
-2. เขียน `%Results%` ลง Excel (`Results` sheet) + `Summary` (นับ Created/Rejected/Skipped/Failed)
-3. **Close window** Contoso (ถ้าค้างใช้ **Terminate process** อย่างระวัง)
-4. **Close Excel**
-
-### E. Optional Outlook ping
-สร้าง Draft หัวข้อ `[PAD-LAB-MOCK] Contoso Invoice Ops — {CreatedCount} created` สรุปสั้น ๆ (แนวเดียวกับ Capstone)
-
 ## Subflows ที่ควรแยก
 
 | Subflow | หน้าที่ |
@@ -132,20 +104,185 @@ Lab นี้โฟกัส **Element UI บนแอป Windows จริง**
 | `SF_WriteResults` | Excel + summary |
 | `SF_LogRowError` | เขียน log รายแถว |
 
+เกณฑ์ผ่าน: มีอย่างน้อย **3 Subflows** จากตารางด้านบน
+
+---
+
+## Hands-on ทีละขั้น
+
+### Step 0 — สร้าง flow และ UI Elements
+
+1. เปิด Power Automate for desktop → **New flow**
+2. ชื่อ: `Lab07_ContosoInvoiceOps` → **Create**
+3. เปิด Contoso ด้วยมือ → ใน designer ใช้เครื่องมือ capture **UI Elements** ตาม [`assets/ui-map.md`](assets/ui-map.md)  
+   (ฟอร์ม Invoice: Account, Contact, Amount, Date, Status, ปุ่ม Save/Submit, เมนูสร้าง Invoice)
+4. สร้าง Subflows ตามตารางด้านบน (อย่างน้อย 3 ชื่อ) จากแถบ Subflows
+
+> **กฎตัวแปรใน PAD (อ่านก่อนทำ Step ถัดไป)**  
+> - ช่อง **Name** ของ **Set variable**, ชื่อ **produced variable**, และ **Store into** = พิมพ์ชื่ออย่างเดียว **ไม่มี `%`** เช่น `WorkingRoot`  
+> - ช่องอื่นที่ต้องดึงค่าตัวแปร (Folder, File path, Text, …) = ใช้ `%WorkingRoot%` (**มี `%` ครบสองด้าน**)  
+> - หลังสร้างแล้ว Variables pane อาจแสดงเป็น `%WorkingRoot%` — เป็นเรื่องปกติ
+
+### Step 1 — SF_InitPaths: path และโฟลเดอร์
+
+วางใน subflow `SF_InitPaths` (หรือต้น Main แล้วค่อยย้าย):
+
+1. ลาก **Set variable** (Name ไม่มี `%`):
+   - Name `WorkingRoot` = Value `C:\PAD-Labs\working\lab07`
+   - Name `OutputRoot` = Value `C:\PAD-Labs\output\lab07`
+   - Name `LogPath` = Value `C:\PAD-Labs\logs\lab07\contoso-run-log.csv`
+   - Name `ContosoPath` = path `.exe` จริงบนเครื่องคุณ
+   - Name `CreatedCount` = Value `0`, Name `FailedCount` = Value `0` (และตัวนับอื่นตามต้องการ)
+2. สำหรับแต่ละโฟลเดอร์ที่ต้องมี (`filed`, logs ถ้ายังไม่มี):
+   - **If folder exists** → path ตามต้องการ
+   - **Else** → **Create folder**
+   - **End**
+
+### Step 2 — อ่าน batch และเตรียม Results / log header
+
+1. ลาก **Launch Excel** → เปิด `%WorkingRoot%\invoices-batch.xlsx` ← **ใช้** (มี `%`) (หรือแปลงจาก CSV)
+2. ชื่อ produced: `ExcelIn` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%ExcelIn%`)
+3. ลาก **Read from Excel worksheet**
+   - Worksheet: แผ่นที่มีข้อมูล batch (หรือชื่อที่คุณตั้ง)
+   - First line contains column names: เปิด
+4. ชื่อ produced: `Invoices` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%Invoices%`)
+5. **Create new data table** → ชื่อ produced: `Results` ← **ไม่ใส่ `%`** คอลัมน์ให้สอดคล้อง [`assets/expected/expected-results.csv`](assets/expected/expected-results.csv)
+6. เขียน header log ด้วย **Write text to file** ที่ `%LogPath%` (If file exists: Overwrite ในรอบเริ่มต้น หรือตามนโยบาย append ที่ชัด)
+7. **Close Excel** ของ input ถ้าไม่ใช้ instance นี้ต่อ (หรือเก็บไว้ถ้าจะเขียนผลลงไฟล์เดิมแยก sheet)
+
+ใน Main: **Run subflow** `SF_InitPaths` ก่อนเข้าส่วนนี้
+
+### Step 3 — SF_LaunchContoso: เปิดแอปครั้งเดียว
+
+วางใน `SF_LaunchContoso`:
+
+1. (แนะนำ) ถ้ามี instance ค้าง: **Terminate process** ชื่อกระบวนการ Contoso — ใช้อย่างระวัง
+2. ลาก **Run application**
+   - Application path: `%ContosoPath%`
+3. ลาก **Wait for window content** จนหน้าต่างหลักพร้อม (เลือก UI element / title ตาม ui-map)
+4. ลาก **Focus window** ไปที่ Contoso
+5. ตรวจด้วยตาว่าแอปพร้อมก่อนไปลูป
+
+ใน Main: **Run subflow** `SF_LaunchContoso` **ครั้งเดียวก่อน** For each
+
+### Step 4 — ลูปประมวลผลทีละแถว + On block error (R6)
+
+1. ใน Main ลาก **For each**
+   - Value to iterate: `%Invoices%` ← **ใช้** (มี `%`)
+   - Store into: `CurrentInvoice` ← **ไม่ใส่ `%`**
+2. **ภายใน For each** ตั้งตัวแปร Name: `InvoiceId` ← **ไม่ใส่ `%`** จากคอลัมน์ของแถว (อ้างอิงด้วย `%InvoiceId%`)
+3. ลาก **On block error** ครอบทั้งชุดงานของแถว (ตั้งแต่ validate จนถึงบันทึก Results)
+4. ในนโยบายของบล็อก: เมื่อ error → ไปรันขั้นตอนกู้ (หรือ **Run subflow** `SF_LogRowError`) แล้ว **Continue** แถวถัดไป — **ห้าม** Terminate ทั้ง flow เพราะ UI แถวเดียวพัง
+
+### Step 5 — SF_ValidateInvoiceRow: R1–R2
+
+ภายใน On block error / เรียก subflow `SF_ValidateInvoiceRow`:
+
+1. **If** Account ว่างหลัง Trim **หรือ** Amount ไม่ใช่ตัวเลข / <= 0  
+   → **Set variable** Name `RowDecision` = `Reject`, Name `Status` = `Rejected` ← **ไม่ใส่ `%` ใน Name** → ไม่แตะ Contoso UI
+2. **Else if** `ProcessFlag` Equal to `Skip`  
+   → Name `RowDecision` = `Skip`, Name `Status` = `Skipped`
+3. **Else** → Name `RowDecision` = `Create`
+4. ถ้า Reject/Skip: **Insert row into data table** `%Results%` ← **ใช้** (มี `%`) แล้วข้ามไปแถวถัดไป (อย่าเรียก Create UI)
+
+### Step 6 — R3/R4 + SF_CreateContosoInvoice
+
+เมื่อ `%RowDecision%` = `Create` ← **ใช้** (มี `%`):
+
+1. **If** Amount >= `10000` → **Set variable** Name `Priority` = `High` (R3) ← **ไม่ใส่ `%` ใน Name**  
+   **Else** → Name `Priority` = `Normal` (R4)
+2. ใน `SF_CreateContosoInvoice`:
+   - Navigate ไปหน้าสร้าง Invoice (เมนู/ปุ่มตาม ui-map) ด้วย **Click UI element in window** / **Press button in window**
+   - **Wait for window content** จนฟอร์มพร้อม
+   - **Populate text field in window** สำหรับ Account, Contact, Amount, Date ตามคอลัมน์แถว
+   - ตั้ง Status / Priority ตาม UI map และ `StatusToSet` (High → พยายาม `Paid` หรือค่าที่หน้าจอรองรับ; Normal → `Open` เป็นต้น)
+   - Save / Submit ด้วย **Click UI element in window** หรือ **Press button in window**
+3. (ถ้าทำได้) อ่าน confirmation หรือตรวจแถวใน grid
+4. ตั้ง Status ผลลัพธ์: `Created` หรือ `Created-HighPriority` + Notes มี `HIGH PRIORITY` เมื่อเป็น High
+5. **Increase variable** เลือก `CreatedCount` (ไม่มี `%` ในรายการเลือก)
+
+### Step 7 — R5: SF_FileAttachment
+
+หลังสร้างสำเร็จ:
+
+1. ใน `SF_FileAttachment` ใช้ **Get files in folder**
+   - Folder: `%WorkingRoot%\attachments`
+   - File filter: `%InvoiceId%*` (หรือกรองชื่อขึ้นต้นด้วย InvoiceId)
+2. **If** มีไฟล์:
+   - **If folder exists** / **Create folder** → `%OutputRoot%\filed\%InvoiceId%`
+   - **Copy file(s)** → โฟลเดอร์นั้น
+   - ตั้ง `AttachmentFiled=Yes`
+3. **Else** → `AttachmentFiled=No`
+4. **Insert row into data table** `%Results%`
+
+### Step 8 — กู้ error รายแถว (Get last error)
+
+ภายในกิ่ง error ของ **On block error** (หรือ `SF_LogRowError`):
+
+1. ลาก **Get last error**
+2. ชื่อ produced: `LastError` ← **ไม่ใส่ `%`** (ชนิด Error; อ้างอิงด้วย `%LastError%`)
+3. Append log ด้วย **Write text to file** — ใส่ `%LastError.Message%` / `%LastError.Location%` และ `%InvoiceId%` ← **ใช้** (มี `%`)
+4. **Insert row into data table** `%Results%` → `Status=Failed`, `ErrorMessage` จาก `%LastError.Message%`
+5. **Increase variable** เลือก `FailedCount` (ไม่มี `%`)
+6. ออกแบบให้ลูป **ไปต่อแถวถัดไป** (R6)
+
+### Step 9 — SF_WriteResults: Excel + Summary + รันซ้ำได้
+
+1. ลาก **If file exists**
+   - File path: `%OutputRoot%\invoice-run-results.xlsx`
+2. **ภายใน If** → **Delete file** ที่ path เดิม
+3. **End**
+4. **Launch Excel** (สร้างเอกสารใหม่ หรือเปิด template)
+5. **Write to Excel worksheet** sheet `Results` จาก `%Results%`
+6. เขียน sheet `Summary`: Created / Rejected / Skipped / Failed / HighPriority ตาม [`assets/business-rules.md`](assets/business-rules.md)
+7. **Save document as** → `%OutputRoot%\invoice-run-results.xlsx`
+8. **Close Excel**
+
+### Step 10 — ปิด Contoso และรันตรวจ
+
+1. ลาก **Close window** Contoso (ถ้าค้างใช้ **Terminate process** อย่างระวัง)
+2. กด **Run** ทั้ง flow
+3. เทียบ Results กับ [`assets/expected/expected-results.csv`](assets/expected/expected-results.csv)
+4. ตรวจ `filed\{InvoiceId}\` และ `contoso-run-log.csv`
+5. รันซ้ำรอบสอง — path output เดิมต้องไม่พังเพราะชื่อไฟล์ซ้ำ
+
+### Challenge (ทางเลือก)
+
+- **Extract data from window** จาก invoice grid บางส่วน เทียบจำนวน Created
+- สร้าง Outlook Draft หัวข้อ `[PAD-LAB-MOCK] Contoso Invoice Ops — {CreatedCount} created` สรุปสั้น ๆ (แนวเดียวกับ Capstone)
+- Attachment filing ครบทุกแถวที่มีไฟล์ใน `attachments\`
+
+---
+
+## จุดที่มักทำผิด
+
+| ผิด | ถูก |
+|-----|-----|
+| พิมพ์ `%Name%` ในช่อง Name / Store into / ชื่อ produced | ใช้ชื่อเปล่าไม่มี `%` เช่น `WorkingRoot`, `CurrentInvoice` |
+| พึ่งพิกัดจอ / Recorder อย่างเดียว | Capture **UI Elements** ให้เสถียรตาม ui-map |
+| Error แถวเดียวแล้วทั้ง flow ตาย | **On block error** + **Get last error** แล้ว continue (R6) |
+| ลืม R1/R2 แล้วยังเปิดฟอร์ม Contoso | Reject/Skip ต้องไม่แตะ UI สร้าง Invoice |
+| **Save document as** รอบสองไม่ลบไฟล์เก่า | **If file exists** → **Delete file** ก่อน |
+| Hardcode path Contoso คนละเครื่อง | ใช้ `%ContosoPath%` ที่หาจากเครื่องจริง |
+| ไม่มี Subflow | แยกอย่างน้อย 3 Subflows |
+
+---
+
 ## Variables
 
-| Variable | Type | ความหมาย |
-|----------|------|----------|
-| `%ContosoPath%` | Text | path ไฟล์ .exe ของแอป |
-| `%ContosoApp%` | Window/App instance | ตาม action ที่ใช้ |
-| `%Invoices%` | Data table | input |
-| `%Results%` | Data table | output |
-| `%InvoiceId%` | Text | รหัสแถวปัจจุบัน |
-| `%Priority%` | Text | High/Normal |
-| `%RowDecision%` | Text | Create / Reject / Skip |
-| `%CreatedCount%` | Numeric | สรุป |
-| `%FailedCount%` | Numeric | สรุป |
-| `%LastError%` | Text | error ล่าสุด |
+| ชื่อตอนสร้าง (ไม่มี `%`) | ตอนอ้างอิง | Type | ความหมาย |
+|--------------------------|------------|------|----------|
+| `ContosoPath` | `%ContosoPath%` | Text | path ไฟล์ .exe ของแอป |
+| `ContosoApp` | `%ContosoApp%` | Window/App instance | ตาม action ที่ใช้ |
+| `WorkingRoot` / `OutputRoot` / `LogPath` | `%WorkingRoot%` ฯลฯ | Text | path งาน |
+| `Invoices` | `%Invoices%` | Data table | input |
+| `Results` | `%Results%` | Data table | output |
+| `CurrentInvoice` | `%CurrentInvoice%` | Data row | แถวปัจจุบันในลูป |
+| `InvoiceId` | `%InvoiceId%` | Text | รหัสแถวปัจจุบัน |
+| `Priority` | `%Priority%` | Text | High/Normal |
+| `RowDecision` | `%RowDecision%` | Text | Create / Reject / Skip |
+| `CreatedCount` / `FailedCount` | `%CreatedCount%` ฯลฯ | Numeric | สรุป |
+| `LastError` | `%LastError%` | Error | จาก **Get last error** |
 
 ## Expected Result
 
@@ -161,10 +298,11 @@ Lab นี้โฟกัส **Element UI บนแอป Windows จริง**
 ## Acceptance Criteria
 
 - [ ] ติดตั้ง Contoso ได้และ Launch จาก Flow ได้
-- [ ] UI Elements ของฟอร์ม Invoice ถูก capture เอง (ไม่พึ่งค่า hardcodeพิกัดจอ)
+- [ ] UI Elements ของฟอร์ม Invoice ถูก capture เอง (ไม่พึ่งค่า hardcode พิกัดจอ)
 - [ ] อ่านจาก Excel/CSV เป็นลูป
 - [ ] Implement กฎ R1–R6 ครบ
 - [ ] มี Results + Summary ออกไฟล์
+- [ ] **รันซ้ำได้:** รันครั้งที่ 2 ด้วย path output เดิม (`invoice-run-results.xlsx`) โดยไม่ error ชื่อไฟล์ซ้ำ — **If file exists** → **Delete file** หรือเปิดไฟล์เดิมแล้ว Save
 - [ ] Error รายแถวแล้ว Flow ไปต่อได้
 - [ ] มีอย่างน้อย 3 Subflows
 - [ ] (Challenge) มี attachment filing หรือ Outlook Draft
@@ -175,21 +313,16 @@ Lab นี้โฟกัส **Element UI บนแอป Windows จริง**
 |-------|-----|
 | หา Contoso exe ไม่เจอ | เปิดแอปมือ → Task Manager → Open file location แล้วใส่ path ใน `%ContosoPath%` |
 | Selector หลุดหลังอัปเดตแอป | Recapture UI element; หลีกเลี่ยง index อย่างเดียว |
-| หน้าต่างถูกบัง | Focus window / Set window state = Normal/Maximized |
+| หน้าต่างถูกบัง | **Focus window** / Set window state = Normal/Maximized |
 | กรอก Amount ไม่ติด | ส่งเป็น text ที่ format ตามแอป; Tab ออกจากฟิลด์ก่อน Save |
 | แอปค้างหลาย instance | **Terminate process** ก่อน **Run application** ใหม่ |
 | Contoso เปิดไม่ได้ / exception | ตรวจไฟล์ Excel ใต้ `Documents\Contoso Invoicing` — Sensitivity อย่าเป็น Confidential ([Q&A](https://learn.microsoft.com/answers/questions/2244882/how-to-resolve-contoso-invoicing-app-issue)) |
 | Excel locked | ปิด workbook ที่เปิดซ้อน |
-| UIPI / ส่ง input ไม่ได้ | รัน PAD กับ Contoso ที่สิทธิ์ elevation เดียวกัน |
+| Save as รอบสองล้ม (ไฟล์ซ้ำ) | ก่อน Save as ที่ `invoice-run-results.xlsx` ใช้ **If file exists** → **Delete file** |
+| UIPI / ส่ง input ไม่ได้ | รัน PAD กับ Contoso ที่สิทธิ์ elevation เดียวกัน — [UIPI issues](https://learn.microsoft.com/troubleshoot/power-platform/power-automate/desktop-flows/ui-automation/uipi-issues) |
 
 ## Cleanup
 
 - ปิด Contoso / Excel ที่ค้าง
 - ข้อมูล invoice ที่สร้างใน Contoso เป็นของ Lab — ล้างตามที่วิทยากรแนะนำก่อนรอบสาธิตถัดไป
 - อย่า commit output/logs ส่วนตัว
-
-## อ้างอิง
-
-- App: [contoso-invoice-app](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/tree/master/power-automate-desktop/contoso-invoice-app)
-- Learn setup: https://learn.microsoft.com/training/modules/input-parameters/2-set-up
-- Web UI คู่ขนาน (Lab อื่น): https://ontoiq.tech/pad/

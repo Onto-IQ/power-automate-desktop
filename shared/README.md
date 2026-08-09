@@ -5,7 +5,9 @@
 | ไฟล์ | คำอธิบาย |
 |------|----------|
 | [WRITING-STYLE.md](WRITING-STYLE.md) | สไตล์ภาษาไทย: ไม่ห้วนเกินไป และไม่แปล keyphrase |
-| [OFFICIAL-TERMINOLOGY.md](OFFICIAL-TERMINOLOGY.md) | ชื่อ Action / ศัพท์ตาม Microsoft Learn ล่าสุด |
+| [HANDS-ON-LAB-TEMPLATE.md](HANDS-ON-LAB-TEMPLATE.md) | แม่แบบ README แบบทีละขั้นใน designer |
+| [SOURCES-AUG2026.md](SOURCES-AUG2026.md) | อ้างอิง official / blog / community เฉพาะสิงหาคม 2026 |
+| [OFFICIAL-TERMINOLOGY.md](OFFICIAL-TERMINOLOGY.md) | ชื่อ Action / ศัพท์ตาม Microsoft Learn (Aug 2026) |
 | [SELECTOR-CONVENTIONS.md](SELECTOR-CONVENTIONS.md) | CSS / data-pad / wait strategy สำหรับ PAD Lab Hub |
 | [BEST-PRACTICES.md](BEST-PRACTICES.md) | Naming, variables, subflows, Outlook/Excel safety |
 | [DATA-SCHEMAS.md](DATA-SCHEMAS.md) | Schema ของ mock leads / orders / scout / recipients |
