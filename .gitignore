@@ -22,10 +22,8 @@ ops/**
 authoring/**
 !authoring/README.md
 
-# Keep project Cursor skills/rules tracked (global gitignore may ignore .cursor/)
+# Cursor project skills/rules (maintainers only — not published for learners)
+# Negate directory first so README can be tracked (global gitignore often ignores .cursor/)
+.cursor/**
 !.cursor/
-!.cursor/skills/
-!.cursor/skills/pad-robin/
-!.cursor/skills/pad-robin/**
-!.cursor/rules/
-!.cursor/rules/**
+!.cursor/README.md
