@@ -7,7 +7,7 @@ SET SumAmount TO 0
 
 Excel.LaunchExcel.LaunchAndOpen Path: $'''%WorkingRoot%\\sales-report.xlsm''' Visible: True ReadOnly: False LoadAddInsAndMacros: True Instance=> Excel
 Excel.SetActiveWorksheet.ActivateWorksheetByName Instance: Excel Name: $'''Orders'''
-Excel.ReadFromExcel.ReadAllCells Instance: Excel ReadAsText: False FirstLineIsHeader: True RangeValue=> Orders
+Excel.ReadFromExcel.ReadAllCells Instance: Excel FirstLineIsHeader: True RangeValue=> Orders
 
 Variables.CreateNewDatatable InputTable: { ^['OrderId', 'Customer', 'Product', 'Amount', 'OrderDate', 'Region', 'Tier'] } DataTable=> Filtered
 
@@ -28,14 +28,18 @@ LOOP FOREACH FilteredRow IN Filtered
     SET SumAmount TO SumAmount + FilteredAmount
 END
 
-Excel.WriteToExcel.WriteCells Instance: Excel Value: Filtered WorksheetName: $'''Filtered''' StartColumn: 1 StartRow: 1 FirstLineIsHeader: True
-Excel.WriteToExcel.WriteCell Instance: Excel Value: $'''TotalAmount''' WorksheetName: $'''Summary''' Column: $'''A''' Row: 1
-Excel.WriteToExcel.WriteCell Instance: Excel Value: SumAmount WorksheetName: $'''Summary''' Column: $'''B''' Row: 1
+Excel.AddWorksheet Instance: Excel Name: $'''Filtered''' WorksheetPosition: Excel.WorksheetPosition.Last
+Excel.WriteToExcel.WriteCell Instance: Excel Value: Filtered.ColumnHeadersRow Column: $'''A''' Row: 1
+Excel.WriteToExcel.WriteCell Instance: Excel Value: Filtered Column: $'''A''' Row: 2
 
-Excel.RunExcelMacro.RunExcelMacro Instance: Excel Macro: $'''FormatSummary'''
+Excel.AddWorksheet Instance: Excel Name: $'''Summary''' WorksheetPosition: Excel.WorksheetPosition.Last
+Excel.WriteToExcel.WriteCell Instance: Excel Value: $'''TotalAmount''' Column: $'''A''' Row: 1
+Excel.WriteToExcel.WriteCell Instance: Excel Value: SumAmount Column: $'''B''' Row: 1
+
+Excel.RunMacro Instance: Excel Macro: $'''FormatSummary'''
 
 IF (File.IfFile.Exists File: OutputPath) THEN
     File.Delete Files: OutputPath
 END
-Excel.SaveAs.SaveAs Instance: Excel DocumentFormat: Excel.DocumentFormat.ExcelMacroEnabledWorkbook DocumentPath: OutputPath
+Excel.SaveExcel.SaveAs Instance: Excel DocumentFormat: Excel.ExcelFormat.FromExtension DocumentPath: OutputPath
 Excel.CloseExcel.Close Instance: Excel
