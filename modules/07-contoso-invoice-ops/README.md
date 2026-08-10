@@ -1,6 +1,6 @@
 # Lab 07 — Contoso Invoice Ops
 
-**วัน:** 2 · **ระดับ:** Advanced · **เวลาโดยประมาณ:** อ่านความรู้ 25–35 นาที + Lab 90–120 นาที  
+**วัน:** 2 · **ระดับ:** Advanced · **เวลาโดยประมาณ:** อ่านความรู้ 25–35 นาที + Lab ~60 นาที (catch-up) / 90–120 นาที (สร้างมือ)  
 **ทักษะ:** Desktop UI (Contoso), Excel ↔ Contoso, R1–R6, Subflows, On block error
 
 ## ลำดับการเรียน (จับมือทำ)

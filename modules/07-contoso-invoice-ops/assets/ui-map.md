@@ -37,7 +37,6 @@ Launch Contoso (+ WorkingDirectory ของโฟลเดอร์ exe)
 → Populate Txt_Date → Txt_Account → Txt_Contact → Txt_Amount
 → Set drop-down Cmb_Status (High→Paid, Normal→Open)
 → Click Btn_Save
-→ (optional) High Priority → Play system sound
 → Close window ท้าย flow
 ```
 
