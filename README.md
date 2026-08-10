@@ -50,7 +50,7 @@
 | Microsoft Excel | ใช้ใน Lab 06–10 |
 | Contoso Invoicing | จำเป็นใน Lab 07 — ติดตั้งจาก [ContosoInvoicingSetup.zip](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/raw/master/power-automate-desktop/contoso-invoice-app/ContosoInvoicingSetup.zip) |
 | Microsoft Outlook (Desktop) | ใช้ใน Capstone (Lab 10) — แนะนำสร้างเป็น Draft และใช้ผู้รับจำลองก่อนส่งจริง |
-| สิทธิ์เครือข่าย | เข้าถึง `https://ontoiq.tech/pad/` ได้ |
+| สิทธิ์เครือข่าย | เข้าถึง `https://ontoiq.tech/pad/` ได้ · ถ้า Browser Secure Isolation กั้น Lab Hub (เช่น SCB) ใช้ [`modules/scb-secure-isolation-alt/`](modules/scb-secure-isolation-alt/) บน `bot.or.th` / `scb.co.th` |
 
 ---
 
@@ -124,6 +124,7 @@
 | 03 | [Catalog](modules/03-web-scout/catalog/README.md) *(optional)* | [LESSON](modules/03-web-scout/catalog/LESSON.md) | [LAB](modules/03-web-scout/catalog/LAB.md) | Next loop + Extract products | [19-catalog](https://pad.ontoiq.tech/pad/19-catalog.html) |
 | 03 | [Controls](modules/03-web-scout/controls/README.md) *(optional)* | [LESSON](modules/03-web-scout/controls/LESSON.md) | [LAB](modules/03-web-scout/controls/LAB.md) | Dropdown / checkbox | [02-controls](https://pad.ontoiq.tech/pad/02-controls.html) |
 | 03 | [Files](modules/03-web-scout/files/README.md) *(optional)* | [LESSON](modules/03-web-scout/files/LESSON.md) | [LAB](modules/03-web-scout/files/LAB.md) | Download / upload | [05-files](https://pad.ontoiq.tech/pad/05-files.html) |
+| SCB | [Secure Isolation Alt](modules/scb-secure-isolation-alt/README.md) *(เฉพาะกิจ)* | [LESSON](modules/scb-secure-isolation-alt/LESSON.md) | Form / Static FX / AJAX FX | ทดแทน Lab 01+03 เมื่อ Lab Hub ถูกกั้น | `bot.or.th` · `scb.co.th` |
 | 04 | [Conditional Automation](modules/04-conditional-automation/README.md) | [LESSON](modules/04-conditional-automation/LESSON.md) | [LAB](modules/04-conditional-automation/LAB.md) | If/Else ตาม business rules | — |
 | 05 | [Looping Files/Data](modules/05-looping-files-data/README.md) | [LESSON](modules/05-looping-files-data/LESSON.md) | [LAB](modules/05-looping-files-data/LAB.md) | For each กับไฟล์และแถวข้อมูล | — |
 | 06 | [Data Table & Excel](modules/06-data-table-excel/README.md) | [LESSON](modules/06-data-table-excel/LESSON.md) | [LAB](modules/06-data-table-excel/LAB.md) | อ่าน แปลง และเขียน Excel | — |
@@ -180,6 +181,7 @@ power-automate-desktop/
 │   ├── 01b-calculator/
 │   ├── 02-file-management/            ← ตัวอย่างมาตรฐานโครงสร้าง 3 ไฟล์
 │   ├── 03-web-scout/                  ← Lab 03 index + static-table / ajax-table / …
+│   ├── scb-secure-isolation-alt/      ← เฉพาะกิจ: ทดแทน 01+03 บน bot.or.th / scb.co.th
 │   ├── …
 │   └── 10-capstone-sales-ops/
 └── …

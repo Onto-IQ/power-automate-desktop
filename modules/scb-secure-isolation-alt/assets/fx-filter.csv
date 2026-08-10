@@ -1,0 +1,4 @@
+CurrencyCode,Note
+USD,Default filter for LabSCB_AjaxFxRates
+EUR,Optional alternate
+JPY,Optional alternate

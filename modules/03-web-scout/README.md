@@ -49,6 +49,9 @@ Catalog / Controls / Files = บ้านหรือถ้าเวลาเห
 - อ่าน [`shared/SELECTOR-CONVENTIONS.md`](../../shared/SELECTOR-CONVENTIONS.md)
 - พื้นฐาน: [`shared/PAD-FUNDAMENTALS.md`](../../shared/PAD-FUNDAMENTALS.md)
 
+> **Browser Secure Isolation / เข้า `pad.ontoiq.tech` ไม่ได้ (เช่น SCB):** ใช้ชุดทดแทน [`../scb-secure-isolation-alt/`](../scb-secure-isolation-alt/)  
+> Static → [Static FX Table](../scb-secure-isolation-alt/static-fx-table/README.md) · AJAX → [AJAX FX Rates](../scb-secure-isolation-alt/ajax-fx-rates/README.md)
+
 ## Output รวม
 
 ```text

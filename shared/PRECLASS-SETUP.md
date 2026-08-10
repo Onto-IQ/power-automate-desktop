@@ -13,6 +13,7 @@
 - [ ] Windows 10 หรือ 11 (เครื่องที่ใช้เรียนจริง)
 - [ ] มีสิทธิ์ติดตั้งโปรแกรม (หรือ IT ติดตั้งให้แล้ว)
 - [ ] เข้าอินเทอร์เน็ตได้ และเปิด [https://ontoiq.tech/pad/](https://ontoiq.tech/pad/) ได้
+- [ ] *(SCB / Secure Isolation)* ถ้า Lab Hub เปิดไม่ได้ — ทดสอบแทน: [ค้นหา ธปท.](https://www.bot.or.th/th/search.html) · [FX ธปท.](https://app.bot.or.th/BTWS_STAT/statistics/ReportPage.aspx?language=TH&reportID=123) · [FX SCB](https://www.scb.co.th/th/personal-banking/foreign-exchange-rates) แล้วใช้ [`modules/scb-secure-isolation-alt/`](../modules/scb-secure-isolation-alt/)
 - [ ] มีบัญชีที่ใช้กับ Power Automate for desktop ตามที่องค์กร/คอร์สกำหนด
 
 ## 2) ติดตั้ง Power Automate for desktop

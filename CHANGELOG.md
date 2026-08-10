@@ -8,6 +8,13 @@ PAD baseline ของชุดเอกสาร: **2607+** (สิงหาค
 
 ---
 
+## [Unreleased]
+
+### Module เฉพาะกิจ
+- เพิ่ม `modules/scb-secure-isolation-alt/` สำหรับห้องที่ Browser Secure Isolation กั้น Lab Hub — ใช้เฉพาะ `bot.or.th` / `scb.co.th` ทดแทน Lab 01 + Lab 03 Core (Form Search · Static FX Table · AJAX FX Rates)
+
+---
+
 ## [1.1.0] — 2026-08-09
 
 ปรับ Lab ให้สอนในห้องได้ลื่นขึ้นหลังรอบ polish หลัง `v1.0.0` (ผู้เรียน clone จาก `main` / tag `v1.1.0`)
