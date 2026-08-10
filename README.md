@@ -1,21 +1,49 @@
 # Power Automate Desktop — Lab Kit (2 Days)
 
-ชุดเอกสารและ mock assets สำหรับหลักสูตร **Power Automate Desktop (PAD) 2 วัน**  
+[![Release](https://img.shields.io/github/v/release/Onto-IQ/power-automate-desktop?display_name=tag&sort=semver)](https://github.com/Onto-IQ/power-automate-desktop/releases/latest)
+[![PAD baseline](https://img.shields.io/badge/PAD-2607%2B-0078D4?logo=microsoft&logoColor=white)](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop)
+[![Lab Hub](https://img.shields.io/badge/Lab%20Hub-ontoiq.tech%2Fpad-0B5FFF)](https://ontoiq.tech/pad/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Changelog](https://img.shields.io/badge/changelog-Keep%20a%20Changelog-E05735)](CHANGELOG.md)
+
+ชุดเอกสาร มือจับทำ (LESSON + LAB) และ mock assets สำหรับหลักสูตร **Power Automate for desktop (PAD) 2 วัน**  
 แนวทางหลักคือ Hands-on Labs ทีละขั้นใน designer ควบคู่ Capstone Workshop เพื่อให้ผู้เรียนลงมือสร้าง desktop flow จริง
 
 | รายการ | รายละเอียด |
 |--------|------------|
 | Web UI (Lab Hub) | [https://ontoiq.tech/pad/](https://ontoiq.tech/pad/) |
-| Element UI (Desktop) | [Contoso Invoicing](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/tree/master/power-automate-desktop/contoso-invoice-app) · ดูรายละเอียดใน Lab [07](modules/07-contoso-invoice-ops/README.md) |
+| Element UI (Desktop) | [Contoso Invoicing](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/tree/master/power-automate-desktop/contoso-invoice-app) · ดู Lab [07](modules/07-contoso-invoice-ops/README.md) |
 | Sample packs อ้างอิง | [Microsoft Learn — power-automate-desktop](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/tree/master/power-automate-desktop) |
-| PAD baseline (Aug 2026) | **2607+** (Installer ~2.70.x) — ดู [PAD version matrix](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop) |
+| PAD baseline (Aug 2026) | **2607+** (Installer ~2.70.x) — [PAD version matrix](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop) |
 | GitHub Release | [Releases](https://github.com/Onto-IQ/power-automate-desktop/releases) · ดาวน์โหลด **`PAD-Labs.zip`** → แตกที่ `C:\` · [`CHANGELOG.md`](CHANGELOG.md) |
 | Course Outline (local) | `slides/Trainocate_Outline_Power Automate Desktop (2 days) ake.pdf` |
 | สไลด์ประกอบ (local) | `slides/Power Automate Desktop.pptx` |
 
-> ไฟล์ PPTX/PDF อยู่ที่ [`slides/`](slides/) บนเครื่องทีมสอน — ไม่ได้เผยแพร่ใน GitHub repo  
+> ไฟล์ PPTX/PDF อยู่ที่ [`slides/`](slides/) บนเครื่องทีมสอน — ไม่ได้เผยแพร่ใน GitHub repo
 
 > แต่ละบทแยกเป็น **LESSON.md** (ความรู้) + **LAB.md** (จับมือทำ) · หน้าปกอยู่ที่ `README.md` ของโฟลเดอร์ Lab · พื้นฐานร่วม: [`shared/PAD-FUNDAMENTALS.md`](shared/PAD-FUNDAMENTALS.md)
+
+---
+
+## สารบัญ
+
+- [วัตถุประสงค์](#วัตถุประสงค์)
+- [กลุ่มเป้าหมาย](#กลุ่มเป้าหมาย)
+- [Prerequisites](#prerequisites)
+- [วิธีเริ่มต้น (ผู้เรียน)](#วิธีเริ่มต้น-ผู้เรียน)
+- [Selector Convention (PAD Lab Hub)](#selector-convention-pad-lab-hub)
+- [แผนการเรียน 2 วัน](#แผนการเรียน-2-วัน)
+- [Module Index](#module-index)
+- [Phase 1 — Core coverage](#phase-1--core-coverage-pad-lab-hub)
+- [โครงสร้าง Repository](#โครงสร้าง-repository)
+- [Microsoft Sample Assets](#microsoft-sample-assets-element-ui)
+- [หลักปฏิบัติสั้น ๆ](#หลักปฏิบัติสั้น-ๆ)
+- [Troubleshooting](#troubleshooting-ภาพรวม)
+- [Contributing](#contributing)
+- [Changelog](#changelog)
+- [Acknowledgments](#acknowledgments)
+- [License](#license)
+- [Disclaimer](#disclaimer)
 
 ---
 
@@ -52,6 +80,32 @@
 | Microsoft Outlook (Desktop) | ใช้ใน Capstone (Lab 10) — แนะนำสร้างเป็น Draft และใช้ผู้รับจำลองก่อนส่งจริง |
 | สิทธิ์เครือข่าย | เข้าถึง `https://ontoiq.tech/pad/` ได้ · ถ้า Browser Secure Isolation กั้น Lab Hub (เช่น SCB) ใช้ [`modules/scb-secure-isolation-alt/`](modules/scb-secure-isolation-alt/) บน `bot.or.th` / `scb.co.th` |
 | **`PAD-Labs.zip`** | โฟลเดอร์ทำงาน `C:\PAD-Labs` seed ครบทุก Module — ดาวน์โหลดจาก [Releases](https://github.com/Onto-IQ/power-automate-desktop/releases) (ดู [`shared/PRECLASS-SETUP.md`](shared/PRECLASS-SETUP.md)) |
+
+---
+
+## วิธีเริ่มต้น (ผู้เรียน)
+
+1. Clone หรือ unzip repo นี้ลงเครื่อง Windows
+2. ทำ [`shared/PRECLASS-SETUP.md`](shared/PRECLASS-SETUP.md) ให้ครบ **ก่อนวันเรียน**
+3. อ่าน [`shared/PAD-FUNDAMENTALS.md`](shared/PAD-FUNDAMENTALS.md) ให้คุ้น designer และกฎตัวแปร `%`
+4. เปิด Lab Hub ที่ [https://ontoiq.tech/pad/](https://ontoiq.tech/pad/) เพื่อยืนยันว่าเข้าถึงได้
+5. ในห้องเรียนทำตาม [`shared/CLASSROOM-SCHEDULE-12H.md`](shared/CLASSROOM-SCHEDULE-12H.md) (Core ก่อน Challenge)
+6. ต่อหนึ่งบท: เปิด `README.md` → อ่าน **LESSON.md** → ทำ **LAB.md**
+7. สร้าง desktop flow **ใหม่ต่อหนึ่ง Lab** และตั้งชื่อตาม convention ใน [`shared/BEST-PRACTICES.md`](shared/BEST-PRACTICES.md)
+8. ใช้ไฟล์ใน `modules/<module>/assets/` เป็น input — **ไม่ควรแก้ไฟล์ต้นฉบับใน repo** ให้คัดลอกไปโฟลเดอร์ทำงานของตนเองก่อน
+
+### โฟลเดอร์ทำงานที่แนะนำบนเครื่อง
+
+```text
+C:\PAD-Labs\
+  ├── working\          ← สำเนา assets ที่แก้ไขได้
+  ├── output\           ← ผลลัพธ์จาก flow
+  └── logs\             ← log / screenshot จาก Lab 07, 09–10
+```
+
+ดาวน์โหลดแพ็กเกจจาก [Releases → `PAD-Labs.zip`](https://github.com/Onto-IQ/power-automate-desktop/releases) แล้วแตกที่ `C:\`  
+หรือจาก clone: `.\tools\pad-labs\Install-PAD-Labs.ps1 -FromRepo -Force`  
+รายละเอียด: [`shared/PRECLASS-SETUP.md`](shared/PRECLASS-SETUP.md) · [`tools/pad-labs/README.md`](tools/pad-labs/README.md)
 
 ---
 
@@ -165,6 +219,8 @@
 ```text
 power-automate-desktop/
 ├── README.md                          ← คุณอยู่ที่นี่
+├── LICENSE                            ← MIT
+├── CHANGELOG.md                       ← Keep a Changelog / SemVer
 ├── tools/pad-labs/                    ← Build/Install PAD-Labs.zip
 ├── shared/                            ← พื้นฐาน + เอกสารผู้เรียน
 │   ├── PAD-FUNDAMENTALS.md            ← อ่านก่อน Module แรก
@@ -189,12 +245,6 @@ power-automate-desktop/
 └── …
 ```
 
-### โฟลเดอร์ทำงานบนเครื่องผู้เรียน (`C:\PAD-Labs`)
-
-ดาวน์โหลดแพ็กเกจจาก [Releases → `PAD-Labs.zip`](https://github.com/Onto-IQ/power-automate-desktop/releases) แล้วแตกที่ `C:\`  
-หรือจาก clone: `.\tools\pad-labs\Install-PAD-Labs.ps1 -FromRepo -Force`  
-รายละเอียด: [`shared/PRECLASS-SETUP.md`](shared/PRECLASS-SETUP.md) · [`tools/pad-labs/README.md`](tools/pad-labs/README.md)
-
 แต่ละ **Module** มี 3 เอกสารหลัก:
 
 - `README.md` — หน้าปกบท: meta, ลำดับเรียน, prerequisites, ลิงก์ LESSON/LAB
@@ -204,27 +254,6 @@ power-automate-desktop/
 
 > โฟลเดอร์รากของบทเรียนคือ **`modules/`** — คำว่า **Lab** ยังใช้กับไฟล์ `LAB.md` และการอ้างอิงแบบ Lab 01, Lab 02 ตามเดิม  
 > คู่มือทีมอยู่ที่ [`authoring/`](authoring/) · [`ops/`](ops/) · [`slides/`](slides/) บนเครื่องทีมพัฒนา (ไม่เผยแพร่ใน GitHub สำหรับผู้เรียน)
----
-
-## วิธีเริ่มต้น (ผู้เรียน)
-
-1. Clone หรือ unzip repo นี้ลงเครื่อง Windows
-2. ทำ [`shared/PRECLASS-SETUP.md`](shared/PRECLASS-SETUP.md) ให้ครบ **ก่อนวันเรียน**
-3. อ่าน [`shared/PAD-FUNDAMENTALS.md`](shared/PAD-FUNDAMENTALS.md) ให้คุ้น designer และกฎตัวแปร `%`
-4. เปิด Lab Hub ที่ [https://ontoiq.tech/pad/](https://ontoiq.tech/pad/) เพื่อยืนยันว่าเข้าถึงได้
-5. ในห้องเรียนทำตาม [`shared/CLASSROOM-SCHEDULE-12H.md`](shared/CLASSROOM-SCHEDULE-12H.md) (Core ก่อน Challenge)
-6. ต่อหนึ่งบท: เปิด `README.md` → อ่าน **LESSON.md** → ทำ **LAB.md**
-7. สร้าง desktop flow **ใหม่ต่อหนึ่ง Lab** และตั้งชื่อตาม convention ใน [`shared/BEST-PRACTICES.md`](shared/BEST-PRACTICES.md)
-8. ใช้ไฟล์ใน `modules/<module>/assets/` เป็น input — **ไม่ควรแก้ไฟล์ต้นฉบับใน repo** ให้คัดลอกไปโฟลเดอร์ทำงานของตนเองก่อน
-
-### โฟลเดอร์ทำงานที่แนะนำบนเครื่อง
-
-```text
-C:\PAD-Labs\
-  ├── working\          ← สำเนา assets ที่แก้ไขได้
-  ├── output\           ← ผลลัพธ์จาก flow
-  └── logs\             ← log / screenshot จาก Lab 07, 09–10
-```
 
 ---
 
@@ -274,8 +303,48 @@ C:\PAD-Labs\
 
 ---
 
-## License / หมายเหตุ
+## Contributing
 
-- PAD Lab Hub เป็นทรัพย์สินของ Onto-IQ สำหรับใช้ประกอบการฝึกอบรม
-- Microsoft sample assets และ Contoso Invoicing อยู่ภายใต้เงื่อนไขของ Microsoft Docs repository ต้นทาง
+ยินดีรับ feedback จากวิทยากร / TA ที่ใช้ชุดนี้ในห้องจริง
+
+1. เปิด [Issue](https://github.com/Onto-IQ/power-automate-desktop/issues) อธิบายปัญหา Lab, selector ที่พัง หรือข้อเสนอแนะหลักสูตร
+2. สำหรับ Pull Request: แก้เฉพาะ Module ที่เกี่ยวข้อง ให้ LESSON / LAB / catch-up `scripts/*.robin` สอดคล้องกัน
+3. อย่า commit โฟลเดอร์ส่วนตัว `C:\PAD-Labs\`, `working/`, `output/`, `logs/` หรือสไลด์ภายใต้ `slides/`
+
+ถ้าต้องการช่วยจัดตารางห้องหรือ catch-up ดูแนวทางใน [`shared/CLASSROOM-SCHEDULE-12H.md`](shared/CLASSROOM-SCHEDULE-12H.md)
+
+---
+
+## Changelog
+
+ดูประวัติเวอร์ชันแบบ SemVer ใน [`CHANGELOG.md`](CHANGELOG.md)  
+แพ็กเกจผู้เรียนล่าสุด: [GitHub Releases](https://github.com/Onto-IQ/power-automate-desktop/releases) (`PAD-Labs.zip`)
+
+---
+
+## Acknowledgments
+
+- [Microsoft Learn — Power Automate Desktop samples](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/tree/master/power-automate-desktop) และ **Contoso Invoicing**
+- [Power Automate for desktop documentation](https://learn.microsoft.com/power-automate/desktop-flows/)
+- Onto-IQ PAD Lab Hub ที่ [ontoiq.tech/pad](https://ontoiq.tech/pad/)
+
+---
+
+## License
+
+เอกสาร Lab Kit, scripts (`.robin`), mock assets และเครื่องมือใน repo นี้เผยแพร่ภายใต้ [**MIT License**](LICENSE) — Copyright © 2026 Onto-IQ
+
+| ส่วนประกอบ | สิทธิ์ / เงื่อนไข |
+|------------|-------------------|
+| เนื้อหาใน repo นี้ (docs, scripts, tools, mock data) | [MIT](LICENSE) |
+| PAD Lab Hub (`ontoiq.tech/pad`) | ทรัพย์สินของ Onto-IQ สำหรับใช้ประกอบการฝึกอบรม — ไม่รวมใน LICENSE ของ repo |
+| Contoso Invoicing / Microsoft sample packs | อยู่ภายใต้เงื่อนไขของ [Microsoft Docs repository](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform) ต้นทาง |
+| Power Automate for desktop | ผลิตภัณฑ์ของ Microsoft — ติดตั้งและใช้ตามข้อกำหนดสิทธิ์ขององค์กรผู้เรียน |
+
+---
+
+## Disclaimer
+
 - Mock data ใน repo นี้เป็นข้อมูลจำลอง ไม่ใช่ข้อมูลลูกค้าจริง
+- Lab Kit นี้ไม่ใช่เอกสารทางการของ Microsoft และไม่รับประกันความเข้ากันได้กับทุกเวอร์ชันของ PAD นอกเหนือจาก baseline ที่ระบุใน Release
+- การส่งอีเมลจริง การรันบนเครื่อง production หรือการเชื่อมระบบองค์กรอยู่นอกขอบเขตหลักสูตร — ใช้เฉพาะสภาพแวดล้อมฝึกตามที่วิทยากรกำหนด
