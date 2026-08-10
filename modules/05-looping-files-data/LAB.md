@@ -398,3 +398,5 @@ C:\PAD-Labs\output\lab05\batch-summary.csv
 
 - กู้ batch จาก `assets/batch` ก่อนรันซ้ำ
 - ลบ `C:\PAD-Labs\working\lab05` ได้หลังผ่านเกณฑ์ — คงต้นฉบับใน repo ไว้
+
+> **Catch-up:** ตามไม่ทัน → วาง [`scripts/05-looping-files-data.robin`](scripts/05-looping-files-data.robin) ใน flow ว่าง (full)

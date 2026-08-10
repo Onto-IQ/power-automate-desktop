@@ -11,8 +11,15 @@
 | 1 | **[LESSON.md](LESSON.md)** | อ่านความรู้: ศัพท์ แนวคิด If/AND/OR |
 | 2 | **[LAB.md](LAB.md)** | Setup + Hands-on ทีละขั้นใน designer |
 
-## วัตถุประสงค์
 
+## Reference script (catch-up)
+
+สำหรับนักเรียนที่ทำตามไม่ทัน — เปิด [`scripts/04-conditional-automation.robin`](scripts/04-conditional-automation.robin) แล้ว copy วางใน desktop flow ว่าง
+
+- full — วางใน flow ว่างได้เลย
+- ไม่แทนการทำ LAB หลัก; ใช้เทียบลำดับ action / กู้งานให้ทันชั้น
+
+## วัตถุประสงค์
 - ใช้เงื่อนไขแยกเส้นทาง Flow
 - จัดประเภทคำขอใน inbox ตาม Priority และ Status
 - เขียน `routing-log.csv` ตาม expected routing

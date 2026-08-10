@@ -12,8 +12,15 @@
 | 1 | **[LESSON.md](LESSON.md)** | ตาราง FX ธปท. |
 | 2 | **[LAB.md](LAB.md)** | Hands-on |
 
-## วัตถุประสงค์
 
+## Reference script (catch-up)
+
+สำหรับนักเรียนที่ทำตามไม่ทัน — เปิด [`scripts/static-fx-table.robin`](scripts/static-fx-table.robin) แล้ว copy วางใน desktop flow ว่าง
+
+- partial-ui
+- ไม่แทนการทำ LAB หลัก; ใช้เทียบลำดับ action / กู้งานให้ทันชั้น
+
+## วัตถุประสงค์
 - เปิดตารางอัตราแลกเปลี่ยนสาธารณะของ ธปท. แล้ว Wait จนตารางพร้อม
 - Extract ทั้งตารางเป็น Data table
 - เขียน CSV ลงโฟลเดอร์ output

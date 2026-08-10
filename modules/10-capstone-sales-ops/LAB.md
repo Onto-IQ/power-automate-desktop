@@ -679,3 +679,5 @@ Skipped
 - Web UI: [https://ontoiq.tech/pad/](https://ontoiq.tech/pad/)
 - Element UI / sample data: [Microsoft Learn PAD samples](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/tree/master/power-automate-desktop)
 - Course outline PDF ที่ราก repo
+
+> **Catch-up:** ตามไม่ทัน → วาง [`scripts/10-capstone-sales-ops.robin`](scripts/10-capstone-sales-ops.robin) ใน flow ว่าง (partial-ui)

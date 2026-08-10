@@ -1,0 +1,160 @@
+# Lab10_CapstoneSalesOps — partial-ui (scout + pricing + leads + Outlook Draft)
+# Subflows marked as section comments (≥3 recommended)
+
+############################################
+# SF_InitPaths
+############################################
+SET WorkingRoot TO $'''C:\\PAD-Labs\\working\\lab10'''
+SET OutputRoot TO $'''C:\\PAD-Labs\\output\\lab10'''
+SET LogPath TO $'''C:\\PAD-Labs\\logs\\lab10\\capstone-error-log.csv'''
+SET ReportPath TO $'''C:\\PAD-Labs\\output\\lab10\\sales-ops-report.xlsx'''
+SET SubmittedCount TO 0
+SET ScoutHitCount TO 0
+SET MailStatus TO $'''Skipped'''
+SET SendMode TO $'''DraftOnly'''
+SET SumAmount TO 0
+SET SumDiscount TO 0
+SET SumTax TO 0
+SET SumGrandTotal TO 0
+
+IF (Folder.IfFolderExists.DoesNotExist Path: $'''%OutputRoot%\\evidence''') THEN
+    Folder.Create FolderPath: OutputRoot FolderName: $'''evidence''' Folder=> NewFolder
+END
+File.WriteText File: LogPath TextToWrite: $'''Case,Message,Location''' AppendNewLine: True IfFileExists: File.IfFileExists.Overwrite Encoding: File.FileEncoding.UTF8
+
+############################################
+# SF_ReadExcelSheet
+############################################
+Excel.LaunchExcel.LaunchAndOpen Path: $'''%WorkingRoot%\\leads.xlsx''' Visible: False ReadOnly: True LoadAddInsAndMacros: False Instance=> Excel
+Excel.ReadFromExcel.ReadAllCells Instance: Excel ReadAsText: False FirstLineIsHeader: True RangeValue=> Leads
+Excel.CloseExcel.Close Instance: Excel
+
+Variables.CreateNewDatatable InputTable: { ^['OrderId', 'Customer', 'Amount', 'Status'] } DataTable=> ScoutResults
+Variables.CreateNewDatatable InputTable: { ^['SKU', 'Product', 'Price', 'Category'] } DataTable=> Products
+Variables.CreateNewDatatable InputTable: { ^['SKU', 'Product', 'Price', 'DiscountRate', 'DiscountAmount', 'NetBeforeTax', 'TaxAmount', 'GrandTotal'] } DataTable=> Priced
+Variables.CreateNewDatatable InputTable: { ^['LeadId', 'FullName', 'Email', 'Priority', 'Status', 'WebResult'] } DataTable=> LeadResults
+
+BLOCK
+ON BLOCK ERROR all
+    Exception.GetLastError LastError=> LastError
+    SET LogLine TO $'''MAIN,%LastError.Message%,%LastError.Location%'''
+    File.WriteText File: LogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
+END
+    ############################################
+    # SF_OpenLabHub — Login
+    ############################################
+    WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://ontoiq.tech/pad/06-login.html''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 60 Timeout: 60 BrowserInstance=> Browser
+    # REBIND: #txt-username #txt-password #btn-login
+    WebAutomation.WaitForWebPageContent.WaitForWebPageToContainElement BrowserInstance: Browser Control: appmask['Lab10 Login']['Txt_Username'] Timeout: 60
+    WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab10 Login']['Txt_Username'] Text: $'''demo''' EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
+    WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab10 Login']['Txt_Password'] Text: $'''demo''' EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
+    WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab10 Login']['Btn_Login'] WaitForPageToLoadTimeout: 60
+
+    ############################################
+    # SF_ScoutAjaxOrders — 09 AJAX
+    ############################################
+    WebAutomation.GoToWebPage.GoToWebPage BrowserInstance: Browser Url: $'''https://ontoiq.tech/pad/09-ajax-table.html''' WaitForPageToLoadTimeout: 60
+    # REBIND: Wait rows + Extract Entire HTML Table → AjaxTable then append to ScoutResults
+    # WebAutomation.ExtractData ... ExtractedData=> AjaxTable
+
+    ############################################
+    # Catalog pagination 19 — required (~24 rows)
+    ############################################
+    WebAutomation.GoToWebPage.GoToWebPage BrowserInstance: Browser Url: $'''https://ontoiq.tech/pad/19-catalog.html''' WaitForPageToLoadTimeout: 60
+    SET MaxPages TO 10
+    SET PageCount TO 0
+    LOOP WHILE PageCount < MaxPages
+        # REBIND: Wait #tbl-products; Extract Entire HTML Table → PageTable
+        # LOOP FOREACH ProductRow IN PageTable → AppendRowToDataTable Products
+        Variables.IncreaseVariable Value: PageCount IncrementValue: 1
+        # REBIND: Get details Btn_NextPage Attribute=Disabled → AttributeValue
+        # IF AttributeValue = True THEN EXIT LOOP
+        # ELSE Press Btn_NextPage (#btn-next-page)
+        EXIT LOOP
+    END
+    # After rebind: set ScoutHitCount = Products.Count (expect ~24)
+
+    ############################################
+    # Price engine — Discount + VAT 7%
+    ############################################
+    LOOP FOREACH ProductRow IN Products
+        Text.ToNumber Text: ProductRow['Price'] Number=> AmountNumber
+        IF AmountNumber >= 15000 THEN
+            SET DiscountRate TO 0.10
+        ELSE IF AmountNumber >= 10000 THEN
+            SET DiscountRate TO 0.05
+        ELSE
+            SET DiscountRate TO 0.00
+        END
+        SET DiscountAmount TO AmountNumber * DiscountRate
+        SET NetBeforeTax TO AmountNumber - DiscountAmount
+        SET TaxAmount TO NetBeforeTax * 0.07
+        SET GrandTotal TO NetBeforeTax + TaxAmount
+        Variables.AddRowToDataTable.AppendRowToDataTable DataTable: Priced RowToAdd: [ProductRow['SKU'], ProductRow['Product'], AmountNumber, DiscountRate, DiscountAmount, NetBeforeTax, TaxAmount, GrandTotal]
+        SET SumAmount TO SumAmount + AmountNumber
+        SET SumDiscount TO SumDiscount + DiscountAmount
+        SET SumTax TO SumTax + TaxAmount
+        SET SumGrandTotal TO SumGrandTotal + GrandTotal
+        Variables.IncreaseVariable Value: ScoutHitCount IncrementValue: 1
+    END
+
+    ############################################
+    # SF_SubmitLeadForms
+    ############################################
+    LOOP FOREACH CurrentLead IN Leads
+        IF CurrentLead['Status'] = $'''New''' THEN
+            IF CurrentLead['Priority'] = $'''High''' THEN
+                WebAutomation.GoToWebPage.GoToWebPage BrowserInstance: Browser Url: $'''https://ontoiq.tech/pad/07-wizard.html''' WaitForPageToLoadTimeout: 60
+                # REBIND: Wizard VIP steps
+                SET WebResult TO $'''WizardSubmitted'''
+            ELSE
+                WebAutomation.GoToWebPage.GoToWebPage BrowserInstance: Browser Url: $'''https://ontoiq.tech/pad/01-forms.html''' WaitForPageToLoadTimeout: 60
+                # REBIND: Populate + Submit from CurrentLead
+                SET WebResult TO $'''FormSubmitted'''
+            END
+            Variables.IncreaseVariable Value: SubmittedCount IncrementValue: 1
+            Variables.AddRowToDataTable.AppendRowToDataTable DataTable: LeadResults RowToAdd: [CurrentLead['LeadId'], CurrentLead['FullName'], CurrentLead['Email'], CurrentLead['Priority'], $'''Submitted''', WebResult]
+        END
+    END
+
+    # Mission Files 05 → evidence under %OutputRoot%\evidence\
+    # WebAutomation.GoToWebPage ... https://ontoiq.tech/pad/05-files.html
+END
+
+############################################
+# SF_WriteExcelReport
+############################################
+IF (File.IfFile.Exists File: ReportPath) THEN
+    File.Delete Files: ReportPath
+END
+Excel.LaunchExcel.LaunchNewDocument Visible: True Instance=> ExcelReport
+Excel.WriteToExcel.WriteCells Instance: ExcelReport Value: Products WorksheetName: $'''Products''' StartColumn: 1 StartRow: 1 FirstLineIsHeader: True
+Excel.WriteToExcel.WriteCells Instance: ExcelReport Value: ScoutResults WorksheetName: $'''Scout''' StartColumn: 1 StartRow: 1 FirstLineIsHeader: True
+Excel.WriteToExcel.WriteCells Instance: ExcelReport Value: Priced WorksheetName: $'''Priced''' StartColumn: 1 StartRow: 1 FirstLineIsHeader: True
+Excel.WriteToExcel.WriteCells Instance: ExcelReport Value: LeadResults WorksheetName: $'''Results''' StartColumn: 1 StartRow: 1 FirstLineIsHeader: True
+Excel.WriteToExcel.WriteCell Instance: ExcelReport Value: $'''SumAmount''' WorksheetName: $'''Summary''' Column: $'''A''' Row: 1
+Excel.WriteToExcel.WriteCell Instance: ExcelReport Value: SumAmount WorksheetName: $'''Summary''' Column: $'''B''' Row: 1
+Excel.WriteToExcel.WriteCell Instance: ExcelReport Value: $'''SumDiscount''' WorksheetName: $'''Summary''' Column: $'''A''' Row: 2
+Excel.WriteToExcel.WriteCell Instance: ExcelReport Value: SumDiscount WorksheetName: $'''Summary''' Column: $'''B''' Row: 2
+Excel.WriteToExcel.WriteCell Instance: ExcelReport Value: $'''SumTax''' WorksheetName: $'''Summary''' Column: $'''A''' Row: 3
+Excel.WriteToExcel.WriteCell Instance: ExcelReport Value: SumTax WorksheetName: $'''Summary''' Column: $'''B''' Row: 3
+Excel.WriteToExcel.WriteCell Instance: ExcelReport Value: $'''SumGrandTotal''' WorksheetName: $'''Summary''' Column: $'''A''' Row: 4
+Excel.WriteToExcel.WriteCell Instance: ExcelReport Value: SumGrandTotal WorksheetName: $'''Summary''' Column: $'''B''' Row: 4
+Excel.WriteToExcel.WriteCell Instance: ExcelReport Value: $'''SubmittedCount''' WorksheetName: $'''Summary''' Column: $'''A''' Row: 5
+Excel.WriteToExcel.WriteCell Instance: ExcelReport Value: SubmittedCount WorksheetName: $'''Summary''' Column: $'''B''' Row: 5
+Excel.WriteToExcel.WriteCell Instance: ExcelReport Value: $'''ScoutHitCount''' WorksheetName: $'''Summary''' Column: $'''A''' Row: 6
+Excel.WriteToExcel.WriteCell Instance: ExcelReport Value: ScoutHitCount WorksheetName: $'''Summary''' Column: $'''B''' Row: 6
+Excel.WriteToExcel.WriteCell Instance: ExcelReport Value: $'''MailStatus''' WorksheetName: $'''Summary''' Column: $'''A''' Row: 7
+Excel.WriteToExcel.WriteCell Instance: ExcelReport Value: MailStatus WorksheetName: $'''Summary''' Column: $'''B''' Row: 7
+Excel.SaveAs.SaveAs Instance: ExcelReport DocumentFormat: Excel.DocumentFormat.OpenXmlWorkbook DocumentPath: ReportPath
+Excel.CloseExcel.Close Instance: ExcelReport
+
+############################################
+# SF_SendOutlookDraft — DraftOnly, subject [PAD-LAB-MOCK]
+############################################
+SET MailSubject TO $'''[PAD-LAB-MOCK] Scout Ops Report — %SubmittedCount% follows-ups, %ScoutHitCount% scout hits'''
+# Outlook.SendEmailThroughOutlook.SendEmail ... SaveAsDraft: True Attachment: ReportPath
+# Recipients only from %WorkingRoot%\recipients.csv (.mock.local)
+SET MailStatus TO $'''DraftCreated'''
+
+WebAutomation.CloseWebBrowser BrowserInstance: Browser

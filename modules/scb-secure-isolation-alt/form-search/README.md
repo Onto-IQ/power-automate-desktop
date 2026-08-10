@@ -12,8 +12,15 @@
 | 1 | **[LESSON.md](LESSON.md)** | ค้นหาแทนฟอร์ม Lab Hub |
 | 2 | **[LAB.md](LAB.md)** | Hands-on |
 
-## วัตถุประสงค์
 
+## Reference script (catch-up)
+
+สำหรับนักเรียนที่ทำตามไม่ทัน — เปิด [`scripts/form-search.robin`](scripts/form-search.robin) แล้ว copy วางใน desktop flow ว่าง
+
+- partial-ui
+- ไม่แทนการทำ LAB หลัก; ใช้เทียบลำดับ action / กู้งานให้ทันชั้น
+
+## วัตถุประสงค์
 - กรอกช่องค้นหาจากตัวแปรแล้วกดค้นหาบนเว็บ ธปท.
 - จัดการแบนเนอร์คุกกี้ถ้าบังหน้า
 - Replay ให้ผลลัพธ์หน้าค้นหาซ้ำได้

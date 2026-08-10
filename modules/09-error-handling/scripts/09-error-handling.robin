@@ -1,0 +1,96 @@
+# Lab09_ErrorHandling — partial-ui (Cases A–E core; F–I challenge stubs)
+# Log schema matches assets/error-log-template.csv
+# REBIND: UI elements on delay / dialogs / forms pages
+
+SET WorkingRoot TO $'''C:\\PAD-Labs\\working\\lab09'''
+SET ErrorLogPath TO $'''C:\\PAD-Labs\\logs\\lab09\\error-log.csv'''
+SET RetryCount TO 0
+SET Fatal TO False
+SET ErrorLogHeader TO $'''Timestamp,CaseId,Severity,Message,RetryCount,Fatal'''
+
+File.WriteText File: ErrorLogPath TextToWrite: ErrorLogHeader AppendNewLine: True IfFileExists: File.IfFileExists.Overwrite Encoding: File.FileEncoding.UTF8
+
+File.ReadText File: $'''%WorkingRoot%\\missing-file-path.txt''' Encoding: File.FileEncoding.UTF8 Content=> MissingPath
+
+# Case A — Missing file
+BLOCK
+ON BLOCK ERROR all
+    Exception.GetLastError LastError=> LastError
+    DateTime.GetCurrentDateTime.GetCurrentDateTime DateTime=> Now
+    SET LogLine TO $'''%Now%,A,Error,%LastError.Message%,0,False'''
+    File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
+END
+    File.ReadText File: MissingPath Encoding: File.FileEncoding.UTF8 Content=> MissingContent
+END
+
+File.ReadText File: $'''%WorkingRoot%\\bad-url.txt''' Encoding: File.FileEncoding.UTF8 Content=> BadUrl
+
+# Case B — Bad URL (ensure Browser exists for later cases)
+BLOCK
+ON BLOCK ERROR all
+    Exception.GetLastError LastError=> LastError
+    DateTime.GetCurrentDateTime.GetCurrentDateTime DateTime=> Now
+    SET LogLine TO $'''%Now%,B,Error,%LastError.Message%,0,False'''
+    File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
+END
+    WebAutomation.LaunchEdge.LaunchEdge Url: BadUrl WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 30 Timeout: 30 BrowserInstance=> Browser
+END
+
+# Recover browser after Case B failure
+BLOCK
+ON BLOCK ERROR all
+END
+    WebAutomation.LaunchEdge.LaunchEdge Url: $'''about:blank''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 30 Timeout: 30 BrowserInstance=> Browser
+END
+
+# Case C — Flaky wait + retry (max 3)
+WebAutomation.GoToWebPage.GoToWebPage BrowserInstance: Browser Url: $'''https://ontoiq.tech/pad/11-delay.html''' WaitForPageToLoadTimeout: 60
+LOOP WHILE RetryCount < 3
+    BLOCK
+    ON BLOCK ERROR all
+        Variables.IncreaseVariable Value: RetryCount IncrementValue: 1
+        DateTime.GetCurrentDateTime.GetCurrentDateTime DateTime=> Now
+        SET LogLine TO $'''%Now%,C,Warning,wait-retry,%RetryCount%,False'''
+        File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
+    END
+        # REBIND: Wait for delayed element on 11-delay.html
+        WebAutomation.WaitForWebPageContent.WaitForWebPageToContainElement BrowserInstance: Browser Control: appmask['Lab09 Delay']['ReadyElement'] Timeout: 10
+        DateTime.GetCurrentDateTime.GetCurrentDateTime DateTime=> Now
+        SET LogLine TO $'''%Now%,C,Info,wait-success,%RetryCount%,False'''
+        File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
+        EXIT LOOP
+    END
+END
+
+# Case D — Dialogs (must rebind + handle alert/confirm in designer)
+WebAutomation.GoToWebPage.GoToWebPage BrowserInstance: Browser Url: $'''https://ontoiq.tech/pad/04-dialogs.html''' WaitForPageToLoadTimeout: 60
+# REBIND required:
+# 1) Click trigger (e.g. Btn_Alert / Btn_Confirm)
+# 2) Handle browser dialog (WebAutomation dialog actions / Send keys)
+# 3) Only then append DIALOG_HANDLED
+# WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab09 Dialogs']['Btn_Alert'] WaitForPageToLoadTimeout: 60
+DateTime.GetCurrentDateTime.GetCurrentDateTime DateTime=> Now
+SET LogLine TO $'''%Now%,D,Info,DIALOG_PENDING_REBIND,0,False'''
+File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
+
+# Case E — Recovery happy path (Forms)
+WebAutomation.GoToWebPage.GoToWebPage BrowserInstance: Browser Url: $'''https://ontoiq.tech/pad/01-forms.html''' WaitForPageToLoadTimeout: 60
+# REBIND: Wait #txt-name; Populate required fields; Press Btn_Submit
+WebAutomation.WaitForWebPageContent.WaitForWebPageToContainElement BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Name'] Timeout: 60
+WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Name'] Text: $'''Recovery User''' EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
+WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Email'] Text: $'''recovery@example.com''' EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
+WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Amount'] Text: $'''1000''' EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
+WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Date'] Text: $'''2026-08-08''' EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
+WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Note'] Text: $'''Lab09 recovery''' EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
+WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab01 Forms']['Btn_Submit'] WaitForPageToLoadTimeout: 60
+DateTime.GetCurrentDateTime.GetCurrentDateTime DateTime=> Now
+SET LogLine TO $'''%Now%,E,Info,RECOVERY_OK,0,False'''
+File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
+
+# Challenge stubs F–I (do ≥2 in class)
+# F: https://ontoiq.tech/pad/10-ocr.html → OCR_MISMATCH log if mismatch
+# G: https://ontoiq.tech/pad/05-files.html → bad upload then %WorkingRoot%\recovery-upload.txt
+# H: https://ontoiq.tech/pad/08-iframe.html → miss-frame then correct iframe
+# I: https://ontoiq.tech/pad/12-api.html → bad endpoint then health 2xx
+
+WebAutomation.CloseWebBrowser BrowserInstance: Browser

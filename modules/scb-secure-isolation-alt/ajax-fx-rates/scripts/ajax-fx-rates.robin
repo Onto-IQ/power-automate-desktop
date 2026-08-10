@@ -1,0 +1,32 @@
+# LabSCB_AjaxFxRates — partial-ui
+# URL: https://www.scb.co.th/th/personal-banking/foreign-exchange-rates
+# Filter CurrencyCode=USD
+
+SET CurrencyCode TO $'''USD'''
+
+WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://www.scb.co.th/th/personal-banking/foreign-exchange-rates''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 90 Timeout: 90 BrowserInstance=> Browser
+
+# REBIND: Wait Tbl_ScbFx until currency rows visible (e.g. USD)
+WebAutomation.WaitForWebPageContent.WaitForWebPageToContainElement BrowserInstance: Browser Control: appmask['SCB AjaxFx']['Tbl_ScbFx'] Timeout: 90
+
+# REBIND: Extract Entire HTML Table (or repeating scrape) → ScbFxTable
+# WebAutomation.ExtractData ... ExtractedData=> ScbFxTable
+Variables.CreateNewDatatable InputTable: { ^['Currency', 'BankBuys', 'BankSells'] } DataTable=> ScbFxTable
+Variables.CreateNewDatatable InputTable: { ^['Currency', 'BankBuys', 'BankSells'] } DataTable=> Hits
+
+LOOP FOREACH FxRow IN ScbFxTable
+    IF Contains(FxRow[0], CurrencyCode, False) THEN
+        Variables.AddRowToDataTable.AppendRowToDataTable DataTable: Hits RowToAdd: FxRow
+    END
+END
+
+SET CsvBody TO $'''Currency,BankBuys,BankSells'''
+LOOP FOREACH HitRow IN Hits
+    SET CsvLine TO $'''%HitRow[0]%,%HitRow[1]%,%HitRow[2]%'''
+    SET CsvBody TO $'''%CsvBody%
+%CsvLine%'''
+END
+
+File.WriteText File: $'''C:\\PAD-Labs\\output\\lab-scb-alt\\scb-fx-rates.csv''' TextToWrite: CsvBody AppendNewLine: True IfFileExists: File.IfFileExists.Overwrite Encoding: File.FileEncoding.UTF8
+
+WebAutomation.CloseWebBrowser BrowserInstance: Browser

@@ -1,0 +1,41 @@
+# Lab06_DataTableExcel — full (filter + Tier + Summary + FormatSummary macro)
+# Filter: Region=BKK OR Amount>=10000; Tier Gold if Amount>=12000 else Silver
+
+SET WorkingRoot TO $'''C:\\PAD-Labs\\working\\lab06'''
+SET OutputPath TO $'''C:\\PAD-Labs\\output\\lab06\\orders-report.xlsm'''
+SET SumAmount TO 0
+
+Excel.LaunchExcel.LaunchAndOpen Path: $'''%WorkingRoot%\\sales-report.xlsm''' Visible: True ReadOnly: False LoadAddInsAndMacros: True Instance=> Excel
+Excel.SetActiveWorksheet.ActivateWorksheetByName Instance: Excel Name: $'''Orders'''
+Excel.ReadFromExcel.ReadAllCells Instance: Excel ReadAsText: False FirstLineIsHeader: True RangeValue=> Orders
+
+Variables.CreateNewDatatable InputTable: { ^['OrderId', 'Customer', 'Product', 'Amount', 'OrderDate', 'Region', 'Tier'] } DataTable=> Filtered
+
+LOOP FOREACH CurrentRow IN Orders
+    Text.ToNumber Text: CurrentRow['Amount'] Number=> AmountNumber
+    IF CurrentRow['Region'] = $'''BKK''' OR AmountNumber >= 10000 THEN
+        IF AmountNumber >= 12000 THEN
+            SET Tier TO $'''Gold'''
+        ELSE
+            SET Tier TO $'''Silver'''
+        END
+        Variables.AddRowToDataTable.AppendRowToDataTable DataTable: Filtered RowToAdd: [CurrentRow['OrderId'], CurrentRow['Customer'], CurrentRow['Product'], CurrentRow['Amount'], CurrentRow['OrderDate'], CurrentRow['Region'], Tier]
+    END
+END
+
+LOOP FOREACH FilteredRow IN Filtered
+    Text.ToNumber Text: FilteredRow['Amount'] Number=> FilteredAmount
+    SET SumAmount TO SumAmount + FilteredAmount
+END
+
+Excel.WriteToExcel.WriteCells Instance: Excel Value: Filtered WorksheetName: $'''Filtered''' StartColumn: 1 StartRow: 1 FirstLineIsHeader: True
+Excel.WriteToExcel.WriteCell Instance: Excel Value: $'''TotalAmount''' WorksheetName: $'''Summary''' Column: $'''A''' Row: 1
+Excel.WriteToExcel.WriteCell Instance: Excel Value: SumAmount WorksheetName: $'''Summary''' Column: $'''B''' Row: 1
+
+Excel.RunExcelMacro.RunExcelMacro Instance: Excel Macro: $'''FormatSummary'''
+
+IF (File.IfFile.Exists File: OutputPath) THEN
+    File.Delete Files: OutputPath
+END
+Excel.SaveAs.SaveAs Instance: Excel DocumentFormat: Excel.DocumentFormat.ExcelMacroEnabledWorkbook DocumentPath: OutputPath
+Excel.CloseExcel.Close Instance: Excel

@@ -101,3 +101,5 @@ C:\PAD-Labs\output\lab-scb-alt\bot-fx-table.csv
 ## Cleanup
 
 ปิดเบราว์เซอร์ค้าง
+
+> **Catch-up:** ตามไม่ทัน → วาง [`scripts/static-fx-table.robin`](scripts/static-fx-table.robin) ใน flow ว่าง (partial-ui)

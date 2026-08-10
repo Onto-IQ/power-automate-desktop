@@ -1,0 +1,30 @@
+# Lab01_RecordReplay — catch-up reference (partial-ui: rebind appmask selectors)
+# URL: https://ontoiq.tech/pad/01-forms.html
+# Selectors: #txt-name #txt-email #txt-amount #txt-date #txt-note [data-pad="btn-submit-form"]
+
+SET FullName TO $'''Somchai Demo'''
+SET Email TO $'''somchai.demo@example.com'''
+SET Amount TO $'''3000'''
+SET FormDate TO $'''2026-08-08'''
+SET Message TO $'''Hello from Lab 01 Record & Replay'''
+
+WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://ontoiq.tech/pad/01-forms.html''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 60 Timeout: 60 BrowserInstance=> Browser
+
+# REBIND: Wait for #txt-name / [data-pad="txt-name"] → Txt_Name
+WebAutomation.WaitForWebPageContent.WaitForWebPageToContainElement BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Name'] Timeout: 60
+
+# REBIND: Populate 5 fields — Txt_Name, Txt_Email, Txt_Amount, Txt_Date, Txt_Note
+WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Name'] Text: FullName EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
+WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Email'] Text: Email EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
+WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Amount'] Text: Amount EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
+WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Date'] Text: FormDate EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
+WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Note'] Text: Message EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
+
+# REBIND: Press Btn_Submit — [data-pad="btn-submit-form"] / #btn-submit-form
+WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab01 Forms']['Btn_Submit'] WaitForPageToLoadTimeout: 60
+
+# REBIND: Wait + Extract confirmation text → SubmitResult (or Take screenshot)
+# WebAutomation.ExtractData.ExtractData BrowserInstance: Browser ... ExtractedData=> SubmitResult
+WebAutomation.TakeScreenshot.TakeScreenshot BrowserInstance: Browser File: $'''C:\\PAD-Labs\\output\\lab01\\submit-proof.png'''
+
+WebAutomation.CloseWebBrowser BrowserInstance: Browser

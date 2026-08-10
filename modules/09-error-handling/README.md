@@ -11,8 +11,15 @@
 | 1 | **[LESSON.md](LESSON.md)** | อ่านความรู้: กลไก error จริงของ PAD (ไม่ใช่ Try-Catch) |
 | 2 | **[LAB.md](LAB.md)** | Fault cases A–E (+ Challenge F–I) ทีละขั้น |
 
-## วัตถุประสงค์
 
+## Reference script (catch-up)
+
+สำหรับนักเรียนที่ทำตามไม่ทัน — เปิด [`scripts/09-error-handling.robin`](scripts/09-error-handling.robin) แล้ว copy วางใน desktop flow ว่าง
+
+- partial-ui — Cases A–E; rebind delay/dialogs/forms
+- ไม่แทนการทำ LAB หลัก; ใช้เทียบลำดับ action / กู้งานให้ทันชั้น
+
+## วัตถุประสงค์
 - ทำให้ desktop flow ทนต่อความล้มเหลวที่ตั้งใจจำลอง
 - บันทึก log ให้ตรวจสอบย้อนหลังได้ และไม่ทิ้ง Excel/browser ค้าง
 - แยกได้ว่า error ใดควร retry และ error ใดควรถือว่าจบงานอย่างควบคุม

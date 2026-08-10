@@ -13,8 +13,15 @@
 | 1 | **[LESSON.md](LESSON.md)** | AJAX vs static |
 | 2 | **[LAB.md](LAB.md)** | Hands-on |
 
-## วัตถุประสงค์
 
+## Reference script (catch-up)
+
+สำหรับนักเรียนที่ทำตามไม่ทัน — เปิด [`scripts/03-ajax-table.robin`](scripts/03-ajax-table.robin) แล้ว copy วางใน desktop flow ว่าง
+
+- partial-ui
+- ไม่แทนการทำ LAB หลัก; ใช้เทียบลำดับ action / กู้งานให้ทันชั้น
+
+## วัตถุประสงค์
 - เปิด [09-ajax-table](https://pad.ontoiq.tech/pad/09-ajax-table.html) แล้ว **Wait จนมีแถว** ก่อน Extract
 - กรองตาม criteria (`MinAmount=1500`) แล้วเขียน CSV
 - แยกจาก static หน้าเดียว และ catalog pagination

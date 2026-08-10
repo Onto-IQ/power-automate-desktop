@@ -115,3 +115,5 @@ C:\PAD-Labs\output\lab-scb-alt\scb-fx-rates.csv
 ## Cleanup
 
 ปิดเบราว์เซอร์ค้าง · ลบ CSV ทดสอบถ้าไม่ต้องการเก็บเรท
+
+> **Catch-up:** ตามไม่ทัน → วาง [`scripts/ajax-fx-rates.robin`](scripts/ajax-fx-rates.robin) ใน flow ว่าง (partial-ui)

@@ -390,3 +390,5 @@ https://ontoiq.tech/pad/12-api.html
 ## หมายเหตุสไลด์ vs official
 
 สไลด์อาจกล่าวถึง “Activate Phone Number Input” — **ไม่ใช่เกณฑ์บังคับของ Lab นี้** ให้ใช้ **Wait for window content** / **Focus window** / **On error** ตาม [official error handling](https://learn.microsoft.com/power-automate/desktop-flows/errors)
+
+> **Catch-up:** ตามไม่ทัน → วาง [`scripts/09-error-handling.robin`](scripts/09-error-handling.robin) ใน flow ว่าง (partial-ui)

@@ -11,8 +11,15 @@
 | 1 | **[LESSON.md](LESSON.md)** | อ่านความรู้: round-trip, Mission W, Actions |
 | 2 | **[LAB.md](LAB.md)** | Setup + Hands-on ทีละขั้นใน designer |
 
-## วัตถุประสงค์
 
+## Reference script (catch-up)
+
+สำหรับนักเรียนที่ทำตามไม่ทัน — เปิด [`scripts/08-excel-web-roundtrip.robin`](scripts/08-excel-web-roundtrip.robin) แล้ว copy วางใน desktop flow ว่าง
+
+- partial-ui — rebind web + Excel
+- ไม่แทนการทำ LAB หลัก; ใช้เทียบลำดับ action / กู้งานให้ทันชั้น
+
+## วัตถุประสงค์
 - สร้าง Flow ธุรกิจสั้น: **Excel → Web → Excel**
 - Login Lab Hub แล้วกรอกฟอร์ม/ Wizard จากแต่ละแถว Lead
 - อัปเดตคอลัมน์ Status / WebResult กลับ workbook output

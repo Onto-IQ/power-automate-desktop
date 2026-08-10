@@ -466,3 +466,5 @@ Approved=%ApprovedCount%; Rejected=%RejectedCount%; Review=%ReviewCount%
 
 - รีเซ็ต working จาก `assets/inbox` ก่อนสาธิตซ้ำ
 - ลบ `C:\PAD-Labs\working\lab04` ได้หลังผ่านเกณฑ์ — คงต้นฉบับใน repo ไว้
+
+> **Catch-up:** ตามไม่ทัน → วาง [`scripts/04-conditional-automation.robin`](scripts/04-conditional-automation.robin) ใน flow ว่าง (full)

@@ -12,8 +12,15 @@
 | 1 | **[LESSON.md](LESSON.md)** | Controls บนเว็บ |
 | 2 | **[LAB.md](LAB.md)** | Hands-on |
 
-## วัตถุประสงค์
 
+## Reference script (catch-up)
+
+สำหรับนักเรียนที่ทำตามไม่ทัน — เปิด [`scripts/03-controls.robin`](scripts/03-controls.robin) แล้ว copy วางใน desktop flow ว่าง
+
+- partial-ui
+- ไม่แทนการทำ LAB หลัก; ใช้เทียบลำดับ action / กู้งานให้ทันชั้น
+
+## วัตถุประสงค์
 - เปิด [02-controls](https://pad.ontoiq.tech/pad/02-controls.html)
 - ตั้งค่า dropdown / checkbox แล้วบันทึกหลักฐานสั้น ๆ (CSV แถวเดียวหรือ screenshot)
 

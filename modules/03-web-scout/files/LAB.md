@@ -65,3 +65,5 @@ C:\PAD-Labs\working\lab03\upload-sample.txt
 ## Cleanup
 
 ไฟล์ใน `downloads\` เก็บไว้ตรวจได้
+
+> **Catch-up:** ตามไม่ทัน → วาง [`scripts/03-files.robin`](scripts/03-files.robin) ใน flow ว่าง (partial-ui)

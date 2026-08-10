@@ -9,6 +9,8 @@
 
 > Lab นี้ไม่ต้องใช้เว็บ Lab Hub — ฝึกกับ Notepad  
 > Calculator (optional): [Lab 01b Calculator](../01b-calculator/README.md) · Desktop เต็มรูปแบบ: [Lab 07 Contoso](../07-contoso-invoice-ops/README.md)
+>
+> **Catch-up:** ตามไม่ทัน → วาง [`scripts/01b_notepad.robin`](scripts/01b_notepad.robin) ใน flow ว่าง (อาจต้อง rebind UI Elements ตามเครื่อง)
 
 ## อ้างอิง (Aug 2026)
 
@@ -58,21 +60,23 @@ Lab01b_Notepad
 
 ### Step 1 — ตั้ง path และข้อความ
 
+อ้างอิงลำดับตัวแปรตาม [`scripts/01b_notepad.robin`](scripts/01b_notepad.robin)
+
 1. ใน Actions Pane ค้นหา **Set variable** แล้วลากลง workspace
 2. ตั้งค่า:
-   - Name: `NotepadPath` ← **ไม่ใส่ `%`**
+   - Name: `Workdir` ← **ไม่ใส่ `%`**
    - Value: (คัดลอกด้านล่างวางในช่อง Value)
 
 ```text
-C:\Windows\System32\notepad.exe
+C:\PAD-Labs\output\lab01b\
 ```
 
 3. เพิ่ม **Set variable** (Name ไม่มี `%`):
    - Name: `OutFile` ← **ไม่ใส่ `%`**
-   - Value: (คัดลอกด้านล่างวางในช่อง Value)
+   - Value: (คัดลอกด้านล่างวางในช่อง Value — **ชื่อไฟล์เท่านั้น**)
 
 ```text
-C:\PAD-Labs\output\lab01b\notepad-output.txt
+notepad-output.txt
 ```
 
 4. เพิ่ม **Set variable**:
@@ -89,45 +93,46 @@ PAD Lab 01b — Notepad
 
 1. ลาก **Run application** วางหลังชุด Set variable
 2. ตั้งค่า:
-   - Application path: (คัดลอกด้านล่างวางในช่อง)
+   - Application path: (คัดลอกด้านล่างวางในช่อง — ตาม reference script)
 
 ```text
-%NotepadPath%
+C:\Windows\System32\notepad.exe
 ```
 
    - Window style: Normal (หรือตามที่มี)
 3. Produced / รอให้แอปเริ่มได้ตามค่าในหน้าต่าง action
 4. กด Save
 
-### Step 3 — รอให้หน้าต่างพร้อม
+### Step 3 — (แนะนำ) รอให้หน้าต่างพร้อม
 
-เส้นทางหลัก: ใช้ **Wait for window content** ให้ Notepad พร้อมก่อน Interact — ไม่บังคับ **Focus window** ถ้า Wait แล้วพิมพ์เข้าได้
+Reference script **ไม่มี** Wait — ถ้าเครื่องพร้อมหลัง Run แล้วไป Step 4 ได้เลย  
+ถ้า Replay พิมพ์ไม่เข้า / หน้าต่างยังไม่ขึ้น ให้เพิ่ม:
 
 1. ลาก **Wait for window content**
 2. ตั้งค่าให้ชี้หน้าต่าง Notepad / พื้นที่ Edit
 3. กด Save
 
-> **Focus window ใส่เมื่อไหร่:** ถ้า Replay แล้วพิมพ์ไม่เข้า หรือหน้าต่างอยู่ด้านหลัง ให้เพิ่ม **Focus window** หลัง Wait — ไม่ต้องใช้ Focus แทน Wait
+> **Focus window ใส่เมื่อไหร่:** ถ้าพิมพ์ไม่เข้า หรือหน้าต่างอยู่ด้านหลัง ให้เพิ่ม **Focus window** — ไม่บังคับในเส้นทางหลัก
 
 ### Step 4 — Capture UI Element ของพื้นที่พิมพ์
 
 1. เปิด **UI Elements** pane → Add element ด้วย UI Picker
-2. ใช้ **Ctrl + Left Click** จับพื้นที่พิมพ์ของ Notepad (Edit / Document)
-3. ตั้งชื่อ element: `Edit_NotepadBody`
+2. ใช้ **Ctrl + Left Click** จับพื้นที่พิมพ์ของ Notepad (Edit / Document — reference มักเป็น `Document 'Text editor'`)
+3. (แนะนำ) ตั้งชื่อ element: `Edit_NotepadBody` — ไม่บังคับให้ตรงชื่อนี้ถ้าใช้ชื่อที่ PAD จับมาแล้ว
 4. ใน Selector Builder กด **Test** / Validate ก่อนใช้จริง
 
 ### Step 5 — กรอกข้อความ
 
 1. ลาก **Populate text field in window**
 2. ตั้งค่า:
-   - UI element: `Edit_NotepadBody`
+   - UI element: element จาก Step 4
    - Text to fill-in: (คัดลอกด้านล่างวางในช่อง)
 
 ```text
 %NoteText%
 ```
 
-   - **Simulate action:** เปิด **On** (แนะนำสำหรับ Lab นี้)
+   - **Simulate action:** เปิด **On** (ตาม reference / แนะนำสำหรับ Lab นี้)
 
 3. กด Save
 
@@ -140,15 +145,14 @@ PAD Lab 01b — Notepad
 1. ลาก **Send keys** (หรือใช้เมนู Save ผ่าน **Click UI element in window** ถ้า capture เมนูได้)
 2. ตั้งค่าให้ส่ง `Ctrl+S` ไปที่หน้าต่าง Notepad
 3. เมื่อมี Save As:
-   - Capture ช่องชื่อไฟล์ → **Populate text field in window** ด้วย (คัดลอกด้านล่างวางในช่อง)
+   - Capture ช่องชื่อไฟล์ → **Populate text field in window** ด้วย (คัดลอกด้านล่างวางในช่อง — รวมโฟลเดอร์+ชื่อไฟล์)
 
 ```text
-%OutFile%
+%Workdir%%OutFile%
 ```
 
    - Capture ปุ่ม Save → **Press button in window** หรือ **Click UI element in window**
 4. จัดการ dialog ทับไฟล์ (Yes/Replace) ถ้ามี — capture UI element ให้ครบ
-
 ### Step 7 — ปิด Notepad
 
 1. ลาก **Close window**
@@ -198,11 +202,11 @@ C:\PAD-Labs\output\lab01b\notepad-output.txt
 
 | ผิด | ถูก |
 |-----|-----|
-| พิมพ์ `%Name%` ในช่อง Name / **Variables produced** | ใช้ชื่อเปล่าไม่มี `%` เช่น `NoteText`, `OutFile` |
+| พิมพ์ `%Name%` ในช่อง Name / **Variables produced** | ใช้ชื่อเปล่าไม่มี `%` เช่น `NoteText`, `Workdir`, `OutFile` |
 | คลิกด้วยพิกัดจอเป็นหลัก | Capture **UI Elements** แล้ว Populate ตาม element |
 | ข้อความใน Notepad ไม่ครบ | เปิด **Simulate action** |
-| ไม่ Wait ก่อนพิมพ์ | มี **Wait for window content** ก่อน Populate |
-| ลืม Save As path | ใส่ `%OutFile%` และจัดการ dialog ให้ครบ |
+| ใส่ path เต็มใน `OutFile` | `OutFile` = ชื่อไฟล์ · path เต็ม = `%Workdir%%OutFile%` |
+| ลืม Save As path | ใส่ `%Workdir%%OutFile%` และจัดการ dialog ให้ครบ |
 | Close ด้วย title เดิมหลัง Save As | ใช้ Window class `Notepad` |
 | เปิดแอปซ้อนหลายตัวตอน Replay | Close / Terminate ก่อนรันรอบใหม่ |
 
@@ -212,14 +216,15 @@ C:\PAD-Labs\output\lab01b\notepad-output.txt
 
 | ชื่อตอนสร้าง (ไม่มี `%`) | ตอนอ้างอิง | Type | ตัวอย่าง |
 |--------------------------|------------|------|----------|
+| `Workdir` | `%Workdir%` | Text | `C:\PAD-Labs\output\lab01b\` |
+| `OutFile` | `%OutFile%` | Text | `notepad-output.txt` |
 | `NoteText` | `%NoteText%` | Text | เนื้อหาจาก `notepad-message.txt` |
-| `NotepadPath` | `%NotepadPath%` | Text | `C:\Windows\System32\notepad.exe` |
-| `OutFile` | `%OutFile%` | Text | `C:\PAD-Labs\output\lab01b\notepad-output.txt` |
 
 ## Expected Result
 
 - Notepad มีข้อความจาก `%NoteText%` และบันทึกไฟล์ได้ (หรือ populate + ปิดอย่างปลอดภัย)
-- UI Elements ตั้งชื่อสื่อความหมาย (`Edit_NotepadBody`, …)
+- ไฟล์ปลายทาง: `%Workdir%%OutFile%` → `C:\PAD-Labs\output\lab01b\notepad-output.txt`
+- UI Elements แนะนำให้ตั้งชื่อสื่อความหมาย (เช่น `Edit_NotepadBody`)
 
 ## Acceptance Criteria
 
@@ -227,7 +232,7 @@ C:\PAD-Labs\output\lab01b\notepad-output.txt
 - [ ] Notepad พิมพ์ข้อความและบันทึกไฟล์ได้ หรืออย่างน้อย populate สำเร็จแล้วปิดอย่างปลอดภัย
 - [ ] Populate เปิด **Simulate action**
 - [ ] Close ใช้ Window class `Notepad` (หรือเทียบเท่าที่เสถียรหลัง Save As)
-- [ ] UI Elements ถูกตั้งชื่อให้สื่อความหมาย
+- [ ] ใช้ `Workdir` + `OutFile` (หรือ path รวมที่เทียบเท่า `%Workdir%%OutFile%`)
 
 ## Troubleshooting
 

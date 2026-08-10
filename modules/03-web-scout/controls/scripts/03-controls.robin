@@ -1,0 +1,20 @@
+# Lab03_Controls — partial-ui
+# URL: https://pad.ontoiq.tech/pad/02-controls.html
+
+WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://pad.ontoiq.tech/pad/02-controls.html''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 60 Timeout: 60 BrowserInstance=> Browser
+
+# REBIND: Set dropdown (non-default) + checkbox
+# WebAutomation.SetDropDownListValue ... Control: appmask['Lab03 Controls']['Ddl_Option']
+# WebAutomation.SetCheckboxState ... Control: appmask['Lab03 Controls']['Chk_Agree']
+
+# optional: Get details → SelectedOption, CheckState
+SET SelectedOption TO $'''(rebind-and-read)'''
+SET CheckState TO $'''(rebind-and-read)'''
+
+SET CsvBody TO $'''SelectedOption,CheckState
+%SelectedOption%,%CheckState%'''
+File.WriteText File: $'''C:\\PAD-Labs\\output\\lab03\\controls-result.csv''' TextToWrite: CsvBody AppendNewLine: True IfFileExists: File.IfFileExists.Overwrite Encoding: File.FileEncoding.UTF8
+
+# optional: WebAutomation.TakeScreenshot → C:\PAD-Labs\output\lab03\controls.png
+
+WebAutomation.CloseWebBrowser BrowserInstance: Browser

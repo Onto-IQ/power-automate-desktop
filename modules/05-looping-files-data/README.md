@@ -11,8 +11,15 @@
 | 1 | **[LESSON.md](LESSON.md)** | อ่านความรู้: ลูปซ้อน Data table รวมยอด |
 | 2 | **[LAB.md](LAB.md)** | Setup + Hands-on ทีละขั้นใน designer |
 
-## วัตถุประสงค์
 
+## Reference script (catch-up)
+
+สำหรับนักเรียนที่ทำตามไม่ทัน — เปิด [`scripts/05-looping-files-data.robin`](scripts/05-looping-files-data.robin) แล้ว copy วางใน desktop flow ว่าง
+
+- full — ต้องมี Excel; GrandTotal=46500
+- ไม่แทนการทำ LAB หลัก; ใช้เทียบลำดับ action / กู้งานให้ทันชั้น
+
+## วัตถุประสงค์
 - ประมวลผลไฟล์เป็นชุด (batch)
 - รวมยอด Amount จากหลาย CSV
 - เขียนรายงานสรุปเดียว (`batch-summary.csv`, Grand total 46500)

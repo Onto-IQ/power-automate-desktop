@@ -1,0 +1,22 @@
+# Lab03_Files — partial-ui
+# URL: https://pad.ontoiq.tech/pad/05-files.html
+
+WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://pad.ontoiq.tech/pad/05-files.html''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 60 Timeout: 60 BrowserInstance=> Browser
+
+# REBIND: click download link/button on page
+# WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab03 Files']['Lnk_Download'] ...
+
+# Wait until download appears (browser download folder or C:\PAD-Labs\downloads\)
+SET DownloadPath TO $'''C:\\PAD-Labs\\downloads\\'''
+# optional: If file exists → write evidence
+SET Evidence TO $'''download=pending; upload=pending'''
+IF (File.IfFile.Exists File: $'''C:\\PAD-Labs\\working\\lab03\\upload-sample.txt''') THEN
+    SET Evidence TO $'''download=check-folder; upload-ready=yes'''
+END
+
+# REBIND: upload input → C:\PAD-Labs\working\lab03\upload-sample.txt then Submit/Confirm
+# WebAutomation.UploadFile / Populate file input with path above
+
+File.WriteText File: $'''C:\\PAD-Labs\\output\\lab03\\files-evidence.txt''' TextToWrite: Evidence AppendNewLine: True IfFileExists: File.IfFileExists.Overwrite Encoding: File.FileEncoding.UTF8
+
+WebAutomation.CloseWebBrowser BrowserInstance: Browser

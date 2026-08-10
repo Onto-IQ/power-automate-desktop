@@ -1,0 +1,47 @@
+# Lab04_ConditionalAutomation — full (file routing by Priority/Status in filename)
+# Filename: REQ-{LeadId}-{Priority}-{Status}.txt
+
+SET WorkingRoot TO $'''C:\\PAD-Labs\\working\\lab04'''
+SET ApprovedCount TO 0
+SET RejectedCount TO 0
+SET ReviewCount TO 0
+SET RoutingLog TO $'''FileName,Folder,Priority,Status'''
+
+IF (Folder.IfFolderExists.DoesNotExist Path: $'''%WorkingRoot%\\approved''') THEN
+    Folder.Create FolderPath: WorkingRoot FolderName: $'''approved''' Folder=> NewFolder
+END
+IF (Folder.IfFolderExists.DoesNotExist Path: $'''%WorkingRoot%\\rejected''') THEN
+    Folder.Create FolderPath: WorkingRoot FolderName: $'''rejected''' Folder=> NewFolder
+END
+IF (Folder.IfFolderExists.DoesNotExist Path: $'''%WorkingRoot%\\review''') THEN
+    Folder.Create FolderPath: WorkingRoot FolderName: $'''review''' Folder=> NewFolder
+END
+
+Folder.GetFiles Folder: $'''%WorkingRoot%\\inbox''' FileFilter: $'''*.txt''' IncludeSubfolders: False FailOnAccessDenied: True SortBy1: Folder.SortBy.NoSort SortDescending1: False SortBy2: Folder.SortBy.NoSort SortDescending2: False SortBy3: Folder.SortBy.NoSort SortDescending3: False Files=> InboxFiles
+
+LOOP FOREACH CurrentFile IN InboxFiles
+    File.GetPathPart File: CurrentFile NameWithoutExtension=> FileNameOnly
+    Text.SplitText.SplitWithDelimiter Text: FileNameOnly CustomDelimiter: $'''-''' IsRegEx: False Result=> NameParts
+    SET Priority TO NameParts[2]
+    SET Status TO NameParts[3]
+    IF Priority = $'''High''' AND Status = $'''Ready''' THEN
+        File.Move Files: CurrentFile Destination: $'''%WorkingRoot%\\approved''' IfFileExists: File.IfExists.Overwrite MovedFiles=> MovedFiles
+        Variables.IncreaseVariable Value: ApprovedCount IncrementValue: 1
+        SET RoutingLog TO $'''%RoutingLog%
+%FileNameOnly%,approved,%Priority%,%Status%'''
+    ELSE IF Priority = $'''Low''' OR Status = $'''Invalid''' THEN
+        File.Move Files: CurrentFile Destination: $'''%WorkingRoot%\\rejected''' IfFileExists: File.IfExists.Overwrite MovedFiles=> MovedFiles
+        Variables.IncreaseVariable Value: RejectedCount IncrementValue: 1
+        SET RoutingLog TO $'''%RoutingLog%
+%FileNameOnly%,rejected,%Priority%,%Status%'''
+    ELSE
+        File.Move Files: CurrentFile Destination: $'''%WorkingRoot%\\review''' IfFileExists: File.IfExists.Overwrite MovedFiles=> MovedFiles
+        Variables.IncreaseVariable Value: ReviewCount IncrementValue: 1
+        SET RoutingLog TO $'''%RoutingLog%
+%FileNameOnly%,review,%Priority%,%Status%'''
+    END
+END
+
+File.WriteText File: $'''C:\\PAD-Labs\\output\\lab04\\routing-log.csv''' TextToWrite: RoutingLog AppendNewLine: True IfFileExists: File.IfFileExists.Overwrite Encoding: File.FileEncoding.UTF8
+SET SummaryText TO $'''Approved=%ApprovedCount%; Rejected=%RejectedCount%; Review=%ReviewCount%'''
+File.WriteText File: $'''C:\\PAD-Labs\\output\\lab04\\routing-summary.txt''' TextToWrite: SummaryText AppendNewLine: True IfFileExists: File.IfFileExists.Overwrite Encoding: File.FileEncoding.UTF8

@@ -1,0 +1,27 @@
+# LabSCB_StaticFxTable — partial-ui
+# URL: BOT stats ReportPage reportID=123
+
+WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://app.bot.or.th/BTWS_STAT/statistics/ReportPage.aspx?language=TH&reportID=123''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 90 Timeout: 90 BrowserInstance=> Browser
+
+# REBIND: Wait Tbl_BotFx (e.g. row “อัตราอ้างอิง : ดอลลาร์สหรัฐ (USD)”)
+WebAutomation.WaitForWebPageContent.WaitForWebPageToContainElement BrowserInstance: Browser Control: appmask['SCB StaticFx']['Tbl_BotFx'] Timeout: 90
+
+# REBIND: Extract Entire HTML Table → BotFxTable (use real column names from Variables pane)
+# WebAutomation.ExtractData ... ExtractedData=> BotFxTable
+Variables.CreateNewDatatable InputTable: { ^['ลำดับ', 'รายการ', 'ค่าล่าสุด'] } DataTable=> BotFxTable
+
+SET CsvBody TO $'''ลำดับ,รายการ,ค่าล่าสุด'''
+SET RowLimit TO 0
+LOOP FOREACH FxRow IN BotFxTable
+    IF RowLimit >= 20 THEN
+        EXIT LOOP
+    END
+    SET CsvLine TO $'''%FxRow[0]%,%FxRow[1]%,%FxRow[2]%'''
+    SET CsvBody TO $'''%CsvBody%
+%CsvLine%'''
+    Variables.IncreaseVariable Value: RowLimit IncrementValue: 1
+END
+
+File.WriteText File: $'''C:\\PAD-Labs\\output\\lab-scb-alt\\bot-fx-table.csv''' TextToWrite: CsvBody AppendNewLine: True IfFileExists: File.IfFileExists.Overwrite Encoding: File.FileEncoding.UTF8
+
+WebAutomation.CloseWebBrowser BrowserInstance: Browser

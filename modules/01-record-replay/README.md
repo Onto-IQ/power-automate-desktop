@@ -11,8 +11,15 @@
 | 1 | **[LESSON.md](LESSON.md)** | อ่านความรู้: Recorder, UI Elements, Web actions |
 | 2 | **[LAB.md](LAB.md)** | Setup + Hands-on ทีละขั้นใน designer |
 
-## วัตถุประสงค์
 
+## Reference script (catch-up)
+
+สำหรับนักเรียนที่ทำตามไม่ทัน — เปิด [`scripts/01-record-replay.robin`](scripts/01-record-replay.robin) แล้ว copy วางใน desktop flow ว่าง
+
+- partial-ui — rebind selectors บน Forms
+- ไม่แทนการทำ LAB หลัก; ใช้เทียบลำดับ action / กู้งานให้ทันชั้น
+
+## วัตถุประสงค์
 - ใช้ **Recorder** สร้าง flow สำหรับกรอกฟอร์มบนเว็บ **ครบทุกช่อง** (ชื่อ อีเมล จำนวนเงิน วันที่ หมายเหตุ) แล้ว Submit
 - ตรวจและปรับ **UI Elements** หลัง Record ให้ selector เสถียรขึ้น
 - Replay flow ให้ได้ผลลัพธ์ซ้ำกันได้อย่างน่าเชื่อถือ

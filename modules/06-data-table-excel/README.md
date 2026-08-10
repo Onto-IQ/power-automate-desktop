@@ -11,8 +11,15 @@
 | 1 | **[LESSON.md](LESSON.md)** | อ่านความรู้: Excel instance, กรอง, Tier, macro |
 | 2 | **[LAB.md](LAB.md)** | Setup + Hands-on ทีละขั้นใน designer |
 
-## วัตถุประสงค์
 
+## Reference script (catch-up)
+
+สำหรับนักเรียนที่ทำตามไม่ทัน — เปิด [`scripts/06-data-table-excel.robin`](scripts/06-data-table-excel.robin) แล้ว copy วางใน desktop flow ว่าง
+
+- full — ต้องมี sales-report.xlsm + macro
+- ไม่แทนการทำ LAB หลัก; ใช้เทียบลำดับ action / กู้งานให้ทันชั้น
+
+## วัตถุประสงค์
 - อ่าน Excel เป็น Data table
 - แปลงข้อมูล (เพิ่มคอลัมน์, กรอง, สรุป)
 - เขียนผลกลับเป็น sheet ใหม่

@@ -5,6 +5,8 @@
 **วัน:** 1 · **ระดับ:** Beginner  
 **ทักษะ:** Folder/File actions, Get files, Copy/Move, Get file path part, Read/Write text
 
+> **Catch-up:** ตามไม่ทัน → วาง [`scripts/02-file-management.robin`](scripts/02-file-management.robin) ใน flow ว่าง (full — ไม่ต้อง rebind UI)
+
 ## อ้างอิง (Aug 2026)
 
 | แหล่ง | URL |
@@ -298,7 +300,7 @@ End
    - **Destination folder:**
 
 ```text
-%WorkingRoot%\archive\csv\
+%WorkingRoot%\archive\csv
 ```
 
    - **If file exists:** Overwrite
@@ -319,7 +321,7 @@ End
    - Destination:
 
 ```text
-%WorkingRoot%\archive\txt\
+%WorkingRoot%\archive\txt
 ```
 
    - If file exists: Overwrite
@@ -339,7 +341,7 @@ End
    - Destination:
 
 ```text
-%WorkingRoot%\archive\ignored\
+%WorkingRoot%\archive\ignored
 ```
 
    - If file exists: Overwrite
@@ -354,21 +356,21 @@ End
 - [ ] มี **If** / **Else if** / **Else** / **End**
 - [ ] แต่ละกิ่งมี **Copy file(s)** ใช้ `%CurrentFile%` (ไม่ใช่ `%InboxFiles%`)
 - [ ] แต่ละกิ่งมี **Increase variable** คนละตัวนับ (`CsvCount` / `TxtCount` / `IgnoredCount`)
-- [ ] ปลายทางเป็น `archive\csv\` · `archive\txt\` · `archive\ignored\` ตามกิ่ง
+- [ ] ปลายทางเป็น `archive\csv` · `archive\txt` · `archive\ignored` ตามกิ่ง (ตาม reference — ไม่บังคับ trailing `\`)
 
-โครงย่อ (เทียบจอ):
+โครงย่อ (เทียบจอ / [`02-file-management.robin`](scripts/02-file-management.robin)):
 
 ```text
 For each CurrentFile in InboxFiles
   Get file path part → FileExtension
   If FileExtension = '.csv'
-    Copy CurrentFile → %WorkingRoot%\archive\csv\
+    Copy CurrentFile → %WorkingRoot%\archive\csv
     Increase CsvCount
   Else if FileExtension = '.txt'
-    Copy CurrentFile → %WorkingRoot%\archive\txt\
+    Copy CurrentFile → %WorkingRoot%\archive\txt
     Increase TxtCount
   Else
-    Copy CurrentFile → %WorkingRoot%\archive\ignored\
+    Copy CurrentFile → %WorkingRoot%\archive\ignored
     Increase IgnoredCount
   End
 End
@@ -378,10 +380,10 @@ End
 
 1. **หลัง** End ของ For each ลาก **Set variable**
 2. Name: `SummaryText` ← **ไม่ใส่ `%`**
-3. Value: (คัดลอกทั้งบรรทัด — `%CsvCount%` คือการ **ใช้** ค่าตัวแปร มี `%` ถูกต้องแล้ว)
+3. Value: (คัดลอกทั้งบรรทัด — ตาม reference script รวมช่องว่างรอบ `;`)
 
 ```text
-CSV=%CsvCount%; TXT=%TxtCount%; IGNORED=%IgnoredCount%; Done
+CSV=%CsvCount% ; TXT=%TxtCount% ; IGNORED=%IgnoredCount% ;  Done
 ```
 
 4. ลาก **Write text to file**
@@ -399,16 +401,18 @@ CSV=%CsvCount%; TXT=%TxtCount%; IGNORED=%IgnoredCount%; Done
 ```
 
    - If file exists: Overwrite
-6. (ทางเลือก) สร้างโฟลเดอร์ `output\lab02` ด้วย **If folder exists** (**Doesn't exist**) + **Create folder** ใน Then ก่อนเขียนไฟล์
+   - Encoding: Unicode (ตาม reference)
+   - Append new line: On (ตาม reference)
+6. (ทางเลือก) สร้างโฟลเดอร์ `output\lab02` ด้วย **If folder exists** (**Doesn't exist**) + **Create folder** ใน Then ก่อนเขียนไฟล์ — reference เขียนใต้ `WorkingRoot` โดยตรง
 
 ### Step 6 — รันและตรวจ
 
 1. กด **Run**
 2. เปิดโฟลเดอร์ `archive\csv`, `archive\txt`, `archive\ignored` เทียบตารางด้านบน
-3. เปิด `summary.txt` ต้องได้แนว:
+3. เปิด `summary.txt` ต้องได้แนว (ช่องว่างตาม reference):
 
 ```text
-CSV=2; TXT=2; IGNORED=1; Done
+CSV=2 ; TXT=2 ; IGNORED=1 ;  Done
 ```
 
 4. รันซ้ำรอบสอง — ต้องไม่พัง (มี overwrite / If exists ชัด)

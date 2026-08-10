@@ -12,8 +12,15 @@
 | 1 | **[LESSON.md](LESSON.md)** | Pagination vs static |
 | 2 | **[LAB.md](LAB.md)** | Hands-on |
 
-## วัตถุประสงค์
 
+## Reference script (catch-up)
+
+สำหรับนักเรียนที่ทำตามไม่ทัน — เปิด [`scripts/03-catalog.robin`](scripts/03-catalog.robin) แล้ว copy วางใน desktop flow ว่าง
+
+- partial-ui
+- ไม่แทนการทำ LAB หลัก; ใช้เทียบลำดับ action / กู้งานให้ทันชั้น
+
+## วัตถุประสงค์
 - เปิด [19-catalog](https://pad.ontoiq.tech/pad/19-catalog.html)
 - Extract `#tbl-products` แล้วกด **Next** วนจนได้ประมาณ 24 รายการ
 - เขียน CSV รวมทุกหน้า

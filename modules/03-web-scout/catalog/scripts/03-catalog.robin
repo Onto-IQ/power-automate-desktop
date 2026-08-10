@@ -1,0 +1,48 @@
+# Lab03_Catalog — partial-ui
+# URL: https://pad.ontoiq.tech/pad/19-catalog.html · ~24 rows / 3 pages · Exit when Next disabled
+
+Variables.CreateNewDatatable InputTable: { ^['SKU', 'Product', 'Price', 'Category'] } DataTable=> CatalogHits
+SET MaxPages TO 10
+SET PageCount TO 0
+
+WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://pad.ontoiq.tech/pad/19-catalog.html''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 60 Timeout: 60 BrowserInstance=> Browser
+
+# REBIND before loop: Btn_NextPage (#btn-next-page), optional Tbl_Products (#tbl-products)
+
+LOOP WHILE PageCount < MaxPages
+    # REBIND: Wait #tbl-products
+    WebAutomation.WaitForWebPageContent.WaitForWebPageToContainElement BrowserInstance: Browser Control: appmask['Lab03 Catalog']['Tbl_Products'] Timeout: 60
+
+    # REBIND: Extract Entire HTML Table → PageTable
+    # WebAutomation.ExtractData ... ExtractedData=> PageTable
+    Variables.CreateNewDatatable InputTable: { ^['SKU', 'Product', 'Price', 'Category'] } DataTable=> PageTable
+
+    LOOP FOREACH ProductRow IN PageTable
+        Variables.AddRowToDataTable.AppendRowToDataTable DataTable: CatalogHits RowToAdd: ProductRow
+    END
+
+    Variables.IncreaseVariable Value: PageCount IncrementValue: 1
+
+    # REBIND: Get details Btn_NextPage Attribute=Disabled → AttributeValue
+    # WebAutomation.GetDetailsOfElement ... AttributeName: $'''Disabled''' AttributeValue=> AttributeValue
+    SET AttributeValue TO False
+    IF AttributeValue = True THEN
+        EXIT LOOP
+    END
+    # REBIND: Press Btn_NextPage
+    # WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab03 Catalog']['Btn_NextPage'] ...
+    EXIT LOOP
+END
+
+SET CsvPath TO $'''C:\\PAD-Labs\\output\\lab03\\catalog-products.csv'''
+File.WriteText File: CsvPath TextToWrite: $'''SKU,Product,Price,Category''' AppendNewLine: True IfFileExists: File.IfFileExists.Overwrite Encoding: File.FileEncoding.UTF8
+
+LOOP FOREACH CatalogRow IN CatalogHits
+    SET CsvLine TO CatalogRow[0]
+    SET CsvLine TO $'''%CsvLine%,%CatalogRow[1]%'''
+    SET CsvLine TO $'''%CsvLine%,%CatalogRow[2]%'''
+    SET CsvLine TO $'''%CsvLine%,%CatalogRow[3]%'''
+    File.WriteText File: CsvPath TextToWrite: CsvLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
+END
+
+WebAutomation.CloseWebBrowser BrowserInstance: Browser

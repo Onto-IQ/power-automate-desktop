@@ -136,3 +136,5 @@ C:\PAD-Labs\output\lab-scb-alt\search-proof.png
 ## Cleanup
 
 ปิดแท็บ/เบราว์เซอร์ค้างจาก lab
+
+> **Catch-up:** ตามไม่ทัน → วาง [`scripts/form-search.robin`](scripts/form-search.robin) ใน flow ว่าง (partial-ui)

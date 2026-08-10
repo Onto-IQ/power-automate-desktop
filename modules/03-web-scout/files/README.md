@@ -12,8 +12,15 @@
 | 1 | **[LESSON.md](LESSON.md)** | Download / Upload |
 | 2 | **[LAB.md](LAB.md)** | Hands-on |
 
-## วัตถุประสงค์
 
+## Reference script (catch-up)
+
+สำหรับนักเรียนที่ทำตามไม่ทัน — เปิด [`scripts/03-files.robin`](scripts/03-files.robin) แล้ว copy วางใน desktop flow ว่าง
+
+- partial-ui
+- ไม่แทนการทำ LAB หลัก; ใช้เทียบลำดับ action / กู้งานให้ทันชั้น
+
+## วัตถุประสงค์
 - เปิด [05-files](https://pad.ontoiq.tech/pad/05-files.html)
 - Download และ/หรือ Upload ด้วย [`assets/upload-sample.txt`](assets/upload-sample.txt)
 - เก็บหลักฐานใต้ `C:\PAD-Labs\downloads\` หรือ `output\lab03\`

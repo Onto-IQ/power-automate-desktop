@@ -417,3 +417,5 @@ https://ontoiq.tech/pad/05-files.html
 ## Cleanup
 
 - ลบ working copies; คง CSV/XLSX ต้นฉบับใน assets
+
+> **Catch-up:** ตามไม่ทัน → วาง [`scripts/08-excel-web-roundtrip.robin`](scripts/08-excel-web-roundtrip.robin) ใน flow ว่าง (partial-ui)

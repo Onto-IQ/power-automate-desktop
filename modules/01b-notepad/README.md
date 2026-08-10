@@ -13,8 +13,15 @@
 | 1 | **[LESSON.md](LESSON.md)** | อ่านความรู้: UI Elements บน Windows + Notepad |
 | 2 | **[LAB.md](LAB.md)** | Setup + Hands-on ใน designer |
 
-## วัตถุประสงค์
 
+## Reference script (catch-up)
+
+สำหรับนักเรียนที่ทำตามไม่ทัน — เปิด [`scripts/01b_notepad.robin`](scripts/01b_notepad.robin) แล้ว copy วางใน desktop flow ว่าง
+
+- partial-ui — อาจต้อง rebind UI Elements
+- ไม่แทนการทำ LAB หลัก; ใช้เทียบลำดับ action / กู้งานให้ทันชั้น
+
+## วัตถุประสงค์
 - อธิบายได้ว่าทำไมควรใช้ **UI Elements** แทนการคลิกด้วยพิกัดจอ
 - เปิด รอ และปิด Notepad ด้วย action ที่เหมาะสม
 - Capture selector ด้วย UI Picker แล้วทดสอบด้วย Validate/Test

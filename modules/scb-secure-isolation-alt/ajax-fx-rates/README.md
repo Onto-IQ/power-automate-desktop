@@ -12,8 +12,15 @@
 | 1 | **[LESSON.md](LESSON.md)** | หน้า FX ของ SCB |
 | 2 | **[LAB.md](LAB.md)** | Hands-on |
 
-## วัตถุประสงค์
 
+## Reference script (catch-up)
+
+สำหรับนักเรียนที่ทำตามไม่ทัน — เปิด [`scripts/ajax-fx-rates.robin`](scripts/ajax-fx-rates.robin) แล้ว copy วางใน desktop flow ว่าง
+
+- partial-ui
+- ไม่แทนการทำ LAB หลัก; ใช้เทียบลำดับ action / กู้งานให้ทันชั้น
+
+## วัตถุประสงค์
 - เปิดหน้าอัตราแลกเปลี่ยน SCB แล้ว **Wait จนแถวสกุลเงินโผล่** (ไม่ใช้ Wait วินาทีอย่างเดียว)
 - Extract ตาราง/รายการเรท
 - กรองแถวที่สนใจ (เช่น มีคำว่า USD) แล้วเขียน CSV

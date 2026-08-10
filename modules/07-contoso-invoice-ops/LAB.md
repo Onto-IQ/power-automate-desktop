@@ -595,3 +595,5 @@ Failed
 - ปิด Contoso / Excel ที่ค้าง
 - ข้อมูล invoice ที่สร้างใน Contoso เป็นของ Lab — ล้างตามที่วิทยากรแนะนำก่อนรอบสาธิตถัดไป
 - อย่า commit output/logs ส่วนตัว
+
+> **Catch-up:** ตามไม่ทัน → วาง [`scripts/07-contoso-invoice-ops.robin`](scripts/07-contoso-invoice-ops.robin) ใน flow ว่าง (partial-ui)

@@ -1,0 +1,55 @@
+# Lab08_ExcelWebRoundtrip — partial-ui
+# Login 06 → For each New lead → High=Wizard 07 else Forms 01 → write leads-output.xlsx
+
+SET WorkingRoot TO $'''C:\\PAD-Labs\\working\\lab08'''
+SET OutputPath TO $'''C:\\PAD-Labs\\output\\lab08\\leads-output.xlsx'''
+
+Excel.LaunchExcel.LaunchAndOpen Path: $'''%WorkingRoot%\\leads-input.xlsx''' Visible: True ReadOnly: False LoadAddInsAndMacros: False Instance=> Excel
+Excel.SetActiveWorksheet.ActivateWorksheetByName Instance: Excel Name: $'''Leads'''
+Excel.ReadFromExcel.ReadAllCells Instance: Excel ReadAsText: False FirstLineIsHeader: True RangeValue=> Leads
+
+WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://ontoiq.tech/pad/06-login.html''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 60 Timeout: 60 BrowserInstance=> Browser
+# REBIND: #txt-username #txt-password #btn-login
+WebAutomation.WaitForWebPageContent.WaitForWebPageToContainElement BrowserInstance: Browser Control: appmask['Lab08 Login']['Txt_Username'] Timeout: 60
+WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab08 Login']['Txt_Username'] Text: $'''demo''' EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
+WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab08 Login']['Txt_Password'] Text: $'''demo''' EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
+WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab08 Login']['Btn_Login'] WaitForPageToLoadTimeout: 60
+
+Variables.CreateNewDatatable InputTable: { ^['LeadId', 'FullName', 'Email', 'Priority', 'Status', 'WebResult', 'SubmittedAt'] } DataTable=> Results
+
+DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateOnly CurrentDateTime=> TodayDate
+Text.ConvertDateTimeToText.FromCustomDateTime DateTime: TodayDate CustomFormat: $'''yyyy-MM-dd''' Result=> TodayText
+
+LOOP FOREACH CurrentLead IN Leads
+    IF CurrentLead['Status'] = $'''New''' THEN
+        IF IsEmpty(CurrentLead['Email']) THEN
+            # skip empty email
+        ELSE IF CurrentLead['Priority'] = $'''High''' THEN
+            # Mission W — Wizard
+            WebAutomation.GoToWebPage.GoToWebPage BrowserInstance: Browser Url: $'''https://ontoiq.tech/pad/07-wizard.html''' WaitForPageToLoadTimeout: 60
+            # REBIND: complete wizard steps with CurrentLead fields
+            SET WebResult TO $'''WizardSubmitted'''
+        ELSE
+            WebAutomation.GoToWebPage.GoToWebPage BrowserInstance: Browser Url: $'''https://ontoiq.tech/pad/01-forms.html''' WaitForPageToLoadTimeout: 60
+            # REBIND: Populate Name/Email/Message/Date from CurrentLead; Press Submit
+            WebAutomation.WaitForWebPageContent.WaitForWebPageToContainElement BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Name'] Timeout: 60
+            WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Name'] Text: CurrentLead['FullName'] EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
+            WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Email'] Text: CurrentLead['Email'] EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
+            WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Date'] Text: TodayText EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
+            WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab01 Forms']['Btn_Submit'] WaitForPageToLoadTimeout: 60
+            SET WebResult TO $'''FormSubmitted'''
+        END
+        DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> SubmittedAt
+        Variables.AddRowToDataTable.AppendRowToDataTable DataTable: Results RowToAdd: [CurrentLead['LeadId'], CurrentLead['FullName'], CurrentLead['Email'], CurrentLead['Priority'], $'''Submitted''', WebResult, SubmittedAt]
+        # Challenge I: if Company contains Fabrikam → 08-iframe.html
+        # Challenge J: after ≥1 success → 05-files.html upload %WorkingRoot%\roundtrip-proof.txt
+    END
+END
+
+IF (File.IfFile.Exists File: OutputPath) THEN
+    File.Delete Files: OutputPath
+END
+Excel.WriteToExcel.WriteCells Instance: Excel Value: Results WorksheetName: $'''Results''' StartColumn: 1 StartRow: 1 FirstLineIsHeader: True
+Excel.SaveAs.SaveAs Instance: Excel DocumentFormat: Excel.DocumentFormat.OpenXmlWorkbook DocumentPath: OutputPath
+Excel.CloseExcel.Close Instance: Excel
+WebAutomation.CloseWebBrowser BrowserInstance: Browser

@@ -11,8 +11,17 @@
 | 1 | **[LESSON.md](LESSON.md)** | อ่านความรู้: Contoso UI, R1–R6, Actions |
 | 2 | **[LAB.md](LAB.md)** | ติดตั้ง Contoso + Setup + Hands-on ทีละขั้น |
 
-## วัตถุประสงค์
 
+## Reference script (catch-up)
+
+สำหรับนักเรียนที่ทำตามไม่ทัน — ใช้เวอร์ชันย่อ **~1 ชม.**:
+
+| ไฟล์ | ใช้เมื่อ |
+|------|---------|
+| [`scripts/07-contoso-invoice-ops.script-only.robin`](scripts/07-contoso-invoice-ops.script-only.robin) | **แนะนำวาง** — สั้น ครบ R1–R6 + Contoso UI (คอมเมนต์ไทย) |
+| [`scripts/07-contoso-invoice-ops.robin`](scripts/07-contoso-invoice-ops.robin) | เวอร์ชันเดียวกัน + ControlRepository (ถ้า paste ไม่ลง ให้ใช้ script-only) |
+
+## วัตถุประสงค์
 - ติดตั้ง Contoso Invoicing แล้ว Launch จาก Flow
 - Capture UI Elements ของฟอร์ม Invoice (ไม่พึ่งพิกัดจอ)
 - อ่าน batch จาก Excel → สร้างใน Contoso ตามกฎ R1–R6 → เขียน Results/Summary

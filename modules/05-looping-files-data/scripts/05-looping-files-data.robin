@@ -1,0 +1,39 @@
+# Lab05_LoopingFilesData — full (nested For each over batch CSV → summary)
+# Expected GrandTotal = 46500
+
+SET WorkingRoot TO $'''C:\\PAD-Labs\\working\\lab05'''
+SET GrandTotal TO 0
+
+IF (Folder.IfFolderExists.DoesNotExist Path: $'''%WorkingRoot%\\processed''') THEN
+    Folder.Create FolderPath: WorkingRoot FolderName: $'''processed''' Folder=> NewFolder
+END
+
+Folder.GetFiles Folder: $'''%WorkingRoot%\\batch''' FileFilter: $'''*.csv''' IncludeSubfolders: False FailOnAccessDenied: True SortBy1: Folder.SortBy.NoSort SortDescending1: False SortBy2: Folder.SortBy.NoSort SortDescending2: False SortBy3: Folder.SortBy.NoSort SortDescending3: False Files=> BatchFiles
+
+Variables.CreateNewDatatable InputTable: { ^['FileName', 'RowCount', 'TotalAmount'] } DataTable=> SummaryTable
+
+LOOP FOREACH CurrentFile IN BatchFiles
+    File.GetPathPart File: CurrentFile Name=> FileName
+    SET TotalAmount TO 0
+    SET RowCount TO 0
+    Excel.LaunchExcel.LaunchAndOpen Path: CurrentFile Visible: False ReadOnly: True LoadAddInsAndMacros: False Instance=> ExcelBatch
+    Excel.ReadFromExcel.ReadAllCells Instance: ExcelBatch ReadAsText: False FirstLineIsHeader: True RangeValue=> FileTable
+    Excel.CloseExcel.Close Instance: ExcelBatch
+    LOOP FOREACH CurrentRow IN FileTable
+        Text.ToNumber Text: CurrentRow['Amount'] Number=> AmountNumber
+        SET TotalAmount TO TotalAmount + AmountNumber
+        Variables.IncreaseVariable Value: RowCount IncrementValue: 1
+    END
+    Variables.AddRowToDataTable.AppendRowToDataTable DataTable: SummaryTable RowToAdd: [FileName, RowCount, TotalAmount]
+    SET GrandTotal TO GrandTotal + TotalAmount
+    File.Move Files: CurrentFile Destination: $'''%WorkingRoot%\\processed''' IfFileExists: File.IfExists.Overwrite MovedFiles=> MovedFiles
+END
+
+SET SummaryCsv TO $'''FileName,RowCount,TotalAmount'''
+LOOP FOREACH SummaryRow IN SummaryTable
+    SET CsvLine TO $'''%SummaryRow[0]%,%SummaryRow[1]%,%SummaryRow[2]%'''
+    SET SummaryCsv TO $'''%SummaryCsv%
+%CsvLine%'''
+END
+# GrandTotal kept in variable (expected CSV has 3 data rows only — no TOTAL row)
+File.WriteText File: $'''C:\\PAD-Labs\\output\\lab05\\batch-summary.csv''' TextToWrite: SummaryCsv AppendNewLine: True IfFileExists: File.IfFileExists.Overwrite Encoding: File.FileEncoding.UTF8

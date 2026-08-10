@@ -72,12 +72,17 @@ Txt_CalcDisplay
 
 > บน Windows 11 ชื่อที่ PAD โชว์ตอนจับมักเป็น accessibility text ตามภาษาเครื่อง — **ชื่อใน PAD ที่เราตั้งเอง** (`Txt_CalcDisplay`) คนละอย่างกับข้อความบนจอ
 
-### Step 3 — คลิกลำดับ 7 + 8 =
+### Step 3 — คลิกลำดับ 7 + 8 = (เส้นทางหลัก)
 
 1. ลาก **Click UI element in window** (หรือ **Press button in window** ถ้าเหมาะกับ control)
 2. UI element: `Btn_Seven` → Save
 3. ทำซ้ำสำหรับ `Btn_Plus`, `Btn_Eight`, `Btn_Equals` ตามลำดับ
 4. ผลบนจอควรเป็น **15**
+
+> **Catch-up / Reference scripts** (วางใน flow ว่างได้ — ต้อง rebind UI Elements ถ้าเครื่องคนละ selector):  
+> - พื้นฐาน `7 + 8 =` → [`scripts/01b-calculator-basic.robin`](scripts/01b-calculator-basic.robin)  
+> - เสริม `7 + 8 ÷ 5 =` → [`scripts/01b-calculator-extended.robin`](scripts/01b-calculator-extended.robin)  
+> Extended จับปุ่มเพิ่ม `Divide by` + `Five` ก่อน `Equals` — ใช้ฝึก click เพิ่ม / ดูกิ่ง Else เมื่อผลไม่ตรง `Contains 15`
 
 ### Step 4 — อ่านค่าจาก display
 
@@ -152,6 +157,7 @@ ApplicationFrameWindow
 ### Challenge (ทางเลือก)
 
 - ก่อน **Run application** ใช้ **Terminate process** / **Close window** เคลียร์ instance ค้าง แล้ว Replay ให้ผ่านสองครั้งติดกัน
+- **Extended:** จับปุ่ม `÷` และ `5` เพิ่ม แล้วคลิกลำดับ `7 + 8 ÷ 5 =` (เทียบ [`01b-calculator-extended.robin`](scripts/01b-calculator-extended.robin)) — อ่าน display ด้วย **Contains** `15` เหมือนเดิม; ถ้าเครื่องคิดเลขให้ผลอื่น กิ่ง Else + **Display message** จะทำงาน (ตั้งใจให้เห็น error path)
 
 ---
 

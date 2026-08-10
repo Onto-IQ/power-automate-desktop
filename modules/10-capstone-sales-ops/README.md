@@ -11,8 +11,15 @@
 | 1 | **[LESSON.md](LESSON.md)** | อ่านความรู้: Scout Ops story, pricing, DraftOnly |
 | 2 | **[LAB.md](LAB.md)** | Setup + Hands-on ตาม Rubric / checklist |
 
-## วัตถุประสงค์
 
+## Reference script (catch-up)
+
+สำหรับนักเรียนที่ทำตามไม่ทัน — เปิด [`scripts/10-capstone-sales-ops.robin`](scripts/10-capstone-sales-ops.robin) แล้ว copy วางใน desktop flow ว่าง
+
+- partial-ui — capstone catch-up skeleton
+- ไม่แทนการทำ LAB หลัก; ใช้เทียบลำดับ action / กู้งานให้ทันชั้น
+
+## วัตถุประสงค์
 - Scout Lab Hub (AJAX + catalog pagination) แล้วคิดส่วนลด/VAT ใน Excel
 - Round-trip leads (Login → Forms/Wizard) แล้วเขียนรายงานครบ sheet
 - สร้าง Outlook **Draft** แนบรายงาน (`SendMode=DraftOnly`) พร้อม error log

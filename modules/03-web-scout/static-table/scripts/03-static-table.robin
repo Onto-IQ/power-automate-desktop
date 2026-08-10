@@ -1,0 +1,22 @@
+# Lab03_StaticTable — partial-ui
+# URL: https://pad.ontoiq.tech/pad/03-table.html · table #tbl-employees
+
+WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://pad.ontoiq.tech/pad/03-table.html''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 60 Timeout: 60 BrowserInstance=> Browser
+
+# REBIND: Wait Contain element Tbl_Employees (#tbl-employees)
+WebAutomation.WaitForWebPageContent.WaitForWebPageToContainElement BrowserInstance: Browser Control: appmask['Lab03 StaticTable']['Tbl_Employees'] Timeout: 60
+
+# REBIND: Extract Entire HTML Table → StaticTable
+# WebAutomation.ExtractData.ExtractData BrowserInstance: Browser ... ExtractedData=> StaticTable
+Variables.CreateNewDatatable InputTable: { ^['Emp ID', 'Name', 'Department', 'Salary'] } DataTable=> StaticTable
+
+SET CsvBody TO $'''Emp ID,Name,Department,Salary'''
+LOOP FOREACH StaticRow IN StaticTable
+    SET CsvLine TO $'''%StaticRow[0]%,%StaticRow[1]%,%StaticRow[2]%,%StaticRow[3]%'''
+    SET CsvBody TO $'''%CsvBody%
+%CsvLine%'''
+END
+
+File.WriteText File: $'''C:\\PAD-Labs\\output\\lab03\\static-table.csv''' TextToWrite: CsvBody AppendNewLine: True IfFileExists: File.IfFileExists.Overwrite Encoding: File.FileEncoding.UTF8
+
+WebAutomation.CloseWebBrowser BrowserInstance: Browser

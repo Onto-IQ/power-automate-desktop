@@ -11,8 +11,15 @@
 | 1 | **[LESSON.md](LESSON.md)** | อ่านความรู้: ศัพท์ แนวคิด Action ที่ใช้ |
 | 2 | **[LAB.md](LAB.md)** | Setup + Hands-on ทีละขั้นใน designer |
 
-## วัตถุประสงค์
 
+## Reference script (catch-up)
+
+สำหรับนักเรียนที่ทำตามไม่ทัน — เปิด [`scripts/02-file-management.robin`](scripts/02-file-management.robin) แล้ว copy วางใน desktop flow ว่าง
+
+- full — วางใน flow ว่างได้เลย
+- ไม่แทนการทำ LAB หลัก; ใช้เทียบลำดับ action / กู้งานให้ทันชั้น
+
+## วัตถุประสงค์
 - สร้างโครงสร้างโฟลเดอร์ด้วย PAD
 - คัดลอกไฟล์ตามนามสกุลด้วย **For each** (ทีละไฟล์ ไม่ทั้งลิสต์)
 - เขียน `summary.txt` สรุปจำนวนไฟล์

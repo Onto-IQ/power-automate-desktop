@@ -14,6 +14,13 @@
 | 1 | **[LESSON.md](LESSON.md)** | อ่านความรู้: Click + อ่าน display |
 | 2 | **[LAB.md](LAB.md)** | Hands-on Calculator ใน designer |
 
+## Reference scripts (catch-up)
+
+| ไฟล์ | ลำดับปุ่ม | ใช้เมื่อ |
+|------|-----------|---------|
+| [`scripts/01b-calculator-basic.robin`](scripts/01b-calculator-basic.robin) | `7 + 8 =` → ตรวจ Contains `15` | ตาม LAB หลัก / ตามไม่ทัน |
+| [`scripts/01b-calculator-extended.robin`](scripts/01b-calculator-extended.robin) | `7 + 8 ÷ 5 =` → ตรวจ Contains `15` | Challenge / ฝึกกิ่ง Else |
+
 ## วัตถุประสงค์
 
 - Capture ปุ่มและช่องแสดงผลของ Calculator ด้วย UI Picker

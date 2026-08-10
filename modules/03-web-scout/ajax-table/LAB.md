@@ -291,3 +291,5 @@ Order ID,Customer,Amount,Status
 ## Cleanup
 
 ปิดเบราว์เซอร์ค้าง
+
+> **Catch-up:** ตามไม่ทัน → วาง [`scripts/03-ajax-table.robin`](scripts/03-ajax-table.robin) ใน flow ว่าง (partial-ui)

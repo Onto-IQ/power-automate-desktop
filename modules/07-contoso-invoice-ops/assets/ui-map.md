@@ -3,36 +3,42 @@
 แผนที่องค์ประกอบสำหรับ capture ใน PAD  
 ชื่อบนหน้าจออาจต่างเล็กน้อยตามเวอร์ชัน installer — ให้ยึดสิ่งที่เห็นในแอปจริงเป็นหลัก
 
+**Catch-up script** [`scripts/07-contoso-invoice-ops.robin`](../scripts/07-contoso-invoice-ops.robin) **ฝัง Contoso UI Elements มาให้แล้ว** (บล็อก `ControlRepository` ท้ายไฟล์) — วางใน flow ว่างแล้วควรขึ้นในแท็บ UI elements โดยชื่อด้านล่าง ถ้า selector หลุดค่อย Recapture/Rename
+
+
+
 ## หน้าต่างหลัก
 
-| Element (ตั้งชื่อใน PAD) | การใช้งาน |
-|--------------------------|-----------|
-| `Win_ContosoMain` | หน้าต่างหลักหลัง Launch |
-| `Btn_Invoices` / `Menu_Invoices` | เข้าโมดูล Invoices |
-| `Btn_NewInvoice` | เปิดฟอร์มสร้างใหม่ |
-| `Grid_InvoiceList` | รายการ invoice (สำหรับ extract/verify) |
+| PAD name | การใช้งาน | Hint จาก Contoso (Automation Id / ชื่อตอน capture) |
+|----------|-----------|------------------------------------------------------|
+| Screen: `Contoso Invoicing` | หน้าต่างหลักหลัง Launch | Window name = `Contoso Invoicing`, Process = `LegacyInvoicingApp` |
+| `Btn_Invoices` | เข้าโมดูล Invoices | Text `Invoices` ใน TreeView |
+| `Btn_NewInvoice` | เปิดฟอร์มสร้างใหม่ | `btnNew` / NewFileIcon / Image New |
+| `Grid_InvoiceList` | รายการ invoice (challenge) | Data grid หลัง Save |
 
 ## ฟอร์ม New Invoice (ค่าที่ Lab ใช้)
 
-| PAD name | Map จาก Excel | หมายเหตุ |
-|----------|---------------|----------|
-| `Txt_Account` | Account | บังคับ |
-| `Txt_Contact` | Contact | บังคับถ้ามีบนฟอร์ม |
-| `Txt_Amount` | Amount | ตัวเลข |
-| `Txt_Date` หรือ `Date_InvoiceDate` | InvoiceDate | ใช้รูปแบบที่แอปยอมรับ |
-| `Cmb_Status` / `Txt_Status` | StatusToSet | Open / Paid / Other ตาม control จริง |
-| `Btn_Save` / `Btn_Submit` | — | บันทึก |
+| PAD name | Map จาก Excel | Hint / Automation Id |
+|----------|---------------|----------------------|
+| `Txt_Date` | InvoiceDate | `txtDate*` — แนะนำรูปแบบ `MM/DD/YYYY` |
+| `Txt_Account` | Account | `txtAccount*` / CompanyAccount |
+| `Txt_Contact` | Contact | `txtContact*` / Mail (ชื่อหรืออีเมลตามฟิลด์จริง) |
+| `Txt_Amount` | Amount | `txtAmount*` — ส่งเป็นตัวเลขข้อความ |
+| `Cmb_Status` | StatusToSet | `cmbStatusChooser*` — ค่าเช่น `Open` / `Paid` |
+| `Btn_Save` | — | `btnSave` / SaveIcon / Image Save |
 
-## ลำดับคลิกที่แนะนำ
+## ลำดับคลิกที่แนะนำ (สไตล์ Microsoft Contoso sample)
 
 ```text
-Launch Contoso
-→ Wait Win_ContosoMain
-→ Invoices
-→ New Invoice
-→ Populate fields
-→ Save
-→ (optional) กลับ list แล้วตรวจสอบ
+Launch Contoso (+ WorkingDirectory ของโฟลเดอร์ exe)
+→ Wait for window title Contoso Invoicing + Focus
+→ Click Btn_Invoices
+→ Click Btn_NewInvoice
+→ Populate Txt_Date → Txt_Account → Txt_Contact → Txt_Amount
+→ Set drop-down Cmb_Status (High→Paid, Normal→Open)
+→ Click Btn_Save
+→ (optional) High Priority → Play system sound
+→ Close window ท้าย flow
 ```
 
 ## แนวทาง Selector บน Desktop

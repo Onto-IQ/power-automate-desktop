@@ -13,8 +13,15 @@
 | 1 | **[LESSON.md](LESSON.md)** | ตาราง static หน้าเดียว |
 | 2 | **[LAB.md](LAB.md)** | Hands-on |
 
-## วัตถุประสงค์
 
+## Reference script (catch-up)
+
+สำหรับนักเรียนที่ทำตามไม่ทัน — เปิด [`scripts/03-static-table.robin`](scripts/03-static-table.robin) แล้ว copy วางใน desktop flow ว่าง
+
+- partial-ui
+- ไม่แทนการทำ LAB หลัก; ใช้เทียบลำดับ action / กู้งานให้ทันชั้น
+
+## วัตถุประสงค์
 - เปิด [03-table](https://pad.ontoiq.tech/pad/03-table.html) แล้ว Wait + Extract ตาราง `#tbl-employees`
 - เข้าใจว่าหน้านี้**ไม่มี** pagination (ไม่มี Prev/Next)
 - วนแถวด้วย For each แล้วเขียน CSV

@@ -431,3 +431,5 @@ FormatSummary
 
 - ลบไฟล์ใน working/output ได้หลังตรวจ
 - ไม่ต้องปรับเว็บ Lab Hub สำหรับ Lab นี้
+
+> **Catch-up:** ตามไม่ทัน → วาง [`scripts/06-data-table-excel.robin`](scripts/06-data-table-excel.robin) ใน flow ว่าง (full)

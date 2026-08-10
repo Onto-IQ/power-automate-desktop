@@ -1,0 +1,39 @@
+# Lab03_AjaxTable — partial-ui
+# URL: https://pad.ontoiq.tech/pad/09-ajax-table.html · MinAmount=1500
+
+SET MinAmount TO 1500
+
+WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://pad.ontoiq.tech/pad/09-ajax-table.html''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 60 Timeout: 60 BrowserInstance=> Browser
+
+# REBIND: Press Btn_RefreshOrders (#btn-refresh-orders) if table empty
+# WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab03 Ajax']['Btn_RefreshOrders'] ...
+
+# REBIND: Wait Contain element #tbl-orders / Tbl_Orders
+WebAutomation.WaitForWebPageContent.WaitForWebPageToContainElement BrowserInstance: Browser Control: appmask['Lab03 Ajax']['Tbl_Orders'] Timeout: 60
+
+# REBIND: Extract Entire HTML Table → AjaxTable (copy real column names from Variables pane)
+# WebAutomation.ExtractData ... ExtractedData=> AjaxTable
+Variables.CreateNewDatatable InputTable: { ^['Order ID', 'Customer', 'Amount', 'Status'] } DataTable=> AjaxTable
+
+# Create Hits with same column names as AjaxTable
+Variables.CreateNewDatatable InputTable: { ^['Order ID', 'Customer', 'Amount', 'Status'] } DataTable=> Hits
+
+LOOP FOREACH AjaxRow IN AjaxTable
+    Text.ToNumber Text: AjaxRow['Amount'] Number=> AmountNumber
+    IF AmountNumber >= MinAmount THEN
+        Variables.AddRowToDataTable.AppendRowToDataTable DataTable: Hits RowToAdd: AjaxRow
+    END
+END
+
+SET CsvPath TO $'''C:\\PAD-Labs\\output\\lab03\\ajax-orders.csv'''
+File.WriteText File: CsvPath TextToWrite: $'''Order ID,Customer,Amount,Status''' AppendNewLine: True IfFileExists: File.IfFileExists.Overwrite Encoding: File.FileEncoding.UTF8
+
+LOOP FOREACH HitRow IN Hits
+    SET CsvLine TO HitRow[0]
+    SET CsvLine TO $'''%CsvLine%,%HitRow[1]%'''
+    SET CsvLine TO $'''%CsvLine%,%HitRow[2]%'''
+    SET CsvLine TO $'''%CsvLine%,%HitRow[3]%'''
+    File.WriteText File: CsvPath TextToWrite: CsvLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
+END
+
+WebAutomation.CloseWebBrowser BrowserInstance: Browser
