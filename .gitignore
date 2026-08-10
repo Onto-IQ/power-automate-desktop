@@ -1,11 +1,15 @@
 # Local working copies / outputs (do not commit personal run artifacts)
-PAD-Labs/
+/PAD-Labs/
 **/output/
 **/logs/
 **/working/
 *.xlsm
+!tools/pad-labs/fixtures/sales-report.xlsm
 ~$*
 DesktopFlows/
+
+# Built learner pack (upload to GitHub Releases — do not commit zip)
+/dist/
 
 # Course slides / outline (local only — not published for learners)
 slides/**

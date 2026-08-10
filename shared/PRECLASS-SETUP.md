@@ -46,45 +46,69 @@
 2. Extract → รัน installer
 3. เปิดจาก Start menu ค้นหา `Contoso Invoicing` ให้ขึ้นหน้าต่างหลักได้
 
-## 5) สร้างโฟลเดอร์ทำงาน (บังคับ)
+## 5) สร้างโฟลเดอร์ทำงาน (บังคับ) — แนะนำดาวน์โหลด zip
 
-สร้างโครงสร้างนี้บนเครื่อง (ไดรฟ์ `C:` แนะนำ — ถ้าใช้ `D:` ต้องใช้ path นั้นให้สม่ำเสมอทั้งคอร์ส):
+โครงสร้างมาตรฐาน (ไดรฟ์ `C:` แนะนำ — ถ้าใช้ `D:` ต้องใช้ path นั้นให้สม่ำเสมอทั้งคอร์ส):
 
 ```text
 C:\PAD-Labs\
-  ├── working\
+  ├── working\      ← input ที่ seed แล้ว (lab01…lab10, lab01b, lab09b, lab-scb-alt)
   ├── output\
-  └── logs\
+  ├── logs\
+  └── downloads\    ← Lab 03 Files
 ```
 
-### วิธีเร็ว (PowerShell)
+### วิธีที่ 1 — ดาวน์โหลด `PAD-Labs.zip` จาก GitHub (แนะนำ)
 
-เปิด **PowerShell** แล้ววางทั้งก้อนนี้:
+1. เปิด [Releases](https://github.com/Onto-IQ/power-automate-desktop/releases) → ดาวน์โหลด **`PAD-Labs.zip`**
+2. คลิกขวา → **Extract All…** → เลือกไดรฟ์ **`C:\`**
+3. ตรวจว่าได้ path นี้จริง:
+
+```text
+C:\PAD-Labs\working\lab01\
+```
+
+```text
+C:\PAD-Labs\working\lab06\sales-report.xlsm
+```
+
+(ภายใน zip มี `README.txt` และ `Install-PAD-Labs.ps1` — ถ้าแตกไปโฟลเดอร์อื่น ให้รัน `.\Install-PAD-Labs.ps1` เพื่อติดตั้งไป `C:\PAD-Labs`)
+
+### วิธีที่ 2 — จาก clone ของ repo
+
+```powershell
+cd <path-to>\power-automate-desktop
+.\tools\pad-labs\Install-PAD-Labs.ps1 -FromRepo -Force
+```
+
+### วิธีที่ 3 — สร้างโฟลเดอร์ว่างเอง (แล้วคัดลอก assets ตามข้อ 6)
 
 ```powershell
 $root = 'C:\PAD-Labs'
 @(
   "$root\working",
   "$root\output",
-  "$root\logs"
+  "$root\logs",
+  "$root\downloads"
 ) | ForEach-Object {
   New-Item -ItemType Directory -Force -Path $_ | Out-Null
 }
 Get-ChildItem $root
 ```
 
-ผลที่ควรเห็น: มีโฟลเดอร์ `working`, `output`, `logs`
+ผลที่ควรเห็น: มีโฟลเดอร์ `working`, `output`, `logs`, `downloads`
 
-## 6) เตรียมไฟล์ Lab (แนะนำทำก่อนวัน 1)
+## 6) เตรียมไฟล์ Lab (ถ้าไม่ได้ใช้ PAD-Labs.zip)
 
-คัดลอกจาก repo ของคอร์ส (หรือ USB/zip ที่วิทยากรแจก) **อย่าแก้ไฟล์ใน `assets/` ต้นฉบับ**
+ถ้าใช้ **`PAD-Labs.zip` หรือ Install-PAD-Labs.ps1 แล้ว ข้ามข้อนี้ได้** — seed ครบทุก Module แล้ว  
+ถ้าเตรียมมือ: คัดลอกจาก repo **อย่าแก้ไฟล์ใน `assets/` ต้นฉบับ**
 
 | Lab | คัดลอกไปที่ |
 |-----|-------------|
 | 01 | `C:\PAD-Labs\working\lab01\` ← จาก `modules/01-record-replay/assets/` |
 | 02 | `C:\PAD-Labs\working\lab02\inbox\` ← จาก `modules/02-file-management/assets/inbox/` |
 | 03 | สร้าง `C:\PAD-Labs\output\lab03\` · (Files optional) คัดลอก `modules/03-web-scout/files/assets/upload-sample.txt` → `C:\PAD-Labs\working\lab03\` · criteria AJAX อยู่ที่ `modules/03-web-scout/ajax-table/assets/` |
-| 04+ | ตาม `LAB.md` ของแต่ละบทในวันที่ 2 |
+| 04–10 / 09b / SCB | ตาม `LAB.md` ของแต่ละบท หรือใช้ zip / Install script ด้านบน |
 
 สร้างโฟลเดอร์ lab ย่อยเพิ่มได้ด้วย:
 
@@ -98,6 +122,7 @@ New-Item -ItemType Directory -Force -Path 'C:\PAD-Labs\working\lab01b' | Out-Nul
 New-Item -ItemType Directory -Force -Path 'C:\PAD-Labs\output\lab01b' | Out-Null
 New-Item -ItemType Directory -Force -Path 'C:\PAD-Labs\working\lab09b','C:\PAD-Labs\output\lab09b' | Out-Null
 New-Item -ItemType Directory -Force -Path 'C:\PAD-Labs\logs\lab07','C:\PAD-Labs\logs\lab09','C:\PAD-Labs\logs\lab09b','C:\PAD-Labs\logs\lab10' | Out-Null
+New-Item -ItemType Directory -Force -Path 'C:\PAD-Labs\output\lab-scb-alt','C:\PAD-Labs\downloads' | Out-Null
 ```
 
 ## 7) ทดสอบสั้น ๆ ว่าพร้อม

@@ -1,0 +1,45 @@
+# Build PAD-Labs.zip and attach to GitHub Release (or workflow_dispatch artifact)
+name: pad-labs-zip
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build PAD-Labs.zip
+        shell: pwsh
+        run: |
+          # GitHub-hosted runners ไม่มี Excel — ใช้ fixture ถ้ามี, ไม่เช่นนั้นข้าม xlsm
+          $fixture = 'tools/pad-labs/fixtures/sales-report.xlsm'
+          if (Test-Path -LiteralPath $fixture) {
+            .\tools\pad-labs\Build-PAD-LabsZip.ps1
+          } else {
+            Write-Warning 'ไม่มี fixtures/sales-report.xlsm — build โดยข้าม xlsm (สั่ง New-Lab06SalesReport.ps1 บนเครื่องที่มี Excel แล้ว commit fixture)'
+            .\tools\pad-labs\Build-PAD-LabsZip.ps1 -SkipXlsm
+          }
+          Get-Item dist\PAD-Labs.zip | Format-List FullName, Length
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PAD-Labs
+          path: dist/PAD-Labs.zip
+          if-no-files-found: error
+
+      - name: Attach to release
+        if: github.event_name == 'release'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload "${{ github.event.release.tag_name }}" dist/PAD-Labs.zip --clobber

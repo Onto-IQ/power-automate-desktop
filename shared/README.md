@@ -5,7 +5,7 @@
 | ไฟล์ | คำอธิบาย |
 |------|----------|
 | [PAD-FUNDAMENTALS.md](PAD-FUNDAMENTALS.md) | พื้นฐาน PAD สำหรับผู้เริ่มต้น (อ่านก่อน Module แรก) |
-| [PRECLASS-SETUP.md](PRECLASS-SETUP.md) | Checklist ติดตั้งก่อนวันเรียน |
+| [PRECLASS-SETUP.md](PRECLASS-SETUP.md) | Checklist ติดตั้งก่อนวันเรียน · ดาวน์โหลด **`PAD-Labs.zip`** |
 | [CLASSROOM-SCHEDULE-12H.md](CLASSROOM-SCHEDULE-12H.md) | ตารางสอน 12 ชม. Core/Optional |
 | [OFFICIAL-TERMINOLOGY.md](OFFICIAL-TERMINOLOGY.md) | ชื่อ Action / ศัพท์ตาม Microsoft Learn (Aug 2026) |
 | [SELECTOR-CONVENTIONS.md](SELECTOR-CONVENTIONS.md) | CSS / data-pad / wait strategy สำหรับ PAD Lab Hub |

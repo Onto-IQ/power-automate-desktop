@@ -9,7 +9,7 @@
 | Element UI (Desktop) | [Contoso Invoicing](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/tree/master/power-automate-desktop/contoso-invoice-app) · ดูรายละเอียดใน Lab [07](modules/07-contoso-invoice-ops/README.md) |
 | Sample packs อ้างอิง | [Microsoft Learn — power-automate-desktop](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/tree/master/power-automate-desktop) |
 | PAD baseline (Aug 2026) | **2607+** (Installer ~2.70.x) — ดู [PAD version matrix](https://learn.microsoft.com/power-platform/released-versions/power-automate-desktop) |
-| GitHub Release | [Releases](https://github.com/Onto-IQ/power-automate-desktop/releases) · [`CHANGELOG.md`](CHANGELOG.md) |
+| GitHub Release | [Releases](https://github.com/Onto-IQ/power-automate-desktop/releases) · ดาวน์โหลด **`PAD-Labs.zip`** → แตกที่ `C:\` · [`CHANGELOG.md`](CHANGELOG.md) |
 | Course Outline (local) | `slides/Trainocate_Outline_Power Automate Desktop (2 days) ake.pdf` |
 | สไลด์ประกอบ (local) | `slides/Power Automate Desktop.pptx` |
 
@@ -51,6 +51,7 @@
 | Contoso Invoicing | จำเป็นใน Lab 07 — ติดตั้งจาก [ContosoInvoicingSetup.zip](https://github.com/MicrosoftDocs/mslearn-developer-tools-power-platform/raw/master/power-automate-desktop/contoso-invoice-app/ContosoInvoicingSetup.zip) |
 | Microsoft Outlook (Desktop) | ใช้ใน Capstone (Lab 10) — แนะนำสร้างเป็น Draft และใช้ผู้รับจำลองก่อนส่งจริง |
 | สิทธิ์เครือข่าย | เข้าถึง `https://ontoiq.tech/pad/` ได้ · ถ้า Browser Secure Isolation กั้น Lab Hub (เช่น SCB) ใช้ [`modules/scb-secure-isolation-alt/`](modules/scb-secure-isolation-alt/) บน `bot.or.th` / `scb.co.th` |
+| **`PAD-Labs.zip`** | โฟลเดอร์ทำงาน `C:\PAD-Labs` seed ครบทุก Module — ดาวน์โหลดจาก [Releases](https://github.com/Onto-IQ/power-automate-desktop/releases) (ดู [`shared/PRECLASS-SETUP.md`](shared/PRECLASS-SETUP.md)) |
 
 ---
 
@@ -164,9 +165,10 @@
 ```text
 power-automate-desktop/
 ├── README.md                          ← คุณอยู่ที่นี่
+├── tools/pad-labs/                    ← Build/Install PAD-Labs.zip
 ├── shared/                            ← พื้นฐาน + เอกสารผู้เรียน
 │   ├── PAD-FUNDAMENTALS.md            ← อ่านก่อน Module แรก
-│   ├── PRECLASS-SETUP.md
+│   ├── PRECLASS-SETUP.md              ← รวมลิงก์ดาวน์โหลด PAD-Labs.zip
 │   └── CLASSROOM-SCHEDULE-12H.md
 ├── authoring/                         ← คู่มือผู้เขียน (local)
 ├── ops/                               ← ทีมสอน / Lab Hub (local)
@@ -186,6 +188,12 @@ power-automate-desktop/
 │   └── 10-capstone-sales-ops/
 └── …
 ```
+
+### โฟลเดอร์ทำงานบนเครื่องผู้เรียน (`C:\PAD-Labs`)
+
+ดาวน์โหลดแพ็กเกจจาก [Releases → `PAD-Labs.zip`](https://github.com/Onto-IQ/power-automate-desktop/releases) แล้วแตกที่ `C:\`  
+หรือจาก clone: `.\tools\pad-labs\Install-PAD-Labs.ps1 -FromRepo -Force`  
+รายละเอียด: [`shared/PRECLASS-SETUP.md`](shared/PRECLASS-SETUP.md) · [`tools/pad-labs/README.md`](tools/pad-labs/README.md)
 
 แต่ละ **Module** มี 3 เอกสารหลัก:
 
