@@ -23,7 +23,4 @@ authoring/**
 !authoring/README.md
 
 # Cursor project skills/rules (maintainers only — not published for learners)
-# Negate directory first so README can be tracked (global gitignore often ignores .cursor/)
-.cursor/**
-!.cursor/
-!.cursor/README.md
+.cursor/
