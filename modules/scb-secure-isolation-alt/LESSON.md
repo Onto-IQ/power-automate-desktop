@@ -35,11 +35,11 @@ Lab มาตรฐานใช้ **PAD Lab Hub** (`ontoiq.tech` / `pad.ontoiq.
 
 ## Selector บนเว็บจริง
 
-ไม่มี convention `#txt-name` ของ Lab Hub:
+ไม่มี convention `#txt-name` / `data-pad` ของ Lab Hub:
 
-1. ใช้ UI Picker ชี้ element จริง
-2. Rename ในแผง UI Elements เป็นชื่อธุรกิจ เช่น `Txt_Search`, `Tbl_BotFx`, `Tbl_ScbFx`
-3. เปิด Edit selector แล้วเก็บ `id` / `name` / `aria-label` ถ้ามี — หลีกเลี่ยง xpath ยาวที่อ้าง index
+1. Catch-up `scripts/*.robin` **bundle UI Elements** แล้ว (`SCB FormSearch` / `SCB StaticFx` / `SCB AjaxFx`) — paste ลง empty flow ได้ทันที
+2. ถ้าทำเองในคลาส: ใช้ UI Picker แล้ว Rename เป็น `Txt_Search`, `Btn_Search`, `Tbl_BotFx`, `Tbl_ScbFx`
+3. DOM เปลี่ยน → **Repair / Test selector** (custom CSS เช่น `input.serach-inputbox`, `table#dgExcel`, `table.table-rate`)
 
 รายละเอียด: [`shared/SELECTOR-CONVENTIONS.md`](../../shared/SELECTOR-CONVENTIONS.md)
 

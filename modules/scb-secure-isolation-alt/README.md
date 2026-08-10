@@ -67,9 +67,11 @@ C:\PAD-Labs\output\lab-scb-alt\
 
 ## ข้อจำกัดที่ต้องรู้
 
-- Selector บนเว็บจริง**ไม่มี** `data-pad` / `#tbl-employees` แบบ Lab Hub — ใช้ UI Picker แล้ว Rename ให้ชัด
+- Catch-up `scripts/*.robin` **bundle UI Elements** แล้ว (`# [ControlRepository]`) ด้วย custom CSS จากหน้าสาธารณะ — paste ลง empty flow ไม่ต้อง Capture ก่อนรัน Wait/Populate/Click
+- Selector บนเว็บจริง**ไม่มี** `data-pad` แบบ Lab Hub — ถ้า DOM เปลี่ยน ให้ **Repair / Test selector** ใน designer (อย่าแก้ `appmask[...]` path ด้วยมือ)
+- Extract Entire HTML Table ยังต้องตั้งใน designer (แบบ Lab 03) — Wait ตารางผ่าน UI Element ที่ bundle มาแล้ว
 - หน้า SCB มักโหลดตารางแบบ dynamic → ต้อง **Wait for web page content** ก่อน Extract
-- แบนเนอร์คุกกี้ ธปท. อาจบังหน้า — กด “จำเป็นเท่านั้น” ก่อน Interact
+- แบนเนอร์คุกกี้ ธปท. อาจบังหน้า — กด “จำเป็นเท่านั้น” ก่อน Interact (optional capture `Btn_CookieNecessary`)
 - ถ้า Browser Secure Isolation ทำให้ **PAD extension คุมเบราว์เซอร์ไม่ได้** (remote browser) ชุดนี้แก้ไม่ได้ด้วยการเปลี่ยน URL — ต้องขอ local Edge/Chrome สำหรับ lab หรือ allowlist automation
 
 ## บทที่เกี่ยวข้อง

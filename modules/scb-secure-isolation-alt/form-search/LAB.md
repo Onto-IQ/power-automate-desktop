@@ -22,12 +22,13 @@ https://www.bot.or.th/th/search.html
 
 ## ข้อมูลตัวอย่าง
 
-**SearchKeyword**
+**SearchKeyword** (ค่าเริ่มต้นใน catch-up — เป็นแท็กยอดนิยมบนหน้าค้นหา ธปท. ให้ผลค้นหาเดโมชัดกว่า `อัตราแลกเปลี่ยน`)
 
 ```text
-อัตราแลกเปลี่ยน
+แก้หนี้ยั่งยืน
 ```
 
+ทางเลือกจาก [`../assets/search-keywords.csv`](../assets/search-keywords.csv): `ภาวะเศรษฐกิจ` · `คุณสู้เราช่วย` · `เงินเฟ้อ` · `นโยบายการเงิน`
 ---
 
 ## Hands-on
@@ -51,7 +52,7 @@ LabSCB_FormSearch
    - Value:
 
 ```text
-อัตราแลกเปลี่ยน
+แก้หนี้ยั่งยืน
 ```
 
 ### Step 2 — Launch
@@ -104,8 +105,9 @@ Btn_Search
 
 ### Step 6 — Wait ผลลัพธ์ + หลักฐาน
 
-1. **Wait for web page content** · ชี้ข้อความ/หัวข้อบนหน้าผลค้นหา (เช่น คำว่าผลลัพธ์ หรือรายการลิงก์แรก)
-2. **Take screenshot** → บันทึก:
+1. **Wait for web page content** · `%Browser%` · **Contain text** · Text: `%SearchKeyword%`  
+   (catch-up รอให้ผลค้นหาโผล่ก่อนถ่ายภาพ — อย่า screenshot ทันทีหลัง Click)
+2. **Take screenshot of web page** → บันทึก:
 
 ```text
 C:\PAD-Labs\output\lab-scb-alt\search-proof.png
@@ -119,8 +121,9 @@ C:\PAD-Labs\output\lab-scb-alt\search-proof.png
 ## Acceptance
 
 - [ ] Flow ชื่อ `LabSCB_FormSearch`
-- [ ] Populate จาก `%SearchKeyword%` ไม่ hardcode ใน action (มี Set variable)
-- [ ] มี `search-proof.png`
+- [ ] `SearchKeyword` = `แก้หนี้ยั่งยืน` (หรือค่าจาก `search-keywords.csv`) ผ่าน **Set variable** แล้ว Populate จาก `%SearchKeyword%`
+- [ ] หลัง Click มี Wait **Contain text** `%SearchKeyword%` ก่อน screenshot
+- [ ] มี `search-proof.png` ที่เห็นผลค้นหา (ไม่ใช่หน้าเปล่า)
 - [ ] Replay ผ่านอย่างน้อย 2 ครั้ง
 - [ ] **ไม่ได้** submit ฟอร์มติดต่อ/สมัครใด ๆ
 
@@ -128,6 +131,8 @@ C:\PAD-Labs\output\lab-scb-alt\search-proof.png
 
 | อาการ | แนวทาง |
 |-------|--------|
+| ผลค้นหาไม่น่าสนใจ / ว่าง | เปลี่ยน `SearchKeyword` เป็นแท็กยอดนิยมบนหน้า เช่น `แก้หนี้ยั่งยืน` · `ภาวะเศรษฐกิจ` · `คุณสู้เราช่วย` |
+| Screenshot ไม่มีผลลัพธ์ | เพิ่ม Wait **Contain text** หลัง Click ก่อน Take screenshot |
 | หาช่องค้นหาไม่เจอ | ปิดแบนเนอร์คุกกี้ก่อน · หรือขยายหน้าต่างเบราว์เซอร์ |
 | Autofill ทับช่อง | ปิด Autofill / กด `{Escape}` หลัง Populate |
 | Replay ผ่านครั้งแรก ครั้งถัดไปพัง | ตรวจว่า Close browser ท้าย flow แล้ว Launch ใหม่ทุกครั้ง |
@@ -137,4 +142,4 @@ C:\PAD-Labs\output\lab-scb-alt\search-proof.png
 
 ปิดแท็บ/เบราว์เซอร์ค้างจาก lab
 
-> **Catch-up:** ตามไม่ทัน → วาง [`scripts/form-search.robin`](scripts/form-search.robin) ใน flow ว่าง (partial-ui)
+> **Catch-up:** ตามไม่ทัน → วาง [`scripts/form-search.robin`](scripts/form-search.robin) ใน flow **ว่าง** (partial-ui + bundled `SCB FormSearch`)
