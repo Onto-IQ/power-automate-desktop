@@ -14,12 +14,7 @@
 
 ## Reference script (catch-up)
 
-สำหรับนักเรียนที่ทำตามไม่ทัน — ใช้เวอร์ชันย่อ **~1 ชม.**:
-
-| ไฟล์ | ใช้เมื่อ |
-|------|---------|
-| [`scripts/07-contoso-invoice-ops.script-only.robin`](scripts/07-contoso-invoice-ops.script-only.robin) | **แนะนำวาง** — สั้น ครบ R1–R6 + Contoso UI (คอมเมนต์ไทย) |
-| [`scripts/07-contoso-invoice-ops.robin`](scripts/07-contoso-invoice-ops.robin) | เวอร์ชันเดียวกัน + ControlRepository (ถ้า paste ไม่ลง ให้ใช้ script-only) |
+สำหรับนักเรียนที่ทำตามไม่ทัน — เปิด [`scripts/07-contoso-invoice-ops.robin`](scripts/07-contoso-invoice-ops.robin) แล้ว copy วางใน desktop flow ว่าง (เวอร์ชันย่อ ~1 ชม. ครบ R1–R6 + Contoso UI คอมเมนต์ไทย; มี ControlRepository ท้ายไฟล์)
 
 ## วัตถุประสงค์
 - ติดตั้ง Contoso Invoicing แล้ว Launch จาก Flow

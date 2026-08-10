@@ -304,18 +304,11 @@ def main() -> None:
     if any(ord(ch) > 127 for ch in SCRIPT):
         raise SystemExit("SCRIPT contains non-ASCII; fix before write")
 
-    # Two deliverables:
-    # 1) full robin with ControlRepository (Notepad-style)
-    # 2) script-only robin (always paste-safe fallback)
     repo = build_control_repo()
     full = SCRIPT.rstrip() + "\n\n" + repo
     ROBIN.write_text(full, encoding="utf-8", newline="\n")
 
-    only = ROBIN.with_name("07-contoso-invoice-ops.script-only.robin")
-    only.write_text(SCRIPT.rstrip() + "\n", encoding="utf-8", newline="\n")
-
     print(f"Wrote {ROBIN} ({ROBIN.stat().st_size} bytes)")
-    print(f"Wrote {only} ({only.stat().st_size} bytes) paste-safe fallback")
     print("Controls:", ", ".join(RENAME.values()))
 
 
