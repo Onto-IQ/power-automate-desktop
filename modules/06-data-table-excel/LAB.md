@@ -3,13 +3,16 @@
 **อ่านก่อน:** [LESSON.md](LESSON.md) · **หน้าปกบท:** [README.md](README.md) · **พื้นฐาน:** [`shared/PAD-FUNDAMENTALS.md`](../../shared/PAD-FUNDAMENTALS.md)
 
 **วัน:** 2 · **ระดับ:** Intermediate  
-**ทักษะ:** Launch Excel, Read/Write worksheet, Data table filter/sort/aggregate, **Run Excel macro**
+**ทักษะ:** Launch Excel, Set active worksheet, Read/Write worksheet, Data table filter/aggregate, **Run Excel macro**
+
+**สคริปต์อ้างอิง (แหล่งความจริงของ Lab นี้):** [`scripts/06-data-table-excel.robin`](scripts/06-data-table-excel.robin)
 
 ## อ้างอิง (Aug 2026)
 
 | แหล่ง | URL |
 |-------|-----|
 | Excel actions | [actions-reference/excel](https://learn.microsoft.com/power-automate/desktop-flows/actions-reference/excel) |
+| Run Excel macro | [how-to/run-macros-excel](https://learn.microsoft.com/power-automate/desktop-flows/how-to/run-macros-excel) |
 | Excel troubleshooting | [troubleshoot Excel errors](https://learn.microsoft.com/troubleshoot/power-platform/power-automate/desktop-flows/office-automation/excel/troubleshoot-excel-errors) |
 | Coding guidelines | [desktop-flow-coding-guidelines](https://learn.microsoft.com/power-automate/guidance/desktop-flow-coding-guidelines/) |
 
@@ -25,34 +28,43 @@ C:\PAD-Labs\working\lab06\
 C:\PAD-Labs\output\lab06\
 ```
 
-2. คัดลอก workbook จาก [`assets/`](assets/) ไปยัง:
+2. คัดลอก workbook / CSV จาก [`assets/`](assets/) ไปยัง:
 
 ```text
 C:\PAD-Labs\working\lab06\
 ```
 
    (อย่าเขียนทับไฟล์ใน repo โดยตรง)
-3. เตรียม macro ตาม [`assets/vba/README.md`](assets/vba/README.md) → ได้ไฟล์ `sales-report.xlsm` ใน working  
-   - ถ้ายังมีแค่ CSV: เปิด `orders-input.csv` ใน Excel แล้ว Save As `.xlsx` / รวมเข้า `.xlsm` ตาม howto
-4. ตรวจว่าใน working มีแผ่น `Orders` ตาม schema ใน [`shared/DATA-SCHEMAS.md`](../../shared/DATA-SCHEMAS.md) ส่วน Orders Scout
+3. เตรียม `sales-report.xlsm` ตาม [`assets/vba/README.md`](assets/vba/README.md) ให้ครบ:
+   - แผ่น **`Orders`** (ข้อมูลตาม schema)
+   - แผ่น **`Filtered`** (ว่าง)
+   - แผ่น **`Summary`** (ว่าง)
+   - VBA module ชื่อ **`Lab06Macros`** + `Public Sub FormatSummary` (จาก [`FormatSummary.bas`](assets/vba/FormatSummary.bas))
+4. ตรวจว่าใน working มีไฟล์:
 
+```text
+C:\PAD-Labs\working\lab06\sales-report.xlsm
+```
+
+> **อย่า**พึ่ง **Add new worksheet** ตอนรัน flow เพื่อสร้าง `Filtered`/`Summary` — รันซ้ำจะเจอ error ชื่อแผ่นซ้ำ  
 > ถ้าใช้ไดรฟ์อื่น (เช่น `D:\PAD-Labs\...`) ได้ — แต่ต้องใช้ path นั้นใน `%WorkingRoot%` / output ให้สม่ำเสมอทั้ง flow
 
-## Input / Output
+## Input / Output (ตรงกับสคริปต์)
 
 | | Path |
 |--|------|
-| Input workbook | [`assets/orders-input.xlsx`](assets/orders-input.xlsx) / CSV สำรอง |
-| Macro source | [`assets/vba/FormatSummary.bas`](assets/vba/FormatSummary.bas) |
+| Working | `%WorkingRoot%` = `C:\PAD-Labs\working\lab06` |
+| Input workbook | `%WorkingRoot%\sales-report.xlsm` ← จาก [`assets/orders-input.xlsx`](assets/orders-input.xlsx) + macro |
+| Macro source | [`assets/vba/FormatSummary.bas`](assets/vba/FormatSummary.bas) (module = `Lab06Macros`) |
 | Macro howto | [`assets/vba/README.md`](assets/vba/README.md) |
 | Expected summary | [`assets/expected-summary.csv`](assets/expected-summary.csv) |
-| Output | ดู code block ใน Step 1 (`OutputPath`) |
+| Output | `%OutputPath%` = `C:\PAD-Labs\output\lab06\orders-report.xlsm` |
 
 ### โจทย์คำนวณ (ต้อง implement)
 
 1. กรองเฉพาะ `Region = BKK` **หรือ** `Amount >= 10000`
 2. เพิ่มคอลัมน์ `Tier` = `Gold` ถ้า Amount >= 12000 ไม่เช่นนั้น `Silver`
-3. สรุปยอดรวม Amount ของชุดที่กรองแล้ว ลง sheet `Summary`
+3. สรุปยอดรวม Amount ของชุดที่กรองแล้ว ลง sheet `Summary` (`TotalAmount` / ค่า)
 4. **Mission M — Excel Macro:** รัน `FormatSummary` เพื่อตัวหนา header / AutoFit / ไฮไลต์แถว Gold
 
 ---
@@ -94,13 +106,13 @@ C:\PAD-Labs\working\lab06
 C:\PAD-Labs\output\lab06\orders-report.xlsm
 ```
 
-4. (แนะนำ) **Set variable** Name: `SumAmount` ← **ไม่ใส่ `%`** · Value:
+4. **Set variable** Name: `SumAmount` ← **ไม่ใส่ `%`** · Value:
 
 ```text
 0
 ```
 
-### Step 2 — เปิด Excel และอ่านแผ่น Orders
+### Step 2 — เปิด Excel → เปิดแผ่น Orders → อ่านทั้งแผ่น
 
 1. ลาก **Launch Excel**
 2. ตั้งค่า:
@@ -111,31 +123,40 @@ C:\PAD-Labs\output\lab06\orders-report.xlsm
 %WorkingRoot%\sales-report.xlsm
 ```
 
-     (หรือ working copy ของ `orders-input.xlsx` แล้วค่อย Save as `.xlsm` ทีหลัง — แนะนำเปิด `.xlsm` ที่มี macro พร้อม)
+   - Advanced: **Load add-ins and macros** = เปิด (จำเป็นสำหรับ Mission M)
 3. **Variables produced:** `Excel` ← **ไม่ใส่ `%`**  
    (อ้างอิงด้วย `%Excel%`)
-4. ลาก **Read from Excel worksheet** วางหลัง Launch Excel
-5. ตั้งค่า:
-   - Excel instance: (คัดลอกด้านล่างวางในช่อง)
+4. ลาก **Set active Excel worksheet**
+   - Excel instance: (คัดลอก)
 
 ```text
 %Excel%
 ```
 
-   - Worksheet: (คัดลอกด้านล่างวางในช่อง)
+   - Activate worksheet with name: (คัดลอก)
 
 ```text
 Orders
 ```
 
-   - First line of range contains column names: เปิด
+5. ลาก **Read from Excel worksheet**
+   - Excel instance: `%Excel%`
+   - Retrieve: All available values from worksheet (หรือเทียบเท่า **Read all cells**)
+   - First line of range contains column names: **เปิด**
 6. **Variables produced:** `Orders` ← **ไม่ใส่ `%`**  
    (อ้างอิงด้วย `%Orders%`)
 
+> ใน designer ปัจจุบัน **ไม่มี**พารามิเตอร์ Worksheet บน Read/Write — สลับแผ่นด้วย **Set active Excel worksheet** ก่อนเสมอ (ตรงกับ catch-up script)
+
 ### Step 3 — สร้าง Data table ว่างสำหรับผลกรอง
 
-1. ลาก **Create new data table** (หรือสร้างตารางว่างตามที่ designer รองรับ)
-2. ตั้งคอลัมน์ให้ครบตามแถวต้นทาง **บวก** คอลัมน์ `Tier`
+1. ลาก **Create new data table**
+2. ตั้งคอลัมน์ตามลำดับนี้ (ตรงสคริปต์):
+
+```text
+OrderId, Customer, Product, Amount, OrderDate, Region, Tier
+```
+
 3. **Variables produced:** `Filtered` ← **ไม่ใส่ `%`**  
    (อ้างอิงด้วย `%Filtered%`)
 
@@ -150,49 +171,42 @@ Orders
 ```
 
    - Store into: `CurrentRow` ← **ไม่ใส่ `%`**
-3. **ภายใน For each** ลาก **If**
-4. เงื่อนไข (ใช้ OR ตามที่ designer รองรับ):
-   - ฝั่งซ้าย (คัดลอกด้านล่างวางในช่อง)
+3. **ภายใน For each** ลาก **Convert text to number**
+   - Text to convert: (คัดลอก)
+
+```text
+%CurrentRow['Amount']%
+```
+
+   - **Variables produced:** `AmountNumber` ← **ไม่ใส่ `%`**
+4. ลาก **If** — เงื่อนไข **OR** (ตามที่ designer รองรับ):
+   - ฝั่งซ้าย (คัดลอก)
 
 ```text
 %CurrentRow['Region']%
 ```
 
-     ตัวดำเนินการ **Equal to** · ฝั่งขวา (คัดลอกด้านล่างวางในช่อง)
+     ตัวดำเนินการ **Equal to** · ฝั่งขวา:
 
 ```text
 BKK
 ```
 
-   - **หรือ** ฝั่งซ้าย (คัดลอกด้านล่างวางในช่อง)
+   - **หรือ** ฝั่งซ้าย:
 
 ```text
-%CurrentRow['Amount']%
+%AmountNumber%
 ```
 
-     ตัวดำเนินการ **Greater than or equal to** · ฝั่งขวา (คัดลอกด้านล่างวางในช่อง)
+     ตัวดำเนินการ **Greater than or equal to** · ฝั่งขวา:
 
 ```text
 10000
 ```
 
-   (ถ้า Amount เป็น text ให้แปลงเป็นตัวเลขก่อนเทียบ)
 5. **ภายใน If** ตั้ง Tier:
-   - ลาก **If** ซ้อน
-   - ฝั่งซ้าย (คัดลอก):
-
-```text
-%CurrentRow['Amount']%
-```
-
-   - ตัวดำเนินการ: **Greater than or equal to**
-   - ฝั่งขวา (คัดลอก):
-
-```text
-12000
-```
-
-   - **ภายใน If ซ้อน** → **Set variable** Name: `Tier` ← **ไม่ใส่ `%`** · Value:
+   - ลาก **If** ซ้อน — ฝั่งซ้าย `%AmountNumber%` · **Greater than or equal to** · `12000`
+   - **ภายใน If ซ้อน** → **Set variable** Name: `Tier` ← Value:
 
 ```text
 Gold
@@ -219,15 +233,15 @@ Silver
 %[CurrentRow['OrderId'], CurrentRow['Customer'], CurrentRow['Product'], CurrentRow['Amount'], CurrentRow['OrderDate'], CurrentRow['Region'], Tier]%
 ```
 
-   (จำนวนค่าต้องเท่าจำนวนคอลัมน์ของ `%Filtered%` ตามที่สร้างตารางไว้)
 7. ปิด **End** (If กรอง) แล้ว **End** (For each)
 
-โครงภายในลูป:
+โครงภายในลูป (ตรงสคริปต์):
 
 ```text
 For each CurrentRow in Orders
-  If %CurrentRow['Region']% = BKK OR %CurrentRow['Amount']% >= 10000
-    If %CurrentRow['Amount']% >= 12000 → Tier = Gold Else → Tier = Silver
+  Convert Amount → AmountNumber
+  If Region = BKK OR AmountNumber >= 10000
+    If AmountNumber >= 12000 → Tier = Gold Else → Tier = Silver
     Insert row into Filtered (+ Tier)
   End
 End
@@ -235,81 +249,85 @@ End
 
 ### Step 5 — สรุปยอด Amount
 
-1. **หลัง** End ของ For each ลาก **For each** บน (คัดลอกด้านล่างวางในช่อง)
+1. **หลัง** End ของ For each ลาก **For each** บน (คัดลอก)
 
 ```text
 %Filtered%
 ```
 
-   (หรือรวมยอดระหว่างแทรกแถวก็ได้)
 2. Store into: `FilteredRow` ← **ไม่ใส่ `%`**
-3. ในลูป: อ่าน Amount แล้วบวกเข้า `SumAmount` — ใช้ (คัดลอก):
-
-```text
-%FilteredRow['Amount']%
-```
-
-   (ถ้าเป็นข้อความ: **Convert text to number** ก่อน)
+3. ในลูป:
+   - **Convert text to number** จาก `%FilteredRow['Amount']%` → `FilteredAmount`
+   - **Set variable** `SumAmount` = `%SumAmount% + %FilteredAmount%` (หรือเทียบเท่าใน designer)
 4. ตอนอ้างอิงต่อใช้ `%SumAmount%`
 
 ### Step 6 — เขียน sheet Filtered และ Summary
 
-1. ลาก **Write to Excel worksheet**
-2. ตั้งค่า (sheet Filtered):
-   - Excel instance: (คัดลอกด้านล่างวางในช่อง)
+**อย่า**ใช้ **Add new worksheet** ในขั้นตอนนี้ — แผ่นต้องมีใน template แล้ว
 
-```text
-%Excel%
-```
+#### 6a — Filtered (header แถว 1 + ข้อมูลแถว 2)
 
-   - Worksheet: (คัดลอกด้านล่างวางในช่อง)
+1. ลาก **Set active Excel worksheet** → ชื่อแผ่น:
 
 ```text
 Filtered
 ```
 
-     (สร้างใหม่ถ้ายังไม่มี ตามที่ action รองรับ)
-   - Value to write: (คัดลอกด้านล่างวางในช่อง)
+2. ลาก **Write to Excel worksheet**
+   - Excel instance: `%Excel%`
+   - Value to write: (คัดลอก — เขียนหัวคอลัมน์)
+
+```text
+%Filtered.ColumnHeadersRow%
+```
+
+   - Write mode: On specified cell · Column: `A` · Row: `1`
+3. ลาก **Write to Excel worksheet** อีกตัว
+   - Value to write: (คัดลอก)
 
 ```text
 %Filtered%
 ```
 
-     (หรือเขียนทีละช่วงให้ได้ตารางครบ)
-3. ลาก **Write to Excel worksheet** อีกชุดสำหรับ sheet Summary
-4. ตั้งค่าตัวอย่าง:
-   - Worksheet: (คัดลอกด้านล่างวางในช่อง)
+   - Column: `A` · Row: `2`
+
+#### 6b — Summary
+
+1. ลาก **Set active Excel worksheet** → ชื่อแผ่น:
 
 ```text
 Summary
 ```
 
-   - เซลล์ Label เช่น (คัดลอกด้านล่างวางในช่อง)
+2. ลาก **Write to Excel worksheet**
+   - Value:
 
 ```text
 TotalAmount
 ```
 
-   - Value = (คัดลอกด้านล่างวางในช่อง)
+   - Column: `A` · Row: `1`
+3. ลาก **Write to Excel worksheet**
+   - Value: (คัดลอก)
 
 ```text
 %SumAmount%
 ```
 
-   - เพิ่มแถว Label อื่นได้ถ้าต้องการ (เช่นจำนวนแถวที่ผ่านเงื่อนไข)
+   - Column: `B` · Row: `1`
 
 ### Step 7 — Mission M: Run Excel macro
 
-1. ตรวจว่า workbook เป็น `.xlsm` และมี macro ชื่อ `FormatSummary` (ตาม [`assets/vba/README.md`](assets/vba/README.md))
+1. ตรวจว่า workbook เป็น `.xlsm` และมี `Public Sub FormatSummary` ใน module **`Lab06Macros`** (ตาม [`assets/vba/README.md`](assets/vba/README.md))
 2. ลาก **Run Excel macro**
 3. ตั้งค่า:
-   - Excel instance: (คัดลอกด้านล่างวางในช่อง)
+   - Excel instance: (คัดลอก)
 
 ```text
 %Excel%
 ```
 
-   - Macro: (คัดลอกด้านล่างวางในช่อง)
+   - Macro: (คัดลอก)
 
 ```text
 FormatSummary
@@ -317,60 +335,42 @@ FormatSummary
 
 4. กด Save ในหน้าต่าง action
 
+> ถ้าตั้งชื่อ VBA **module** ซ้ำกับ Sub (`FormatSummary`) → PAD จะ **Failed to run macro**  
+> แก้: เปลี่ยนชื่อ module เป็น `Lab06Macros` หรือเรียก `Lab06Macros.FormatSummary`
+
 ### Step 8 — บันทึก output แบบรันซ้ำได้ แล้วปิด Excel
 
-นโยบาย Lab Kit: ก่อน **Save document as** ไป path คงที่ ต้องลบไฟล์เก่าก่อนถ้ามี
+นโยบาย Lab Kit: ก่อน **Save Excel** (Save document as) ไป path คงที่ ต้องลบไฟล์เก่าก่อนถ้ามี
 
 1. ลาก **If file exists**
 2. ตั้งค่า:
-   - File path: (คัดลอกด้านล่างวางในช่อง)
+   - File path: (คัดลอก)
 
 ```text
 %OutputPath%
 ```
 
-3. **ภายใน If** ลาก **Delete file** → File: (คัดลอกด้านล่างวางในช่อง)
-
-```text
-%OutputPath%
-```
-
+3. **ภายใน If** ลาก **Delete file** → File: `%OutputPath%`
 4. ปิดด้วย **End**
-5. ลาก **Save document as** (หรือชื่อเทียบเท่าในกลุ่ม Excel ที่บันทึกเป็น path ใหม่)
-   - Excel instance: (คัดลอกด้านล่างวางในช่อง)
-
-```text
-%Excel%
-```
-
-   - Document path: (คัดลอกด้านล่างวางในช่อง)
-
-```text
-%OutputPath%
-```
-
+5. ลาก **Save Excel** → โหมด **Save document as**
+   - Excel instance: `%Excel%`
+   - Document path: `%OutputPath%`
+   - Document format: **Default (From Extension)** (ไฟล์ลงท้าย `.xlsm`)
 6. ลาก **Close Excel**
-   - Excel instance: (คัดลอกด้านล่างวางในช่อง)
-
-```text
-%Excel%
-```
-
-   - ก่อนปิด: อย่าลืมว่าบันทึกแล้ว
-
-> ทางเลือกที่ผ่านเกณฑ์เช่นกัน: เปิดไฟล์ output เดิมแล้ว **Save document** (ไม่ as) — แต่ใน Lab นี้แนะนำ If exists → Delete → Save document as ให้ชัด
+   - Excel instance: `%Excel%`
+   - ก่อนปิด: บันทึกแล้ว (อย่า Save อีกครั้งทับ working โดยไม่ตั้งใจ)
 
 ### Step 9 — รันและตรวจ
 
 1. กด **Run**
-2. เปิด `orders-report.xlsm` ตรวจ sheet `Filtered` / `Summary` เทียบ [`assets/expected-summary.csv`](assets/expected-summary.csv)
+2. เปิด `C:\PAD-Labs\output\lab06\orders-report.xlsm` ตรวจ sheet `Filtered` / `Summary` เทียบ [`assets/expected-summary.csv`](assets/expected-summary.csv)
 3. หลัง macro: แถวหัวตัวหนา และแถว Gold มีสีพื้น (ถ้าใช้ `FormatSummary.bas` เต็ม)
-4. รันซ้ำรอบสอง — ต้องไม่พังเพราะชื่อไฟล์ซ้ำ
+4. รันซ้ำรอบสอง — ต้องไม่พังเพราะชื่อไฟล์ซ้ำ **และ** ไม่พังเพราะชื่อแผ่นซ้ำ
 
 ### Challenge (ทางเลือก)
 
 - เรียง `%Filtered%` ตาม Amount ก่อนเขียน sheet
-- เพิ่ม sheet `Audit` บันทึกจำนวนแถวที่ถูกตัดออกจากการกรอง
+- เพิ่ม sheet `Audit` ใน template แล้วบันทึกจำนวนแถวที่ถูกตัดออกจากการกรอง
 
 ---
 
@@ -380,10 +380,13 @@ FormatSummary
 |-----|-----|
 | พิมพ์ `%Name%` ในช่อง Name / Store into / **Variables produced** | ใช้ชื่อเปล่าไม่มี `%` เช่น `WorkingRoot`, `Orders` |
 | เขียนทับไฟล์ใน `assets/` ของ repo | คัดลอกไป `working\lab06` ก่อน |
+| **Add new worksheet** สร้าง `Filtered`/`Summary` ตอนรัน | เตรียม 3 แผ่นใน `sales-report.xlsm` แล้วใช้ **Set active** |
+| ใส่พารามิเตอร์ Worksheet บน Read/Write (designer ปัจจุบันไม่รับ) | **Set active Excel worksheet** ก่อน Read/Write |
+| เขียนแค่ `%Filtered%` ที่ A1 โดยไม่มี header | เขียน `%Filtered.ColumnHeadersRow%` ที่ A1 แล้ว `%Filtered%` ที่ A2 |
+| VBA module ชื่อ `FormatSummary` ซ้ำกับ Sub | module = `Lab06Macros`, Macro ใน PAD = `FormatSummary` |
 | **Save document as** รอบสองโดยไม่ลบไฟล์เก่า | **If file exists** → **Delete file** ก่อน Save as |
 | ลืม **Close Excel** | ปิด instance ทุกครั้งท้าย flow |
-| Macro ชื่อผิด / ไฟล์ยังเป็น `.xlsx` | ใช้ `.xlsm` + macro = `FormatSummary` |
-| เทียบ Amount เป็น text โดยไม่แปลง | Convert text to number ก่อน If |
+| เทียบ Amount เป็น text โดยไม่แปลง | **Convert text to number** → `AmountNumber` / `FilteredAmount` |
 | กรองแค่ Region หรือแค่ Amount | ต้องเป็น BKK **หรือ** Amount >= 10000 |
 
 ---
@@ -398,38 +401,41 @@ FormatSummary
 | `Orders` | `%Orders%` | Data table |
 | `Filtered` | `%Filtered%` | Data table |
 | `CurrentRow` | `%CurrentRow%` | Data row |
+| `AmountNumber` | `%AmountNumber%` | Numeric |
+| `FilteredRow` | `%FilteredRow%` | Data row |
+| `FilteredAmount` | `%FilteredAmount%` | Numeric |
 | `SumAmount` | `%SumAmount%` | Numeric |
 | `Tier` | `%Tier%` | Text |
 
 ## Expected Result
 
 - จำนวนแถวที่ผ่านเงื่อนไขและยอดรวมตรงแนว `expected-summary.csv`
-- ไฟล์ผลลัพธ์มีอย่างน้อย 2 sheets (`Filtered`, `Summary`)
+- ไฟล์ผลลัพธ์มีอย่างน้อยแผ่น `Orders` / `Filtered` / `Summary`
 - หลัง macro: header ตัวหนา และแถว Gold มีสีพื้น (ถ้าใช้ bas เต็ม)
 
 ## Acceptance Criteria
 
-- [ ] อ่าน/เขียนด้วย Excel actions
+- [ ] อ่าน/เขียนด้วย Excel actions + **Set active worksheet**
 - [ ] ปิด Excel instance ทุกครั้ง
-- [ ] มีอย่างน้อย 2 sheets ในไฟล์ผลลัพธ์
-- [ ] **รันซ้ำได้:** รัน flow ครั้งที่ 2 ด้วย path output เดิมโดยไม่ error ชื่อไฟล์ซ้ำ (**If file exists** → **Delete file** ก่อน Save as / หรือเปิดไฟล์เดิมแล้ว Save)
+- [ ] มีอย่างน้อยแผ่น `Filtered` และ `Summary` ในไฟล์ผลลัพธ์
+- [ ] **รันซ้ำได้:** รัน flow ครั้งที่ 2 ด้วย path output เดิมโดยไม่ error ชื่อไฟล์ซ้ำ (**If file exists** → **Delete file** ก่อน Save as)
 - [ ] **Mission M:** รัน **Run Excel macro** สำเร็จอย่างน้อย 1 ครั้ง (หรือวิทยากรตรวจว่า macro พร้อมแล้วแต่ถูกบล็อกโดยนโยบายเครื่อง)
 
 ## Troubleshooting
 
 | อาการ | แก้ |
 |-------|-----|
-| Save as รอบสองล้ม (ไฟล์ซ้ำ) | ก่อน **Save document as** ใช้ **If file exists** → **Delete file** — ดู [`shared/BEST-PRACTICES.md`](../../shared/BEST-PRACTICES.md) ส่วน Excel |
-| File locked | ปิด Excel UI ที่เปิดไฟล์อยู่ |
-| Column not found | ตรวจชื่อ header ให้ตรง schema · อ้างคอลัมน์ด้วย `%CurrentRow['Amount']%` (พิมพ์เอง) |
+| Save as รอบสองล้ม (ไฟล์ซ้ำ) | ก่อน **Save Excel** (as) ใช้ **If file exists** → **Delete file** — ดู [`shared/BEST-PRACTICES.md`](../../shared/BEST-PRACTICES.md) ส่วน Excel |
+| ไม่สามารถสร้าง worksheet ชื่อ Filtered | อย่า Add ตอนรัน — ใส่แผ่นใน template แล้ว **Set active** (ดู Setup) |
+| Failed to run macro | ตรวจ Trust Center · ไฟล์เป็น `.xlsm` · Macro = `FormatSummary` · **อย่า**ตั้งชื่อ module ซ้ำ Sub · เปิด **Load add-ins and macros** |
+| File locked | ปิด Excel UI / ฆ่า `EXCEL.EXE` ที่ค้าง แล้วรันใหม่ |
+| Column not found | ตรวจชื่อ header ให้ตรง schema · อ้างคอลัมน์ด้วย `%CurrentRow['Amount']%` |
 | Number format | Convert text to number |
-| หาคอลัมน์ใน If ไม่เจอ | ไม่มีในรายการตัวแปร — วาง `%CurrentRow['Region']%` / `%CurrentRow['Amount']%` |
-| Macro disabled / not found | ตรวจ Trust Center + ชื่อ macro = `FormatSummary` + ไฟล์เป็น `.xlsm` |
-| VBA project access | ดูขั้นตอน import ใน `assets/vba/README.md` |
+| หาคอลัมน์ใน If ไม่เจอ | ไม่มีในรายการตัวแปร — วาง `%CurrentRow['Region']%` / `%AmountNumber%` |
 
 ## Cleanup
 
 - ลบไฟล์ใน working/output ได้หลังตรวจ
 - ไม่ต้องปรับเว็บ Lab Hub สำหรับ Lab นี้
 
-> **Catch-up:** ตามไม่ทัน → วาง [`scripts/06-data-table-excel.robin`](scripts/06-data-table-excel.robin) ใน flow ว่าง (full)
+> **Catch-up:** ตามไม่ทัน → วาง [`scripts/06-data-table-excel.robin`](scripts/06-data-table-excel.robin) ใน **flow ว่าง** (full) — template ต้องมีแผ่น `Orders` / `Filtered` / `Summary` + macro พร้อม
