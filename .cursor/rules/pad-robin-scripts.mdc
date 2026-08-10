@@ -1,0 +1,37 @@
+---
+description: PAD Robin catch-up script conventions and lint
+globs: modules/**/*.robin
+alwaysApply: false
+---
+
+# PAD Robin scripts
+
+When editing `modules/**/scripts/*.robin`, follow `.cursor/skills/pad-robin/SKILL.md`.
+
+## Must
+
+- Valid Robin that pastes into an **empty** PAD desktop flow
+- Variable **Name** / Store into: no `%` — use `%Name%` only when referencing
+- Strings/paths: `$'''...'''` with `\\` in Windows paths
+- Lab 07-style `ON BLOCK ERROR` / action `ON ERROR`: **SET-only** inside handler; Increase / File / AddRow **outside** after a flag
+- Never invent action IDs (e.g. `WaitForWindowToOpen`) — use catalog / sibling scripts
+
+## Wait for window (validated)
+
+```robin
+WAIT (UIAutomation.WaitForWindow.ToOpenByTitleClass Title: $'''Contoso Invoicing''' Class: $'''''' FocusWindow: True) FOR 30
+```
+
+## Contoso / desktop UI
+
+- Prefer bundled `# [ControlRepository][PowerAutomateDesktop]` (Lab 07) + `# pad-lint: allow-desktop-appmask`
+- Live `UIAutomation` + `appmask['Contoso Invoicing']['Btn_…']` names must match `ui-map.md`
+- Web Lab Hub `WebAutomation` + `appmask` may stay live
+
+## Lint before finish
+
+```powershell
+python .cursor/skills/pad-robin/scripts/lint-robin.py <path-to-robin-or-folder>
+```
+
+Fix **errors** before stopping.

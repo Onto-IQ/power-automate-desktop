@@ -1,0 +1,36 @@
+---
+description: PAD Lab Kit project defaults (Onto-IQ power-automate-desktop)
+alwaysApply: true
+---
+
+# PAD Lab Kit — project rule
+
+This repo is a **Power Automate Desktop (PAD) 2-day lab kit**, not a cloud-flow or app codebase.
+
+## Language & audience
+
+- Prefer **Thai** for learner-facing docs and lab comments; keep action/API identifiers in English.
+- Write for a Senior Solution Architect / instructor maintaining classroom labs.
+
+## Scope boundaries
+
+- Author **desktop flow / Robin** paste-into-designer scripts and lab markdown.
+- Do **not** invent Power Automate **cloud** JSON, Power Fx cloud expressions, or unrelated app code.
+- Prefer editing existing `modules/<lab>/` files over rewriting the kit.
+
+## Canonical layout
+
+- Labs: `modules/<lab>/README.md` + `LESSON.md` + `LAB.md` + `assets/` + optional `scripts/*.robin`
+- Shared: `shared/PAD-FUNDAMENTALS.md`, `OFFICIAL-TERMINOLOGY.md`, `BEST-PRACTICES.md`, `SELECTOR-CONVENTIONS.md`
+- Working paths for learners: `C:\PAD-Labs\working\labXX`, `output\labXX`, `logs\labXX`
+
+## Agent skills
+
+- Robin / Contoso / UI automation → follow `.cursor/skills/pad-robin/SKILL.md`
+- After `.robin` edits, run: `python .cursor/skills/pad-robin/scripts/lint-robin.py modules/<lab>/scripts`
+
+## Docs hygiene
+
+- Do not overwrite `assets/` with run outputs; outputs go under `C:\PAD-Labs\...`
+- Do not commit personal `PAD-Labs/`, `working/`, `output/`, `logs/`
+- Keep catch-up scripts aligned with each lab’s acceptance criteria in `LAB.md`

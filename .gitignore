@@ -22,8 +22,10 @@ ops/**
 authoring/**
 !authoring/README.md
 
-# Keep project PAD Robin skill tracked (global gitignore may ignore .cursor/)
+# Keep project Cursor skills/rules tracked (global gitignore may ignore .cursor/)
 !.cursor/
 !.cursor/skills/
 !.cursor/skills/pad-robin/
 !.cursor/skills/pad-robin/**
+!.cursor/rules/
+!.cursor/rules/**

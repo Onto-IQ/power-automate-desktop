@@ -1,0 +1,28 @@
+---
+description: Lab markdown conventions for PAD modules
+globs: modules/**/*.md
+alwaysApply: false
+---
+
+# Lab module docs
+
+Each lab folder should stay consistent:
+
+| File | Role |
+|------|------|
+| `README.md` | Cover: time, skills, link to LESSON/LAB, catch-up script |
+| `LESSON.md` | Concepts only |
+| `LAB.md` | Hands-on steps, paths, acceptance, troubleshooting |
+
+## Conventions
+
+- Point catch-up to `scripts/*.robin` when present; note `full` vs `partial-ui`
+- Use official PAD action names from `shared/OFFICIAL-TERMINOLOGY.md`
+- Lab Hub selectors: prefer `#id` / `[data-pad=…]` (`shared/SELECTOR-CONVENTIONS.md`)
+- Contoso: link `assets/ui-map.md` + setup zip from Microsoft Learn samples
+- Keep Thai learner voice; code blocks / paths copy-paste ready
+
+## Do not
+
+- Expand scope into unrelated modules in the same change
+- Document cloud-flow-only patterns as desktop steps
