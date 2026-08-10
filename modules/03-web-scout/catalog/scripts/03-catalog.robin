@@ -11,8 +11,7 @@ WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://pad.ontoiq.tech/pad/19-cata
 
 LOOP WHILE PageCount < MaxPages
     # REBIND: Wait #tbl-products
-    WebAutomation.WaitForWebPageContent.WaitForWebPageToContainElement BrowserInstance: Browser Control: appmask['Lab03 Catalog']['Tbl_Products'] Timeout: 60
-
+    WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['Lab03 Catalog']['Tbl_Products']) FOR 60
     # REBIND: Extract Entire HTML Table → PageTable
     # WebAutomation.ExtractData ... ExtractedData=> PageTable
     Variables.CreateNewDatatable InputTable: { ^['SKU', 'Product', 'Price', 'Category'] } DataTable=> PageTable

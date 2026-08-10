@@ -9,8 +9,7 @@ WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://pad.ontoiq.tech/pad/09-ajax
 # WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab03 Ajax']['Btn_RefreshOrders'] ...
 
 # REBIND: Wait Contain element #tbl-orders / Tbl_Orders
-WebAutomation.WaitForWebPageContent.WaitForWebPageToContainElement BrowserInstance: Browser Control: appmask['Lab03 Ajax']['Tbl_Orders'] Timeout: 60
-
+WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['Lab03 Ajax']['Tbl_Orders']) FOR 60
 # REBIND: Extract Entire HTML Table → AjaxTable (copy real column names from Variables pane)
 # WebAutomation.ExtractData ... ExtractedData=> AjaxTable
 Variables.CreateNewDatatable InputTable: { ^['Order ID', 'Customer', 'Amount', 'Status'] } DataTable=> AjaxTable

@@ -45,7 +45,7 @@ END
     ############################################
     WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://ontoiq.tech/pad/06-login.html''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 60 Timeout: 60 BrowserInstance=> Browser
     # REBIND: #txt-username #txt-password #btn-login
-    WebAutomation.WaitForWebPageContent.WaitForWebPageToContainElement BrowserInstance: Browser Control: appmask['Lab10 Login']['Txt_Username'] Timeout: 60
+    WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['Lab10 Login']['Txt_Username']) FOR 60
     WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab10 Login']['Txt_Username'] Text: $'''demo''' EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
     WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab10 Login']['Txt_Password'] Text: $'''demo''' EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
     WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab10 Login']['Btn_Login'] WaitForPageToLoadTimeout: 60

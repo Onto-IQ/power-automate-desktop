@@ -1,6 +1,7 @@
-# Lab01_RecordReplay — catch-up reference (partial-ui: rebind appmask selectors)
+# Lab01_RecordReplay - partial-ui catch-up (Chrome + bundled Lab01 Forms UI Elements)
 # URL: https://ontoiq.tech/pad/01-forms.html
-# Selectors: #txt-name #txt-email #txt-amount #txt-date #txt-note [data-pad="btn-submit-form"]
+# ControlRepository at end - paste into an EMPTY desktop flow
+# Elements: Txt_Name Txt_Email Txt_Amount Txt_Date Txt_Note Btn_Submit
 
 SET FullName TO $'''Somchai Demo'''
 SET Email TO $'''somchai.demo@example.com'''
@@ -8,23 +9,46 @@ SET Amount TO $'''3000'''
 SET FormDate TO $'''2026-08-08'''
 SET Message TO $'''Hello from Lab 01 Record & Replay'''
 
-WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://ontoiq.tech/pad/01-forms.html''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 60 Timeout: 60 BrowserInstance=> Browser
+IF (Folder.IfFolderExists.DoesNotExist Path: $'''C:\\PAD-Labs\\output\\lab01''') THEN
+    Folder.Create FolderPath: $'''C:\\PAD-Labs\\output''' FolderName: $'''lab01''' Folder=> Lab01OutFolder
+END
 
-# REBIND: Wait for #txt-name / [data-pad="txt-name"] → Txt_Name
-WebAutomation.WaitForWebPageContent.WaitForWebPageToContainElement BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Name'] Timeout: 60
+WebAutomation.LaunchChrome.LaunchChrome Url: $'''https://ontoiq.tech/pad/01-forms.html''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 60 Timeout: 60 BrowserInstance=> Browser
 
-# REBIND: Populate 5 fields — Txt_Name, Txt_Email, Txt_Amount, Txt_Date, Txt_Note
+WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Name']) FOR 60
+
 WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Name'] Text: FullName EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
 WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Email'] Text: Email EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
 WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Amount'] Text: Amount EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
 WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Date'] Text: FormDate EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
 WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Note'] Text: Message EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
 
-# REBIND: Press Btn_Submit — [data-pad="btn-submit-form"] / #btn-submit-form
 WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab01 Forms']['Btn_Submit'] WaitForPageToLoadTimeout: 60
 
-# REBIND: Wait + Extract confirmation text → SubmitResult (or Take screenshot)
-# WebAutomation.ExtractData.ExtractData BrowserInstance: Browser ... ExtractedData=> SubmitResult
-WebAutomation.TakeScreenshot.TakeScreenshot BrowserInstance: Browser File: $'''C:\\PAD-Labs\\output\\lab01\\submit-proof.png'''
+WebAutomation.TakeScreenshot.TakeScreenshotSaveToFile BrowserInstance: Browser File: $'''C:\\PAD-Labs\\output\\lab01\\submit-proof.png''' FileFormat: WebAutomation.FileFormat.Png
 
 WebAutomation.CloseWebBrowser BrowserInstance: Browser
+
+# [ControlRepository][PowerAutomateDesktop]
+
+{
+  "ControlRepositorySymbols": [
+    {
+      "IgnoreImagesOnSerialization": false,
+      "Repository": "{\r\n  \"Screens\": [\r\n    {\r\n      \"Controls\": [\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"input\",\r\n          \"InstanceId\": \"e30a3da1-ea14-40b9-9401-ea8dbd6fad2a\",\r\n          \"Name\": \"Txt_Name\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#txt-name\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"input\"\r\n        },\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"input\",\r\n          \"InstanceId\": \"5ce2a655-c5fb-4b79-84e8-db80deeae73a\",\r\n          \"Name\": \"Txt_Email\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#txt-email\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"input\"\r\n        },\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"input\",\r\n          \"InstanceId\": \"ad8ed32f-ec11-467c-b1f2-399d743773d9\",\r\n          \"Name\": \"Txt_Amount\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#txt-amount\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"input\"\r\n        },\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"input\",\r\n          \"InstanceId\": \"95cab3c5-1885-4748-b719-d3ee8714003c\",\r\n          \"Name\": \"Txt_Date\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#txt-date\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"input\"\r\n        },\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"textarea\",\r\n          \"InstanceId\": \"b4b9bbf5-6089-487f-ad6a-01d85ad80ea5\",\r\n          \"Name\": \"Txt_Note\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#txt-note\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"textarea\"\r\n        },\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"button\",\r\n          \"InstanceId\": \"cc8c0f9d-5d4e-4d22-b07f-f59a69e98dad\",\r\n          \"Name\": \"Btn_Submit\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"[data-pad=\\\"btn-submit-form\\\"]\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"button\"\r\n        }\r\n      ],\r\n      \"Handle\": {\r\n        \"value\": 0\r\n      },\r\n      \"ProcessName\": null,\r\n      \"ScreenShot\": null,\r\n      \"ElementTypeName\": \"Web Page\",\r\n      \"InstanceId\": \"08ca07d5-7a9c-4849-b595-86b5b42d66ff\",\r\n      \"Name\": \"Lab01 Forms\",\r\n      \"SelectorCount\": 1,\r\n      \"Selectors\": [\r\n        {\r\n          \"CustomSelector\": null,\r\n          \"Elements\": [\r\n            {\r\n              \"Attributes\": [],\r\n              \"CustomValue\": \"domcontainer\",\r\n              \"Ignore\": false,\r\n              \"Name\": \"Web Page 'https://ontoiq.tech/pad/01-forms.html'\",\r\n              \"Tag\": \"domcontainer\"\r\n            }\r\n          ],\r\n          \"Ignore\": false,\r\n          \"ImageSelector\": null,\r\n          \"IsCustom\": false,\r\n          \"IsImageBased\": false,\r\n          \"IsPlaceholderSelector\": false,\r\n          \"IsWindowsInstance\": false,\r\n          \"Name\": \"Default Selector\",\r\n          \"Properties\": []\r\n        }\r\n      ],\r\n      \"Tag\": \"domcontainer\",\r\n      \"ScreenshotPath\": null\r\n    }\r\n  ],\r\n  \"Version\": 1\r\n}",
+      "ImportMetadata": {
+        "DisplayName": "Local computer",
+        "ConnectionString": "",
+        "Type": "Local",
+        "DesktopType": "local"
+      },
+      "Name": "appmask"
+    }
+  ],
+  "ImageRepositorySymbol": {
+    "Repository": "{\r\n  \"Folders\": [],\r\n  \"Images\": [],\r\n  \"Version\": 1\r\n}",
+    "ImportMetadata": {},
+    "Name": "imgrepo"
+  },
+  "ConnectionReferences": []
+}

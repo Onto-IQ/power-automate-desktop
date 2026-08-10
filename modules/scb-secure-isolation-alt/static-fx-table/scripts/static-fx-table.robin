@@ -4,8 +4,7 @@
 WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://app.bot.or.th/BTWS_STAT/statistics/ReportPage.aspx?language=TH&reportID=123''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 90 Timeout: 90 BrowserInstance=> Browser
 
 # REBIND: Wait Tbl_BotFx (e.g. row “อัตราอ้างอิง : ดอลลาร์สหรัฐ (USD)”)
-WebAutomation.WaitForWebPageContent.WaitForWebPageToContainElement BrowserInstance: Browser Control: appmask['SCB StaticFx']['Tbl_BotFx'] Timeout: 90
-
+WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['SCB StaticFx']['Tbl_BotFx']) FOR 90
 # REBIND: Extract Entire HTML Table → BotFxTable (use real column names from Variables pane)
 # WebAutomation.ExtractData ... ExtractedData=> BotFxTable
 Variables.CreateNewDatatable InputTable: { ^['ลำดับ', 'รายการ', 'ค่าล่าสุด'] } DataTable=> BotFxTable

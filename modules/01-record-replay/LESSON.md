@@ -9,7 +9,7 @@
 เมื่อจบบทนี้ คุณจะ:
 
 - อธิบายได้ว่า **Web Recorder** ช่วยจับขั้นตอนบนเว็บอย่างไร และทำไมต้องตรวจ UI Elements หลัง Record
-- เปิดเบราว์เซอร์ด้วย **Launch new Microsoft Edge** / **Launch new Chrome** แล้วรอหน้าพร้อมด้วย **Wait for web page content**
+- เปิดเบราว์เซอร์ด้วย **Launch new Chrome** (หลัก) หรือ **Launch new Microsoft Edge** แล้วรอหน้าพร้อมด้วย **Wait for web page content**
 - กรอกฟอร์ม**ครบทุกช่อง** ด้วย **Populate text field on web page** จากตัวแปร (ไม่ hardcode) แล้วกด Submit ด้วย **Press button on web page**
 - เก็บหลักฐานสำเร็จด้วย **Extract data from web page** หรือ **Take screenshot of web page** แล้วปิดด้วย **Close web browser**
 - เข้าใจกฎ `%` ตอนสร้างชื่อตัวแปร vs ตอนอ้างอิงค่า
@@ -54,7 +54,7 @@ Pseudo-flow:
 
 ```text
 FullName, Email, Amount, FormDate, Message = ค่าจากแถวแรกของ CSV
-Browser = Launch Edge/Chrome ไป https://ontoiq.tech/pad/01-forms.html
+Browser = Launch Chrome ไป https://ontoiq.tech/pad/01-forms.html
 รอให้ช่องฟอร์มพร้อม
 Populate ครบ 5 ช่อง: Txt_Name ← %FullName%, Txt_Email ← %Email%, Txt_Amount ← %Amount%, Txt_Date ← %FormDate%, Txt_Note ← %Message%
 Press Btn_Submit
@@ -68,7 +68,7 @@ Run ซ้ำรอบสอง — ต้องผ่านเหมือน�
 | Action (official) | ทำอะไร | Input สำคัญ | **Variables produced** (ชื่อตอนสร้าง — ไม่มี `%`) |
 |-------------------|--------|-------------|--------------------------------------|
 | **Set variable** | ตั้งค่าตัวแปร | Name, Value | — (ใช้ชื่อที่คุณตั้ง) |
-| **Launch new Microsoft Edge** / **Launch new Chrome** | เปิดเบราว์เซอร์ไป URL | Initial URL | `Browser` |
+| **Launch new Chrome** (หรือ Edge) | เปิดเบราว์เซอร์ไป URL | Initial URL | `Browser` |
 | **Wait for web page content** | รอ element/ข้อความบนหน้า | Browser instance, Wait for | — |
 | **Populate text field on web page** | กรอกข้อความลงช่อง | Browser, UI element, Text | — |
 | **Press button on web page** | กดปุ่มบนหน้า | Browser, UI element | — |

@@ -10,13 +10,13 @@ WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://www.bot.or.th/th/search.htm
 # WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['SCB FormSearch']['Btn_CookieNecessary'] ...
 
 # REBIND: Wait + Populate Txt_Search with %SearchKeyword%
-WebAutomation.WaitForWebPageContent.WaitForWebPageToContainElement BrowserInstance: Browser Control: appmask['SCB FormSearch']['Txt_Search'] Timeout: 60
+WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['SCB FormSearch']['Txt_Search']) FOR 60
 WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['SCB FormSearch']['Txt_Search'] Text: SearchKeyword EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
 
 # REBIND: Press Btn_Search (or SendKeys {Enter})
 WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['SCB FormSearch']['Btn_Search'] WaitForPageToLoadTimeout: 60
 
 # REBIND: Wait results then screenshot
-WebAutomation.TakeScreenshot.TakeScreenshot BrowserInstance: Browser File: $'''C:\\PAD-Labs\\output\\lab-scb-alt\\search-proof.png'''
+WebAutomation.TakeScreenshot.TakeScreenshotSaveToFile BrowserInstance: Browser File: $'''C:\\PAD-Labs\\output\\lab-scb-alt\\search-proof.png''' FileFormat: WebAutomation.FileFormat.Png
 
 WebAutomation.CloseWebBrowser BrowserInstance: Browser

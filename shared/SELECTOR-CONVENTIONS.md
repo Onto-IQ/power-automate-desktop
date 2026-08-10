@@ -7,6 +7,8 @@
 1. เลือก element ด้วย **UI element picker** ใน Power Automate Desktop
 2. ตรวจ/ล็อก selector ให้ใช้ `id` หรือ `data-pad` เป็นหลัก
 3. หลีกเลี่ยงตำแหน่งสัมพัทธ์ยาว ๆ และ text ที่เปลี่ยนบ่อย
+4. ถ้า attribute เปลี่ยนบ่อย ให้เปลี่ยนตัวดำเนินการเป็น **Contains** / **Starts with** แทน Equal to ทั้งสตริง ([custom selectors](https://learn.microsoft.com/power-automate/desktop-flows/build-custom-selectors))
+5. PAD กับแอปเป้าหมายต้องอยู่ระดับสิทธิ์เดียวกัน — อาการ “Can't access UI elements” มักเป็น elevation mismatch
 
 ## รูปแบบที่แนะนำ
 

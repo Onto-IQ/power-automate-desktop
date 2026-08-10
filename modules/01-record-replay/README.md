@@ -16,7 +16,7 @@
 
 สำหรับนักเรียนที่ทำตามไม่ทัน — เปิด [`scripts/01-record-replay.robin`](scripts/01-record-replay.robin) แล้ว copy วางใน desktop flow ว่าง
 
-- partial-ui — rebind selectors บน Forms
+- partial-ui — Chrome + UI Elements `Lab01 Forms` ฝังในไฟล์ (กรอกฟอร์มได้หลังวางใน flow ว่าง)
 - ไม่แทนการทำ LAB หลัก; ใช้เทียบลำดับ action / กู้งานให้ทันชั้น
 
 ## วัตถุประสงค์

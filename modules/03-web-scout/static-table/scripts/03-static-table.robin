@@ -4,8 +4,7 @@
 WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://pad.ontoiq.tech/pad/03-table.html''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 60 Timeout: 60 BrowserInstance=> Browser
 
 # REBIND: Wait Contain element Tbl_Employees (#tbl-employees)
-WebAutomation.WaitForWebPageContent.WaitForWebPageToContainElement BrowserInstance: Browser Control: appmask['Lab03 StaticTable']['Tbl_Employees'] Timeout: 60
-
+WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['Lab03 StaticTable']['Tbl_Employees']) FOR 60
 # REBIND: Extract Entire HTML Table → StaticTable
 # WebAutomation.ExtractData.ExtractData BrowserInstance: Browser ... ExtractedData=> StaticTable
 Variables.CreateNewDatatable InputTable: { ^['Emp ID', 'Name', 'Department', 'Salary'] } DataTable=> StaticTable

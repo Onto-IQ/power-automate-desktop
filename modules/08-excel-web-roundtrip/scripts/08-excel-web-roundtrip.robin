@@ -10,7 +10,7 @@ Excel.ReadFromExcel.ReadAllCells Instance: Excel ReadAsText: False FirstLineIsHe
 
 WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://ontoiq.tech/pad/06-login.html''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 60 Timeout: 60 BrowserInstance=> Browser
 # REBIND: #txt-username #txt-password #btn-login
-WebAutomation.WaitForWebPageContent.WaitForWebPageToContainElement BrowserInstance: Browser Control: appmask['Lab08 Login']['Txt_Username'] Timeout: 60
+WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['Lab08 Login']['Txt_Username']) FOR 60
 WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab08 Login']['Txt_Username'] Text: $'''demo''' EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
 WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab08 Login']['Txt_Password'] Text: $'''demo''' EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
 WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab08 Login']['Btn_Login'] WaitForPageToLoadTimeout: 60
@@ -32,7 +32,7 @@ LOOP FOREACH CurrentLead IN Leads
         ELSE
             WebAutomation.GoToWebPage.GoToWebPage BrowserInstance: Browser Url: $'''https://ontoiq.tech/pad/01-forms.html''' WaitForPageToLoadTimeout: 60
             # REBIND: Populate Name/Email/Message/Date from CurrentLead; Press Submit
-            WebAutomation.WaitForWebPageContent.WaitForWebPageToContainElement BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Name'] Timeout: 60
+            WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Name']) FOR 60
             WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Name'] Text: CurrentLead['FullName'] EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
             WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Email'] Text: CurrentLead['Email'] EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
             WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Date'] Text: TodayText EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace

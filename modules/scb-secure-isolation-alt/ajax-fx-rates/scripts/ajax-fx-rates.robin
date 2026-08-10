@@ -7,8 +7,7 @@ SET CurrencyCode TO $'''USD'''
 WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://www.scb.co.th/th/personal-banking/foreign-exchange-rates''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 90 Timeout: 90 BrowserInstance=> Browser
 
 # REBIND: Wait Tbl_ScbFx until currency rows visible (e.g. USD)
-WebAutomation.WaitForWebPageContent.WaitForWebPageToContainElement BrowserInstance: Browser Control: appmask['SCB AjaxFx']['Tbl_ScbFx'] Timeout: 90
-
+WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['SCB AjaxFx']['Tbl_ScbFx']) FOR 90
 # REBIND: Extract Entire HTML Table (or repeating scrape) → ScbFxTable
 # WebAutomation.ExtractData ... ExtractedData=> ScbFxTable
 Variables.CreateNewDatatable InputTable: { ^['Currency', 'BankBuys', 'BankSells'] } DataTable=> ScbFxTable

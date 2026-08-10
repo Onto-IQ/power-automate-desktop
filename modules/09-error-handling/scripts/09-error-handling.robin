@@ -54,7 +54,7 @@ LOOP WHILE RetryCount < 3
         File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
     END
         # REBIND: Wait for delayed element on 11-delay.html
-        WebAutomation.WaitForWebPageContent.WaitForWebPageToContainElement BrowserInstance: Browser Control: appmask['Lab09 Delay']['ReadyElement'] Timeout: 10
+        WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['Lab09 Delay']['ReadyElement']) FOR 10
         DateTime.GetCurrentDateTime.GetCurrentDateTime DateTime=> Now
         SET LogLine TO $'''%Now%,C,Info,wait-success,%RetryCount%,False'''
         File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
@@ -76,7 +76,7 @@ File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFil
 # Case E — Recovery happy path (Forms)
 WebAutomation.GoToWebPage.GoToWebPage BrowserInstance: Browser Url: $'''https://ontoiq.tech/pad/01-forms.html''' WaitForPageToLoadTimeout: 60
 # REBIND: Wait #txt-name; Populate required fields; Press Btn_Submit
-WebAutomation.WaitForWebPageContent.WaitForWebPageToContainElement BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Name'] Timeout: 60
+WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Name']) FOR 60
 WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Name'] Text: $'''Recovery User''' EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
 WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Email'] Text: $'''recovery@example.com''' EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
 WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Amount'] Text: $'''1000''' EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
