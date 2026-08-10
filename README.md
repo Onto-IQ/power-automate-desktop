@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Changelog](https://img.shields.io/badge/changelog-Keep%20a%20Changelog-E05735)](CHANGELOG.md)
 
-ชุดเอกสาร มือจับทำ (LESSON + LAB) และ mock assets สำหรับหลักสูตร **Power Automate for desktop (PAD) 2 วัน**  
+ชุดเอกสาร จับมือทำ (LESSON + LAB) และ mock assets สำหรับหลักสูตร **Power Automate for desktop (PAD) 2 วัน**  
 แนวทางหลักคือ Hands-on Labs ทีละขั้นใน designer ควบคู่ Capstone Workshop เพื่อให้ผู้เรียนลงมือสร้าง desktop flow จริง
 
 | รายการ | รายละเอียด |
