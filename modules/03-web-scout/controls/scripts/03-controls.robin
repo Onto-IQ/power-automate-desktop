@@ -1,20 +1,50 @@
-# Lab03_Controls — partial-ui
+# Lab03_Controls — partial-ui (Chrome + bundled UI Elements)
 # URL: https://pad.ontoiq.tech/pad/02-controls.html
+# ControlRepository at end — paste into an EMPTY desktop flow
+# Elements: Ddl_Department (#ddl-department) Chk_Terms (#chk-terms) Btn_Primary
+# Set dropdown IT + check terms → GetDetails → controls-result.csv + screenshot
 
-WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://pad.ontoiq.tech/pad/02-controls.html''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 60 Timeout: 60 BrowserInstance=> Browser
+IF (Folder.IfFolderExists.DoesNotExist Path: $'''C:\\PAD-Labs\\output\\lab03''') THEN
+    Folder.Create FolderPath: $'''C:\\PAD-Labs\\output''' FolderName: $'''lab03''' Folder=> Lab03OutFolder
+END
 
-# REBIND: Set dropdown (non-default) + checkbox
-# WebAutomation.SetDropDownListValue ... Control: appmask['Lab03 Controls']['Ddl_Option']
-# WebAutomation.SetCheckboxState ... Control: appmask['Lab03 Controls']['Chk_Agree']
+WebAutomation.LaunchChrome.LaunchChrome Url: $'''https://pad.ontoiq.tech/pad/02-controls.html''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 60 Timeout: 60 BrowserInstance=> Browser
 
-# optional: Get details → SelectedOption, CheckState
-SET SelectedOption TO $'''(rebind-and-read)'''
-SET CheckState TO $'''(rebind-and-read)'''
+WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['Lab03 Controls']['Ddl_Department']) FOR 60
+WebAutomation.SetDropDownListValue.SetDropDownListValueByName BrowserInstance: Browser Control: appmask['Lab03 Controls']['Ddl_Department'] OptionsNames: $'''IT''' UseRegularExpressions: False
+WebAutomation.SetCheckboxState.SetCheckboxState BrowserInstance: Browser Control: appmask['Lab03 Controls']['Chk_Terms'] CheckBoxState: WebAutomation.CheckBoxState.Checked
+
+WebAutomation.GetDetailsOfElement BrowserInstance: Browser Control: appmask['Lab03 Controls']['Ddl_Department'] AttributeName: $'''Own Text''' AttributeValue=> SelectedOption
+WebAutomation.GetDetailsOfElement BrowserInstance: Browser Control: appmask['Lab03 Controls']['Chk_Terms'] AttributeName: $'''Checked''' AttributeValue=> CheckState
 
 SET CsvBody TO $'''SelectedOption,CheckState
 %SelectedOption%,%CheckState%'''
 File.WriteText File: $'''C:\\PAD-Labs\\output\\lab03\\controls-result.csv''' TextToWrite: CsvBody AppendNewLine: True IfFileExists: File.IfFileExists.Overwrite Encoding: File.FileEncoding.UTF8
 
-# optional: WebAutomation.TakeScreenshot → C:\PAD-Labs\output\lab03\controls.png
+WebAutomation.TakeScreenshot.TakeScreenshotSaveToFile BrowserInstance: Browser File: $'''C:\\PAD-Labs\\output\\lab03\\controls.png''' FileFormat: WebAutomation.FileFormat.Png
 
 WebAutomation.CloseWebBrowser BrowserInstance: Browser
+
+# [ControlRepository][PowerAutomateDesktop]
+
+{
+  "ControlRepositorySymbols": [
+    {
+      "IgnoreImagesOnSerialization": false,
+      "Repository": "{\r\n  \"Screens\": [\r\n    {\r\n      \"Controls\": [\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"select\",\r\n          \"InstanceId\": \"426c3b16-9c3c-4335-b216-c99e4fc1bb5d\",\r\n          \"Name\": \"Ddl_Department\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#ddl-department\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"select\"\r\n        },\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"input\",\r\n          \"InstanceId\": \"ff5d6d0d-4ae3-4dd8-9d27-c1584c3ad47a\",\r\n          \"Name\": \"Chk_Terms\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#chk-terms\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"input\"\r\n        },\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"button\",\r\n          \"InstanceId\": \"8e16c9a9-f449-4393-a8b5-d486555b7b23\",\r\n          \"Name\": \"Btn_Primary\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#btn-primary-action\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"button\"\r\n        }\r\n      ],\r\n      \"Handle\": {\r\n        \"value\": 0\r\n      },\r\n      \"ProcessName\": null,\r\n      \"ScreenShot\": null,\r\n      \"ElementTypeName\": \"Web Page\",\r\n      \"InstanceId\": \"1da20a99-0d2c-41ec-a121-9247182d98ae\",\r\n      \"Name\": \"Lab03 Controls\",\r\n      \"SelectorCount\": 1,\r\n      \"Selectors\": [\r\n        {\r\n          \"CustomSelector\": null,\r\n          \"Elements\": [\r\n            {\r\n              \"Attributes\": [],\r\n              \"CustomValue\": \"domcontainer\",\r\n              \"Ignore\": false,\r\n              \"Name\": \"Web Page 'https://pad.ontoiq.tech/pad/02-controls.html'\",\r\n              \"Tag\": \"domcontainer\"\r\n            }\r\n          ],\r\n          \"Ignore\": false,\r\n          \"ImageSelector\": null,\r\n          \"IsCustom\": false,\r\n          \"IsImageBased\": false,\r\n          \"IsPlaceholderSelector\": false,\r\n          \"IsWindowsInstance\": false,\r\n          \"Name\": \"Default Selector\",\r\n          \"Properties\": []\r\n        }\r\n      ],\r\n      \"Tag\": \"domcontainer\",\r\n      \"ScreenshotPath\": null\r\n    }\r\n  ],\r\n  \"Version\": 1\r\n}",
+      "ImportMetadata": {
+        "DisplayName": "Local computer",
+        "ConnectionString": "",
+        "Type": "Local",
+        "DesktopType": "local"
+      },
+      "Name": "appmask"
+    }
+  ],
+  "ImageRepositorySymbol": {
+    "Repository": "{\r\n  \"Folders\": [],\r\n  \"Images\": [],\r\n  \"Version\": 1\r\n}",
+    "ImportMetadata": {},
+    "Name": "imgrepo"
+  },
+  "ConnectionReferences": []
+}

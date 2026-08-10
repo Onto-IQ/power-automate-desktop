@@ -10,13 +10,33 @@ PAD baseline ของชุดเอกสาร: **2607+** (สิงหาค
 
 ## [Unreleased]
 
-### Module เฉพาะกิจ
-- เพิ่ม `modules/scb-secure-isolation-alt/` สำหรับห้องที่ Browser Secure Isolation กั้น Lab Hub — ใช้เฉพาะ `bot.or.th` / `scb.co.th` ทดแทน Lab 01 + Lab 03 Core (Form Search · Static FX Table · AJAX FX Rates)
+---
+
+## [1.3.0] — 2026-08-11
+
+Catch-up web labs พร้อม UI Elements bundle + อัปเดต `PAD-Labs.zip` บน Release
+
+### Catch-up / UI Elements
+- Bundle `# [ControlRepository]` ให้ Lab **03** (Static / AJAX / Catalog / Controls / Files), **08** (Login / Forms / Wizard), **09** (Delay / Dialogs / Forms) — paste ลง empty flow ไม่ต้อง Capture ก่อนรัน
+- อัปเดต README / LAB catch-up notes ให้ระบุ bundled screens
+
+### Module เฉพาะกิจ (รวมจาก main หลัง v1.2.0)
+- Harden `modules/scb-secure-isolation-alt/` — catch-up bundle UI Elements + LAB ชัดขึ้น
+
+### Learner pack
+- Release asset **`PAD-Labs.zip`** อัปเดตคู่กับ tag นี้
+
+---
+
+## [1.2.0] — 2026-08-10
 
 ### Learner pack
 - เพิ่ม `tools/pad-labs/` — สร้าง/ติดตั้ง **`PAD-Labs.zip`** (seed `C:\PAD-Labs` ครบทุก Module รวม Lab 06 `sales-report.xlsm`)
 - อัปเดต [`shared/PRECLASS-SETUP.md`](shared/PRECLASS-SETUP.md) ให้ดาวน์โหลด zip จาก GitHub Releases เป็นวิธีหลัก
 - Workflow `.github/workflows/pad-labs-zip.yml` แนบ `PAD-Labs.zip` ตอน publish Release
+
+### Module เฉพาะกิจ
+- เพิ่ม `modules/scb-secure-isolation-alt/` สำหรับห้องที่ Browser Secure Isolation กั้น Lab Hub — ใช้เฉพาะ `bot.or.th` / `scb.co.th` ทดแทน Lab 01 + Lab 03 Core
 
 ---
 

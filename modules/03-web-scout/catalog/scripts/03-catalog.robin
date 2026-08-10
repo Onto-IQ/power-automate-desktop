@@ -1,36 +1,41 @@
-# Lab03_Catalog — partial-ui
-# URL: https://pad.ontoiq.tech/pad/19-catalog.html · ~24 rows / 3 pages · Exit when Next disabled
+# Lab03_Catalog — partial-ui (Chrome + bundled UI Elements)
+# URL: https://pad.ontoiq.tech/pad/19-catalog.html · ~24 rows / 3 pages
+# ControlRepository at end — paste into an EMPTY desktop flow
+# Elements: Tbl_Products (#tbl-products) Btn_NextPage (#btn-next-page)
+# Loop: Extract page → append → GetDetails Disabled on Next → exit or Click Next
 
 Variables.CreateNewDatatable InputTable: { ^['SKU', 'Product', 'Price', 'Category'] } DataTable=> CatalogHits
 SET MaxPages TO 10
 SET PageCount TO 0
 
-WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://pad.ontoiq.tech/pad/19-catalog.html''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 60 Timeout: 60 BrowserInstance=> Browser
+IF (Folder.IfFolderExists.DoesNotExist Path: $'''C:\\PAD-Labs\\output\\lab03''') THEN
+    Folder.Create FolderPath: $'''C:\\PAD-Labs\\output''' FolderName: $'''lab03''' Folder=> Lab03OutFolder
+END
 
-# REBIND before loop: Btn_NextPage (#btn-next-page), optional Tbl_Products (#tbl-products)
+WebAutomation.LaunchChrome.LaunchChrome Url: $'''https://pad.ontoiq.tech/pad/19-catalog.html''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 60 Timeout: 60 BrowserInstance=> Browser
 
 LOOP WHILE PageCount < MaxPages
-    # REBIND: Wait #tbl-products
     WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['Lab03 Catalog']['Tbl_Products']) FOR 60
-    # REBIND: Extract Entire HTML Table → PageTable
-    # WebAutomation.ExtractData ... ExtractedData=> PageTable
-    Variables.CreateNewDatatable InputTable: { ^['SKU', 'Product', 'Price', 'Category'] } DataTable=> PageTable
+    WebAutomation.ExtractData.ExtractHtmlTable BrowserInstance: Browser Control: $'''#tbl-products''' ExtractionParameters: {[$'''SKU''', $'''Product''', $'''Price''', $'''Category'''], [$'''''', $'''''', $'''''', $''''''] } PostProcessData: False TimeoutInSeconds: 60 ExtractedData=> PageTable
 
     LOOP FOREACH ProductRow IN PageTable
-        Variables.AddRowToDataTable.AppendRowToDataTable DataTable: CatalogHits RowToAdd: ProductRow
+        Variables.AddRowToDataTable.AppendRowToDataTable DataTable: CatalogHits RowToAdd: [ProductRow[0], ProductRow[1], ProductRow[2], ProductRow[3]]
     END
 
     Variables.IncreaseVariable Value: PageCount IncrementValue: 1
 
-    # REBIND: Get details Btn_NextPage Attribute=Disabled → AttributeValue
-    # WebAutomation.GetDetailsOfElement ... AttributeName: $'''Disabled''' AttributeValue=> AttributeValue
-    SET AttributeValue TO False
+    WebAutomation.GetDetailsOfElement BrowserInstance: Browser Control: appmask['Lab03 Catalog']['Btn_NextPage'] AttributeName: $'''Disabled''' AttributeValue=> AttributeValue
     IF AttributeValue = True THEN
         EXIT LOOP
     END
-    # REBIND: Press Btn_NextPage
-    # WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab03 Catalog']['Btn_NextPage'] ...
-    EXIT LOOP
+    IF AttributeValue = $'''true''' THEN
+        EXIT LOOP
+    END
+    IF AttributeValue = $'''True''' THEN
+        EXIT LOOP
+    END
+
+    WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab03 Catalog']['Btn_NextPage'] WaitForPageToLoadTimeout: 60
 END
 
 SET CsvPath TO $'''C:\\PAD-Labs\\output\\lab03\\catalog-products.csv'''
@@ -45,3 +50,27 @@ LOOP FOREACH CatalogRow IN CatalogHits
 END
 
 WebAutomation.CloseWebBrowser BrowserInstance: Browser
+
+# [ControlRepository][PowerAutomateDesktop]
+
+{
+  "ControlRepositorySymbols": [
+    {
+      "IgnoreImagesOnSerialization": false,
+      "Repository": "{\r\n  \"Screens\": [\r\n    {\r\n      \"Controls\": [\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"table\",\r\n          \"InstanceId\": \"2d8772ec-4b4c-4371-b3e0-4fb56afe5538\",\r\n          \"Name\": \"Tbl_Products\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#tbl-products\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"table\"\r\n        },\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"button\",\r\n          \"InstanceId\": \"71191dc5-f049-4e86-961c-42a6c80f44eb\",\r\n          \"Name\": \"Btn_NextPage\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#btn-next-page\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"button\"\r\n        }\r\n      ],\r\n      \"Handle\": {\r\n        \"value\": 0\r\n      },\r\n      \"ProcessName\": null,\r\n      \"ScreenShot\": null,\r\n      \"ElementTypeName\": \"Web Page\",\r\n      \"InstanceId\": \"646d5a5a-8b39-4ede-b76f-60db97008d73\",\r\n      \"Name\": \"Lab03 Catalog\",\r\n      \"SelectorCount\": 1,\r\n      \"Selectors\": [\r\n        {\r\n          \"CustomSelector\": null,\r\n          \"Elements\": [\r\n            {\r\n              \"Attributes\": [],\r\n              \"CustomValue\": \"domcontainer\",\r\n              \"Ignore\": false,\r\n              \"Name\": \"Web Page 'https://pad.ontoiq.tech/pad/19-catalog.html'\",\r\n              \"Tag\": \"domcontainer\"\r\n            }\r\n          ],\r\n          \"Ignore\": false,\r\n          \"ImageSelector\": null,\r\n          \"IsCustom\": false,\r\n          \"IsImageBased\": false,\r\n          \"IsPlaceholderSelector\": false,\r\n          \"IsWindowsInstance\": false,\r\n          \"Name\": \"Default Selector\",\r\n          \"Properties\": []\r\n        }\r\n      ],\r\n      \"Tag\": \"domcontainer\",\r\n      \"ScreenshotPath\": null\r\n    }\r\n  ],\r\n  \"Version\": 1\r\n}",
+      "ImportMetadata": {
+        "DisplayName": "Local computer",
+        "ConnectionString": "",
+        "Type": "Local",
+        "DesktopType": "local"
+      },
+      "Name": "appmask"
+    }
+  ],
+  "ImageRepositorySymbol": {
+    "Repository": "{\r\n  \"Folders\": [],\r\n  \"Images\": [],\r\n  \"Version\": 1\r\n}",
+    "ImportMetadata": {},
+    "Name": "imgrepo"
+  },
+  "ConnectionReferences": []
+}

@@ -1,26 +1,31 @@
-# Lab03_AjaxTable — partial-ui
+# Lab03_AjaxTable — partial-ui (Chrome + bundled UI Elements)
 # URL: https://pad.ontoiq.tech/pad/09-ajax-table.html · MinAmount=1500
+# ControlRepository at end — paste into an EMPTY desktop flow
+# Elements: Btn_RefreshOrders (#btn-refresh-orders) Tbl_Orders (#tbl-orders)
+# Refresh → Wait rows → ExtractHtmlTable → filter Amount >= MinAmount → ajax-orders.csv
 
 SET MinAmount TO 1500
 
-WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://pad.ontoiq.tech/pad/09-ajax-table.html''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 60 Timeout: 60 BrowserInstance=> Browser
+IF (Folder.IfFolderExists.DoesNotExist Path: $'''C:\\PAD-Labs\\output\\lab03''') THEN
+    Folder.Create FolderPath: $'''C:\\PAD-Labs\\output''' FolderName: $'''lab03''' Folder=> Lab03OutFolder
+END
 
-# REBIND: Press Btn_RefreshOrders (#btn-refresh-orders) if table empty
-# WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab03 Ajax']['Btn_RefreshOrders'] ...
+WebAutomation.LaunchChrome.LaunchChrome Url: $'''https://pad.ontoiq.tech/pad/09-ajax-table.html''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 60 Timeout: 60 BrowserInstance=> Browser
 
-# REBIND: Wait Contain element #tbl-orders / Tbl_Orders
+WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['Lab03 Ajax']['Btn_RefreshOrders']) FOR 60
+WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab03 Ajax']['Btn_RefreshOrders'] WaitForPageToLoadTimeout: 60
+
 WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['Lab03 Ajax']['Tbl_Orders']) FOR 60
-# REBIND: Extract Entire HTML Table → AjaxTable (copy real column names from Variables pane)
-# WebAutomation.ExtractData ... ExtractedData=> AjaxTable
-Variables.CreateNewDatatable InputTable: { ^['Order ID', 'Customer', 'Amount', 'Status'] } DataTable=> AjaxTable
+WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainText BrowserInstance: Browser Text: $'''Order''') FOR 60
 
-# Create Hits with same column names as AjaxTable
+WebAutomation.ExtractData.ExtractHtmlTable BrowserInstance: Browser Control: $'''#tbl-orders''' ExtractionParameters: {[$'''Order ID''', $'''Customer''', $'''Amount''', $'''Status'''], [$'''''', $'''''', $'''''', $''''''] } PostProcessData: False TimeoutInSeconds: 60 ExtractedData=> AjaxTable
+
 Variables.CreateNewDatatable InputTable: { ^['Order ID', 'Customer', 'Amount', 'Status'] } DataTable=> Hits
 
 LOOP FOREACH AjaxRow IN AjaxTable
-    Text.ToNumber Text: AjaxRow['Amount'] Number=> AmountNumber
+    Text.ToNumber Text: AjaxRow[2] Number=> AmountNumber
     IF AmountNumber >= MinAmount THEN
-        Variables.AddRowToDataTable.AppendRowToDataTable DataTable: Hits RowToAdd: AjaxRow
+        Variables.AddRowToDataTable.AppendRowToDataTable DataTable: Hits RowToAdd: [AjaxRow[0], AjaxRow[1], AjaxRow[2], AjaxRow[3]]
     END
 END
 
@@ -36,3 +41,27 @@ LOOP FOREACH HitRow IN Hits
 END
 
 WebAutomation.CloseWebBrowser BrowserInstance: Browser
+
+# [ControlRepository][PowerAutomateDesktop]
+
+{
+  "ControlRepositorySymbols": [
+    {
+      "IgnoreImagesOnSerialization": false,
+      "Repository": "{\r\n  \"Screens\": [\r\n    {\r\n      \"Controls\": [\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"button\",\r\n          \"InstanceId\": \"fb06501f-7267-46b8-bc3a-8f34bf7d9b53\",\r\n          \"Name\": \"Btn_RefreshOrders\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#btn-refresh-orders\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"button\"\r\n        },\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"table\",\r\n          \"InstanceId\": \"d484e72b-2de3-4560-971a-ca87dae2823a\",\r\n          \"Name\": \"Tbl_Orders\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#tbl-orders\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"table\"\r\n        }\r\n      ],\r\n      \"Handle\": {\r\n        \"value\": 0\r\n      },\r\n      \"ProcessName\": null,\r\n      \"ScreenShot\": null,\r\n      \"ElementTypeName\": \"Web Page\",\r\n      \"InstanceId\": \"2e3f3164-ba1e-4cc3-ae7d-d5916af2ac6c\",\r\n      \"Name\": \"Lab03 Ajax\",\r\n      \"SelectorCount\": 1,\r\n      \"Selectors\": [\r\n        {\r\n          \"CustomSelector\": null,\r\n          \"Elements\": [\r\n            {\r\n              \"Attributes\": [],\r\n              \"CustomValue\": \"domcontainer\",\r\n              \"Ignore\": false,\r\n              \"Name\": \"Web Page 'https://pad.ontoiq.tech/pad/09-ajax-table.html'\",\r\n              \"Tag\": \"domcontainer\"\r\n            }\r\n          ],\r\n          \"Ignore\": false,\r\n          \"ImageSelector\": null,\r\n          \"IsCustom\": false,\r\n          \"IsImageBased\": false,\r\n          \"IsPlaceholderSelector\": false,\r\n          \"IsWindowsInstance\": false,\r\n          \"Name\": \"Default Selector\",\r\n          \"Properties\": []\r\n        }\r\n      ],\r\n      \"Tag\": \"domcontainer\",\r\n      \"ScreenshotPath\": null\r\n    }\r\n  ],\r\n  \"Version\": 1\r\n}",
+      "ImportMetadata": {
+        "DisplayName": "Local computer",
+        "ConnectionString": "",
+        "Type": "Local",
+        "DesktopType": "local"
+      },
+      "Name": "appmask"
+    }
+  ],
+  "ImageRepositorySymbol": {
+    "Repository": "{\r\n  \"Folders\": [],\r\n  \"Images\": [],\r\n  \"Version\": 1\r\n}",
+    "ImportMetadata": {},
+    "Name": "imgrepo"
+  },
+  "ConnectionReferences": []
+}

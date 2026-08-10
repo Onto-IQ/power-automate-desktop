@@ -18,7 +18,7 @@
 
 สำหรับนักเรียนที่ทำตามไม่ทัน — เปิด [`scripts/09-error-handling.robin`](scripts/09-error-handling.robin) แล้ว copy วางใน desktop flow ว่าง
 
-- partial-ui — Cases A–E; rebind delay/dialogs/forms
+- partial-ui — Cases A–E; Chrome + bundled Delay / Dialogs / Forms (F–I ยังเป็น challenge stub)
 - Get last error ใน catch-up: `ERROR => LastError Reset: True`
 - ไม่แทนการทำ LAB หลัก; ใช้เทียบลำดับ action / กู้งานให้ทันชั้น
 

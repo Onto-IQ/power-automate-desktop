@@ -17,7 +17,7 @@
 
 สำหรับนักเรียนที่ทำตามไม่ทัน — เปิด [`scripts/03-files.robin`](scripts/03-files.robin) แล้ว copy วางใน desktop flow ว่าง
 
-- partial-ui
+- partial-ui — Chrome + bundled `Lab03 Files` (download CSV + upload sample)
 - ไม่แทนการทำ LAB หลัก; ใช้เทียบลำดับ action / กู้งานให้ทันชั้น
 
 ## วัตถุประสงค์

@@ -63,4 +63,4 @@ SelectedOption,CheckState
 
 ปิดเบราว์เซอร์ค้าง
 
-> **Catch-up:** ตามไม่ทัน → วาง [`scripts/03-controls.robin`](scripts/03-controls.robin) ใน flow ว่าง (partial-ui)
+> **Catch-up:** ตามไม่ทัน → วาง [`scripts/03-controls.robin`](scripts/03-controls.robin) ใน flow **ว่าง** (partial-ui + bundled `Lab03 Controls`)

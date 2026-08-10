@@ -18,7 +18,7 @@
 
 สำหรับนักเรียนที่ทำตามไม่ทัน — เปิด [`scripts/03-ajax-table.robin`](scripts/03-ajax-table.robin) แล้ว copy วางใน desktop flow ว่าง
 
-- partial-ui
+- partial-ui — Chrome + bundled `Lab03 Ajax` (`Btn_RefreshOrders`, `Tbl_Orders`)
 - ไม่แทนการทำ LAB หลัก; ใช้เทียบลำดับ action / กู้งานให้ทันชั้น
 
 ## วัตถุประสงค์

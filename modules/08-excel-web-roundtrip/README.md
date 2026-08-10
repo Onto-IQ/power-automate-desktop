@@ -16,7 +16,7 @@
 
 สำหรับนักเรียนที่ทำตามไม่ทัน — เปิด [`scripts/08-excel-web-roundtrip.robin`](scripts/08-excel-web-roundtrip.robin) แล้ว copy วางใน desktop flow ว่าง
 
-- partial-ui — rebind web + Excel
+- partial-ui — Chrome + bundled Login / Forms / Wizard (ต้องมี `leads-input.xlsx`)
 - ไม่แทนการทำ LAB หลัก; ใช้เทียบลำดับ action / กู้งานให้ทันชั้น
 
 ## วัตถุประสงค์

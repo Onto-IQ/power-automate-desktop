@@ -140,4 +140,4 @@ C:\PAD-Labs\output\lab03\static-table.csv
 
 ปิดเบราว์เซอร์ค้าง · เก็บ CSV ไว้ตรวจ
 
-> **Catch-up:** ตามไม่ทัน → วาง [`scripts/03-static-table.robin`](scripts/03-static-table.robin) ใน flow ว่าง (partial-ui)
+> **Catch-up:** ตามไม่ทัน → วาง [`scripts/03-static-table.robin`](scripts/03-static-table.robin) ใน flow **ว่าง** (partial-ui + bundled `Lab03 StaticTable`)

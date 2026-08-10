@@ -17,7 +17,7 @@
 
 สำหรับนักเรียนที่ทำตามไม่ทัน — เปิด [`scripts/03-catalog.robin`](scripts/03-catalog.robin) แล้ว copy วางใน desktop flow ว่าง
 
-- partial-ui
+- partial-ui — Chrome + bundled `Lab03 Catalog` (`Tbl_Products`, `Btn_NextPage`)
 - ไม่แทนการทำ LAB หลัก; ใช้เทียบลำดับ action / กู้งานให้ทันชั้น
 
 ## วัตถุประสงค์

@@ -1,8 +1,10 @@
-# Lab09_ErrorHandling — partial-ui (Cases A–E core; F–I challenge stubs)
+# Lab09_ErrorHandling — partial-ui (Chrome + bundled UI Elements; Cases A-E)
 # Log schema matches assets/error-log-template.csv
-# ON BLOCK ERROR: SET-only — Get last error / log / Increase อยู่นอก handler
+# ON BLOCK ERROR: SET-only — Get last error / log / Increase outside handler
 # Get last error (validated paste): ERROR => LastError Reset: True
-# REBIND: UI elements on delay / dialogs / forms pages
+# Screens: Lab09 Delay · Lab09 Dialogs · Lab01 Forms
+# Case C: start timer → Wait contain-text ready (short FOR to practice retry) → unlock
+# Case D: alert/confirm via ClickPressDialogButton + custom modal OK
 
 SET WorkingRoot TO $'''C:\\PAD-Labs\\working\\lab09'''
 SET ErrorLogPath TO $'''C:\\PAD-Labs\\logs\\lab09\\error-log.csv'''
@@ -11,6 +13,10 @@ SET Fatal TO False
 SET CaseFailed TO False
 SET WaitFailed TO False
 SET ErrorLogHeader TO $'''Timestamp,CaseId,Severity,Message,RetryCount,Fatal'''
+
+IF (Folder.IfFolderExists.DoesNotExist Path: $'''C:\\PAD-Labs\\logs\\lab09''') THEN
+    Folder.Create FolderPath: $'''C:\\PAD-Labs\\logs''' FolderName: $'''lab09''' Folder=> Lab09LogFolder
+END
 
 File.WriteText File: ErrorLogPath TextToWrite: ErrorLogHeader AppendNewLine: True IfFileExists: File.IfFileExists.Overwrite Encoding: File.FileEncoding.UTF8
 
@@ -33,13 +39,13 @@ END
 
 File.ReadTextFromFile.ReadText File: $'''%WorkingRoot%\\bad-url.txt''' Encoding: File.TextFileEncoding.UTF8 Content=> BadUrl
 
-# Case B — Bad URL (ensure Browser exists for later cases)
+# Case B — Bad URL
 SET CaseFailed TO False
 BLOCK
 ON BLOCK ERROR all
     SET CaseFailed TO True
 END
-    WebAutomation.LaunchEdge.LaunchEdge Url: BadUrl WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 30 Timeout: 30 BrowserInstance=> Browser
+    WebAutomation.LaunchChrome.LaunchChrome Url: BadUrl WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 30 Timeout: 30 BrowserInstance=> Browser
 END
 IF CaseFailed = True THEN
     ERROR => LastError Reset: True
@@ -52,19 +58,21 @@ END
 BLOCK
 ON BLOCK ERROR all
 END
-    WebAutomation.LaunchEdge.LaunchEdge Url: $'''about:blank''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 30 Timeout: 30 BrowserInstance=> Browser
+    WebAutomation.LaunchChrome.LaunchChrome Url: $'''about:blank''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 30 Timeout: 30 BrowserInstance=> Browser
 END
 
 # Case C — Flaky wait + retry (max 3)
 WebAutomation.GoToWebPage.GoToWebPage BrowserInstance: Browser Url: $'''https://ontoiq.tech/pad/11-delay.html''' WaitForPageToLoadTimeout: 60
+WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['Lab09 Delay']['Btn_StartTimer']) FOR 60
+WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab09 Delay']['Btn_StartTimer'] WaitForPageToLoadTimeout: 60
+SET RetryCount TO 0
 LOOP WHILE RetryCount < 3
     SET WaitFailed TO False
     BLOCK
     ON BLOCK ERROR all
         SET WaitFailed TO True
     END
-        # REBIND: Wait for delayed element on 11-delay.html
-        WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['Lab09 Delay']['ReadyElement']) FOR 10
+        WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainText BrowserInstance: Browser Text: $'''พร้อมกรอกรหัส''') FOR 3
     END
     IF WaitFailed = True THEN
         Variables.IncreaseVariable Value: RetryCount IncrementValue: 1
@@ -79,19 +87,29 @@ LOOP WHILE RetryCount < 3
     END
 END
 
-# Case D — Dialogs (must rebind + handle alert/confirm in designer)
+# Complete unlock after wait (Own Text of captcha label)
+BLOCK
+ON BLOCK ERROR all
+END
+    WebAutomation.GetDetailsOfElement BrowserInstance: Browser Control: appmask['Lab09 Delay']['Lbl_Captcha'] AttributeName: $'''Own Text''' AttributeValue=> CaptchaCode
+    WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab09 Delay']['Txt_Captcha'] Text: CaptchaCode EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
+    WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab09 Delay']['Btn_Unlock'] WaitForPageToLoadTimeout: 60
+END
+
+# Case D — Dialogs (alert/confirm + custom modal)
 WebAutomation.GoToWebPage.GoToWebPage BrowserInstance: Browser Url: $'''https://ontoiq.tech/pad/04-dialogs.html''' WaitForPageToLoadTimeout: 60
-# REBIND required:
-# 1) Click trigger (e.g. Btn_Alert / Btn_Confirm)
-# 2) Handle browser dialog (WebAutomation dialog actions / Send keys)
-# 3) Only then append DIALOG_HANDLED
+WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['Lab09 Dialogs']['Btn_Alert']) FOR 60
+WebAutomation.Click.ClickPressDialogButton BrowserInstance: Browser Control: appmask['Lab09 Dialogs']['Btn_Alert'] WaitForPageToLoadTimeout: 60 DialogButton: WebAutomation.DialogButton.OK
+WebAutomation.Click.ClickPressDialogButton BrowserInstance: Browser Control: appmask['Lab09 Dialogs']['Btn_Confirm'] WaitForPageToLoadTimeout: 60 DialogButton: WebAutomation.DialogButton.OK
+WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab09 Dialogs']['Btn_OpenModal'] WaitForPageToLoadTimeout: 60
+WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['Lab09 Dialogs']['Btn_ModalOk']) FOR 60
+WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab09 Dialogs']['Btn_ModalOk'] WaitForPageToLoadTimeout: 60
 DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> Now
-SET LogLine TO $'''%Now%,D,Info,DIALOG_PENDING_REBIND,0,False'''
+SET LogLine TO $'''%Now%,D,Info,DIALOG_HANDLED,0,False'''
 File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
 
 # Case E — Recovery happy path (Forms)
 WebAutomation.GoToWebPage.GoToWebPage BrowserInstance: Browser Url: $'''https://ontoiq.tech/pad/01-forms.html''' WaitForPageToLoadTimeout: 60
-# REBIND: Wait #txt-name; Populate required fields; Press Btn_Submit
 WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Name']) FOR 60
 WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Name'] Text: $'''Recovery User''' EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
 WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Email'] Text: $'''recovery@example.com''' EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
@@ -103,10 +121,34 @@ DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAn
 SET LogLine TO $'''%Now%,E,Info,RECOVERY_OK,0,False'''
 File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
 
-# Challenge stubs F–I (do ≥2 in class)
-# F: https://ontoiq.tech/pad/10-ocr.html → OCR_MISMATCH log if mismatch
-# G: https://ontoiq.tech/pad/05-files.html → bad upload then %WorkingRoot%\recovery-upload.txt
-# H: https://ontoiq.tech/pad/08-iframe.html → miss-frame then correct iframe
-# I: https://ontoiq.tech/pad/12-api.html → bad endpoint then health 2xx
+# Challenge stubs F-I (do >=2 in class)
+# F: https://ontoiq.tech/pad/10-ocr.html
+# G: https://ontoiq.tech/pad/05-files.html
+# H: https://ontoiq.tech/pad/08-iframe.html
+# I: https://ontoiq.tech/pad/12-api.html
 
 WebAutomation.CloseWebBrowser BrowserInstance: Browser
+
+# [ControlRepository][PowerAutomateDesktop]
+
+{
+  "ControlRepositorySymbols": [
+    {
+      "IgnoreImagesOnSerialization": false,
+      "Repository": "{\r\n  \"Screens\": [\r\n    {\r\n      \"Controls\": [\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"button\",\r\n          \"InstanceId\": \"94577759-0033-49f6-86e3-8a7358c48da9\",\r\n          \"Name\": \"Btn_StartTimer\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#btn-start-timer\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"button\"\r\n        },\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"div\",\r\n          \"InstanceId\": \"b0030567-85d6-475b-8de3-792dfd0e2ede\",\r\n          \"Name\": \"Lbl_Captcha\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#lbl-captcha\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"div\"\r\n        },\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"input\",\r\n          \"InstanceId\": \"63eb4419-b3a7-49bf-8419-f0ab538fe115\",\r\n          \"Name\": \"Txt_Captcha\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#txt-captcha\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"input\"\r\n        },\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"button\",\r\n          \"InstanceId\": \"3f73f907-dd6a-47e8-939d-1227bf380e44\",\r\n          \"Name\": \"Btn_Unlock\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#btn-unlock\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"button\"\r\n        },\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"p\",\r\n          \"InstanceId\": \"fcbb41d1-f98e-4d82-838a-e0aaa89d150b\",\r\n          \"Name\": \"ReadyElement\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#delay-status\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"p\"\r\n        }\r\n      ],\r\n      \"Handle\": {\r\n        \"value\": 0\r\n      },\r\n      \"ProcessName\": null,\r\n      \"ScreenShot\": null,\r\n      \"ElementTypeName\": \"Web Page\",\r\n      \"InstanceId\": \"a4d628c4-5be3-405d-aba1-ee4c919dd6df\",\r\n      \"Name\": \"Lab09 Delay\",\r\n      \"SelectorCount\": 1,\r\n      \"Selectors\": [\r\n        {\r\n          \"CustomSelector\": null,\r\n          \"Elements\": [\r\n            {\r\n              \"Attributes\": [],\r\n              \"CustomValue\": \"domcontainer\",\r\n              \"Ignore\": false,\r\n              \"Name\": \"Web Page 'https://ontoiq.tech/pad/11-delay.html'\",\r\n              \"Tag\": \"domcontainer\"\r\n            }\r\n          ],\r\n          \"Ignore\": false,\r\n          \"ImageSelector\": null,\r\n          \"IsCustom\": false,\r\n          \"IsImageBased\": false,\r\n          \"IsPlaceholderSelector\": false,\r\n          \"IsWindowsInstance\": false,\r\n          \"Name\": \"Default Selector\",\r\n          \"Properties\": []\r\n        }\r\n      ],\r\n      \"Tag\": \"domcontainer\",\r\n      \"ScreenshotPath\": null\r\n    },\r\n    {\r\n      \"Controls\": [\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"button\",\r\n          \"InstanceId\": \"d15623c2-0261-4195-a6a1-4695408dfb29\",\r\n          \"Name\": \"Btn_Alert\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#btn-alert\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"button\"\r\n        },\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"button\",\r\n          \"InstanceId\": \"a8c011b4-80dc-464e-93b9-946492e43754\",\r\n          \"Name\": \"Btn_Confirm\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#btn-confirm\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"button\"\r\n        },\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"button\",\r\n          \"InstanceId\": \"8ce5310e-bc55-4461-b237-a583f2f33866\",\r\n          \"Name\": \"Btn_OpenModal\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#btn-open-modal\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"button\"\r\n        },\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"button\",\r\n          \"InstanceId\": \"a09c94c0-16fa-47a4-a2b5-275bc301f0ab\",\r\n          \"Name\": \"Btn_ModalOk\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#btn-modal-ok\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"button\"\r\n        }\r\n      ],\r\n      \"Handle\": {\r\n        \"value\": 0\r\n      },\r\n      \"ProcessName\": null,\r\n      \"ScreenShot\": null,\r\n      \"ElementTypeName\": \"Web Page\",\r\n      \"InstanceId\": \"3d3f4a79-7434-401d-ad9a-32b0c7b28a1c\",\r\n      \"Name\": \"Lab09 Dialogs\",\r\n      \"SelectorCount\": 1,\r\n      \"Selectors\": [\r\n        {\r\n          \"CustomSelector\": null,\r\n          \"Elements\": [\r\n            {\r\n              \"Attributes\": [],\r\n              \"CustomValue\": \"domcontainer\",\r\n              \"Ignore\": false,\r\n              \"Name\": \"Web Page 'https://ontoiq.tech/pad/04-dialogs.html'\",\r\n              \"Tag\": \"domcontainer\"\r\n            }\r\n          ],\r\n          \"Ignore\": false,\r\n          \"ImageSelector\": null,\r\n          \"IsCustom\": false,\r\n          \"IsImageBased\": false,\r\n          \"IsPlaceholderSelector\": false,\r\n          \"IsWindowsInstance\": false,\r\n          \"Name\": \"Default Selector\",\r\n          \"Properties\": []\r\n        }\r\n      ],\r\n      \"Tag\": \"domcontainer\",\r\n      \"ScreenshotPath\": null\r\n    },\r\n    {\r\n      \"Controls\": [\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"input\",\r\n          \"InstanceId\": \"ec24028d-5bbf-41a3-b21f-e17a1c66c351\",\r\n          \"Name\": \"Txt_Name\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#txt-name\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"input\"\r\n        },\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"input\",\r\n          \"InstanceId\": \"2cbfe14e-e8ec-4152-990a-ac157ef2e128\",\r\n          \"Name\": \"Txt_Email\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#txt-email\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"input\"\r\n        },\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"input\",\r\n          \"InstanceId\": \"9ad7b8d0-8e59-43e5-a0cb-782b47eb4c39\",\r\n          \"Name\": \"Txt_Amount\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#txt-amount\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"input\"\r\n        },\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"input\",\r\n          \"InstanceId\": \"9d24d583-ac80-4372-af59-4987c8bef7ef\",\r\n          \"Name\": \"Txt_Date\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#txt-date\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"input\"\r\n        },\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"textarea\",\r\n          \"InstanceId\": \"51b7904c-85fb-492b-81c2-859c5ebcf976\",\r\n          \"Name\": \"Txt_Note\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#txt-note\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"textarea\"\r\n        },\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"button\",\r\n          \"InstanceId\": \"009754c7-32fd-4cc2-99d6-ea2a20d04b55\",\r\n          \"Name\": \"Btn_Submit\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"[data-pad=\\\"btn-submit-form\\\"]\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"button\"\r\n        }\r\n      ],\r\n      \"Handle\": {\r\n        \"value\": 0\r\n      },\r\n      \"ProcessName\": null,\r\n      \"ScreenShot\": null,\r\n      \"ElementTypeName\": \"Web Page\",\r\n      \"InstanceId\": \"ea4d122f-af72-4562-9f44-cd65011b1940\",\r\n      \"Name\": \"Lab01 Forms\",\r\n      \"SelectorCount\": 1,\r\n      \"Selectors\": [\r\n        {\r\n          \"CustomSelector\": null,\r\n          \"Elements\": [\r\n            {\r\n              \"Attributes\": [],\r\n              \"CustomValue\": \"domcontainer\",\r\n              \"Ignore\": false,\r\n              \"Name\": \"Web Page 'https://ontoiq.tech/pad/01-forms.html'\",\r\n              \"Tag\": \"domcontainer\"\r\n            }\r\n          ],\r\n          \"Ignore\": false,\r\n          \"ImageSelector\": null,\r\n          \"IsCustom\": false,\r\n          \"IsImageBased\": false,\r\n          \"IsPlaceholderSelector\": false,\r\n          \"IsWindowsInstance\": false,\r\n          \"Name\": \"Default Selector\",\r\n          \"Properties\": []\r\n        }\r\n      ],\r\n      \"Tag\": \"domcontainer\",\r\n      \"ScreenshotPath\": null\r\n    }\r\n  ],\r\n  \"Version\": 1\r\n}",
+      "ImportMetadata": {
+        "DisplayName": "Local computer",
+        "ConnectionString": "",
+        "Type": "Local",
+        "DesktopType": "local"
+      },
+      "Name": "appmask"
+    }
+  ],
+  "ImageRepositorySymbol": {
+    "Repository": "{\r\n  \"Folders\": [],\r\n  \"Images\": [],\r\n  \"Version\": 1\r\n}",
+    "ImportMetadata": {},
+    "Name": "imgrepo"
+  },
+  "ConnectionReferences": []
+}

@@ -1,22 +1,53 @@
-# Lab03_Files — partial-ui
+# Lab03_Files — partial-ui (Chrome + bundled UI Elements)
 # URL: https://pad.ontoiq.tech/pad/05-files.html
+# ControlRepository at end — paste into an EMPTY desktop flow
+# Elements: Lnk_DownloadCsv Inp_Upload Btn_ShowUpload
+# Download via HTTP (Chrome-safe) + Populate file input for upload evidence
 
-WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://pad.ontoiq.tech/pad/05-files.html''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 60 Timeout: 60 BrowserInstance=> Browser
-
-# REBIND: click download link/button on page
-# WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab03 Files']['Lnk_Download'] ...
-
-# Wait until download appears (browser download folder or C:\PAD-Labs\downloads\)
-SET DownloadPath TO $'''C:\\PAD-Labs\\downloads\\'''
-# optional: If file exists → write evidence
-SET Evidence TO $'''download=pending; upload=pending'''
-IF (File.IfFile.Exists File: $'''C:\\PAD-Labs\\working\\lab03\\upload-sample.txt''') THEN
-    SET Evidence TO $'''download=check-folder; upload-ready=yes'''
+IF (Folder.IfFolderExists.DoesNotExist Path: $'''C:\\PAD-Labs\\downloads''') THEN
+    Folder.Create FolderPath: $'''C:\\PAD-Labs''' FolderName: $'''downloads''' Folder=> DownloadsFolder
+END
+IF (Folder.IfFolderExists.DoesNotExist Path: $'''C:\\PAD-Labs\\output\\lab03''') THEN
+    Folder.Create FolderPath: $'''C:\\PAD-Labs\\output''' FolderName: $'''lab03''' Folder=> Lab03OutFolder
 END
 
-# REBIND: upload input → C:\PAD-Labs\working\lab03\upload-sample.txt then Submit/Confirm
-# WebAutomation.UploadFile / Populate file input with path above
+WebAutomation.LaunchChrome.LaunchChrome Url: $'''https://pad.ontoiq.tech/pad/05-files.html''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 60 Timeout: 60 BrowserInstance=> Browser
+
+WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['Lab03 Files']['Lnk_DownloadCsv']) FOR 60
+Web.DownloadFromWeb.DownloadToFolder Url: $'''https://pad.ontoiq.tech/pad/samples/orders.csv''' ConnectionTimeout: 30 FollowRedirection: True ClearCookies: False UserAgent: $'''''' Encoding: Web.Encoding.AutoDetect AcceptUntrustedCertificates: False DestinationFolder: $'''C:\\PAD-Labs\\downloads''' DownloadedFile=> DownloadedCsv
+
+SET Evidence TO $'''download=ok; upload=pending'''
+IF (File.IfFile.Exists File: $'''C:\\PAD-Labs\\working\\lab03\\upload-sample.txt''') THEN
+    WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['Lab03 Files']['Inp_Upload']) FOR 60
+    WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab03 Files']['Inp_Upload'] Text: $'''C:\\PAD-Labs\\working\\lab03\\upload-sample.txt''' EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
+    WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab03 Files']['Btn_ShowUpload'] WaitForPageToLoadTimeout: 60
+    SET Evidence TO $'''download=ok; upload=ok'''
+END
 
 File.WriteText File: $'''C:\\PAD-Labs\\output\\lab03\\files-evidence.txt''' TextToWrite: Evidence AppendNewLine: True IfFileExists: File.IfFileExists.Overwrite Encoding: File.FileEncoding.UTF8
 
 WebAutomation.CloseWebBrowser BrowserInstance: Browser
+
+# [ControlRepository][PowerAutomateDesktop]
+
+{
+  "ControlRepositorySymbols": [
+    {
+      "IgnoreImagesOnSerialization": false,
+      "Repository": "{\r\n  \"Screens\": [\r\n    {\r\n      \"Controls\": [\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"a\",\r\n          \"InstanceId\": \"5ef47828-8df1-4c09-8ea2-8d56f5eaa199\",\r\n          \"Name\": \"Lnk_DownloadCsv\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#lnk-download-csv\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"a\"\r\n        },\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"input\",\r\n          \"InstanceId\": \"9f77d42a-6d03-43dd-b9cd-b76eeccfd313\",\r\n          \"Name\": \"Inp_Upload\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#file-upload\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"input\"\r\n        },\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"button\",\r\n          \"InstanceId\": \"52cf189e-427f-46ee-ba3c-2923afde9990\",\r\n          \"Name\": \"Btn_ShowUpload\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"#btn-show-upload\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"button\"\r\n        }\r\n      ],\r\n      \"Handle\": {\r\n        \"value\": 0\r\n      },\r\n      \"ProcessName\": null,\r\n      \"ScreenShot\": null,\r\n      \"ElementTypeName\": \"Web Page\",\r\n      \"InstanceId\": \"1747e2c4-6ce0-4132-873e-aaaa625155f8\",\r\n      \"Name\": \"Lab03 Files\",\r\n      \"SelectorCount\": 1,\r\n      \"Selectors\": [\r\n        {\r\n          \"CustomSelector\": null,\r\n          \"Elements\": [\r\n            {\r\n              \"Attributes\": [],\r\n              \"CustomValue\": \"domcontainer\",\r\n              \"Ignore\": false,\r\n              \"Name\": \"Web Page 'https://pad.ontoiq.tech/pad/05-files.html'\",\r\n              \"Tag\": \"domcontainer\"\r\n            }\r\n          ],\r\n          \"Ignore\": false,\r\n          \"ImageSelector\": null,\r\n          \"IsCustom\": false,\r\n          \"IsImageBased\": false,\r\n          \"IsPlaceholderSelector\": false,\r\n          \"IsWindowsInstance\": false,\r\n          \"Name\": \"Default Selector\",\r\n          \"Properties\": []\r\n        }\r\n      ],\r\n      \"Tag\": \"domcontainer\",\r\n      \"ScreenshotPath\": null\r\n    }\r\n  ],\r\n  \"Version\": 1\r\n}",
+      "ImportMetadata": {
+        "DisplayName": "Local computer",
+        "ConnectionString": "",
+        "Type": "Local",
+        "DesktopType": "local"
+      },
+      "Name": "appmask"
+    }
+  ],
+  "ImageRepositorySymbol": {
+    "Repository": "{\r\n  \"Folders\": [],\r\n  \"Images\": [],\r\n  \"Version\": 1\r\n}",
+    "ImportMetadata": {},
+    "Name": "imgrepo"
+  },
+  "ConnectionReferences": []
+}
