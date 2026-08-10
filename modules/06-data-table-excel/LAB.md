@@ -28,19 +28,19 @@ C:\PAD-Labs\working\lab06\
 C:\PAD-Labs\output\lab06\
 ```
 
-2. คัดลอก workbook / CSV จาก [`assets/`](assets/) ไปยัง:
+2. เตรียม **`sales-report.xlsm`** ตาม [`assets/vba/README.md`](assets/vba/README.md) แล้ววางที่ working (อย่าเขียนทับไฟล์ใน repo):
 
 ```text
-C:\PAD-Labs\working\lab06\
+C:\PAD-Labs\working\lab06\sales-report.xlsm
 ```
 
-   (อย่าเขียนทับไฟล์ใน repo โดยตรง)
-3. เตรียม `sales-report.xlsm` ตาม [`assets/vba/README.md`](assets/vba/README.md) ให้ครบ:
-   - แผ่น **`Orders`** (ข้อมูลตาม schema)
-   - แผ่น **`Filtered`** (ว่าง)
-   - แผ่น **`Summary`** (ว่าง)
-   - VBA module ชื่อ **`Lab06Macros`** + `Public Sub FormatSummary` (จาก [`FormatSummary.bas`](assets/vba/FormatSummary.bas))
-4. ตรวจว่าใน working มีไฟล์:
+   Template ต้องครบตาม comment ในสคริปต์:
+   - แผ่น **`Orders`** — ข้อมูลจาก [`assets/orders-input.xlsx`](assets/orders-input.xlsx) (หรือ CSV สำรอง)
+   - แผ่น **`Filtered`** — ว่าง (สคริปต์จะเขียนทับ)
+   - แผ่น **`Summary`** — ว่าง (สคริปต์จะเขียนทับ)
+   - VBA module **`Lab06Macros`** + `Public Sub FormatSummary` (จาก [`FormatSummary.bas`](assets/vba/FormatSummary.bas))
+3. (ทางเลือก) คัดลอก [`assets/expected-summary.csv`](assets/expected-summary.csv) ไป working เพื่อเทียบผลหลังรัน
+4. ตรวจว่า flow จะเปิดไฟล์นี้เท่านั้น (ไม่เปิด `.xlsx` โดยตรง):
 
 ```text
 C:\PAD-Labs\working\lab06\sales-report.xlsm
@@ -60,12 +60,38 @@ C:\PAD-Labs\working\lab06\sales-report.xlsm
 | Expected summary | [`assets/expected-summary.csv`](assets/expected-summary.csv) |
 | Output | `%OutputPath%` = `C:\PAD-Labs\output\lab06\orders-report.xlsm` |
 
-### โจทย์คำนวณ (ต้อง implement)
+### โจทย์คำนวณ (ต้อง implement — ตรง header สคริปต์)
 
 1. กรองเฉพาะ `Region = BKK` **หรือ** `Amount >= 10000`
 2. เพิ่มคอลัมน์ `Tier` = `Gold` ถ้า Amount >= 12000 ไม่เช่นนั้น `Silver`
 3. สรุปยอดรวม Amount ของชุดที่กรองแล้ว ลง sheet `Summary` (`TotalAmount` / ค่า)
 4. **Mission M — Excel Macro:** รัน `FormatSummary` เพื่อตัวหนา header / AutoFit / ไฮไลต์แถว Gold
+
+### ลำดับ action (ตรง `06-data-table-excel.robin`)
+
+| # | Designer action | ตัวแปร / ค่าสำคัญ |
+|---|-----------------|-------------------|
+| 1–3 | **Set variable** ×3 | `WorkingRoot`, `OutputPath`, `SumAmount` = `0` |
+| 4 | **Launch Excel** | `%WorkingRoot%\sales-report.xlsm` · Load add-ins and macros · → `Excel` |
+| 5 | **Set active Excel worksheet** | `Orders` |
+| 6 | **Read from Excel worksheet** | All cells · First line = column names · → `Orders` |
+| 7 | **Create new data table** | คอลัมน์ + `Tier` · → `Filtered` |
+| 8 | **For each** | `%Orders%` → `CurrentRow` |
+| 8a | **Convert text to number** | `%CurrentRow['Amount']%` → `AmountNumber` |
+| 8b | **If** (OR) | Region = `BKK` **หรือ** `AmountNumber` ≥ `10000` |
+| 8c | **If** / **Else** | ≥ `12000` → `Tier` = `Gold` / ไม่เช่นนั้น `Silver` |
+| 8d | **Insert row into data table** | ต่อท้าย `%Filtered%` (รวม `Tier`) |
+| 9 | **For each** | `%Filtered%` → `FilteredRow` |
+| 9a | **Convert text to number** | → `FilteredAmount` |
+| 9b | **Set variable** | `SumAmount` = `%SumAmount% + %FilteredAmount%` |
+| 10 | **Set active** → **Write** ×2 | sheet `Filtered`: header ที่ A1 · data ที่ A2 |
+| 11 | **Set active** → **Write** ×2 | sheet `Summary`: `TotalAmount` / `%SumAmount%` |
+| 12 | **Run Excel macro** | `FormatSummary` |
+| 13 | **If file exists** → **Delete file** | `%OutputPath%` |
+| 14 | **Save Excel** (Save as) | `%OutputPath%` · From Extension |
+| 15 | **Close Excel** | `%Excel%` |
+
+> **ไม่มี** **Add new worksheet** ในสคริปต์ — แผ่น `Filtered` / `Summary` ต้องมีใน template แล้ว
 
 ---
 
@@ -115,7 +141,7 @@ C:\PAD-Labs\output\lab06\orders-report.xlsm
 ### Step 2 — เปิด Excel → เปิดแผ่น Orders → อ่านทั้งแผ่น
 
 1. ลาก **Launch Excel**
-2. ตั้งค่า:
+2. ตั้งค่า (ตรงสคริปต์ `LaunchAndOpen`):
    - Launch Excel: with the following document (หรือเทียบเท่าใน designer)
    - Document path: (คัดลอกด้านล่างวางในช่อง)
 
@@ -123,7 +149,9 @@ C:\PAD-Labs\output\lab06\orders-report.xlsm
 %WorkingRoot%\sales-report.xlsm
 ```
 
-   - Advanced: **Load add-ins and macros** = เปิด (จำเป็นสำหรับ Mission M)
+   - Make instance visible: **เปิด**
+   - Open as read-only: **ปิด**
+   - Advanced: **Load add-ins and macros** = **เปิด** (จำเป็นสำหรับ Mission M)
 3. **Variables produced:** `Excel` ← **ไม่ใส่ `%`**  
    (อ้างอิงด้วย `%Excel%`)
 4. ลาก **Set active Excel worksheet**
@@ -363,9 +391,12 @@ FormatSummary
 ### Step 9 — รันและตรวจ
 
 1. กด **Run**
-2. เปิด `C:\PAD-Labs\output\lab06\orders-report.xlsm` ตรวจ sheet `Filtered` / `Summary` เทียบ [`assets/expected-summary.csv`](assets/expected-summary.csv)
-3. หลัง macro: แถวหัวตัวหนา และแถว Gold มีสีพื้น (ถ้าใช้ `FormatSummary.bas` เต็ม)
-4. รันซ้ำรอบสอง — ต้องไม่พังเพราะชื่อไฟล์ซ้ำ **และ** ไม่พังเพราะชื่อแผ่นซ้ำ
+2. เปิด `C:\PAD-Labs\output\lab06\orders-report.xlsm`
+3. ตรวจ sheet `Filtered` / `Summary` เทียบ [`assets/expected-summary.csv`](assets/expected-summary.csv):
+   - `Filtered` ≈ **4** แถวข้อมูล (+ header)
+   - `Summary` A1 = `TotalAmount`, B1 = **56000**
+4. หลัง macro: แถวหัวตัวหนา และแถว Gold มีสีพื้น (ถ้าใช้ `FormatSummary.bas` เต็ม)
+5. รันซ้ำรอบสอง — ต้องไม่พังเพราะชื่อไฟล์ซ้ำ **และ** ไม่พังเพราะชื่อแผ่นซ้ำ (เพราะไม่มี Add worksheet)
 
 ### Challenge (ทางเลือก)
 
@@ -409,9 +440,15 @@ FormatSummary
 
 ## Expected Result
 
-- จำนวนแถวที่ผ่านเงื่อนไขและยอดรวมตรงแนว `expected-summary.csv`
-- ไฟล์ผลลัพธ์มีอย่างน้อยแผ่น `Orders` / `Filtered` / `Summary`
-- หลัง macro: header ตัวหนา และแถว Gold มีสีพื้น (ถ้าใช้ bas เต็ม)
+เทียบ [`assets/expected-summary.csv`](assets/expected-summary.csv) (ข้อมูล `orders-input` ปัจจุบัน):
+
+| ตรวจ | ค่าที่คาด |
+|------|-----------|
+| แถวใน `Filtered` | **4** (`ORD-2001`, `2003`, `2005`, `2007`) |
+| `Summary!B1` (`SumAmount`) | **56000** |
+| Tier | Gold **3** / Silver **1** |
+| แผ่นในไฟล์ผลลัพธ์ | `Orders` / `Filtered` / `Summary` |
+| หลัง `FormatSummary` | header ตัวหนา · AutoFit · แถว Gold มีสีพื้น (ถ้าใช้ bas เต็ม) |
 
 ## Acceptance Criteria
 
