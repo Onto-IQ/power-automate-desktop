@@ -1,5 +1,6 @@
 # Lab06_DataTableExcel — full (filter + Tier + Summary + FormatSummary macro)
 # Filter: Region=BKK OR Amount>=10000; Tier Gold if Amount>=12000 else Silver
+# Template sales-report.xlsm must already contain sheets: Orders, Filtered, Summary
 
 SET WorkingRoot TO $'''C:\\PAD-Labs\\working\\lab06'''
 SET OutputPath TO $'''C:\\PAD-Labs\\output\\lab06\\orders-report.xlsm'''
@@ -28,11 +29,11 @@ LOOP FOREACH FilteredRow IN Filtered
     SET SumAmount TO SumAmount + FilteredAmount
 END
 
-Excel.AddWorksheet Instance: Excel Name: $'''Filtered''' WorksheetPosition: Excel.WorksheetPosition.Last
+Excel.SetActiveWorksheet.ActivateWorksheetByName Instance: Excel Name: $'''Filtered'''
 Excel.WriteToExcel.WriteCell Instance: Excel Value: Filtered.ColumnHeadersRow Column: $'''A''' Row: 1
 Excel.WriteToExcel.WriteCell Instance: Excel Value: Filtered Column: $'''A''' Row: 2
 
-Excel.AddWorksheet Instance: Excel Name: $'''Summary''' WorksheetPosition: Excel.WorksheetPosition.Last
+Excel.SetActiveWorksheet.ActivateWorksheetByName Instance: Excel Name: $'''Summary'''
 Excel.WriteToExcel.WriteCell Instance: Excel Value: $'''TotalAmount''' Column: $'''A''' Row: 1
 Excel.WriteToExcel.WriteCell Instance: Excel Value: SumAmount Column: $'''B''' Row: 1
 

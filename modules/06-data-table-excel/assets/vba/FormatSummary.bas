@@ -1,8 +1,9 @@
-Attribute VB_Name = "FormatSummary"
+Attribute VB_Name = "Lab06Macros"
 Option Explicit
 
 ' Import this module into the output workbook (or sales-report.xlsm template)
-' then call macro name: FormatSummary
+' Module name must NOT equal Sub name — otherwise PAD "FormatSummary" fails
+' and only "Lab06Macros.FormatSummary" works.
 ' From PAD: Run Excel Macro → Macro: FormatSummary
 
 Public Sub FormatSummary()
