@@ -21,3 +21,9 @@ ops/**
 # Authoring guides (course writers only — not published for learners)
 authoring/**
 !authoring/README.md
+
+# Keep project PAD Robin skill tracked (global gitignore may ignore .cursor/)
+!.cursor/
+!.cursor/skills/
+!.cursor/skills/pad-robin/
+!.cursor/skills/pad-robin/**
