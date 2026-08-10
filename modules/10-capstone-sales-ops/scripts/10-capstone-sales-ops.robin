@@ -34,11 +34,10 @@ Variables.CreateNewDatatable InputTable: { ^['SKU', 'Product', 'Price', 'Categor
 Variables.CreateNewDatatable InputTable: { ^['SKU', 'Product', 'Price', 'DiscountRate', 'DiscountAmount', 'NetBeforeTax', 'TaxAmount', 'GrandTotal'] } DataTable=> Priced
 Variables.CreateNewDatatable InputTable: { ^['LeadId', 'FullName', 'Email', 'Priority', 'Status', 'WebResult'] } DataTable=> LeadResults
 
+SET CaseFailed TO False
 BLOCK
 ON BLOCK ERROR all
-    Exception.GetLastError LastError=> LastError
-    SET LogLine TO $'''MAIN,%LastError.Message%,%LastError.Location%'''
-    File.WriteText File: LogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
+    SET CaseFailed TO True
 END
     ############################################
     # SF_OpenLabHub — Login
@@ -158,3 +157,9 @@ SET MailSubject TO $'''[PAD-LAB-MOCK] Scout Ops Report — %SubmittedCount% foll
 SET MailStatus TO $'''DraftCreated'''
 
 WebAutomation.CloseWebBrowser BrowserInstance: Browser
+END
+IF CaseFailed = True THEN
+    ERROR => LastError Reset: True
+    SET LogLine TO $'''MAIN,%LastError.Message%,%LastError.Location%'''
+    File.WriteText File: LogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
+END

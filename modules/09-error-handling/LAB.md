@@ -5,6 +5,8 @@
 **วัน:** 2 · **ระดับ:** Advanced  
 **ทักษะ:** **On block error**, **On error** (Retry / Continue flow run), **Get last error**, การบันทึก log, screenshot และการปิดแอปอย่างปลอดภัย
 
+> **Browser บล็อก Capture element:** ทำ [Lab 09b WinApp (Notepad)](../09b-error-handling-winapp/LAB.md) แทน — สอนกลไก error เดียวกันโดยไม่ใช้ web automation
+
 ## อ้างอิง (Aug 2026)
 
 | แหล่ง | URL |

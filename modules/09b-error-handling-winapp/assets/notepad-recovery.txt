@@ -1,0 +1,3 @@
+PAD Lab 09b — Error Handling WinApp
+Recovery text after fault cases A–D
+Date: 2026-08-10

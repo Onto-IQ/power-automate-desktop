@@ -96,7 +96,8 @@ Get-ChildItem $root
 }
 New-Item -ItemType Directory -Force -Path 'C:\PAD-Labs\working\lab01b' | Out-Null
 New-Item -ItemType Directory -Force -Path 'C:\PAD-Labs\output\lab01b' | Out-Null
-New-Item -ItemType Directory -Force -Path 'C:\PAD-Labs\logs\lab07','C:\PAD-Labs\logs\lab09','C:\PAD-Labs\logs\lab10' | Out-Null
+New-Item -ItemType Directory -Force -Path 'C:\PAD-Labs\working\lab09b','C:\PAD-Labs\output\lab09b' | Out-Null
+New-Item -ItemType Directory -Force -Path 'C:\PAD-Labs\logs\lab07','C:\PAD-Labs\logs\lab09','C:\PAD-Labs\logs\lab09b','C:\PAD-Labs\logs\lab10' | Out-Null
 ```
 
 ## 7) ทดสอบสั้น ๆ ว่าพร้อม

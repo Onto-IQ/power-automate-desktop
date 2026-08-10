@@ -1,0 +1,167 @@
+# Lab09b_ErrorHandling_WinApp — partial-ui (Cases A–E core; F–H challenge)
+# Desktop / Notepad alternate for Lab 09 when browser blocks Capture element
+# Log schema matches assets/error-log-template.csv
+# ON BLOCK ERROR: SET-only (Lab 07 rule) — Get last error / log / Increase อยู่นอก handler
+# Get last error (validated paste): ERROR => LastError Reset: True
+# REBIND: Notepad edit / Save As / Don't Save dialog (Win10 vs Win11 titles differ)
+
+SET WorkingRoot TO $'''C:\\PAD-Labs\\working\\lab09b'''
+SET ErrorLogPath TO $'''C:\\PAD-Labs\\logs\\lab09b\\error-log.csv'''
+SET OutputPath TO $'''C:\\PAD-Labs\\output\\lab09b\\recovery-ok.txt'''
+SET OutputRoot TO $'''C:\\PAD-Labs\\output\\lab09b'''
+SET RetryCount TO 0
+SET Fatal TO False
+SET CaseFailed TO False
+SET WaitFailed TO False
+SET ErrorLogHeader TO $'''Timestamp,CaseId,Severity,Message,RetryCount,Fatal'''
+
+IF (Folder.IfFolderExists.DoesNotExist Path: $'''C:\\PAD-Labs\\logs\\lab09b''') THEN
+    Folder.Create FolderPath: $'''C:\\PAD-Labs\\logs''' FolderName: $'''lab09b''' Folder=> LogsFolder
+END
+IF (Folder.IfFolderExists.DoesNotExist Path: OutputRoot) THEN
+    Folder.Create FolderPath: $'''C:\\PAD-Labs\\output''' FolderName: $'''lab09b''' Folder=> OutputFolder
+END
+
+File.WriteText File: ErrorLogPath TextToWrite: ErrorLogHeader AppendNewLine: True IfFileExists: File.IfFileExists.Overwrite Encoding: File.FileEncoding.UTF8
+
+File.ReadTextFromFile.ReadText File: $'''%WorkingRoot%\\missing-file-path.txt''' Encoding: File.TextFileEncoding.UTF8 Content=> MissingPath
+
+# Case A — Missing file
+SET CaseFailed TO False
+BLOCK
+ON BLOCK ERROR all
+    SET CaseFailed TO True
+END
+    File.ReadTextFromFile.ReadText File: MissingPath Encoding: File.TextFileEncoding.UTF8 Content=> MissingContent
+END
+IF CaseFailed = True THEN
+    ERROR => LastError Reset: True
+    DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> Now
+    SET LogLine TO $'''%Now%,A,Error,%LastError.Message%,0,False'''
+    File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
+END
+
+File.ReadTextFromFile.ReadText File: $'''%WorkingRoot%\\bad-app-path.txt''' Encoding: File.TextFileEncoding.UTF8 Content=> BadAppPath
+
+# Case B — Bad application path
+SET CaseFailed TO False
+BLOCK
+ON BLOCK ERROR all
+    SET CaseFailed TO True
+END
+    System.RunApplication.RunApplication ApplicationPath: BadAppPath WindowStyle: System.ProcessWindowStyle.Normal ProcessId=> BadAppProcessId
+END
+IF CaseFailed = True THEN
+    ERROR => LastError Reset: True
+    DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> Now
+    SET LogLine TO $'''%Now%,B,Error,%LastError.Message%,0,False'''
+    File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
+END
+
+# Case C — Flaky wait + retry (max 3) then real Notepad wait
+System.RunApplication.RunApplication ApplicationPath: $'''C:\\Windows\\System32\\notepad.exe''' WindowStyle: System.ProcessWindowStyle.Normal ProcessId=> AppProcessId
+LOOP WHILE RetryCount < 3
+    SET WaitFailed TO False
+    BLOCK
+    ON BLOCK ERROR all
+        SET WaitFailed TO True
+    END
+        WAIT (UIAutomation.WaitForWindow.ToOpenByTitleClass Title: $'''ThisWindowDoesNotExist''' Class: $'''''' FocusWindow: False) FOR 3
+    END
+    IF WaitFailed = True THEN
+        Variables.IncreaseVariable Value: RetryCount IncrementValue: 1
+        DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> Now
+        SET LogLine TO $'''%Now%,C,Warning,RETRY_WAIT,%RetryCount%,False'''
+        File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
+    END
+END
+WAIT (UIAutomation.WaitForWindow.ToOpenByTitleClass Title: $'''''' Class: $'''Notepad''' FocusWindow: True) FOR 30
+DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> Now
+SET LogLine TO $'''%Now%,C,Info,wait-success,%RetryCount%,False'''
+File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
+
+# Case D — Save dialog (Don't Save)
+UIAutomation.FocusWindow.FocusByTitleClass Title: $'''''' Class: $'''Notepad'''
+MouseAndKeyboard.SendKeys.FocusAndSendKeys TextToSend: $'''Lab09b dialog test''' DelayBetweenKeystrokes: 10 SendTextAsHardwareKeys: False
+SET CaseFailed TO False
+BLOCK
+ON BLOCK ERROR all
+    SET CaseFailed TO True
+END
+    UIAutomation.CloseWindow.CloseByTitleClass Title: $'''''' Class: $'''Notepad'''
+    # REBIND if Alt+N does not dismiss Win11 Notepad save prompt:
+    # Capture Don't Save then Press button / Click UI element
+    WAIT 1
+    MouseAndKeyboard.SendKeys.FocusAndSendKeys TextToSend: $'''{Alt}({N})''' DelayBetweenKeystrokes: 10 SendTextAsHardwareKeys: False
+END
+DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> Now
+IF CaseFailed = True THEN
+    SET LogLine TO $'''%Now%,D,Warning,DIALOG_PENDING_REBIND,0,False'''
+ELSE
+    SET LogLine TO $'''%Now%,D,Info,DIALOG_HANDLED,0,False'''
+END
+File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
+
+# Case E — Recovery happy path (Save As via Send keys; rebind Populate if needed)
+File.ReadTextFromFile.ReadText File: $'''%WorkingRoot%\\notepad-recovery.txt''' Encoding: File.TextFileEncoding.UTF8 Content=> NoteText
+System.RunApplication.RunApplication ApplicationPath: $'''C:\\Windows\\System32\\notepad.exe''' WindowStyle: System.ProcessWindowStyle.Normal ProcessId=> RecoveryProcessId
+WAIT (UIAutomation.WaitForWindow.ToOpenByTitleClass Title: $'''''' Class: $'''Notepad''' FocusWindow: True) FOR 30
+UIAutomation.FocusWindow.FocusByTitleClass Title: $'''''' Class: $'''Notepad'''
+# REBIND preferred: Populate text field in window (Simulate) with ControlRepository from Lab 01b
+MouseAndKeyboard.SendKeys.FocusAndSendKeys TextToSend: NoteText DelayBetweenKeystrokes: 5 SendTextAsHardwareKeys: False
+MouseAndKeyboard.SendKeys.FocusAndSendKeys TextToSend: $'''{Control}{S}''' DelayBetweenKeystrokes: 10 SendTextAsHardwareKeys: False
+WAIT 1
+MouseAndKeyboard.SendKeys.FocusAndSendKeys TextToSend: OutputPath DelayBetweenKeystrokes: 5 SendTextAsHardwareKeys: False
+MouseAndKeyboard.SendKeys.FocusAndSendKeys TextToSend: $'''{Enter}''' DelayBetweenKeystrokes: 10 SendTextAsHardwareKeys: False
+# REBIND: if overwrite confirm appears, capture Yes / Replace
+WAIT 1
+DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> Now
+SET LogLine TO $'''%Now%,E,Info,RECOVERY_OK,0,False'''
+File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
+
+# Challenge G — file fault then recover
+SET CaseFailed TO False
+BLOCK
+ON BLOCK ERROR all
+    SET CaseFailed TO True
+END
+    File.Copy Files: $'''%WorkingRoot%\\this-file-does-not-exist.txt''' Destination: OutputRoot IfFileExists: File.IfExists.Overwrite CopiedFiles=> MissingCopied
+END
+IF CaseFailed = True THEN
+    DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> Now
+    SET LogLine TO $'''%Now%,G,Error,FILE_MISSING,0,False'''
+    File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
+END
+File.Copy Files: $'''%WorkingRoot%\\recovery-upload.txt''' Destination: OutputRoot IfFileExists: File.IfExists.Overwrite CopiedFiles=> RecoveredCopied
+DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> Now
+SET LogLine TO $'''%Now%,G,Info,FILE_OK,0,False'''
+File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
+
+# Challenge H — wrong focus then correct
+SET CaseFailed TO False
+BLOCK
+ON BLOCK ERROR all
+    SET CaseFailed TO True
+END
+    UIAutomation.FocusWindow.FocusByTitleClass Title: $'''ThisWindowDoesNotExist''' Class: $''''''
+END
+IF CaseFailed = True THEN
+    DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> Now
+    SET LogLine TO $'''%Now%,H,Warning,FOCUS_MISS,0,False'''
+    File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
+END
+UIAutomation.FocusWindow.FocusByTitleClass Title: $'''''' Class: $'''Notepad'''
+DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> Now
+SET LogLine TO $'''%Now%,H,Info,FOCUS_OK,0,False'''
+File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
+
+# Challenge F stub (do in class): Wait/Populate wrong UI element then UI_MISMATCH then recover
+
+# Cleanup — close Notepad (title may change after Save As)
+BLOCK
+ON BLOCK ERROR all
+END
+    UIAutomation.CloseWindow.CloseByTitleClass Title: $'''''' Class: $'''Notepad'''
+    WAIT 1
+    MouseAndKeyboard.SendKeys.FocusAndSendKeys TextToSend: $'''{Alt}({N})''' DelayBetweenKeystrokes: 10 SendTextAsHardwareKeys: False
+END

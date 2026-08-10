@@ -64,7 +64,7 @@
 | 09:10–10:20 | 70 | Lab 04 + 05 | [`04`](../modules/04-conditional-automation/) · [`05`](../modules/05-looping-files-data/) | Demo รวม 15 แล้วทำต่อเนื่อง |
 | 10:20–10:30 | 10 | พักสั้น | — | |
 | 10:30–11:20 | 50 | Lab 06 Excel (ไม่บังคับ macro) | [`modules/06-data-table-excel/`](../modules/06-data-table-excel/) | Mission M = บ้าน |
-| 11:20–12:50 | 90 | **เส้นทาง A:** Lab 07 Contoso **หรือ** **เส้นทาง B:** Lab 08 + Lab 09 ย่อ | [`07`](../modules/07-contoso-invoice-ops/) · [`08`](../modules/08-excel-web-roundtrip/) · [`09`](../modules/09-error-handling/) | ห้องเลือกเส้นเดียวกันทั้งรุ่น (วิทยากรตัดสินใจก่อนวันสอน) |
+| 11:20–12:50 | 90 | **เส้นทาง A:** Lab 07 Contoso **หรือ** **เส้นทาง B:** Lab 08 + Lab 09 ย่อ | [`07`](../modules/07-contoso-invoice-ops/) · [`08`](../modules/08-excel-web-roundtrip/) · [`09`](../modules/09-error-handling/) · alt [`09b`](../modules/09b-error-handling-winapp/) | ห้องเลือกเส้นเดียวกันทั้งรุ่น; ถ้า browser บล็อก Capture ใช้ **09b** แทน 09 |
 | 12:50–13:50 | 60 | พักกลางวัน | — | |
 | 13:50–15:10 | 80 | Capstone 10 ย่อ | [`modules/10-capstone-sales-ops/`](../modules/10-capstone-sales-ops/) | Scout 1 แหล่ง + Excel สรุป + Outlook DraftOnly |
 | 15:10–15:30 | 20 | สรุป Best Practices + Q&A + ส่งงาน | [`BEST-PRACTICES.md`](BEST-PRACTICES.md) | |
@@ -75,6 +75,7 @@
 |------|------------|----------|
 | **A — Contoso (07)** | เน้น Desktop UI / ใกล้สไลด์ Trainocate | Lab 07 Core (R1–R4 อย่างน้อย) |
 | **B — Web + Error (08+09)** | เน้น Lab Hub / ไม่ติดตั้ง Contoso | Lab 08 Login+Forms · Lab 09 Case A+C+E |
+| **B′ — Web + Error WinApp** | เส้น B แต่ browser บล็อก Capture element | Lab 08 ตามสภาพ · **Lab 09b** (Notepad) Case A+C+E แทน Lab 09 web |
 
 อย่าบังคับ A+B เต็มใน 90 นาทีเดียวกัน
 

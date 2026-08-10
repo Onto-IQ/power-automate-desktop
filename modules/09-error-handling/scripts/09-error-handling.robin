@@ -1,39 +1,51 @@
 # Lab09_ErrorHandling — partial-ui (Cases A–E core; F–I challenge stubs)
 # Log schema matches assets/error-log-template.csv
+# ON BLOCK ERROR: SET-only — Get last error / log / Increase อยู่นอก handler
+# Get last error (validated paste): ERROR => LastError Reset: True
 # REBIND: UI elements on delay / dialogs / forms pages
 
 SET WorkingRoot TO $'''C:\\PAD-Labs\\working\\lab09'''
 SET ErrorLogPath TO $'''C:\\PAD-Labs\\logs\\lab09\\error-log.csv'''
 SET RetryCount TO 0
 SET Fatal TO False
+SET CaseFailed TO False
+SET WaitFailed TO False
 SET ErrorLogHeader TO $'''Timestamp,CaseId,Severity,Message,RetryCount,Fatal'''
 
 File.WriteText File: ErrorLogPath TextToWrite: ErrorLogHeader AppendNewLine: True IfFileExists: File.IfFileExists.Overwrite Encoding: File.FileEncoding.UTF8
 
-File.ReadText File: $'''%WorkingRoot%\\missing-file-path.txt''' Encoding: File.FileEncoding.UTF8 Content=> MissingPath
+File.ReadTextFromFile.ReadText File: $'''%WorkingRoot%\\missing-file-path.txt''' Encoding: File.TextFileEncoding.UTF8 Content=> MissingPath
 
 # Case A — Missing file
+SET CaseFailed TO False
 BLOCK
 ON BLOCK ERROR all
-    Exception.GetLastError LastError=> LastError
-    DateTime.GetCurrentDateTime.GetCurrentDateTime DateTime=> Now
+    SET CaseFailed TO True
+END
+    File.ReadTextFromFile.ReadText File: MissingPath Encoding: File.TextFileEncoding.UTF8 Content=> MissingContent
+END
+IF CaseFailed = True THEN
+    ERROR => LastError Reset: True
+    DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> Now
     SET LogLine TO $'''%Now%,A,Error,%LastError.Message%,0,False'''
     File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
 END
-    File.ReadText File: MissingPath Encoding: File.FileEncoding.UTF8 Content=> MissingContent
-END
 
-File.ReadText File: $'''%WorkingRoot%\\bad-url.txt''' Encoding: File.FileEncoding.UTF8 Content=> BadUrl
+File.ReadTextFromFile.ReadText File: $'''%WorkingRoot%\\bad-url.txt''' Encoding: File.TextFileEncoding.UTF8 Content=> BadUrl
 
 # Case B — Bad URL (ensure Browser exists for later cases)
+SET CaseFailed TO False
 BLOCK
 ON BLOCK ERROR all
-    Exception.GetLastError LastError=> LastError
-    DateTime.GetCurrentDateTime.GetCurrentDateTime DateTime=> Now
-    SET LogLine TO $'''%Now%,B,Error,%LastError.Message%,0,False'''
-    File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
+    SET CaseFailed TO True
 END
     WebAutomation.LaunchEdge.LaunchEdge Url: BadUrl WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 30 Timeout: 30 BrowserInstance=> Browser
+END
+IF CaseFailed = True THEN
+    ERROR => LastError Reset: True
+    DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> Now
+    SET LogLine TO $'''%Now%,B,Error,%LastError.Message%,0,False'''
+    File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
 END
 
 # Recover browser after Case B failure
@@ -46,16 +58,21 @@ END
 # Case C — Flaky wait + retry (max 3)
 WebAutomation.GoToWebPage.GoToWebPage BrowserInstance: Browser Url: $'''https://ontoiq.tech/pad/11-delay.html''' WaitForPageToLoadTimeout: 60
 LOOP WHILE RetryCount < 3
+    SET WaitFailed TO False
     BLOCK
     ON BLOCK ERROR all
-        Variables.IncreaseVariable Value: RetryCount IncrementValue: 1
-        DateTime.GetCurrentDateTime.GetCurrentDateTime DateTime=> Now
-        SET LogLine TO $'''%Now%,C,Warning,wait-retry,%RetryCount%,False'''
-        File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
+        SET WaitFailed TO True
     END
         # REBIND: Wait for delayed element on 11-delay.html
         WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['Lab09 Delay']['ReadyElement']) FOR 10
-        DateTime.GetCurrentDateTime.GetCurrentDateTime DateTime=> Now
+    END
+    IF WaitFailed = True THEN
+        Variables.IncreaseVariable Value: RetryCount IncrementValue: 1
+        DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> Now
+        SET LogLine TO $'''%Now%,C,Warning,wait-retry,%RetryCount%,False'''
+        File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
+    ELSE
+        DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> Now
         SET LogLine TO $'''%Now%,C,Info,wait-success,%RetryCount%,False'''
         File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
         EXIT LOOP
@@ -68,8 +85,7 @@ WebAutomation.GoToWebPage.GoToWebPage BrowserInstance: Browser Url: $'''https://
 # 1) Click trigger (e.g. Btn_Alert / Btn_Confirm)
 # 2) Handle browser dialog (WebAutomation dialog actions / Send keys)
 # 3) Only then append DIALOG_HANDLED
-# WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab09 Dialogs']['Btn_Alert'] WaitForPageToLoadTimeout: 60
-DateTime.GetCurrentDateTime.GetCurrentDateTime DateTime=> Now
+DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> Now
 SET LogLine TO $'''%Now%,D,Info,DIALOG_PENDING_REBIND,0,False'''
 File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
 
@@ -83,7 +99,7 @@ WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Contr
 WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Date'] Text: $'''2026-08-08''' EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
 WebAutomation.PopulateTextField.PopulateTextField BrowserInstance: Browser Control: appmask['Lab01 Forms']['Txt_Note'] Text: $'''Lab09 recovery''' EmulateTyping: False UnfocusAfterPopulate: True Mode: WebAutomation.PopulateTextMode.Replace
 WebAutomation.Click.Click BrowserInstance: Browser Control: appmask['Lab01 Forms']['Btn_Submit'] WaitForPageToLoadTimeout: 60
-DateTime.GetCurrentDateTime.GetCurrentDateTime DateTime=> Now
+DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> Now
 SET LogLine TO $'''%Now%,E,Info,RECOVERY_OK,0,False'''
 File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
 
