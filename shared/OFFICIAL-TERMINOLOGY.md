@@ -34,12 +34,23 @@
 
 | กลไก | ใช้เมื่อ |
 |------|---------|
-| **On error** (ในแต่ละ action) | Retry / Continue flow run / Set variable / Run subflow |
-| **On block error** | ครอบหลาย action ด้วยนโยบายเดียวกัน |
+| **On error** (ในแต่ละ action) | นโยบายเมื่อ action พัง — ดูตารางย่อยด้านล่าง |
+| **On block error** | ครอบหลาย action ด้วยนโยบายเดียวกัน (Continue จากต้น/ท้ายบล็อกได้) |
 | **Get last error** | ดึง error object ล่าสุด (มี message, location, subflow, …) |
 | **Terminate process** / จบ flow ตามสถานการณ์ | หยุด process หรือออกแบบให้ flow จบอย่างควบคุม |
 
-ตัวแปรแนะนำหลัง Get last error คือ `%LastError%` (ชนิด Error) จากนั้นอ้าง `%LastError.Message%` และ `%LastError.Location%` ตาม properties จริงใน designer
+### นโยบายใต้ On error / On block error
+
+| นโยบาย (ชื่อใน designer / docs) | ความหมายสั้น |
+|----------------------------------|--------------|
+| **Stop flow** (ค่าเริ่มต้น) | ไม่ตั้ง handler → โฟลว์หยุดเมื่อพัง; ถ้ารันจาก parent/cloud = เห็นว่าล้ม (throw ไป caller) |
+| **Continue flow run** | ไม่หยุดทั้ง flow — เลือก **Go to next action** / **Repeat action** / **Go to label** |
+| **Retry action if an error occurs** | ลอง action เดิมซ้ำตามจำนวนครั้ง + หน่วงวินาที |
+| **Repeat action** | ภายใต้ Continue — วนจนกว่าจะสำเร็จ (**จำกัดเพดานเอง** ถ้าใช้ในคลาส) |
+| **New rule** | **Set variable** / **Run subflow** เพิ่มเติมเมื่อพัง |
+
+ตัวแปรแนะนำหลัง Get last error คือ `%LastError%` (ชนิด Error) จากนั้นอ้าง `%LastError.Message%` และ `%LastError.Location%` ตาม properties จริงใน designer  
+อ้างอิง: [Handle errors in desktop flows](https://learn.microsoft.com/power-automate/desktop-flows/errors)
 
 ## Action names ที่ Lab Kit ใช้ (สะกดตาม docs)
 

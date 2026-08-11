@@ -10,8 +10,27 @@ PAD baseline ของชุดเอกสาร: **2607+** (สิงหาค
 
 ## [Unreleased]
 
+---
+
+## [1.4.0] — 2026-08-11
+
+Lab 09 สอนนโยบาย On error ครบ + รวม polish หลัง v1.3.0 · อัปเดต `PAD-Labs.zip` บน Release
+
+### Lab 09 — On error policies
+- เติมสอน **Stop flow** (default / throw ไป caller), **Continue flow run**, **Retry action** / **Repeat action** ใน `LESSON.md` · `LAB.md` Step 0.5 · `README` · `fault-injection.md`
+- อัปเดต `shared/OFFICIAL-TERMINOLOGY.md` และ `shared/BEST-PRACTICES.md` ให้สอดคล้อง [Handle errors](https://learn.microsoft.com/power-automate/desktop-flows/errors)
+- สะท้อนศัพท์เดียวกันใน Lab 09b (สรุป + ลิงก์กลับ Lab 09)
+
+### Lab / docs อื่น (หลัง v1.3.0)
 - Rename `modules/scb-secure-isolation-alt/` → `modules/03b-public-web-alt/` (กลาง; ทักษะเทียบ 01 form + 03 table เมื่อ Lab Hub ถูกกั้น)
 - Flow / screen / output path: `Lab03b_*`, `lab03b`, `Tbl_FxRates`; rebuild via `bundle-03b-public-web-appmask.py`
+- Align Lab 07 R6 error handling (SET-only ใน On block error)
+- Lab 06: copy-paste OR filter Expression + legend สำหรับ If / data table row
+- Lab 09b: แปลคอมเมนต์ Robin เป็นไทยทีละขั้น
+- Root README: badges / TOC / MIT · แก้คำว่า “จับมือทำ”
+
+### Learner pack
+- Release asset **`PAD-Labs.zip`** อัปเดตคู่กับ tag นี้
 
 ---
 

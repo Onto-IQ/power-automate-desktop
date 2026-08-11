@@ -1,7 +1,7 @@
 # Lab 09b — Error Handling (Windows / Notepad)
 
 **วัน:** 2 · **ระดับ:** Advanced · **เวลาโดยประมาณ:** อ่านความรู้ 15–20 นาที + Lab 50–70 นาที  
-**ทักษะ:** On block error, On error (Retry/Continue), Get last error, logging, Cleanup บน Desktop UI  
+**ทักษะ:** On block error, On error (Stop / Continue / Retry), Get last error, logging, Cleanup บน Desktop UI  
 **Flow ชื่อ:** `Lab09b_ErrorHandling_WinApp`  
 **ทดแทน:** [Lab 09 Error Handling (web)](../09-error-handling/README.md) เมื่อ browser บล็อก **Capture element**
 

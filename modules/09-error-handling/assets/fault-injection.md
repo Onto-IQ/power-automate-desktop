@@ -1,12 +1,21 @@
 # Fault Injection Script — Lab 09
 
 ใช้เรียงลำดับ A → E (บังคับ) แล้ว F → I (Challenge Phase 1) — ห้ามข้ามการ log  
-กลไก PAD ทางการ: **On block error**, **On error** (Retry / Continue flow run), **Get last error** — ดู [Handle errors](https://learn.microsoft.com/power-automate/desktop-flows/errors)
+กลไก PAD ทางการ: **On block error**, **On error**, **Get last error** — ดู [Handle errors](https://learn.microsoft.com/power-automate/desktop-flows/errors)
+
+### นโยบาย On error ที่ต้องพูดก่อน Case A
+
+| นโยบาย | ความหมาย | ใน Lab นี้ |
+|--------|----------|-----------|
+| **Stop flow** (default) | โฟลว์หยุดเมื่อพัง / throw ไป caller | สาธิตสั้น Step 0.5 แล้วลบออก |
+| **Continue flow run** | ข้าม error แล้วไปต่อ | Case A–E หลัก |
+| **Retry action** | ลองซ้ำจำกัดครั้ง + หน่วง | Case C (หรือ Loop `RetryCount`) |
+| **Repeat action** | วนจนกว่าจะสำเร็จ | **ห้าม** ใช้ไม่จำกัดในคลาส |
 
 ## Case A — Missing file
 
 อ่าน path จาก `missing-file-path.txt` แล้วพยายาม **Read text from file**  
-คาดหวัง: ไฟล์ไม่มีจริง → on error → เขียน log `MISSING_FILE`
+คาดหวัง: ไฟล์ไม่มีจริง → On block error + **Continue** → เขียน log `MISSING_FILE` / Case A
 
 ## Case B — Bad URL
 

@@ -10,6 +10,7 @@
 เมื่อจบบทนี้ คุณจะ:
 
 - แยกได้ชัดว่า PAD **ไม่มี Action ชื่อ Try-Catch** — ใช้ **On block error**, **On error**, **Get last error**
+- อธิบาย **Stop flow** (default) / **Continue flow run** / **Retry action** ได้ (รายละเอียดเต็มที่ [Lab 09](../09-error-handling/LESSON.md))
 - ออกแบบ flow ให้ทนต่อความล้มเหลวบน **Windows app (Notepad) + ไฟล์** โดยไม่พึ่ง web automation
 - Log `%LastError.Message%` / `.Location%` แล้ว **Continue** งานถัดไป
 - ตั้ง **Retry** อย่างจำกัดสำหรับ **Wait for window** ที่ตั้งใจให้พลาด
@@ -28,10 +29,12 @@
 | ศัพท์ | ความหมายภาษาคน | เห็นที่ไหนใน PAD |
 |--------|----------------|------------------|
 | **On block error** | ครอบหลาย action เป็นบล็อก — กำหนดว่าเมื่อพังจะทำอะไร | ลากเป็นโครงสร้างใน workspace |
-| **On error** | นโยบายต่อ **หนึ่ง action** (Retry / Continue flow run / Throw ฯลฯ) | แท็บ/ไอคอนในหน้าต่าง action |
+| **On error** | นโยบายต่อ **หนึ่ง action** | แท็บ/ไอคอนในหน้าต่าง action |
+| **Stop flow** (ค่าเริ่มต้น) | โฟลว์หยุดเมื่อพัง / throw ไป caller | ไม่ตั้ง On error — สาธิตสั้นแล้วอย่าใช้ในเคสหลัก |
+| **Continue flow run** | ไม่หยุดทั้ง flow หลัง error | นโยบาย On error / On block error |
+| **Retry action** | ลอง action เดิมอีกครั้งตามจำนวนที่จำกัด | ภายใต้ On error หรือ Loop + Wait |
+| **Repeat action** | วนจนกว่าจะสำเร็จ (เสี่ยงค้าง) | ใต้ Continue — **ห้าม** ไม่จำกัดใน Lab นี้ |
 | **Get last error** | อ่านรายละเอียด error ล่าสุดเพื่อ log หรือตัดสินใจ | **Variables produced** = `LastError` (ชนิด Error) |
-| **Retry** | ลอง action เดิมอีกครั้งตามจำนวนที่จำกัด | ภายใต้ On error ของ action หรือ Loop + Wait |
-| **Continue flow run** | ไม่หยุดทั้ง flow หลัง error ของ action/บล็อก | นโยบาย On error / On block error |
 | **Fault injection** | จงใจทำให้พังเพื่อทดสอบการกู้ | [`assets/fault-injection.md`](assets/fault-injection.md) |
 | **Error log** | CSV ที่เก็บ Case / Message / Retry | `error-log.csv` |
 | **Recovery path** | งานที่ต้องสำเร็จหลังมี error ก่อนหน้า (Case E) | Notepad Save As หลัง A–D |

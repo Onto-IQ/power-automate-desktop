@@ -67,7 +67,8 @@ Main
     └── Display / Notification
 ```
 
-ใน PAD ให้ใช้ **On block error** ร่วมกับ **On error** ของแต่ละ action (เช่น Retry หรือ Continue flow run)  
+ใน PAD ให้ใช้ **On block error** ร่วมกับ **On error** ของแต่ละ action  
+แยกให้ชัด: **Stop flow** (default / throw ไป caller) · **Continue flow run** · **Retry action** (จำกัดครั้ง) — หลีกเลี่ยง **Repeat action** ไม่จำกัดในคลาส  
 คำว่า “Try-Catch” ใช้อธิบายแนวคิดได้ แต่ไม่ใช่ชื่อ Action ใน designer
 
 ## Subflows ที่ใช้ซ้ำได้ (Capstone)

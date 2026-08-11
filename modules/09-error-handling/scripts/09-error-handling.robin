@@ -2,6 +2,8 @@
 # Log schema matches assets/error-log-template.csv
 # ON BLOCK ERROR: SET-only (ทบทวนจาก Lab 07 R6) — Get last error / log / Increase outside handler
 # Get last error (validated paste): ERROR => LastError Reset: True
+# On error policies (สอนใน LESSON/LAB Step 0.5): Stop flow (default) | Continue flow run | Retry action
+#   — catch-up ใช้ Continue ผ่าน On block error + Loop retry (ไม่ใช้ Repeat action ไม่จำกัด)
 # Screens: Lab09 Delay · Lab09 Dialogs · Lab01 Forms
 # Case C: start timer → Wait contain-text ready (short FOR to practice retry) → unlock
 # Case D: alert/confirm via ClickPressDialogButton + custom modal OK

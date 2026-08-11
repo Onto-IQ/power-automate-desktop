@@ -9,6 +9,7 @@
 เมื่อจบบทนี้ คุณจะ:
 
 - แยกได้ชัดว่า PAD **ไม่มี Action ชื่อ Try-Catch** — ใช้ **On block error**, **On error**, **Get last error**
+- อธิบายนโยบาย **On error** สามแบบหลักได้: **Stop flow** (ค่าเริ่มต้น / throw ไป caller), **Continue flow run**, **Retry / Repeat action**
 - ออกแบบ flow ให้ทนต่อความล้มเหลวที่ตั้งใจจำลอง (fault injection)
 - Log `%LastError.Message%` / `.Location%` แล้ว **Continue** งานถัดไป
 - ตั้ง **Retry** อย่างจำกัดสำหรับ wait ที่ไม่เสถียร
@@ -28,10 +29,12 @@
 | ศัพท์ | ความหมายภาษาคน | เห็นที่ไหนใน PAD |
 |--------|----------------|------------------|
 | **On block error** | ครอบหลาย action เป็นบล็อก — กำหนดว่าเมื่อพังจะทำอะไร | ลากเป็นโครงสร้างใน workspace |
-| **On error** | นโยบายต่อ **หนึ่ง action** (Retry / Continue flow run / Throw ฯลฯ) | แท็บ/ไอคอนในหน้าต่าง action |
+| **On error** | นโยบายต่อ **หนึ่ง action** | แท็บ/ไอคอน **On error** ในหน้าต่าง action |
+| **Stop flow** (ค่าเริ่มต้น) | ไม่ตั้ง On error เพิ่ม → โฟลว์หยุดเมื่อพัง และถ้าถูกเรียกจาก parent/cloud จะเห็นว่าโฟลว์ล้ม (throw ไป caller) | พฤติกรรม default ตาม [Handle errors](https://learn.microsoft.com/power-automate/desktop-flows/errors) |
+| **Continue flow run** | ไม่หยุดทั้ง flow — ข้าม error แล้วไปต่อ (เช่น **Go to next action**) | checkbox / ตัวเลือกใต้ On error |
+| **Retry action** | ลอง action เดิมซ้ำตามจำนวนครั้ง + หน่วงวินาทีที่กำหนด | **Retry action if an error occurs** |
+| **Repeat action** | ภายใต้ Continue flow run — ทำซ้ำจนกว่าจะสำเร็จ (ระวังลูปไม่จบ) | dropdown ของ Continue flow run |
 | **Get last error** | อ่านรายละเอียด error ล่าสุดเพื่อ log หรือตัดสินใจ | **Variables produced** = `LastError` (ชนิด Error) |
-| **Retry** | ลอง action เดิมอีกครั้งตามจำนวนที่จำกัด | ภายใต้ On error ของ action |
-| **Continue flow run** | ไม่หยุดทั้ง flow หลัง error ของ action/บล็อก | นโยบาย On error / On block error |
 | **Fault injection** | จงใจทำให้พังเพื่อทดสอบการกู้ | [`assets/fault-injection.md`](assets/fault-injection.md) |
 | **Error log** | CSV ที่เก็บ Case / Message / Location | `error-log.csv` |
 | **Recovery path** | งานที่ต้องสำเร็จหลังมี error ก่อนหน้า (Case E) | Forms 01 หลัง A–D |
@@ -40,12 +43,24 @@
 
 แนวคิดสำคัญ: **จับให้ได้ → บันทึกให้ครบ → ไปต่ออย่างควบคุม**  
 ทบทวนโครงจาก Lab 07 R6 (Contoso): ใน handler = SET flag อย่างเดียว → นอกบล็อก = Get last error + log  
-แยกบทบาท:
+
+### นโยบาย On error สามแบบ (ต้องพูดในชั้น)
+
+| นโยบาย | พฤติกรรม | ใช้เมื่อ | ใน Lab 09 |
+|--------|----------|---------|-----------|
+| **Stop flow** (default) | หยุดรันทันทีเมื่อพัง — แจ้งว่าโฟลว์ล้ม / throw ไป caller | error ที่ไม่ควรกลืน (ข้อมูลสำคัญเสีย, ไม่มีทางกู้) | **สาธิตสั้น** ก่อน Case A: รัน Read ไฟล์ที่ไม่มีโดยไม่ครอบ On block error → โฟลว์แดงแล้วหยุด |
+| **Continue flow run** | ข้าม error แล้วไป action ถัดไป (หรือ label / ท้ายบล็อก) | จับ → log → ไปเคสถัดไปได้ | Case A / B / D / E — เป้าหมายหลักของบท |
+| **Retry action** (+ จำกัดครั้ง) | ลอง action เดิมอีกครั้งตามครั้ง/วินาที | wait/flaky ที่มักสำเร็จในรอบถัดไป | Case C — หรือใช้ Loop นับ `RetryCount` แทน/คู่กัน |
+
+> **Repeat action** ใต้ Continue flow run ≠ Retry แบบจำกัดครั้ง — Repeat จะวนจนกว่าจะสำเร็จ ห้ามใช้โดยไม่จำกัดในห้องเรียน  
+> อ้างอิง UI: [Handle errors — Configure error-handling](https://learn.microsoft.com/power-automate/desktop-flows/errors#configure-error-handling-functionality)
+
+แยกบทบาทโครงสร้าง:
 
 | กลไก | ใช้เมื่อ |
 |------|---------|
 | **On block error** | ครอบ “ชุดเคส” (เช่น Case A ทั้งก้อน) แล้วไปกู้รวม |
-| **On error** (ของ action) | ตั้ง Retry/Continue เฉพาะ Wait หรือ action ที่ flaky |
+| **On error** (ของ action) | ตั้ง Retry / Continue เฉพาะ Wait หรือ action ที่ flaky |
 | **Get last error** | ทุกครั้งที่ต้องการข้อความจริงสำหรับ log — อย่ากลืนเงียบ |
 
 ```mermaid
@@ -98,8 +113,8 @@ Close browser / Excel
 |--------|------------|------------|----------------|
 | ชื่อกลไก | **On block error / On error / Get last error** | “Try-Catch action” | **ไม่มี** Try-Catch ใน designer — ใช้ชื่อทางการ |
 | ขอบเขต | **On block error** (หลายขั้น) | **On error** ต่อหนึ่ง action | ชุดเคส vs Retry ของ Wait |
-| หลัง error | **Continue** + log | Terminate ทั้ง flow | Lab นี้ต้องการไปต่อถึง Case E |
-| Retry | จำกัดครั้ง (เช่น 3) | Retry ไม่จำกัด | ป้องกันลูปไม่จบ |
+| หลัง error | **Continue flow run** + log | **Stop flow** (default) | Lab หลัก A→E ต้อง Continue ถึง Case E; Stop ใช้สาธิต “โฟลว์พัง” เท่านั้น |
+| ลองซ้ำ | **Retry action** จำกัดครั้ง (เช่น 3) | **Repeat action** ไม่จำกัด / Retry ไม่จำกัด | Case C ใช้ Retry หรือ Loop `RetryCount` — ห้าม Repeat ไม่จำกัด |
 | Screenshot | มี browser instance | ถ่ายทั้งที่ browser ไม่เปิด | ตรวจ `%Browser%` ก่อน |
 
 ## 7. กฎ `%` และ Variables pane
@@ -141,14 +156,23 @@ On block error ครอบหลาย action เป็นบล็อก; On e
 ดึง Message/Location ไปเขียน error-log — อย่างน้อย Case A ต้องมีแถว log จากกลไกนี้
 </details>
 
-**4.** Case C ควรจำกัด Retry อย่างไร?
+**4.** Stop flow / Continue flow run / Retry ต่างกันอย่างไร?
 
 <details>
 <summary>เฉลย</summary>
-ใช้ On error → Retry และ/หรือ Loop กับ RetryCount รวมแล้วแนวไม่เกิน 3 ครั้ง แล้วค่อยถือว่าล้มแบบควบคุม
+<strong>Stop flow</strong> = ค่าเริ่มต้น โฟลว์หยุดและแจ้งว่าพัง (throw ไป caller ถ้ารันจาก parent)<br>
+<strong>Continue flow run</strong> = ข้าม error แล้วไป action ถัดไปได้<br>
+<strong>Retry action</strong> = ลอง action เดิมซ้ำตามจำนวนครั้ง/หน่วงที่ตั้ง — ไม่ใช่ Repeat ไม่จำกัด
 </details>
 
-**5.** ทำไม Case E ต้องอยู่หลัง A–D?
+**5.** Case C ควรจำกัด Retry อย่างไร?
+
+<details>
+<summary>เฉลย</summary>
+ใช้ On error → Retry และ/หรือ Loop กับ RetryCount รวมแล้วแนวไม่เกิน 3 ครั้ง แล้วค่อยถือว่าล้มแบบควบคุม — อย่าใช้ Repeat action โดยไม่จำกัด
+</details>
+
+**6.** ทำไม Case E ต้องอยู่หลัง A–D?
 
 <details>
 <summary>เฉลย</summary>

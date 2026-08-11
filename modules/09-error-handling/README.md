@@ -1,7 +1,7 @@
 # Lab 09 — Error Handling
 
 **วัน:** 2 · **ระดับ:** Advanced · **เวลาโดยประมาณ:** อ่านความรู้ 20–30 นาที + Lab 60–90 นาที  
-**ทักษะ:** On block error, On error (Retry/Continue), Get last error, logging, cleanup
+**ทักษะ:** On block error, On error (Stop / Continue / Retry), Get last error, logging, cleanup
 
 > **Browser บล็อก Capture element:** ใช้เส้นทดแทน Desktop/Notepad ที่ [`../09b-error-handling-winapp/`](../09b-error-handling-winapp/README.md) — ไม่ต้องพึ่ง Lab Hub / browser extension
 
@@ -23,6 +23,7 @@
 - ไม่แทนการทำ LAB หลัก; ใช้เทียบลำดับ action / กู้งานให้ทันชั้น
 
 ## วัตถุประสงค์
+- แยกนโยบาย **Stop flow** (default / throw ไป caller), **Continue flow run**, และ **Retry / Repeat action** ได้
 - ทำให้ desktop flow ทนต่อความล้มเหลวที่ตั้งใจจำลอง
 - บันทึก log ให้ตรวจสอบย้อนหลังได้ และไม่ทิ้ง Excel/browser ค้าง
 - แยกได้ว่า error ใดควร retry และ error ใดควรถือว่าจบงานอย่างควบคุม

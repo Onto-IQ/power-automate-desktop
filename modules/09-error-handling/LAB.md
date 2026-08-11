@@ -3,7 +3,7 @@
 **อ่านก่อน:** [LESSON.md](LESSON.md) · **หน้าปกบท:** [README.md](README.md) · **พื้นฐาน:** [`shared/PAD-FUNDAMENTALS.md`](../../shared/PAD-FUNDAMENTALS.md)
 
 **วัน:** 2 · **ระดับ:** Advanced  
-**ทักษะ:** **On block error**, **On error** (Retry / Continue flow run), **Get last error**, การบันทึก log, screenshot และการปิดแอปอย่างปลอดภัย
+**ทักษะ:** **On block error**, **On error** (**Stop flow** / **Continue flow run** / **Retry** · **Repeat action**), **Get last error**, การบันทึก log, screenshot และการปิดแอปอย่างปลอดภัย
 
 > **Browser บล็อก Capture element:** ทำ [Lab 09b WinApp (Notepad)](../09b-error-handling-winapp/LAB.md) แทน — สอนกลไก error เดียวกันโดยไม่ใช้ web automation  
 > ทบทวน R6 จาก [Lab 07 Contoso](../07-contoso-invoice-ops/LAB.md): SET-only ใน On block error → Get last error นอก handler
@@ -95,6 +95,31 @@ Lab09_ErrorHandling
 > - ช่องอื่นที่ต้องดึงค่าตัวแปร (Folder, File path, Text, …) = ใช้ `%WorkingRoot%` (**มี `%` ครบสองด้าน**)  
 > - หลังสร้างแล้ว Variables pane อาจแสดงเป็น `%WorkingRoot%` — เป็นเรื่องปกติ
 
+### Step 0.5 — เปิด On error แล้วรู้จัก 3 นโยบาย (สาธิตสั้น ~3 นาที)
+
+ก่อนทำ Case A ให้เปิดหน้าต่าง action ใดก็ได้ (เช่น **Read text from file**) → กด **On error** แล้วชี้ให้เห็นตาม docs:
+
+| ตัวเลือกใน designer | ความหมายสั้น ๆ | Lab นี้ใช้เมื่อ |
+|---------------------|-----------------|----------------|
+| *(ไม่ตั้งอะไร — default)* | **Stop flow** — โฟลว์หยุดเมื่อพัง; ถ้าถูกเรียกจาก parent/cloud = throw ไป caller | สาธิตครั้งเดียวด้านล่าง แล้วปิด |
+| **Continue flow run** → **Go to next action** | ข้าม error แล้วทำ action ถัดไป | Case A / B (ผ่าน **On block error** + continue) |
+| **Retry action if an error occurs** | ลองซ้ำตามครั้ง + หน่วงวินาที | Case C (และ/หรือ Loop `RetryCount`) |
+| **Continue flow run** → **Repeat action** | วนซ้ำจนกว่าจะสำเร็จ | **ห้าม** ใน Lab นี้ — เสี่ยงค้าง |
+
+**สาธิต Stop flow (ทำแล้วลบออกก่อนเข้า Step 1):**
+
+1. ลาก **Read text from file** ไปที่ path ที่ไม่มีจริง เช่น:
+
+```text
+C:\PAD-Labs\working\lab09\__does-not-exist__.txt
+```
+
+2. **อย่า** เปิด On error / อย่าครอบ **On block error**
+3. กด **Run** → โฟลว์ต้องแดงแล้วหยุด (นี่คือค่าเริ่มต้น)
+4. ลบ action สาธิตออก → ไป Step 1
+
+> หลังจากนี้ทุก Case หลักใช้ **Continue** (ผ่าน On block error หรือ On error) เพื่อไปถึง Case E — อย่าปล่อย Stop กลางทาง
+
 ### Step 1 — Init ตัวแปรและ header log
 
 1. ลาก **Set variable** (Name ไม่มี `%`):
@@ -152,6 +177,7 @@ False
 
    (path ที่ไม่มีจริง)
 4. ในหน้านโยบาย **On block error** (หรือกิ่ง Exception):
+   - ตั้งให้ **Continue** flow ไป Case ถัดไป — **ไม่ใช้ Stop flow** หลังจับแล้ว
    - ลาก **Get last error**
    - **Variables produced:** `LastError` ← **ไม่ใส่ `%`** (อ้างอิงด้วย `%LastError%`)
    - **Write text to file** append แถว log — Case Value:
@@ -170,10 +196,10 @@ A
 %LastError.Location%
 ```
 
-   - ตั้งให้ **Continue** flow ไป Case ถัดไป — อย่าหยุดทั้ง flow
 5. ปิดบล็อกตามโครง designer
 
-> จำไว้: ใช้ชื่อ **On block error** / **Get last error** — ไม่เขียนว่า “ใส่ Try-Catch”
+> จำไว้: ใช้ชื่อ **On block error** / **Get last error** — ไม่เขียนว่า “ใส่ Try-Catch”  
+> ถ้าลืม Continue → พฤติกรรมกลับไปใกล้ **Stop flow** แล้ว Case E จะไม่ถึง
 
 ### Step 3 — Case B: Bad URL + screenshot
 
@@ -211,7 +237,7 @@ https://ontoiq.tech/pad/11-delay.html
 
 2. ลาก **Wait for web page content** รอ element ที่จะพร้อมช้า
 3. เปิดการตั้งค่า **On error** ของ action นี้ (ไอคอน/แท็บ On error ในหน้าต่าง action — ไม่ใช่ชื่อ Action ว่า Try-Catch):
-   - **Retry** action ตามจำนวนที่จำกัด (รวมแล้วไม่เกินแนว 3 ครั้ง) และ/หรือ
+   - ติ๊ก **Retry action if an error occurs** ตามจำนวนที่จำกัด (รวมแล้วไม่เกินแนว 3 ครั้ง) **หรือ**
    - ใช้ **Loop** / **Loop condition** กับ (คัดลอก):
 
 ```text
@@ -219,6 +245,7 @@ https://ontoiq.tech/pad/11-delay.html
 ```
 
      สูงสุด 3 แล้วค่อยถือว่าล้มเหลวแบบควบคุม
+   - **อย่า** เลือก **Continue flow run → Repeat action** โดยไม่มีเพดาน — ต่างจาก Retry แบบจำกัดครั้ง
 4. เมื่อสำเร็จหรือหมดรอบ: append log Case Value:
 
 ```text
@@ -341,8 +368,9 @@ https://ontoiq.tech/pad/12-api.html
 |-----|-----|
 | พิมพ์ `%Name%` ในช่อง Name / **Variables produced** | ใช้ชื่อเปล่าไม่มี `%` เช่น `WorkingRoot`, `LastError` |
 | เรียกกลไกว่า “Try-Catch action” | ใช้ **On block error** / **On error** / **Get last error** |
+| สับสน Stop / Continue / Retry | Stop = default หยุดทั้ง flow; Continue = ไปต่อ; Retry = ลองซ้ำจำกัดครั้ง — ไม่ใช้ Repeat ไม่จำกัด |
 | กลืน error โดยไม่ log | **Get last error** แล้วเขียน `%LastError.Message%` / `.Location%` |
-| Retry ไม่จำกัด | จำกัดครั้งใน **On error → Retry** หรือ max loop |
+| Retry ไม่จำกัด / Repeat action ค้าง | จำกัดครั้งใน **On error → Retry** หรือ max loop |
 | Case E ไม่ทำหลัง error | จัดลำดับ A→E ให้ recovery อยู่ท้ายชุด core |
 | ลืมปิด browser | **Close web browser** ใน cleanup |
 | Screenshot ทั้งที่ไม่มี browser | ตรวจว่ามี instance ก่อน **Take screenshot of web page** |
@@ -369,6 +397,7 @@ https://ontoiq.tech/pad/12-api.html
 
 ## Acceptance Criteria
 
+- [ ] ชี้/อธิบายได้ว่า **Stop flow** (default) ≠ **Continue flow run** ≠ **Retry action** (และไม่ใช้ **Repeat action** ไม่จำกัด)
 - [ ] ใช้ **On block error** อย่างน้อย 2 จุด
 - [ ] ใช้ **Get last error** อย่างน้อย 1 ครั้งเมื่อ log
 - [ ] มีไฟล์ log
@@ -382,7 +411,8 @@ https://ontoiq.tech/pad/12-api.html
 | อาการ | แก้ |
 |-------|-----|
 | Error ถูกกลืน ไม่รู้สาเหตุ | **Get last error** แล้ว log `%LastError.Message%` / `.Location%` |
-| Retry ไม่จบ | จำกัดจำนวน retry ใน On error; หลีกเลี่ยง Repeat action ไม่จำกัด |
+| Retry ไม่จบ | จำกัดจำนวน retry ใน On error; หลีกเลี่ยง **Repeat action** ไม่จำกัด |
+| โฟลว์หยุดกลาง Case A | ตรวจว่า On block error ตั้ง **Continue** แล้ว — อย่าปล่อย Stop (default) หลังจับ |
 | Screenshot ว่าง | ตรวจว่ามี browser instance เปิดอยู่ |
 | Selector ไม่เจอ | เพิ่ม **Wait for web page content** / recapture ([docs](https://learn.microsoft.com/troubleshoot/power-platform/power-automate/desktop-flows/ui-automation/failed-get-ui-element)) |
 
