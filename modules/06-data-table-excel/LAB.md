@@ -275,11 +275,21 @@ Silver
 ```
 
    - **Into location:** **End of data table**
-   - **New value(s):** ใส่ list ตามลำดับคอลัมน์ของ `%Filtered%` (**ห้ามซ้อน `%` ข้างใน**):
+   - **New value(s)** — Expression (คัดลอกวางได้เลย; ลำดับคอลัมน์ตรง `%Filtered%`):
 
 ```text
 %[CurrentRow['OrderId'], CurrentRow['Customer'], CurrentRow['Product'], CurrentRow['Amount'], CurrentRow['OrderDate'], CurrentRow['Region'], Tier]%
 ```
+
+   อธิบาย Expression นี้สั้น ๆ:
+
+   | ส่วน | ความหมาย |
+   |------|----------|
+   | `%[ … ]%` | list ค่าที่จะแทรกเป็นแถวใหม่ใน data table |
+   | `CurrentRow['…']` | ค่าจากแถวปัจจุบัน — **ห้าม**เขียน `%CurrentRow['…']%` ซ้อนใน list |
+   | `Tier` | ตัวแปรที่ตั้ง Gold/Silver ไว้ใน If ซ้อน (ไม่มี `%` ข้างใน list) |
+
+   > กฎ: ข้างใน `%[ … ]%` ใช้ชื่อคอลัมน์/ตัวแปรเปล่า — อย่าซ้อน `%` เพิ่ม
 
 7. ปิด **End** (If กรอง) แล้ว **End** (For each)
 
