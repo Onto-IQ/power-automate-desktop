@@ -1,10 +1,12 @@
-# Lab09b_ErrorHandling_WinApp — partial-ui (Cases A–E core; F–H challenge)
-# Desktop / Notepad alternate for Lab 09 when browser blocks Capture element
-# Log schema matches assets/error-log-template.csv
-# ON BLOCK ERROR: SET-only (Lab 07 rule) — Get last error / log / Increase อยู่นอก handler
+# Lab09b_ErrorHandling_WinApp — partial-ui (Cases A–E หลัก; F–H challenge)
+# ทางเลือก Desktop/Notepad ของ Lab 09 เมื่อเบราว์เซอร์จับ Capture element ไม่ได้
+# สคีมา log ตรงกับ assets/error-log-template.csv
+# กฎสำคัญ: ใน ON BLOCK ERROR ใส่ได้แค่ SET (แบบ Lab 07)
+#   → Get last error / เขียน log / IncreaseVariable ต้องอยู่นอก handler
 # Get last error (validated paste): ERROR => LastError Reset: True
-# REBIND: Notepad edit / Save As / Don't Save dialog (Win10 vs Win11 titles differ)
+# REBIND: ช่องพิมพ์ Notepad / Save As / Don't Save (ชื่อ dialog Win10≠Win11)
 
+# --- Init: path + ตัวนับ + โฟลเดอร์ + หัว CSV ---
 SET WorkingRoot TO $'''C:\\PAD-Labs\\working\\lab09b'''
 SET ErrorLogPath TO $'''C:\\PAD-Labs\\logs\\lab09b\\error-log.csv'''
 SET OutputPath TO $'''C:\\PAD-Labs\\output\\lab09b\\recovery-ok.txt'''
@@ -15,6 +17,7 @@ SET CaseFailed TO False
 SET WaitFailed TO False
 SET ErrorLogHeader TO $'''Timestamp,CaseId,Severity,Message,RetryCount,Fatal'''
 
+# สร้างโฟลเดอร์ logs / output ถ้ายังไม่มี (อย่าเขียนทับ assets/)
 IF (Folder.IfFolderExists.DoesNotExist Path: $'''C:\\PAD-Labs\\logs\\lab09b''') THEN
     Folder.Create FolderPath: $'''C:\\PAD-Labs\\logs''' FolderName: $'''lab09b''' Folder=> LogsFolder
 END
@@ -22,18 +25,23 @@ IF (Folder.IfFolderExists.DoesNotExist Path: OutputRoot) THEN
     Folder.Create FolderPath: $'''C:\\PAD-Labs\\output''' FolderName: $'''lab09b''' Folder=> OutputFolder
 END
 
+# เขียนหัวตาราง error-log.csv (Overwrite ทุกครั้งที่รันใหม่)
 File.WriteText File: ErrorLogPath TextToWrite: ErrorLogHeader AppendNewLine: True IfFileExists: File.IfFileExists.Overwrite Encoding: File.FileEncoding.UTF8
 
+# อ่าน path ปลอมจากไฟล์ config (ใช้ใน Case A)
 File.ReadTextFromFile.ReadText File: $'''%WorkingRoot%\\missing-file-path.txt''' Encoding: File.TextFileEncoding.UTF8 Content=> MissingPath
 
-# Case A — Missing file
+# ========== Case A — Missing file ==========
+# จุดสอน: อ่านไฟล์ที่ไม่มี → จับด้วย On block error → Get last error → append log → Continue
 SET CaseFailed TO False
 BLOCK
 ON BLOCK ERROR all
+    # ใน handler: SET flag อย่างเดียว — ห้าม Write / Increase ที่นี่
     SET CaseFailed TO True
 END
     File.ReadTextFromFile.ReadText File: MissingPath Encoding: File.TextFileEncoding.UTF8 Content=> MissingContent
 END
+# นอกบล็อก: เมื่อพัง → ดึง LastError แล้วเขียนแถว Case A
 IF CaseFailed = True THEN
     ERROR => LastError Reset: True
     DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> Now
@@ -41,9 +49,11 @@ IF CaseFailed = True THEN
     File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
 END
 
+# อ่าน path แอปปลอม (ใช้ใน Case B)
 File.ReadTextFromFile.ReadText File: $'''%WorkingRoot%\\bad-app-path.txt''' Encoding: File.TextFileEncoding.UTF8 Content=> BadAppPath
 
-# Case B — Bad application path
+# ========== Case B — Bad application path ==========
+# จุดสอน: Run application ด้วย path ผิด → โครงเดียวกับ Case A (flag + log นอก handler)
 SET CaseFailed TO False
 BLOCK
 ON BLOCK ERROR all
@@ -58,7 +68,8 @@ IF CaseFailed = True THEN
     File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
 END
 
-# Case C — Flaky wait + retry (max 3) then real Notepad wait
+# ========== Case C — Flaky wait + Retry (สูงสุด 3) แล้ว Wait Notepad จริง ==========
+# จุดสอน: เปิด Notepad → ฝึก Wait title ผิด + retry ≤3 → จากนั้น Wait class Notepad สำเร็จ
 System.RunApplication.RunApplication ApplicationPath: $'''C:\\Windows\\System32\\notepad.exe''' WindowStyle: System.ProcessWindowStyle.Normal ProcessId=> AppProcessId
 LOOP WHILE RetryCount < 3
     SET WaitFailed TO False
@@ -66,21 +77,25 @@ LOOP WHILE RetryCount < 3
     ON BLOCK ERROR all
         SET WaitFailed TO True
     END
+        # จงใจรอหน้าต่างที่ไม่มี (timeout สั้น) เพื่อให้เข้า retry
         WAIT (UIAutomation.WaitForWindow.ToOpenByTitleClass Title: $'''ThisWindowDoesNotExist''' Class: $'''''' FocusWindow: False) FOR 3
     END
     IF WaitFailed = True THEN
+        # Increase / เขียน log อยู่นอก ON BLOCK ERROR
         Variables.IncreaseVariable Value: RetryCount IncrementValue: 1
         DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> Now
         SET LogLine TO $'''%Now%,C,Warning,RETRY_WAIT,%RetryCount%,False'''
         File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
     END
 END
+# หลัง Loop: Wait หน้าต่างจริงด้วย Class = Notepad (Title ว่าง)
 WAIT (UIAutomation.WaitForWindow.ToOpenByTitleClass Title: $'''''' Class: $'''Notepad''' FocusWindow: True) FOR 30
 DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> Now
 SET LogLine TO $'''%Now%,C,Info,wait-success,%RetryCount%,False'''
 File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
 
-# Case D — Save dialog (Don't Save)
+# ========== Case D — Save dialog (Don't Save) ==========
+# จุดสอน: พิมพ์ข้อความ → Close โดยไม่ Save → ส่ง Alt+N ปิด Don't Save → log ผล
 UIAutomation.FocusWindow.FocusByTitleClass Title: $'''''' Class: $'''Notepad'''
 MouseAndKeyboard.SendKeys.FocusAndSendKeys TextToSend: $'''Lab09b dialog test''' DelayBetweenKeystrokes: 10 SendTextAsHardwareKeys: False
 SET CaseFailed TO False
@@ -89,8 +104,8 @@ ON BLOCK ERROR all
     SET CaseFailed TO True
 END
     UIAutomation.CloseWindow.CloseByTitleClass Title: $'''''' Class: $'''Notepad'''
-    # REBIND if Alt+N does not dismiss Win11 Notepad save prompt:
-    # Capture Don't Save then Press button / Click UI element
+    # REBIND ถ้า Alt+N ไม่ปิด Save prompt ของ Win11 Notepad:
+    # Capture ปุ่ม Don't Save แล้วใช้ Press button / Click UI element
     WAIT 1
     MouseAndKeyboard.SendKeys.FocusAndSendKeys TextToSend: $'''{Alt}({N})''' DelayBetweenKeystrokes: 10 SendTextAsHardwareKeys: False
 END
@@ -102,24 +117,27 @@ ELSE
 END
 File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
 
-# Case E — Recovery happy path (Save As via Send keys; rebind Populate if needed)
+# ========== Case E — Recovery happy path (Save As) ==========
+# จุดสอน: หลังมี error A–D แล้วยังต้องกู้งานสำเร็จ — Notepad ใหม่ → พิมพ์ → Save As → RECOVERY_OK
 File.ReadTextFromFile.ReadText File: $'''%WorkingRoot%\\notepad-recovery.txt''' Encoding: File.TextFileEncoding.UTF8 Content=> NoteText
 System.RunApplication.RunApplication ApplicationPath: $'''C:\\Windows\\System32\\notepad.exe''' WindowStyle: System.ProcessWindowStyle.Normal ProcessId=> RecoveryProcessId
 WAIT (UIAutomation.WaitForWindow.ToOpenByTitleClass Title: $'''''' Class: $'''Notepad''' FocusWindow: True) FOR 30
 UIAutomation.FocusWindow.FocusByTitleClass Title: $'''''' Class: $'''Notepad'''
-# REBIND preferred: Populate text field in window (Simulate) with ControlRepository from Lab 01b
+# REBIND ที่แนะนำ: Populate text field in window (Simulate) + ControlRepository จาก Lab 01b
 MouseAndKeyboard.SendKeys.FocusAndSendKeys TextToSend: NoteText DelayBetweenKeystrokes: 5 SendTextAsHardwareKeys: False
 MouseAndKeyboard.SendKeys.FocusAndSendKeys TextToSend: $'''{Control}{S}''' DelayBetweenKeystrokes: 10 SendTextAsHardwareKeys: False
 WAIT 1
+# พิมพ์ path ปลายทาง Save As แล้ว Enter
 MouseAndKeyboard.SendKeys.FocusAndSendKeys TextToSend: OutputPath DelayBetweenKeystrokes: 5 SendTextAsHardwareKeys: False
 MouseAndKeyboard.SendKeys.FocusAndSendKeys TextToSend: $'''{Enter}''' DelayBetweenKeystrokes: 10 SendTextAsHardwareKeys: False
-# REBIND: if overwrite confirm appears, capture Yes / Replace
+# REBIND: ถ้ามี confirm overwrite ให้ Capture Yes / Replace
 WAIT 1
 DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> Now
 SET LogLine TO $'''%Now%,E,Info,RECOVERY_OK,0,False'''
 File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
 
-# Challenge G — file fault then recover
+# ========== Challenge G — ไฟล์หายแล้วกู้ ==========
+# จุดสอน: Copy ไฟล์ที่ไม่มี → log FILE_MISSING → Copy recovery-upload.txt → FILE_OK
 SET CaseFailed TO False
 BLOCK
 ON BLOCK ERROR all
@@ -132,12 +150,14 @@ IF CaseFailed = True THEN
     SET LogLine TO $'''%Now%,G,Error,FILE_MISSING,0,False'''
     File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
 END
+# กู้: คัดลอกไฟล์ที่มีจริงไป output
 File.Copy Files: $'''%WorkingRoot%\\recovery-upload.txt''' Destination: OutputRoot IfFileExists: File.IfExists.Overwrite CopiedFiles=> RecoveredCopied
 DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> Now
 SET LogLine TO $'''%Now%,G,Info,FILE_OK,0,False'''
 File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
 
-# Challenge H — wrong focus then correct
+# ========== Challenge H — Focus ผิดแล้วแก้ ==========
+# จุดสอน: Focus หน้าต่างที่ไม่มี → log FOCUS_MISS → Focus Class Notepad → FOCUS_OK
 SET CaseFailed TO False
 BLOCK
 ON BLOCK ERROR all
@@ -155,13 +175,16 @@ DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAn
 SET LogLine TO $'''%Now%,H,Info,FOCUS_OK,0,False'''
 File.WriteText File: ErrorLogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
 
-# Challenge F stub (do in class): Wait/Populate wrong UI element then UI_MISMATCH then recover
+# ========== Challenge F (ทำในชั้น — ไม่มีใน catch-up) ==========
+# Stub: Wait/Populate UI element ผิด → log UI_MISMATCH → แล้วกู้ด้วย element ที่ถูก
 
-# Cleanup — close Notepad (title may change after Save As)
+# ========== Cleanup ==========
+# ปิด Notepad ทิ้งท้าย (title อาจเปลี่ยนหลัง Save As) — handler ว่างได้เพื่อไม่ให้ Cleanup พังทั้ง flow
 BLOCK
 ON BLOCK ERROR all
 END
     UIAutomation.CloseWindow.CloseByTitleClass Title: $'''''' Class: $'''Notepad'''
     WAIT 1
+    # เผื่อ Save dialog ค้าง: Alt+N = Don't Save
     MouseAndKeyboard.SendKeys.FocusAndSendKeys TextToSend: $'''{Alt}({N})''' DelayBetweenKeystrokes: 10 SendTextAsHardwareKeys: False
 END
