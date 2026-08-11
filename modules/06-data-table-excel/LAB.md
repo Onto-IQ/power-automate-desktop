@@ -207,7 +207,27 @@ OrderId, Customer, Product, Amount, OrderDate, Region, Tier
 ```
 
    - **Variables produced:** `AmountNumber` ← **ไม่ใส่ `%`**
-4. ลาก **If** — เงื่อนไข **OR** (ตามที่ designer รองรับ):
+4. ลาก **If** — เงื่อนไข **OR** (ตามที่ designer รองรับ)
+
+   **ทางลัด — Expression (คัดลอกวางได้เลย):**
+
+```text
+%CurrentRow['Region'] = $'''BKK''' OR AmountNumber >= 10000%
+```
+
+   อธิบาย Expression นี้สั้น ๆ:
+
+   | ส่วน | ความหมาย |
+   |------|----------|
+   | `% … %` ครอบทั้งก้อน | บอก PAD ว่าเป็น expression แบบ classic (ไม่ใช่ Power Fx `=`) |
+   | `CurrentRow['Region']` | ค่าคอลัมน์ Region ของแถวปัจจุบันใน For each |
+   | `$'''BKK'''` | สตริง literal ใน Robin/designer (= ค่า `BKK`) |
+   | `OR` | เข้าเงื่อนไขถ้าข้อใดข้อหนึ่งเป็นจริง |
+   | `AmountNumber >= 10000` | ตัวเลขที่แปลงจาก Amount แล้ว (ต้องทำ Convert ก่อน) |
+
+   วางในช่องเงื่อนไขของ **If** (โหมด Expression / ช่องเงื่อนไขเต็ม) — อย่าใส่ `%` ซ้ำซ้อนด้านนอกอีก
+
+   **หรือตั้งทีละฝั่งใน designer:**
    - ฝั่งซ้าย (คัดลอก)
 
 ```text
@@ -268,7 +288,7 @@ Silver
 ```text
 For each CurrentRow in Orders
   Convert Amount → AmountNumber
-  If Region = BKK OR AmountNumber >= 10000
+  If %CurrentRow['Region'] = $'''BKK''' OR AmountNumber >= 10000%
     If AmountNumber >= 12000 → Tier = Gold Else → Tier = Silver
     Insert row into Filtered (+ Tier)
   End
