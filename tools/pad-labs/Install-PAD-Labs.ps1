@@ -108,8 +108,8 @@ $dirs = @(
     "$TargetRoot\working\lab10",
     "$TargetRoot\output\lab10",
     "$TargetRoot\logs\lab10",
-    "$TargetRoot\working\lab-scb-alt",
-    "$TargetRoot\output\lab-scb-alt"
+    "$TargetRoot\working\lab03b",
+    "$TargetRoot\output\lab03b"
 )
 $dirs | ForEach-Object { Ensure-Dir $_ }
 
@@ -158,7 +158,7 @@ if ($FromRepo) {
     Copy-Tree (Join-Path $RepoRoot 'modules\09-error-handling\assets') "$TargetRoot\working\lab09"
     Copy-Tree (Join-Path $RepoRoot 'modules\09b-error-handling-winapp\assets') "$TargetRoot\working\lab09b"
     Copy-Tree (Join-Path $RepoRoot 'modules\10-capstone-sales-ops\assets') "$TargetRoot\working\lab10"
-    Copy-Tree (Join-Path $RepoRoot 'modules\scb-secure-isolation-alt\assets') "$TargetRoot\working\lab-scb-alt"
+    Copy-Tree (Join-Path $RepoRoot 'modules\03b-public-web-alt\assets') "$TargetRoot\working\lab03b"
 }
 else {
     # Package mode: copy pre-seeded tree next to this script

@@ -9,7 +9,7 @@
 **อ้างอิงลำดับ action:** [`scripts/09b-error-handling-winapp.robin`](scripts/09b-error-handling-winapp.robin)
 
 > Lab นี้**ไม่ใช้** Launch browser / Wait for web page content  
-> พื้นฐาน Notepad: [Lab 01b](../01b-notepad/LAB.md)
+> พื้นฐาน Notepad: [Lab 01b](../01b-notepad/LAB.md) · ทบทวน R6 จาก [Lab 07 Contoso](../07-contoso-invoice-ops/LAB.md) (SET-only + Get last error นอก handler)
 
 ## อ้างอิง (Aug 2026)
 
@@ -86,7 +86,7 @@ Acceptance Challenge: ทำอย่างน้อย 2 จาก F–H (catch
 
 ### โครง On block error (บังคับให้ตรง catch-up)
 
-ใน handler ของ **On block error** ใส่ได้แค่ **Set variable** (SET-only)  
+ใน handler ของ **On block error** ใส่ได้แค่ **Set variable** (SET-only) — ทบทวนกฎจาก Lab 07 R6  
 **Get last error**, **Get current date and time**, **Write text to file**, **Increase variable** ทำ**นอก**บล็อกหลัง flag
 
 ```text

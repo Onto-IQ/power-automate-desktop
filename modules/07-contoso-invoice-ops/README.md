@@ -1,7 +1,7 @@
 # Lab 07 — Contoso Invoice Ops
 
 **วัน:** 2 · **ระดับ:** Advanced · **เวลาโดยประมาณ:** อ่านความรู้ 25–35 นาที + Lab ~60 นาที (catch-up) / 90–120 นาที (สร้างมือ)  
-**ทักษะ:** Desktop UI (Contoso), Excel ↔ Contoso, R1–R6, Subflows, On block error
+**ทักษะ:** Desktop UI (Contoso), Excel ↔ Contoso, R1–R6, Subflows, On block error (SET-only) + Get last error
 
 ## ลำดับการเรียน (จับมือทำ)
 
@@ -41,6 +41,5 @@
 
 ## บทที่เกี่ยวข้อง
 
-- ข้อมูลก่อนหน้า: [Lab 06 Excel & Data Tables](../06-excel-data-tables/README.md)
-- Web round-trip: [Lab 08](../08-excel-web-roundtrip/README.md) · Error: [Lab 09](../09-error-handling/README.md)
-- รวมทักษะ: [Lab 10 Capstone](../10-capstone-sales-ops/README.md)
+- ก่อนหน้า: [Lab 06 Excel & Data Tables](../06-excel-data-tables/README.md)
+- ถัดไป: [Lab 08](../08-excel-web-roundtrip/README.md) · [Lab 09 Error Handling](../09-error-handling/README.md) (ทบทวน R6) · [Lab 10 Capstone](../10-capstone-sales-ops/README.md)

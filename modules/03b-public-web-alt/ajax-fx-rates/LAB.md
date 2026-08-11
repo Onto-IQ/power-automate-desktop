@@ -1,14 +1,14 @@
-# Lab SCB Alt — AJAX FX Rates (Hands-on)
+# Lab 03b — AJAX FX Rates (Hands-on)
 
 **อ่านก่อน:** [LESSON.md](LESSON.md) · **หน้าปก:** [README.md](README.md) · **โมดูล:** [`../README.md`](../README.md)
 
-**Flow ชื่อ:** `LabSCB_AjaxFxRates` · **ทดแทน Lab 03 AJAX**  
-**Catch-up:** [`scripts/ajax-fx-rates.robin`](scripts/ajax-fx-rates.robin) — `partial-ui` + **bundled** UI Elements (`SCB AjaxFx` → `Tbl_ScbFx`)
+**Flow ชื่อ:** `Lab03b_AjaxFxRates` · **ทดแทน Lab 03 AJAX**  
+**Catch-up:** [`scripts/ajax-fx-rates.robin`](scripts/ajax-fx-rates.robin) — `partial-ui` + **bundled** UI Elements (`Lab03b AjaxFx` → `Tbl_FxRates`)
 
 ## Setup
 
 ```text
-C:\PAD-Labs\output\lab-scb-alt\
+C:\PAD-Labs\output\lab03b\
 ```
 
 อ่าน criteria: [`../assets/fx-filter.csv`](../assets/fx-filter.csv) → ค่าเริ่มต้น `CurrencyCode=USD`
@@ -24,11 +24,11 @@ https://www.scb.co.th/th/personal-banking/foreign-exchange-rates
 | | ค่า |
 |---|-----|
 | Input | `CurrencyCode` = `USD` |
-| UI screen | `SCB AjaxFx` |
-| UI element | `Tbl_ScbFx` · CSS `table.table-rate` |
+| UI screen | `Lab03b AjaxFx` |
+| UI element | `Tbl_FxRates` · CSS `table.table-rate` |
 | Extract → | `%ScbFxTable%` (7 คอลัมน์) |
 | Filter → | `%Hits%` คอลัมน์ `Currency`, `BankBuys`, `BankSells` |
-| Output | `C:\PAD-Labs\output\lab-scb-alt\scb-fx-rates.csv` |
+| Output | `C:\PAD-Labs\output\lab03b\bank-fx-rates.csv` |
 
 ---
 
@@ -41,7 +41,7 @@ https://www.scb.co.th/th/personal-banking/foreign-exchange-rates
 1. **New flow** → ชื่อ:
 
 ```text
-LabSCB_AjaxFxRates
+Lab03b_AjaxFxRates
 ```
 
 2. **Set variable** · Name `CurrencyCode` ← Value:
@@ -53,10 +53,10 @@ USD
 3. **If folder exists** · Path:
 
 ```text
-C:\PAD-Labs\output\lab-scb-alt
+C:\PAD-Labs\output\lab03b
 ```
 
-   · โหมด **Does not exist** → ภายใน: **Create folder** · Folder path `C:\PAD-Labs\output` · Folder name `lab-scb-alt`
+   · โหมด **Does not exist** → ภายใน: **Create folder** · Folder path `C:\PAD-Labs\output` · Folder name `lab03b`
 
 ### Step 1 — Launch Chrome
 
@@ -76,11 +76,11 @@ https://www.scb.co.th/th/personal-banking/foreign-exchange-rates
 1. **Wait for web page content** · `%Browser%` · **Contain element** · UI element:
 
 ```text
-Tbl_ScbFx
+Tbl_FxRates
 ```
 
-   · Screen ใน catch-up: `SCB AjaxFx` · selector: `table.table-rate` · Timeout / FOR: `90`  
-   · ถ้าทำมือ: UI Picker ชี้ตารางเรท → Rename เป็น `Tbl_ScbFx` ภายใต้ screen `SCB AjaxFx`  
+   · Screen ใน catch-up: `Lab03b AjaxFx` · selector: `table.table-rate` · Timeout / FOR: `90`  
+   · ถ้าทำมือ: UI Picker ชี้ตารางเรท → Rename เป็น `Tbl_FxRates` ภายใต้ screen `Lab03b AjaxFx`  
    · ถ้า paste catch-up: UI Elements มาพร้อม ControlRepository — ไม่ต้อง Capture ใหม่
 
 2. **Wait for web page content** · `%Browser%` · **Contain text** · Text: `%CurrencyCode%` (ตัวแปร `CurrencyCode`) · FOR: `90`
@@ -150,7 +150,7 @@ BankSells
 1. **Write text to file** · Text to write: `%CsvBody%`
 
 ```text
-C:\PAD-Labs\output\lab-scb-alt\scb-fx-rates.csv
+C:\PAD-Labs\output\lab03b\bank-fx-rates.csv
 ```
 
 2. If file exists: **Overwrite** · Encoding: UTF-8
@@ -159,14 +159,14 @@ C:\PAD-Labs\output\lab-scb-alt\scb-fx-rates.csv
 
 ## Acceptance
 
-- [ ] Flow ชื่อ `LabSCB_AjaxFxRates`
-- [ ] มีโฟลเดอร์ `C:\PAD-Labs\output\lab-scb-alt\` (สร้างอัตโนมัติถ้ายังไม่มี)
+- [ ] Flow ชื่อ `Lab03b_AjaxFxRates`
+- [ ] มีโฟลเดอร์ `C:\PAD-Labs\output\lab03b\` (สร้างอัตโนมัติถ้ายังไม่มี)
 - [ ] **Launch new Chrome** ไปที่ URL `/th/.../foreign-exchange-rates`
-- [ ] Wait **Contain element** `Tbl_ScbFx` แล้วตามด้วย Wait **Contain text** `%CurrencyCode%` ก่อน Extract
+- [ ] Wait **Contain element** `Tbl_FxRates` แล้วตามด้วย Wait **Contain text** `%CurrencyCode%` ก่อน Extract
 - [ ] มี Extract Entire HTML Table → `%ScbFxTable%` (ไม่ใช้ stub ตารางว่างแทน Extract)
 - [ ] มี `%Hits%` คอลัมน์ `Currency`, `BankBuys`, `BankSells` และกรองด้วย Contains บนคอลัมน์แรก
 - [ ] map แถว: `[0]→Currency`, `[3]→BankBuys`, `[1]→BankSells`
-- [ ] มี `scb-fx-rates.csv` และมีอย่างน้อย 1 แถวที่เกี่ยวกับ USD (หรือสกุลที่ตั้งไว้)
+- [ ] มี `bank-fx-rates.csv` และมีอย่างน้อย 1 แถวที่เกี่ยวกับ USD (หรือสกุลที่ตั้งไว้)
 - [ ] **Close web browser** · ไม่ได้ login / ทำรายการแลกเงิน
 
 ## Troubleshooting
@@ -175,7 +175,7 @@ C:\PAD-Labs\output\lab-scb-alt\scb-fx-rates.csv
 |-------|--------|
 | Wait element ผ่านเร็ว แต่ `%Hits%` = 0 | ขาด Wait **Contain text** — ตาราง shell ว่างก่อน AJAX · ดู Step 2 |
 | Wait text timeout | ปิดคุกกี้/popup · เพิ่ม FOR · เปิดหน้าด้วยมือยืนยันว่ามี `USD` · ลอง `CurrencyCode=EUR` |
-| Designer: UI element wasn't found | paste catch-up ลง **empty** flow เพื่อให้ ControlRepository เข้า · หรือ Capture `Tbl_ScbFx` เองใต้ `SCB AjaxFx` |
+| Designer: UI element wasn't found | paste catch-up ลง **empty** flow เพื่อให้ ControlRepository เข้า · หรือ Capture `Tbl_FxRates` เองใต้ `Lab03b AjaxFx` |
 | Extract ได้แค่ placeholder / 0 แถวข้อมูล | Extract ก่อน AJAX เสร็จ — ย้าย Extract ไปหลัง Wait text |
 | `%Hits%` ว่างหลังมีแถวใน `%ScbFxTable%` | ตรวจ Contains ที่ `%FxRow[0]%` · เปิด Variables ดูว่าสกุลเงินอยู่คอลัมน์ไหน · ปรับ index map `[0]/[3]/[1]` ถ้า DOM เปลี่ยน |
 | CSV คอลัมน์เรทสลับ Buys/Sells | ตาม catch-up: Buys = col3 (`BuyTT`), Sells = col1 (`SellDDTT`) — อย่าสลับ |
@@ -185,4 +185,4 @@ C:\PAD-Labs\output\lab-scb-alt\scb-fx-rates.csv
 
 ปิดเบราว์เซอร์ค้าง · ลบ CSV ทดสอบถ้าไม่ต้องการเก็บเรท
 
-> **Catch-up:** ตามไม่ทัน → วาง [`scripts/ajax-fx-rates.robin`](scripts/ajax-fx-rates.robin) ใน flow **ว่าง** (partial-ui + bundled `SCB AjaxFx` / `Tbl_ScbFx`)
+> **Catch-up:** ตามไม่ทัน → วาง [`scripts/ajax-fx-rates.robin`](scripts/ajax-fx-rates.robin) ใน flow **ว่าง** (partial-ui + bundled `Lab03b AjaxFx` / `Tbl_FxRates`)

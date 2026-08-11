@@ -1,8 +1,8 @@
-# Lab SCB Alt — Form Search
+# Lab 03b — Form Search
 
-**วัน:** 1 · **ระดับ:** Beginner · **ทดแทน:** [Lab 01 Record & Replay](../../01-record-replay/README.md)  
+**วัน:** 1 · **ระดับ:** Beginner · **ทักษะเทียบ:** [Lab 01 Record & Replay](../../01-record-replay/README.md) (form)  
 **ทักษะ:** Launch browser, Populate text, Press button, Wait, Replay  
-**Flow ชื่อ:** `LabSCB_FormSearch`
+**Flow ชื่อ:** `Lab03b_FormSearch`
 
 ## ลำดับการเรียน
 
@@ -36,7 +36,7 @@
 |--|------------|
 | Keywords | [`../assets/search-keywords.csv`](../assets/search-keywords.csv) |
 | Web UI | https://www.bot.or.th/th/search.html |
-| Screenshot | `C:\PAD-Labs\output\lab-scb-alt\search-proof.png` |
+| Screenshot | `C:\PAD-Labs\output\lab03b\search-proof.png` |
 
 ## บทที่เกี่ยวข้อง
 

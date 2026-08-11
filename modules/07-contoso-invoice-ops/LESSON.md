@@ -68,12 +68,13 @@ Init paths + CreatedCount/FailedCount
 อ่าน Invoices จาก Excel → Data table
 Launch Contoso ครั้งเดียว (Wait + Focus)
 สำหรับแต่ละ CurrentInvoice:
-  On block error:
+  On block error (SET-only ใน handler):
     ตรวจ R1/R2 → Reject/Skip แล้วข้าม UI
     ถ้า Create: ตั้ง Priority ตาม R3/R4 แล้วกรอกฟอร์ม Contoso
     หลัง Created: หาไฟล์แนบ InvoiceId* แล้ว Copy ไป filed\{InvoiceId}\ (R5)
     Insert Results
-  เมื่อ error: Get last error → log → Status=Failed → ไปแถวถัดไป (R6)
+  เมื่อ RowFailed (นอก handler):
+    Get last error → ErrorMessage=%LastError.Message% → log → FailedCount → แถวถัดไป (R6)
 เขียน Results + Summary → Close Contoso
 ```
 
@@ -120,7 +121,7 @@ Launch Contoso ครั้งเดียว (Wait + Focus)
 |--------|------------|------------|----------------|
 | เป้าหมาย UI | **Web** (Lab Hub) | **Desktop** (Contoso) | Lab นี้ = Desktop UI elements |
 | การคลิก | **UI Element** ที่ capture | พิกัดจอ / Recorder อย่างเดียว | ใช้ UI Element เป็นหลัก |
-| Error รายแถว | **On block error** + Continue | ให้ทั้ง flow Terminate | R6 ต้อง Continue |
+| Error รายแถว | **On block error** (SET-only) + **Get last error** นอก handler + Continue | ให้ทั้ง flow Terminate / ใส่ Get last error ใน handler | R6 ต้อง Continue — Lab 09/09b จะทบทวนแพทเทิร์นนี้ |
 | Reject/Skip | ไม่เปิดฟอร์ม Contoso | ยังกรอก UI แล้วค่อยลบ | R1/R2 ห้ามแตะ Create UI |
 | Path Contoso | `%ContosoPath%` จากเครื่องจริง | hardcode คนละเครื่อง | หา exe จาก Task Manager |
 | โครงสร้าง | Subflows ≥ 3 | ยัดทั้งหมดใน Main | เกณฑ์ผ่านต้องการแยกอย่างน้อย 3 |
@@ -162,7 +163,7 @@ R1 = ข้อมูลไม่ผ่าน validate → <code>Rejected</code>;
 
 <details>
 <summary>เฉลย</summary>
-<strong>On block error</strong> ครอบงานรายแถว + <strong>Get last error</strong> เพื่อ log แล้ว Continue แถวถัดไป
+<strong>On block error</strong> ครอบงานรายแถว (ใน handler = <strong>SET</strong> flag อย่างเดียว) แล้ว<strong>นอก</strong>บล็อกใช้ <strong>Get last error</strong> → log <code>%LastError.Message%</code> แล้ว Continue แถวถัดไป
 </details>
 
 **4.** Amount = 12000 ควรได้ Priority แบบใด และ Notes ต้องมีอะไร?

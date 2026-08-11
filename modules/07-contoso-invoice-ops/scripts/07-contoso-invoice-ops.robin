@@ -1,6 +1,8 @@
 # Lab07_ContosoInvoiceOps - catch-up 1 ชม. (PAD Robin) + UI repo
 # pad-lint: allow-desktop-appmask
-# วางใน flow ว่าง | ON BLOCK ERROR ใส่ได้แค่ SET | ContosoPath แก้ตามเครื่อง
+# วางใน flow ว่าง | ContosoPath แก้ตามเครื่อง
+# R6: ON BLOCK ERROR = SET-only → Get last error / Increase / File อยู่นอก handler
+# Get last error (validated paste): ERROR => LastError Reset: True
 # UI: Contoso Invoicing > Btn_Invoices, Btn_NewInvoice, Txt_Date, Txt_Account, Txt_Contact, Txt_Amount, Cmb_Status, Btn_Save
 
 ############################################
@@ -59,12 +61,11 @@ LOOP FOREACH CurrentInvoice IN Invoices
     SET DateForContoso TO InvoiceDate
     SET RowFailed TO False
 
-    # R6: แถวพังแล้วไปต่อ - ใน handler ใช้ SET อย่างเดียว
+    # R6: แถวพังแล้วไปต่อ — ใน handler ใส่ได้แค่ SET flag/Status
     BLOCK
     ON BLOCK ERROR all
         SET RowFailed TO True
         SET Status TO $'''Failed'''
-        SET ErrorMessage TO $'''Row processing error'''
     END
         ############################################
         # SF_ValidateInvoiceRow - R1 Reject / R2 Skip
@@ -157,13 +158,15 @@ LOOP FOREACH CurrentInvoice IN Invoices
             END
 
             Variables.AddRowToDataTable.AppendRowToDataTable DataTable: Results RowToAdd: [InvoiceId, Status, Priority, AttachmentFiled, ErrorMessage, Notes]
-            SET LogLine TO $'''%InvoiceId%,%Status%,%Priority%,%AttachmentFiled%,'''
+            SET LogLine TO $'''%InvoiceId%,%Status%,%Priority%,%AttachmentFiled%,%ErrorMessage%'''
             File.WriteText File: LogPath TextToWrite: LogLine AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.UTF8
         END
     END
 
-    # บันทึก Failed นอก handler (Increase/File ห้ามใน ON BLOCK ERROR)
+    # Failed นอก handler: Get last error → ErrorMessage → Increase / Insert / log (ห้ามทำใน ON BLOCK ERROR)
     IF RowFailed = True THEN
+        ERROR => LastError Reset: True
+        SET ErrorMessage TO $'''%LastError.Message%'''
         Variables.IncreaseVariable Value: FailedCount IncrementValue: 1
         Variables.AddRowToDataTable.AppendRowToDataTable DataTable: Results RowToAdd: [InvoiceId, Status, Priority, AttachmentFiled, ErrorMessage, Notes]
         SET LogLine TO $'''%InvoiceId%,Failed,%Priority%,%AttachmentFiled%,%ErrorMessage%'''

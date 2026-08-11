@@ -1,8 +1,8 @@
-# Lab SCB Alt — Static FX Table
+# Lab 03b — Static FX Table
 
-**วัน:** 1 · **ระดับ:** Intermediate · **ทดแทน:** [Lab 03 Static Table](../../03-web-scout/static-table/README.md)  
+**วัน:** 1 · **ระดับ:** Intermediate · **ทักษะเทียบ:** [Lab 03 Static Table](../../03-web-scout/static-table/README.md)  
 **ทักษะ:** Wait + Extract Entire HTML Table + เขียน CSV  
-**Flow ชื่อ:** `LabSCB_StaticFxTable`
+**Flow ชื่อ:** `Lab03b_StaticFxTable`
 
 ## ลำดับการเรียน
 
@@ -35,7 +35,7 @@
 | | Path / ค่า |
 |--|------------|
 | Web UI | https://app.bot.or.th/BTWS_STAT/statistics/ReportPage.aspx?language=TH&reportID=123 |
-| CSV | `C:\PAD-Labs\output\lab-scb-alt\bot-fx-table.csv` |
+| CSV | `C:\PAD-Labs\output\lab03b\bot-fx-table.csv` |
 
 ## บทที่เกี่ยวข้อง
 

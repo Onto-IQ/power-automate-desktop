@@ -5,7 +5,7 @@
 ## ทำไมใช้หน้าค้นหาแทน 01-forms
 
 Lab 01 สอน Populate หลายช่องแล้ว Submit  
-บนโดเมนที่อนุญาตใน SCB **ไม่มีฟอร์มฝึกที่ปลอดภัยเทียบเท่า Lab Hub**  
+บนโดเมนสาธารณะที่มักผ่าน allowlist **ไม่มีฟอร์มฝึกที่ปลอดภัยเทียบเท่า Lab Hub**  
 หน้าค้นหา ธปท. ให้ทักษะเดียวกันในแกนหลัก: Launch → Populate → Press button → Wait → Replay โดยไม่สร้างธุรกรรม/ticket
 
 ## หน้าเป้าหมาย
@@ -26,7 +26,7 @@ Browser = Launch Edge/Chrome → https://www.bot.or.th/th/search.html
 Populate Txt_Search = %SearchKeyword%
 Press Btn_Search
 Wait for web page content (ผลค้นหา / หัวข้อผลลัพธ์)
-Take screenshot → C:\PAD-Labs\output\lab-scb-alt\search-proof.png
+Take screenshot → C:\PAD-Labs\output\lab03b\search-proof.png
 Close browser
 ```
 

@@ -1,15 +1,15 @@
-# Lab SCB Alt — Form Search (Hands-on)
+# Lab 03b — Form Search (Hands-on)
 
 **อ่านก่อน:** [LESSON.md](LESSON.md) · **หน้าปก:** [README.md](README.md) · **โมดูล:** [`../README.md`](../README.md)
 
-**Flow ชื่อ:** `LabSCB_FormSearch` · **ทดแทน Lab 01**
+**Flow ชื่อ:** `Lab03b_FormSearch` · **ทดแทน Lab 01**
 
 ## Setup บนเครื่อง
 
 1. สร้างโฟลเดอร์:
 
 ```text
-C:\PAD-Labs\output\lab-scb-alt\
+C:\PAD-Labs\output\lab03b\
 ```
 
 2. เปิด URL นี้ด้วยมือหนึ่งครั้ง:
@@ -38,7 +38,7 @@ https://www.bot.or.th/th/search.html
 1. **New flow** → ชื่อ:
 
 ```text
-LabSCB_FormSearch
+Lab03b_FormSearch
 ```
 
 2. **Create**
@@ -110,7 +110,7 @@ Btn_Search
 2. **Take screenshot of web page** → บันทึก:
 
 ```text
-C:\PAD-Labs\output\lab-scb-alt\search-proof.png
+C:\PAD-Labs\output\lab03b\search-proof.png
 ```
 
 ### Step 7 — ปิด
@@ -120,7 +120,7 @@ C:\PAD-Labs\output\lab-scb-alt\search-proof.png
 
 ## Acceptance
 
-- [ ] Flow ชื่อ `LabSCB_FormSearch`
+- [ ] Flow ชื่อ `Lab03b_FormSearch`
 - [ ] `SearchKeyword` = `แก้หนี้ยั่งยืน` (หรือค่าจาก `search-keywords.csv`) ผ่าน **Set variable** แล้ว Populate จาก `%SearchKeyword%`
 - [ ] หลัง Click มี Wait **Contain text** `%SearchKeyword%` ก่อน screenshot
 - [ ] มี `search-proof.png` ที่เห็นผลค้นหา (ไม่ใช่หน้าเปล่า)
@@ -142,4 +142,4 @@ C:\PAD-Labs\output\lab-scb-alt\search-proof.png
 
 ปิดแท็บ/เบราว์เซอร์ค้างจาก lab
 
-> **Catch-up:** ตามไม่ทัน → วาง [`scripts/form-search.robin`](scripts/form-search.robin) ใน flow **ว่าง** (partial-ui + bundled `SCB FormSearch`)
+> **Catch-up:** ตามไม่ทัน → วาง [`scripts/form-search.robin`](scripts/form-search.robin) ใน flow **ว่าง** (partial-ui + bundled `Lab03b FormSearch`)

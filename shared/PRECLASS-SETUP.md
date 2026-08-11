@@ -13,7 +13,7 @@
 - [ ] Windows 10 หรือ 11 (เครื่องที่ใช้เรียนจริง)
 - [ ] มีสิทธิ์ติดตั้งโปรแกรม (หรือ IT ติดตั้งให้แล้ว)
 - [ ] เข้าอินเทอร์เน็ตได้ และเปิด [https://ontoiq.tech/pad/](https://ontoiq.tech/pad/) ได้
-- [ ] *(SCB / Secure Isolation)* ถ้า Lab Hub เปิดไม่ได้ — ทดสอบแทน: [ค้นหา ธปท.](https://www.bot.or.th/th/search.html) · [FX ธปท.](https://app.bot.or.th/BTWS_STAT/statistics/ReportPage.aspx?language=TH&reportID=123) · [FX SCB](https://www.scb.co.th/th/personal-banking/foreign-exchange-rates) แล้วใช้ [`modules/scb-secure-isolation-alt/`](../modules/scb-secure-isolation-alt/)
+- [ ] *(Secure Isolation / Lab Hub ถูกกั้น)* ถ้า Lab Hub เปิดไม่ได้ — ทดสอบแทน: [ค้นหา ธปท.](https://www.bot.or.th/th/search.html) · [FX ธปท.](https://app.bot.or.th/BTWS_STAT/statistics/ReportPage.aspx?language=TH&reportID=123) · [FX สาธารณะ](https://www.scb.co.th/th/personal-banking/foreign-exchange-rates) แล้วใช้ [`modules/03b-public-web-alt/`](../modules/03b-public-web-alt/) (ทักษะเทียบ 01 form + 03 table)
 - [ ] มีบัญชีที่ใช้กับ Power Automate for desktop ตามที่องค์กร/คอร์สกำหนด
 
 ## 2) ติดตั้ง Power Automate for desktop
@@ -52,7 +52,7 @@
 
 ```text
 C:\PAD-Labs\
-  ├── working\      ← input ที่ seed แล้ว (lab01…lab10, lab01b, lab09b, lab-scb-alt)
+  ├── working\      ← input ที่ seed แล้ว (lab01…lab10, lab01b, lab09b, lab03b)
   ├── output\
   ├── logs\
   └── downloads\    ← Lab 03 Files
@@ -108,7 +108,7 @@ Get-ChildItem $root
 | 01 | `C:\PAD-Labs\working\lab01\` ← จาก `modules/01-record-replay/assets/` |
 | 02 | `C:\PAD-Labs\working\lab02\inbox\` ← จาก `modules/02-file-management/assets/inbox/` |
 | 03 | สร้าง `C:\PAD-Labs\output\lab03\` · (Files optional) คัดลอก `modules/03-web-scout/files/assets/upload-sample.txt` → `C:\PAD-Labs\working\lab03\` · criteria AJAX อยู่ที่ `modules/03-web-scout/ajax-table/assets/` |
-| 04–10 / 09b / SCB | ตาม `LAB.md` ของแต่ละบท หรือใช้ zip / Install script ด้านบน |
+| 04–10 / 09b / 03b | ตาม `LAB.md` ของแต่ละบท หรือใช้ zip / Install script ด้านบน |
 
 สร้างโฟลเดอร์ lab ย่อยเพิ่มได้ด้วย:
 
@@ -122,7 +122,7 @@ New-Item -ItemType Directory -Force -Path 'C:\PAD-Labs\working\lab01b' | Out-Nul
 New-Item -ItemType Directory -Force -Path 'C:\PAD-Labs\output\lab01b' | Out-Null
 New-Item -ItemType Directory -Force -Path 'C:\PAD-Labs\working\lab09b','C:\PAD-Labs\output\lab09b' | Out-Null
 New-Item -ItemType Directory -Force -Path 'C:\PAD-Labs\logs\lab07','C:\PAD-Labs\logs\lab09','C:\PAD-Labs\logs\lab09b','C:\PAD-Labs\logs\lab10' | Out-Null
-New-Item -ItemType Directory -Force -Path 'C:\PAD-Labs\output\lab-scb-alt','C:\PAD-Labs\downloads' | Out-Null
+New-Item -ItemType Directory -Force -Path 'C:\PAD-Labs\output\lab03b','C:\PAD-Labs\downloads' | Out-Null
 ```
 
 ## 7) ทดสอบสั้น ๆ ว่าพร้อม

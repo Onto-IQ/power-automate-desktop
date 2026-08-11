@@ -5,7 +5,8 @@
 **วัน:** 2 · **ระดับ:** Advanced  
 **ทักษะ:** **On block error**, **On error** (Retry / Continue flow run), **Get last error**, การบันทึก log, screenshot และการปิดแอปอย่างปลอดภัย
 
-> **Browser บล็อก Capture element:** ทำ [Lab 09b WinApp (Notepad)](../09b-error-handling-winapp/LAB.md) แทน — สอนกลไก error เดียวกันโดยไม่ใช้ web automation
+> **Browser บล็อก Capture element:** ทำ [Lab 09b WinApp (Notepad)](../09b-error-handling-winapp/LAB.md) แทน — สอนกลไก error เดียวกันโดยไม่ใช้ web automation  
+> ทบทวน R6 จาก [Lab 07 Contoso](../07-contoso-invoice-ops/LAB.md): SET-only ใน On block error → Get last error นอก handler
 
 ## อ้างอิง (Aug 2026)
 

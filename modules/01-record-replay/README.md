@@ -30,7 +30,7 @@
 - เข้าถึงหน้า [01 Forms](https://ontoiq.tech/pad/01-forms.html) ได้
 - **ปิด Browser Autofill** ในโปรไฟล์ที่ใช้กับ PAD (Save passwords / Autofill forms + Microsoft Autofill extension) — ถ้าเปิดไว้ Replay มักกรอกได้แค่ช่องแรก; ดู [LAB Troubleshooting](LAB.md#troubleshooting) และ [community](https://community.powerplatform.com/forums/thread/details/?threadid=5b9067f5-2fec-4e44-b05e-9549f05ea7bd)
 
-> **Browser Secure Isolation / เข้า Lab Hub ไม่ได้ (เช่น SCB):** ใช้ชุดทดแทนโดเมน `bot.or.th` / `scb.co.th` ที่ [`../scb-secure-isolation-alt/`](../scb-secure-isolation-alt/) — Lab ย่อย [Form Search](../scb-secure-isolation-alt/form-search/README.md)
+> **Browser Secure Isolation / เข้า Lab Hub ไม่ได้:** ใช้เส้นทดแทน [`../03b-public-web-alt/`](../03b-public-web-alt/) (ทักษะเทียบ 01 form + 03 table) บน `bot.or.th` / `scb.co.th` — Lab ย่อย [Form Search](../03b-public-web-alt/form-search/README.md)
 
 ## Assets / Output
 

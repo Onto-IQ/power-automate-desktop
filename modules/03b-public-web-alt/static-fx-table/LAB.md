@@ -1,14 +1,14 @@
-# Lab SCB Alt — Static FX Table (Hands-on)
+# Lab 03b — Static FX Table (Hands-on)
 
 **อ่านก่อน:** [LESSON.md](LESSON.md) · **หน้าปก:** [README.md](README.md) · **โมดูล:** [`../README.md`](../README.md)
 
-**Flow ชื่อ:** `LabSCB_StaticFxTable` · **ทดแทน Lab 03 Static**  
-**Catch-up:** [`scripts/static-fx-table.robin`](scripts/static-fx-table.robin) — `partial-ui` + **bundled** UI Elements (`SCB StaticFx` → `Tbl_BotFx`)
+**Flow ชื่อ:** `Lab03b_StaticFxTable` · **ทดแทน Lab 03 Static**  
+**Catch-up:** [`scripts/static-fx-table.robin`](scripts/static-fx-table.robin) — `partial-ui` + **bundled** UI Elements (`Lab03b StaticFx` → `Tbl_BotFx`)
 
 ## Setup
 
 ```text
-C:\PAD-Labs\output\lab-scb-alt\
+C:\PAD-Labs\output\lab03b\
 ```
 
 เปิดด้วยมือเพื่อยืนยันว่าตารางโหลด (มีแถว เช่น อัตราอ้างอิง USD):
@@ -21,11 +21,11 @@ https://app.bot.or.th/BTWS_STAT/statistics/ReportPage.aspx?language=TH&reportID=
 
 | | ค่า |
 |---|-----|
-| UI screen | `SCB StaticFx` |
+| UI screen | `Lab03b StaticFx` |
 | UI element | `Tbl_BotFx` · CSS `table#dgExcel` |
 | Extract → | `%BotFxTable%` (8 คอลัมน์: `Seq`, `Item`, `D1`…`D6`) |
 | CSV | เขียนแค่ 3 คอลัมน์แรก สูงสุด 20 แถว |
-| Output | `C:\PAD-Labs\output\lab-scb-alt\bot-fx-table.csv` |
+| Output | `C:\PAD-Labs\output\lab03b\bot-fx-table.csv` |
 
 ---
 
@@ -38,16 +38,16 @@ https://app.bot.or.th/BTWS_STAT/statistics/ReportPage.aspx?language=TH&reportID=
 1. **New flow** → ชื่อ:
 
 ```text
-LabSCB_StaticFxTable
+Lab03b_StaticFxTable
 ```
 
 2. **If folder exists** · Path:
 
 ```text
-C:\PAD-Labs\output\lab-scb-alt
+C:\PAD-Labs\output\lab03b
 ```
 
-   · โหมด **Does not exist** → **Create folder** · Folder path `C:\PAD-Labs\output` · Folder name `lab-scb-alt`
+   · โหมด **Does not exist** → **Create folder** · Folder path `C:\PAD-Labs\output` · Folder name `lab03b`
 
 ### Step 1 — Launch Chrome
 
@@ -68,7 +68,7 @@ https://app.bot.or.th/BTWS_STAT/statistics/ReportPage.aspx?language=TH&reportID=
 Tbl_BotFx
 ```
 
-   · Screen: `SCB StaticFx` · selector: `table#dgExcel` · FOR: `90`  
+   · Screen: `Lab03b StaticFx` · selector: `table#dgExcel` · FOR: `90`  
    · paste catch-up → UI Elements มาพร้อม ControlRepository  
    · ทำมือ → UI Picker ชี้ตาราง → Rename `Tbl_BotFx`
 
@@ -128,7 +128,7 @@ D6
 5. **Write text to file** · Text to write: `%CsvBody%`
 
 ```text
-C:\PAD-Labs\output\lab-scb-alt\bot-fx-table.csv
+C:\PAD-Labs\output\lab03b\bot-fx-table.csv
 ```
 
    - If file exists: **Overwrite** · Encoding: UTF-8
@@ -140,8 +140,8 @@ C:\PAD-Labs\output\lab-scb-alt\bot-fx-table.csv
 
 ## Acceptance
 
-- [ ] Flow ชื่อ `LabSCB_StaticFxTable`
-- [ ] มีโฟลเดอร์ `C:\PAD-Labs\output\lab-scb-alt\`
+- [ ] Flow ชื่อ `Lab03b_StaticFxTable`
+- [ ] มีโฟลเดอร์ `C:\PAD-Labs\output\lab03b\`
 - [ ] **Launch new Chrome** ไปที่ ReportPage `reportID=123` (`language=TH`)
 - [ ] Wait **Contain element** `Tbl_BotFx` แล้วตามด้วย Wait **Contain text** `USD` ก่อน Extract
 - [ ] มี Extract Entire HTML Table → `%BotFxTable%` (ไม่ใช่ stub ตารางว่าง)
@@ -163,4 +163,4 @@ C:\PAD-Labs\output\lab-scb-alt\bot-fx-table.csv
 
 ปิดเบราว์เซอร์ค้าง · ลบ CSV ทดสอบถ้าไม่ต้องการเก็บเรท
 
-> **Catch-up:** ตามไม่ทัน → วาง [`scripts/static-fx-table.robin`](scripts/static-fx-table.robin) ใน flow **ว่าง** (partial-ui + bundled `SCB StaticFx` / `Tbl_BotFx`)
+> **Catch-up:** ตามไม่ทัน → วาง [`scripts/static-fx-table.robin`](scripts/static-fx-table.robin) ใน flow **ว่าง** (partial-ui + bundled `Lab03b StaticFx` / `Tbl_BotFx`)

@@ -3,7 +3,7 @@
 **อ่านก่อน:** [LESSON.md](LESSON.md) · **หน้าปกบท:** [README.md](README.md) · **พื้นฐาน:** [`shared/PAD-FUNDAMENTALS.md`](../../shared/PAD-FUNDAMENTALS.md)
 
 **วัน:** 2 · **ระดับ:** Advanced · **เวลาเป้าหมาย (catch-up):** ~1 ชม.  
-**ทักษะ:** Run application / Wait for window / Close, UI Elements (Contoso), Excel → Contoso → Excel, R1–R6, On block error (SET-only), Subflows
+**ทักษะ:** Run application / Wait for window / Close, UI Elements (Contoso), Excel → Contoso → Excel, R1–R6, On block error (SET-only) + Get last error, Subflows
 
 **สคริปต์อ้างอิง (แหล่งความจริงของ Lab นี้):** [`scripts/07-contoso-invoice-ops.robin`](scripts/07-contoso-invoice-ops.robin)
 
@@ -167,12 +167,11 @@ InvoiceId, Status, Priority, AttachmentFiled, ErrorMessage, Notes
 | `StatusToSet` | `%CurrentInvoice['StatusToSet']%` |
 
 3. Reset รายแถว: `AttachmentFiled=No`, `ErrorMessage` / `Notes` / `Priority` / `Status` / `RowDecision` ว่าง, `DateForContoso=%InvoiceDate%`, `RowFailed=False`
-4. **On block error** ครอบงานแถว  
+4. **On block error** ครอบงานแถว (นโยบาย Continue ตาม R6)  
    - ในกิ่ง error: **Set variable เท่านั้น**  
      - `RowFailed` = `True`  
      - `Status` = `Failed`  
-     - `ErrorMessage` = `Row processing error`  
-   - **ห้าม** Increase / Write text / Insert row / Get last error **ใน** handler (PAD มัก reject — ตามสคริปต์ Lab 07)
+   - **ห้าม** Increase / Write text / Insert row / **Get last error** **ใน** handler (PAD มัก reject)
 
 ### Step 4 — SF_ValidateInvoiceRow (R1–R2)
 
@@ -228,11 +227,22 @@ InvoiceId, Status, Priority, AttachmentFiled, ErrorMessage, Notes
    Else → `No`
 3. Insert row + append log (เช่นเดียวกับ Create สำเร็จ)
 
-### Step 8 — บันทึก Failed นอก handler
+### Step 8 — บันทึก Failed นอก handler (Get last error → log)
 
 หลังจบ **On block error** ของแถว (ยังใน For each):
 
-1. If `%RowFailed%` = True → Increase `FailedCount` → Insert row → append log สถานะ `Failed`
+1. If `%RowFailed%` = True:
+   - **Get last error** → `LastError` (เปิด **Clear error**)
+   - **Set variable** `ErrorMessage` ← `%LastError.Message%`
+   - Increase `FailedCount`
+   - **Insert row** เข้า `%Results%` (Status = Failed)
+   - **Write text** append log:
+
+```text
+%InvoiceId%,Failed,%Priority%,%AttachmentFiled%,%ErrorMessage%
+```
+
+> อย่าใส่ข้อความตายตัวเช่น `Row processing error` ใน handler — ใช้ `%LastError.Message%` นอกบล็อกเพื่อให้ log มีสาเหตุจริง (Lab 09/09b จะทบทวนแพทเทิร์นนี้ต่อ)
 
 ### Step 9 — SF_WriteResults + ปิด Contoso
 
@@ -272,7 +282,8 @@ InvoiceId, Status, Priority, AttachmentFiled, ErrorMessage, Notes
 |-----|-----|
 | `%Name%` ในช่อง Name / Store into | ชื่อเปล่า เช่น `WorkingRoot` |
 | Wait for window content / invent `WaitForWindowToOpen` | **Wait for window** title `Contoso Invoicing` + Focus |
-| Increase/File/Get last error ใน On block error | ใน handler = **SET** อย่างเดียว; log นอกหลัง `RowFailed` |
+| Increase/File/**Get last error** ใน On block error | ใน handler = **SET** อย่างเดียว (`RowFailed`, `Status`); **Get last error** + log **นอก**หลัง flag |
+| ใส่ `ErrorMessage` ตายตัวใน handler | นอกบล็อก: `ErrorMessage` ← `%LastError.Message%` |
 | Reject/Skip แล้วยัง Click New Invoice | เฉพาะ `RowDecision=Create` เท่านั้นที่แตะ UI |
 | Save as รอบสองไม่ลบไฟล์เก่า | If file exists → Delete ที่ `%ResultsPath%` |
 | ชื่อ UI ไม่ตรงสคริปต์ | Rename ตาม ui-map / ตารางใน Step 6 |
@@ -288,6 +299,7 @@ InvoiceId, Status, Priority, AttachmentFiled, ErrorMessage, Notes
 | `InvoiceId`, `Account`, `AmountText`, `ProcessFlag`, `Contact`, `InvoiceDate`, `StatusToSet` | `%…%` | คอลัมน์แถว |
 | `AccountTrimmed`, `AmountNumber`, `DateForContoso`, `DateParts` | `%…%` | validate / วันที่ |
 | `RowDecision`, `Status`, `Priority`, `Notes`, `AttachmentFiled`, `ErrorMessage`, `RowFailed` | `%…%` | ตัดสินใจแถว |
+| `LastError` | `%LastError%` / `%LastError.Message%` | จาก **Get last error** เมื่อ `RowFailed` |
 | `CreatedCount`, `RejectedCount`, `SkippedCount`, `FailedCount`, `HighPriorityCount` | `%…%` | Summary |
 
 ## Acceptance Criteria
@@ -297,7 +309,7 @@ InvoiceId, Status, Priority, AttachmentFiled, ErrorMessage, Notes
 - [ ] อ่าน Excel เป็นลูป + R1–R6 ครบตามตารางด้านบน
 - [ ] Results ที่ A1 + Summary ที่ H:I ใน `invoice-run-results.xlsx`
 - [ ] รันซ้ำได้ (Delete ไฟล์ผลก่อน Save as)
-- [ ] Error รายแถวแล้วไปต่อได้ (SET-only ใน On block error)
+- [ ] Error รายแถวแล้วไปต่อได้ (SET-only ใน On block error + **Get last error** นอก handler → `%LastError.Message%` ใน log)
 - [ ] มีอย่างน้อย 3 ชื่อ `SF_*` (Subflow หรือคอมเมนต์ตาม catch-up)
 - [ ] (Challenge) Extract grid หรือ Outlook Draft
 
@@ -309,7 +321,7 @@ InvoiceId, Status, Priority, AttachmentFiled, ErrorMessage, Notes
 | หา Contoso exe ไม่เจอ | Task Manager → Open file location → แก้ `ContosoPath` |
 | Selector หลุด | Recapture; อย่าพึ่งพิกัดจออย่างเดียว |
 | กรอก Amount / Date ไม่ติด | ส่งข้อความ; วันที่เป็น MM/DD/YYYY ตามสคริปต์ |
-| On block error แดงตอนใส่ Increase/File | ย้ายออกนอก handler หลัง `RowFailed` |
+| On block error แดงตอนใส่ Increase/File/Get last error | ย้ายออกนอก handler: flag ใน handler → **Get last error** + log หลัง `RowFailed` |
 | Save as รอบสองล้ม | If file exists → Delete `%ResultsPath%` |
 | UIPI | รัน PAD กับ Contoso elevation เดียวกัน |
 

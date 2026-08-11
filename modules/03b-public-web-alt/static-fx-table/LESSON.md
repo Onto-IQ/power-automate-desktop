@@ -7,7 +7,7 @@
 Lab 03 Static ใช้ `#tbl-employees` บน Lab Hub  
 ชุดนี้ใช้ตารางสถิติอัตราแลกเปลี่ยนของ ธปท. ซึ่ง:
 
-- อยู่ในโดเมน `app.bot.or.th` (อนุญาตใน SCB ได้โดยทั่วไป)
+- อยู่ในโดเมน `app.bot.or.th` (มักผ่าน allowlist ขององค์กรได้)
 - เป็น HTML table ที่ Extract ได้ด้วย **Extract Entire HTML Table**
 - ข้อมูลสาธารณะ — ไม่อ่านข้อมูลลูกค้า
 

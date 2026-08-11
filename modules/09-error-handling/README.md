@@ -44,6 +44,7 @@
 
 ## บทที่เกี่ยวข้อง
 
+- ก่อนหน้า (R6 ที่ Contoso): [Lab 07 Contoso Invoice Ops](../07-contoso-invoice-ops/README.md)
 - ทดแทนเมื่อ Capture ไม่ได้: [Lab 09b Error Handling WinApp](../09b-error-handling-winapp/README.md)
-- ใช้แนวคิดนี้ใน: [Lab 07 Contoso](../07-contoso-invoice-ops/README.md) · [Lab 10 Capstone](../10-capstone-sales-ops/README.md)
+- ถัดไป: [Lab 10 Capstone](../10-capstone-sales-ops/README.md)
 - คำศัพท์ทางการ: [`shared/OFFICIAL-TERMINOLOGY.md`](../../shared/OFFICIAL-TERMINOLOGY.md)

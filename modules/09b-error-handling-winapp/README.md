@@ -35,6 +35,7 @@
 - PAD ติดตั้งแล้ว (แนะนำ baseline **2607+**)
 - มี `C:\Windows\System32\notepad.exe`
 - แนะนำทำ [Lab 01b Notepad](../01b-notepad/README.md) มาก่อน (UI Elements พื้นฐาน)
+- ทบทวน R6 จาก [Lab 07 Contoso](../07-contoso-invoice-ops/README.md) (SET-only + Get last error)
 - **ไม่ต้อง** มี browser extension / Lab Hub
 - อ่านสั้น ๆ: [Handle errors](https://learn.microsoft.com/power-automate/desktop-flows/errors)
 
@@ -51,7 +52,8 @@
 
 ## บทที่เกี่ยวข้อง
 
-- Lab มาตรฐาน (web): [Lab 09 Error Handling](../09-error-handling/README.md)
+- ก่อนหน้า (R6 ที่ Contoso): [Lab 07 Contoso Invoice Ops](../07-contoso-invoice-ops/README.md)
 - Desktop พื้นฐาน: [Lab 01b Notepad](../01b-notepad/README.md)
-- ใช้แนวคิดต่อ: [Lab 07 Contoso](../07-contoso-invoice-ops/README.md) · [Lab 10 Capstone](../10-capstone-sales-ops/README.md)
+- Lab มาตรฐาน (web): [Lab 09 Error Handling](../09-error-handling/README.md)
+- ถัดไป: [Lab 10 Capstone](../10-capstone-sales-ops/README.md)
 - คำศัพท์ทางการ: [`shared/OFFICIAL-TERMINOLOGY.md`](../../shared/OFFICIAL-TERMINOLOGY.md)

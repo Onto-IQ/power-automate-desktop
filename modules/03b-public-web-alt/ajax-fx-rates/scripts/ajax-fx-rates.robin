@@ -1,0 +1,63 @@
+# Lab03b_AjaxFxRates — partial-ui (Chrome + bundled UI Elements)
+# URL: https://www.scb.co.th/th/personal-banking/foreign-exchange-rates
+# ControlRepository at end — paste into an EMPTY desktop flow
+# Elements: Tbl_FxRates (CSS: table.table-rate) — shell only; rates fill via AJAX
+# Wait Contain text %CurrencyCode% before Extract (table node exists empty first)
+# ExtractHtmlTable columns: Currency SellDDTT SellNotes BuyTT BuyExport BuyTCHQ BuyNotes
+# Hits maps Currency / BankBuys(BuyTT=col3) / BankSells(SellDDTT=col1)
+
+SET CurrencyCode TO $'''USD'''
+
+IF (Folder.IfFolderExists.DoesNotExist Path: $'''C:\\PAD-Labs\\output\\lab03b''') THEN
+    Folder.Create FolderPath: $'''C:\\PAD-Labs\\output''' FolderName: $'''lab03b''' Folder=> Lab03bOutFolder
+END
+
+WebAutomation.LaunchChrome.LaunchChrome Url: $'''https://www.scb.co.th/th/personal-banking/foreign-exchange-rates''' WindowState: WebAutomation.BrowserWindowState.Normal ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 90 Timeout: 90 BrowserInstance=> Browser
+
+WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainElement BrowserInstance: Browser Control: appmask['Lab03b AjaxFx']['Tbl_FxRates']) FOR 90
+WAIT (WebAutomation.WaitForWebPageContent.WebPageToContainText BrowserInstance: Browser Text: CurrencyCode) FOR 90
+
+WebAutomation.ExtractData.ExtractHtmlTable BrowserInstance: Browser Control: $'''table.table-rate''' ExtractionParameters: {[$'''Currency''', $'''SellDDTT''', $'''SellNotes''', $'''BuyTT''', $'''BuyExport''', $'''BuyTCHQ''', $'''BuyNotes'''], [$'''''', $'''''', $'''''', $'''''', $'''''', $'''''', $''''''] } PostProcessData: False TimeoutInSeconds: 60 ExtractedData=> FxRatesTable
+
+Variables.CreateNewDatatable InputTable: { ^['Currency', 'BankBuys', 'BankSells'] } DataTable=> Hits
+
+LOOP FOREACH FxRow IN FxRatesTable
+    IF Contains(FxRow[0], CurrencyCode, False) THEN
+        Variables.AddRowToDataTable.AppendRowToDataTable DataTable: Hits RowToAdd: [FxRow[0], FxRow[3], FxRow[1]]
+    END
+END
+
+SET CsvBody TO $'''Currency,BankBuys,BankSells'''
+LOOP FOREACH HitRow IN Hits
+    SET CsvLine TO $'''%HitRow[0]%,%HitRow[1]%,%HitRow[2]%'''
+    SET CsvBody TO $'''%CsvBody%
+%CsvLine%'''
+END
+
+File.WriteText File: $'''C:\\PAD-Labs\\output\\lab03b\\bank-fx-rates.csv''' TextToWrite: CsvBody AppendNewLine: True IfFileExists: File.IfFileExists.Overwrite Encoding: File.FileEncoding.UTF8
+
+WebAutomation.CloseWebBrowser BrowserInstance: Browser
+
+# [ControlRepository][PowerAutomateDesktop]
+
+{
+  "ControlRepositorySymbols": [
+    {
+      "IgnoreImagesOnSerialization": false,
+      "Repository": "{\r\n  \"Screens\": [\r\n    {\r\n      \"Controls\": [\r\n        {\r\n          \"AutomationProtocol\": null,\r\n          \"ScreenShot\": null,\r\n          \"ElementTypeName\": \"table\",\r\n          \"InstanceId\": \"6b70f53c-6dee-402c-9d2d-1f6e4fc6eb5f\",\r\n          \"Name\": \"Tbl_FxRates\",\r\n          \"SelectorCount\": 1,\r\n          \"Selectors\": [\r\n            {\r\n              \"CustomSelector\": \"table.table-rate\",\r\n              \"Elements\": [],\r\n              \"Ignore\": false,\r\n              \"IsCustom\": true,\r\n              \"IsWindowsInstance\": false,\r\n              \"Order\": 0\r\n            }\r\n          ],\r\n          \"Tag\": \"table\"\r\n        }\r\n      ],\r\n      \"Handle\": {\r\n        \"value\": 0\r\n      },\r\n      \"ProcessName\": null,\r\n      \"ScreenShot\": null,\r\n      \"ElementTypeName\": \"Web Page\",\r\n      \"InstanceId\": \"55bcef66-d93b-4d6d-8db9-13836c84de07\",\r\n      \"Name\": \"Lab03b AjaxFx\",\r\n      \"SelectorCount\": 1,\r\n      \"Selectors\": [\r\n        {\r\n          \"CustomSelector\": null,\r\n          \"Elements\": [\r\n            {\r\n              \"Attributes\": [],\r\n              \"CustomValue\": \"domcontainer\",\r\n              \"Ignore\": false,\r\n              \"Name\": \"Web Page 'https://www.scb.co.th/th/personal-banking/foreign-exchange-rates'\",\r\n              \"Tag\": \"domcontainer\"\r\n            }\r\n          ],\r\n          \"Ignore\": false,\r\n          \"ImageSelector\": null,\r\n          \"IsCustom\": false,\r\n          \"IsImageBased\": false,\r\n          \"IsPlaceholderSelector\": false,\r\n          \"IsWindowsInstance\": false,\r\n          \"Name\": \"Default Selector\",\r\n          \"Properties\": []\r\n        }\r\n      ],\r\n      \"Tag\": \"domcontainer\",\r\n      \"ScreenshotPath\": null\r\n    }\r\n  ],\r\n  \"Version\": 1\r\n}",
+      "ImportMetadata": {
+        "DisplayName": "Local computer",
+        "ConnectionString": "",
+        "Type": "Local",
+        "DesktopType": "local"
+      },
+      "Name": "appmask"
+    }
+  ],
+  "ImageRepositorySymbol": {
+    "Repository": "{\r\n  \"Folders\": [],\r\n  \"Images\": [],\r\n  \"Version\": 1\r\n}",
+    "ImportMetadata": {},
+    "Name": "imgrepo"
+  },
+  "ConnectionReferences": []
+}

@@ -10,6 +10,9 @@ PAD baseline ของชุดเอกสาร: **2607+** (สิงหาค
 
 ## [Unreleased]
 
+- Rename `modules/scb-secure-isolation-alt/` → `modules/03b-public-web-alt/` (กลาง; ทักษะเทียบ 01 form + 03 table เมื่อ Lab Hub ถูกกั้น)
+- Flow / screen / output path: `Lab03b_*`, `lab03b`, `Tbl_FxRates`; rebuild via `bundle-03b-public-web-appmask.py`
+
 ---
 
 ## [1.3.0] — 2026-08-11
@@ -21,7 +24,7 @@ Catch-up web labs พร้อม UI Elements bundle + อัปเดต `PAD-L
 - อัปเดต README / LAB catch-up notes ให้ระบุ bundled screens
 
 ### Module เฉพาะกิจ (รวมจาก main หลัง v1.2.0)
-- Harden `modules/scb-secure-isolation-alt/` — catch-up bundle UI Elements + LAB ชัดขึ้น
+- Harden `modules/03b-public-web-alt/` — catch-up bundle UI Elements + LAB ชัดขึ้น
 
 ### Learner pack
 - Release asset **`PAD-Labs.zip`** อัปเดตคู่กับ tag นี้
@@ -36,7 +39,7 @@ Catch-up web labs พร้อม UI Elements bundle + อัปเดต `PAD-L
 - Workflow `.github/workflows/pad-labs-zip.yml` แนบ `PAD-Labs.zip` ตอน publish Release
 
 ### Module เฉพาะกิจ
-- เพิ่ม `modules/scb-secure-isolation-alt/` สำหรับห้องที่ Browser Secure Isolation กั้น Lab Hub — ใช้เฉพาะ `bot.or.th` / `scb.co.th` ทดแทน Lab 01 + Lab 03 Core
+- เพิ่ม `modules/03b-public-web-alt/` สำหรับห้องที่ Browser Secure Isolation กั้น Lab Hub — ใช้เฉพาะ `bot.or.th` / `scb.co.th` ทดแทน Lab 01 + Lab 03 Core
 
 ---
 
